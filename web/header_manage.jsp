@@ -84,13 +84,13 @@
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Quản Lý Cộng Đồng:</h6>
-                            <a class="collapse-item" href="a-adminForum.html">Báo Cáo Chung</a>
-                            <a class="collapse-item" href="a-reportPost.html">Bài Đăng Bị Báo Cáo</a>
-                            <a class="collapse-item" href="a-reportComment.html">Bình Luận Bị Báo Cáo</a>
-                            <a class="collapse-item" href="a-topic.html">Chủ Đề</a>
-                            <a class="collapse-item" href="a-disablePost.html">Bài Đăng Bị Vô Hiệu Hóa</a>
-                            <a class="collapse-item" href="a-disableComment.html">Bình Luận Bị Vô Hiệu Hóa</a>
-                            <a class="collapse-item" href="a-disableTopic.html">Chủ Đề Bị Vô Hiệu Hóa</a>
+                            <a class="collapse-item" href="<%= request.getContextPath()%>/AdminForum">Báo Cáo Chung</a>
+                            <a class="collapse-item" href="<%= request.getContextPath()%>/ReportPost">Bài Đăng Bị Báo Cáo</a>
+                            <a class="collapse-item" href="<%= request.getContextPath()%>/ReportComment">Bình Luận Bị Báo Cáo</a>
+                            <a class="collapse-item" href="<%= request.getContextPath()%>/Topic">Chủ Đề</a>
+                            <a class="collapse-item" href="<%= request.getContextPath()%>/DisablePost">Bài Đăng Bị Vô Hiệu Hóa</a>
+                            <a class="collapse-item" href="<%= request.getContextPath()%>/DisableComment">Bình Luận Bị Vô Hiệu Hóa</a>
+                            <a class="collapse-item" href="<%= request.getContextPath()%>/DisableTopic">Chủ Đề Bị Vô Hiệu Hóa</a>
                         </div>
                     </div>
                 </li>

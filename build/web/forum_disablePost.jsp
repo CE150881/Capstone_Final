@@ -7,7 +7,6 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 
     <head>
@@ -18,7 +17,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Admin Dashboard</title>
+        <title>Quản Lí Cộng Đồng</title>
         <link href="user/img/logo.jpg" rel="icon">
 
         <!-- Custom fonts for this template-->
@@ -30,10 +29,6 @@
         <!-- Custom styles for this template-->
         <link href="manage/css/sb-admin-2.css" rel="stylesheet">
 
-
-        <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-
-
     </head>
 
     <body id="page-top">
@@ -41,140 +36,15 @@
         <!-- Page Wrapper -->
         <div id="wrapper">
 
-            <!-- Sidebar -->
-            <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-                <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.html">
-                    <div class="sidebar-brand-text mx-3">JPD</div>
-                </a>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider my-0">
-
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="a-dashboard.html">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Trang Chủ</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    QUẢN TRỊ VIÊN
-                </div>
-
-                <!-- Account -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                       aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Tài Khoản</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Quản Lý Tài Khoản:</h6>
-                            <a class="collapse-item" href="a-manageAccount.html">Danh Sách Tài Khoản</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Notification -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwoo"
-                       aria-expanded="true" aria-controls="collapseTwoo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Thông Báo</span>
-                    </a>
-                    <div id="collapseTwoo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Quản Lý Thông Báo:</h6>
-                            <a class="collapse-item" href="a-manageNoti.html">Danh Sách Thông Báo</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Forum -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                       aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Cộng Đồng</span>
-                    </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Quản Lý Cộng Đồng:</h6>
-                            <a class="collapse-item" href="<%= request.getContextPath()%>/AdminForum">Báo Cáo Chung</a>
-                            <a class="collapse-item" href="<%= request.getContextPath()%>/ReportPost">Bài Đăng Bị Báo
-                                Cáo</a>
-                            <a class="collapse-item" href="<%= request.getContextPath()%>/ReportComment">Bình Luận Bị Báo
-                                Cáo</a>
-                            <a class="collapse-item" href="<%= request.getContextPath()%>/Topic">Chủ Đề</a>
-                            <a class="collapse-item" href="<%= request.getContextPath()%>/DisablePost">Bài Đăng Bị Vô Hiệu
-                                Hóa</a>
-                            <a class="collapse-item" href="<%= request.getContextPath()%>/DisableComment">Bình Luận Bị Vô
-                                Hiệu Hóa</a>
-                            <a class="collapse-item" href="<%= request.getContextPath()%>/DisableTopic">Chủ Đề Bị Vô Hiệu
-                                Hóa</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    QUẢN LÝ NỘI DUNG
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                       aria-expanded="true" aria-controls="collapsePages">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Bài Học</span>
-                    </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Quản Lý Bài Học:</h6>
-                            <a class="collapse-item" href="c-manageAlphabet.html">Bảng Chữ Cái</a>
-                            <a class="collapse-item" href="c-manageKanji.html">Kanji</a>
-                            <a class="collapse-item" href="c-manageGrammar.html">Ngữ Pháp</a>
-                            <div class="collapse-divider"></div>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse"
-                       aria-expanded="true" aria-controls="collapse">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Kiểm Tra</span>
-                    </a>
-                    <div id="collapse" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Login Screens:</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                            <div class="collapse-divider"></div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <!-- End of Sidebar -->
+            <jsp:include page="header_manage.jsp" />
 
             <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
 
                 <!-- Main Content -->
                 <div id="content">
+
+
                     <!-- Topbar -->
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -186,172 +56,20 @@
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
 
-                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                            <li class="nav-item dropdown no-arrow d-sm-none">
-                                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-search fa-fw"></i>
-                                </a>
-                                <!-- Dropdown - Messages -->
-                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                     aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto w-100 navbar-search">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control bg-light border-0 small"
-                                                   placeholder="Search for..." aria-label="Search"
-                                                   aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="fas fa-search fa-sm"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
-
-                            <!-- Nav Item - Alerts -->
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-bell fa-fw"></i>
-                                    <!-- Counter - Alerts -->
-                                    <span class="badge badge-danger badge-counter">3+</span>
-                                </a>
-                                <!-- Dropdown - Alerts -->
-                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                     aria-labelledby="alertsDropdown">
-                                    <h6 class="dropdown-header">
-                                        Alerts Center
-                                    </h6>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-primary">
-                                                <i class="fas fa-file-alt text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 12, 2019</div>
-                                            <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-success">
-                                                <i class="fas fa-donate text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 7, 2019</div>
-                                            $290.29 has been deposited into your account!
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-warning">
-                                                <i class="fas fa-exclamation-triangle text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 2, 2019</div>
-                                            Spending Alert: We've noticed unusually high spending for your account.
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                </div>
-                            </li>
-
-                            <!-- Nav Item - Messages -->
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-envelope fa-fw"></i>
-                                    <!-- Counter - Messages -->
-                                    <span class="badge badge-danger badge-counter">7</span>
-                                </a>
-                                <!-- Dropdown - Messages -->
-                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                     aria-labelledby="messagesDropdown">
-                                    <h6 class="dropdown-header">
-                                        Message Center
-                                    </h6>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
-                                            <div class="status-indicator bg-success"></div>
-                                        </div>
-                                        <div class="font-weight-bold">
-                                            <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                                problem I've been having.</div>
-                                            <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
-                                            <div class="status-indicator"></div>
-                                        </div>
-                                        <div>
-                                            <div class="text-truncate">I have the photos that you ordered last month, how
-                                                would you like them sent to you?</div>
-                                            <div class="small text-gray-500">Jae Chun · 1d</div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
-                                            <div class="status-indicator bg-warning"></div>
-                                        </div>
-                                        <div>
-                                            <div class="text-truncate">Last month's report looks great, I am very happy with
-                                                the progress so far, keep up the good work!</div>
-                                            <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle" src=""
-                                                 alt="...">
-                                            <div class="status-indicator bg-success"></div>
-                                        </div>
-                                        <div>
-                                            <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                                told me that people say this to all dogs, even if they aren't good...</div>
-                                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                                </div>
-                            </li>
-
-                            <div class="topbar-divider d-none d-sm-block"></div>
-
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                    <img class="img-profile rounded-circle" src="manage/img/undraw_profile.svg">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.acc.username}</span>
+                                    <img class="img-profile rounded-circle"
+                                         src="${sessionScope.acc.avatar}">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Profile
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Activity Log
-                                    </a>
-                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
+                                        Đăng Xuất
                                     </a>
                                 </div>
                             </li>
@@ -360,6 +78,7 @@
 
                     </nav>
                     <!-- End of Topbar -->
+                    
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
 
@@ -441,7 +160,7 @@
         </div>
         <!-- End of Page Wrapper -->
 
-        <!-- Scroll to Top Button-->
+         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
@@ -452,15 +171,15 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-body">Bạn muốn đăng xuất ?</div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                        <a class="btn btn-primary" href="LogoutControl">Đăng Xuất</a>
                     </div>
                 </div>
             </div>
@@ -482,15 +201,6 @@
         <!-- Page level custom scripts -->
         <script src="manage/js/demo/chart-area-demo.js"></script>
         <script src="manage/js/demo/chart-pie-demo.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#example').DataTable();
-            });
-        </script>
 
     </body>
 
