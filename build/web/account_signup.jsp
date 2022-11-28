@@ -1,0 +1,70 @@
+<%-- 
+    Document   : account_signup
+    Created on : 24-Nov-2022, 21:17:25
+    Author     : A Hi
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Đăng Ký</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="user/css/login.css">
+
+    </head>
+    <body class="img js-fullheight" style="background-image: url(user/img/13.jpg);">
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center mb-5">
+                        <h2 class="heading-section">Đăng Ký</h2>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="login-wrap p-0">
+                            <form action="SignupControl" method="POST" class="signin-form">
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="username" class="form-control" placeholder="Tên Người Dùng" required>
+                                </div>
+                                <div class="form-group">
+                                    <input id="password-field" name="password" type="password" class="form-control" placeholder="Mật Khẩu" required>
+                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" name="phone" class="form-control" placeholder="Số Điện Thoại" required>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="form-control btn submit px-3" style="background-color: #f5b8c5;">Đăng Ký</button>
+                                </div>
+                            </form>
+                            <p class="w-100 text-center">&mdash; hoặc đăng ký với &mdash;</p>
+                            <div class="social d-flex text-center">
+                                <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8084/Capstone_Final/SignupWithGoogleControl&response_type=code
+                                   &client_id=385719648415-f3cmsdtcnus0srmpkn5897b5brdes37s.apps.googleusercontent.com&approval_prompt=force" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Google</a>
+                            </div>
+                            <a href="account_login.jsp" class="w-100 text-center" style="color: #fff; display: flex; justify-content: center; text-decoration: underline;">Bạn đã có tài khoản?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script src="user/js/jquery.min.js"></script>
+        <script src="user/js/bootstrap.min.js"></script>
+        <script src="user/js/login.js"></script>
+
+    </body>
+</html>
+
+
