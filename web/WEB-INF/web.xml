@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">  
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>Forum</servlet-name>
         <servlet-class>Controllers.Forum.Forum</servlet-class>
@@ -96,6 +96,26 @@
         <servlet-name>DeleteForumNotification</servlet-name>
         <servlet-class>Controllers.Forum.DeleteForumNotification</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddNotification</servlet-name>
+        <servlet-class>Controllers.Notification.AddNotification</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ToggleNotificationVisibility</servlet-name>
+        <servlet-class>Controllers.Notification.ToggleNotificationVisibility</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteNotification</servlet-name>
+        <servlet-class>Controllers.Notification.DeleteNotification</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditNotification</servlet-name>
+        <servlet-class>Controllers.Notification.EditNotification</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NotificationController</servlet-name>
+        <servlet-class>Controllers.Notification.NotificationController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Forum</servlet-name>
         <url-pattern>/Forum/*</url-pattern>
@@ -191,6 +211,26 @@
     <servlet-mapping>
         <servlet-name>DeleteForumNotification</servlet-name>
         <url-pattern>/DeleteForumNotification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNotification</servlet-name>
+        <url-pattern>/AddNotification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ToggleNotificationVisibility</servlet-name>
+        <url-pattern>/ToggleNotificationVisibility</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteNotification</servlet-name>
+        <url-pattern>/DeleteNotification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditNotification</servlet-name>
+        <url-pattern>/EditNotification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationController</servlet-name>
+        <url-pattern>/NotificationController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

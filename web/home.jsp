@@ -4,6 +4,8 @@
     Author     : A Hi
 --%>
 
+<%@page import="DAOs.Notification.NotificationDAO"%>
+<%@page import="java.sql.ResultSet"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -196,20 +198,31 @@
                             <img src="user/img/about.jpg" class="img-fluid" alt="">
                         </div>
                         <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right" data-aos-delay="100">
-                            <h3>Bảng Tin</h3>
-                            <p class="fst-italic">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.
-                            </p>
-                            <ul>
-                                <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                                <li><i class="ri-check-double-line"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                                <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
-                            </ul>
-                            <p>
-                                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
-                            </p>
+                            <h3>Bảng Tin</h3><br>
+                            <%
+                                // Get All Notification
+                                ResultSet rs1 = NotificationDAO.getAllNotification();
+                                int limit = 5;
+                                int notifNo = 0;
+                                while (rs1.next()) {
+                                    if (notifNo >= limit) {
+                            %>
+                            <div style="text-align: left; margin-top: 2vh"><a href="<%=request.getContextPath()%>/notification_all.jsp" style="text-decoration: none; color: #000;">Xem thêm...</a></div>
+                            <%
+                                    break;
+                                }
+                                int id = rs1.getInt("notificationID");
+                                String title = rs1.getString("title");
+                                String time = rs1.getString("time");
+                                int status = rs1.getInt("status");
+                                if (status == 0) {
+                                    notifNo += 1;
+                            %>
+                            <a href="<%=request.getContextPath()%>/NotificationController?id=<%=id%>" style="text-decoration: none; color: #000;"><span><%=time%></span><span> - </span><span style="font-weight: bold;"><%=title%></span></a><br>
+                                    <%
+                                            }
+                                        }
+                                    %>
                         </div>
                     </div>
 
