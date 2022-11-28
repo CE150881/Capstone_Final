@@ -44,6 +44,12 @@
         ======================================================== -->
     </head>
 
+    <style>
+        .dropdown-menu li:hover>a{
+            background-color: #f5b8c5;
+        }
+    </style>
+
     <body>
 
         <!-- ======= Header ======= -->
@@ -90,15 +96,11 @@
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
                 <ul>
-
                     <c:if test="${sessionScope.acc.role == 'Người dùng'}">
                         <!-- đã đăng nhập -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" style="color: white; padding-right:5px;" fill="currentColor" class="bi bi-envelope-exclamation" viewBox="0 0 17 17">
-                        <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z"/>
-                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1.5a.5.5 0 0 1-1 0V11a.5.5 0 0 1 1 0Zm0 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
-                        </svg>
+
                         <a href="account_profile.jsp" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
-                        <a class="dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
+                        <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="account_profile.jsp">Tài Khoản</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
@@ -109,7 +111,6 @@
                         <a href="account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
                         <a href="account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
                     </c:if>
-
                 </ul>
 
             </div>
