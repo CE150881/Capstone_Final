@@ -82,6 +82,8 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <p>welcome jpd</p>
+                        
+                        <a href="HomeControl">Web người dùng</a>
                     </div>
                     <!-- /.container-fluid -->
                 </div>
