@@ -245,7 +245,15 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#example').DataTable();
+                $('#example').DataTable({
+                    "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
+                    "pageLength": 5,
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
+                        "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
+                        "info": "Hiển thị _END_ trên tổng số _TOTAL_ dữ liệu"
+                    }
+                });
             });
         </script>
     </body>
