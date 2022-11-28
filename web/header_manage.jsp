@@ -94,6 +94,21 @@
                         </div>
                     </div>
                 </li>
+                
+                <!-- Chat -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwou"
+                       aria-expanded="true" aria-controls="collapseTwou">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Hỗ Trợ</span>
+                    </a>
+                    <div id="collapseTwou" class="collapse" aria-labelledby="collapseTwou" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản Lý Tin Nhắn:</h6>
+                            <a class="collapse-item" href="a-manageNoti.html">Hỗ Trợ Người Dùng</a>
+                        </div>
+                    </div>
+                </li>
 
                 <!-- Divider -->
                 <hr class="sidebar-divider">
