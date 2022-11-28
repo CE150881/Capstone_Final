@@ -6,6 +6,7 @@
 
 <%@page import="java.sql.ResultSet"%>
 <%@page import="Models.User"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Alphabet</title>
+        <title>Tạo Bài Mới</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -51,60 +52,89 @@
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
             <div class="container d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="u-home.html">JPD<span>.</span></a></h1>
+                <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="user/img/logo.png" alt="" class="img-fluid"></a>-->
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto" href="u-home.html">Trang Chủ</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
                         <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
-                                <li class="dropdown"><a href="u-alphabet.html"><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
+                                <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
-                                        <li><a href="#">Deep Drop Down 1</a></li>
-                                        <li><a href="#">Deep Drop Down 2</a></li>
+                                        <c:forEach items="${listT}" var="q">
+                                            <li><a href="AlphabetControl?type=${q.type}">${q.type}</a></li>
+                                            </c:forEach>
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href="u-kanji.html"><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
+                                <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
-                                        <li><a href="#">N1</a></li>
-                                        <li><a href="#">N2</a></li>
-                                        <li><a href="#">N3</a></li>
-                                        <li><a href="#">N4</a></li>
-                                        <li><a href="#">N5</a></li>
+                                        <c:forEach items="${listL}" var="w">
+                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
+                                            </c:forEach> 
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href="u-grammar.html"><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
+                                <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
-                                        <li><a href="#">N1</a></li>
-                                        <li><a href="#">N2</a></li>
-                                        <li><a href="#">N3</a></li>
-                                        <li><a href="#">N4</a></li>
-                                        <li><a href="#">N5</a></li>
+                                        <c:forEach items="${listL}" var="e">
+                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
+                                            </c:forEach>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                         <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
-                        <li><a class="nav-link scrollto " href="u-practice.html">Luyện Tập</a></li>
+                        <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto active" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
+                        <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
+                        </c:if>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
                 <ul>
-                    <!-- đã đăng nhập -->                    
-                    <a href="u-home.html" class="logo me-auto me-lg-0" ><img src="${pageContext.request.contextPath}/user/img/logo.jpg" alt="" class="rounded-circle"></a>
-                    <a class="scrollto" href="u-profile.html">Thanh Tâm</a>
+                    <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                        <!-- đã đăng nhập -->
 
-                    <!-- chưa đăng nhập
-                      <a href="signup.html" class="get-started-btn scrollto">Đăng Ký</a>
-                    <a href="login.html" class="get-started-btn scrollto">Đăng Nhập</a>
-                    -->
+                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
+                        </ul>
+                    </c:if>
 
+                    <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
+                        <a href="<%= request.getContextPath()%>/account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
+                        <a href="<%= request.getContextPath()%>/account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
+                    </c:if>
                 </ul>
+
             </div>
+
         </header><!-- End Header -->
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Bạn muốn đăng xuất ?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
+                        <a class="btn" style="background-color: #f5b8c5; color: white" href="<%= request.getContextPath()%>/LogoutControl">Đăng Xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <main id="main" class="bg-light">
 
@@ -113,9 +143,12 @@
                 <div class="container">
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>Cộng Đồng</h2>
-                        <ol>
-                            <li><a href="u-home.html">Trang Chủ</a></li>
+                        <div>
+                            <h2 style="display: inline-block;">Cộng Đồng</h2>                            
+                        </div>
+
+                        <ol>                                                       
+                            <li><a href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
                             <li>Cộng Đồng</li>
                         </ol>
                     </div>
@@ -135,23 +168,30 @@
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Tiêu Đề</label>
                                     <textarea class="form-control" required="required" name="post_title" id="exampleFormControlTextarea1"
-                                              rows="1" placeholder="Please enter post title"></textarea>
+                                              rows="1" placeholder="Chủ đề"></textarea>
                                 </div>
+                                <br>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Nội Dung</label>
                                     <textarea class="form-control" required="required" name="post_content" id="exampleFormControlTextarea2"
-                                              rows="10" placeholder="Please enter post content"></textarea>
+                                              rows="10" placeholder="Nội dung"></textarea>
                                 </div>
-                                <select name="topic_id" class="form-select" aria-label="Default select example">
-                                    <%
-                                        ResultSet rs = (ResultSet) session.getAttribute("allTopic");
-                                        while (rs.next()) {
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <select name="topic_id" class="form-select" aria-label="Default select example">
+                                            <%
+                                                ResultSet rs = (ResultSet) session.getAttribute("allTopic");
+                                                while (rs.next()) {
 
-                                    %>
-                                    <option value="<%= rs.getString("topic_id")%>"><%= rs.getString("topic_name")%></option>
-                                    <%                                            }
-                                    %>
-                                </select>
+                                            %>
+                                            <option value="<%= rs.getString("topic_id")%>"><%= rs.getString("topic_name")%></option>
+                                            <%                                            }
+                                            %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
                                 <Button type="submit" value="New Post" name="newPost" class="btn btn-sm btn-outline-secondary">Đăng Bài</button>
 
                             </form>
@@ -176,42 +216,9 @@
                                     An Bình, Cần Thơ<br><br>
                                     <strong>Số Điện Thoại:</strong> 0349554811<br>
                                     <strong>Email:</strong> noreply.jpd@gmail.com<br>
-                                </p>
-                                <div class="social-links mt-3">
-                                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                                </div>
+                                </p>                                
                             </div>
-                        </div>
-
-                        <div class="col-lg-2 col-md-6 footer-links">
-                            <h4>Dành Cho Bạn</h4>
-                            <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="">Trang Chủ</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Tài Liệu</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Kiểm Tra</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Luyện Tập</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Cộng Đồng</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>Dịch Vụ Của Chúng Tôi</h4>
-                            <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Nguyên Tắc Cộng Đồng</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Quyền Riêng Tư</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Điều Khoản</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 footer-newsletter">
-                            <h4>Nhận Thông Báo</h4>
-                            <p>Chúng tôi sẽ gửi email cho bạn khi có thông báo mới.</p>
-                            <form action="" method="post">
-                                <input type="email" name="email"><input type="submit" value="Gửi">
-                            </form>
-                        </div>
+                        </div>                                              
                     </div>
                 </div>
             </div>
