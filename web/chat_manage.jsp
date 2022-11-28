@@ -1,0 +1,305 @@
+<%-- 
+    Document   : chat_manage
+    Created on : Nov 28, 2022, 5:11:47 PM
+    Author     : Admin
+--%>
+
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.util.Date"%>
+<%@page import="Models.User"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="DAOs.Chat.ChatSessionDAO"%>
+<%@page import="java.text.ParseException"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="Models.ChatSession"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="DAOs.Chat.ChatMessageDAO"%>
+<%@page import="Models.ChatMessage"%>
+<%@page import="DAOs.Notification.NotificationDAO"%>
+<%@page import="DAOs.Account.UserDAO"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Quản Lí Tin Nhắn</title>
+        <link href="user/img/logo.jpg" rel="icon">
+
+        <!-- //// STYLE -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+              integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+        <!-- STYLE ///-->
+
+        <!-- ///CSS JS-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link href="chat/css/chatAdmin.css" rel="stylesheet" type="text/css"/>
+        <script src="chat/js/chatAdmin.js" type="text/javascript"></script>
+        <!-- CSS JS///-->
+
+        <!-- OTHER -->
+        <!-- Custom fonts for this template-->
+        <link href="manage/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+        <!-- Custom styles for this template-->
+        <link href="manage/css/sb-admin-2.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    </head>
+
+    <body id="page-top">
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+
+            <jsp:include page="header_manage.jsp" />
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
+                    <div class="row">
+                        <!-- SESSION LIST -->
+                        <div class="side">
+                            <div id="search-container">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" name="searchContent" id="search-content" placeholder="Tìm kiếm...">
+                            </div>
+                            <div id="session-container">
+                                <%!
+                                    private static ArrayList<ChatSession> sortSessionByLastMessage(ArrayList<ChatSession> arr) {
+                                        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                        int n = arr.size();
+                                        ArrayList<ChatSession> beforeArr = arr;
+
+                                        // remove session without message
+                                        for (int i = 0; i < n; i++) {
+                                            ChatMessage tmpCM = ChatMessageDAO.getLastChatMessageBySessionID(arr.get(i).getSessionID());
+
+                                            if (tmpCM == null) {
+                                                arr.remove(i);
+                                                i = i - 1;
+                                                n = n - 1;
+                                            }
+                                        }
+
+                                        // bubble sort
+                                        for (int i = 0; i < n - 1; i++) {
+                                            for (int j = 0; j < n - i - 1; j++) {
+                                                ChatMessage tmpCM1 = ChatMessageDAO.getLastChatMessageBySessionID(arr.get(j).getSessionID());
+                                                ChatMessage tmpCM2 = ChatMessageDAO.getLastChatMessageBySessionID(arr.get(j + 1).getSessionID());
+
+                                                try {
+                                                    if (fmt.parse(tmpCM1.getTime()).before(fmt.parse(tmpCM2.getTime()))) {
+                                                        // swap arr[j+1] and arr[j]
+                                                        ChatSession tmpSwap = arr.get(j);
+                                                        arr.set(j, arr.get(j + 1));
+                                                        arr.set(j + 1, tmpSwap);
+                                                    }
+                                                } catch (ParseException ex) {
+                                                    return beforeArr;
+                                                }
+                                            }
+                                        }
+
+                                        return arr;
+                                    }
+                                %>
+                                <%
+                                    ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
+                                    csList = sortSessionByLastMessage(csList);
+                                    UserDAO userdao = new UserDAO();
+                                    SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                                    long SECOND = 1000;
+                                    long MINUTE = 60 * SECOND;
+                                    long HOUR = 60 * MINUTE;
+                                    long DAY = 24 * HOUR;
+                                    long WEEK = 7 * DAY;
+                                    long MONTH = 30 * DAY;
+                                    long YEAR = 12 * MONTH;
+                                    boolean isInitial = true;
+                                    for (ChatSession cs : csList) {
+                                        User u = userdao.getUserByID2(cs.getUserID());
+                                        if (cs.getStatus() == 0 && u.getRole().equals("Người dùng")) {
+                                            int sID = cs.getSessionID();
+                                            int uID = u.getUserID();
+                                            String uName = u.getUsername();
+                                            String uAvatar = u.getAvatar();
+                                            ChatMessage lastCM = ChatMessageDAO.getLastChatMessageBySessionID(sID);
+                                            String lmContent = lastCM.getChatContent();
+                                            String lastMessage;
+                                            if (lastCM.getUserID() == 1) {
+                                                lastMessage = "Bạn : " + lmContent;
+                                            } else {
+                                                lastMessage = lmContent;
+                                            }
+
+                                            Date lmTime = fmt.parse(lastCM.getTime());
+                                            LocalDateTime ldtNow = LocalDateTime.now();
+                                            String currDate = dtf.format(ldtNow);
+                                            Date currTime = fmt.parse(currDate);
+                                            long offset = currTime.getTime() - lmTime.getTime();
+                                            String offsetStr;
+
+                                            if (offset < MINUTE) {
+                                                // SECOND
+                                                offsetStr = String.valueOf(offset / SECOND) + " giây trước";
+                                            } else if (offset < HOUR) {
+                                                // MINUTE
+                                                offsetStr = String.valueOf(offset / MINUTE) + " phút trước";
+                                            } else if (offset < DAY) {
+                                                // HOUR
+                                                offsetStr = String.valueOf(offset / HOUR) + " giờ trước";
+                                            } else if (offset < WEEK) {
+                                                // DAY
+                                                offsetStr = String.valueOf(offset / DAY) + " ngày trước";
+                                            } else if ((offset < MONTH) && (offset >= WEEK)) {
+                                                // WEEK
+                                                offsetStr = String.valueOf(offset / WEEK) + " tuần trước";
+                                            } else if (offset < YEAR) {
+                                                // MONTH
+                                                offsetStr = String.valueOf(offset / MONTH) + " tháng trước";
+                                            } else {
+                                                // YEAR
+                                                offsetStr = String.valueOf(offset / YEAR) + " năm trước";
+                                            }
+
+                                            if (isInitial) {
+                                %>
+                                <!-- The first session in the list -->
+                                <a href="javascript:void(0);" onclick="loadMessage(<%=uID%>, <%=sID%>)" class="text-decor-none" id="init-session">
+                                    <div class="user-list-item" id="user-session-<%=sID%>">
+                                        <div class="row uli-row">
+                                            <div class="col-md-2 uli-ava-container">
+                                                <%
+                                                    if (!uAvatar.equals("")) {
+                                                %>
+                                                <img src="<%=request.getContextPath()%>/<%=uAvatar%>" alt="" class="uli-ava"/>
+                                                <%
+                                                } else {
+                                                %>
+                                                <img src="<%=request.getContextPath()%>/chat/img/default_avatar.png" alt="" class="uli-ava"/>
+                                                <%
+                                                    }
+                                                %>
+                                            </div>
+                                            <div class="col-md-8 uli-info-container"><div class="uli-date"><%=lmTime%></div><div class="uli-name"><%=uName%></div><div class="uli-last-message"><%=lastMessage%></div><div class="uli-last-message-time"><%=offsetStr%></div></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <%
+                                    isInitial = false;
+                                } else {
+                                %>
+                                <!-- Other sessions in the list -->
+                                <a href="javascript:void(0);" onclick="loadMessage(<%=uID%>, <%=sID%>)" class="text-decor-none">
+                                    <div class="user-list-item" id="user-session-<%=sID%>">
+                                        <div class="row uli-row">
+                                            <div class="col-md-2 uli-ava-container">
+                                                <%
+                                                    if (!uAvatar.equals("")) {
+                                                %>
+                                                <img src="<%=request.getContextPath()%>/<%=uAvatar%>" alt="" class="uli-ava"/>
+                                                <%
+                                                } else {
+                                                %>
+                                                <img src="<%=request.getContextPath()%>/chat/img/default_avatar.png" alt="" class="uli-ava"/>
+                                                <%
+                                                    }
+                                                %>
+                                            </div>
+                                            <div class="col-md-8 uli-info-container"><div class="uli-date"><%=lmTime%></div><div class="uli-name"><%=uName%></div><div class="uli-last-message"><%=lastMessage%></div><div class="uli-last-message-time"><%=offsetStr%></div></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <%
+                                            }
+                                        }
+                                    }
+                                %>
+                            </div>
+                        </div>
+
+                        <!-- CHAT CONTENT & MESSAGE INPUT -->
+                        <div class="main">
+                            <!-- Chat content -->
+                            <div id="message-list"></div>
+
+                            <!-- Message input -->
+                            <div id="chat-form-container">
+                                <form action="/" id="chat-form" method="POST" autocomplete="off">
+                                    <textarea type="text" name="chatContent" id="chat-content" placeholder="Nhập tin nhắn..."></textarea>
+                                    <input type="hidden" name="sessionID" id="session-id">
+                                    <input type="hidden" name="chatUserID" id="chat-user-id">
+                                    <button type="submit" id="chat-submit" title="Gửi"><i class="fa-solid fa-paper-plane"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Main Content -->
+            </div>
+            <!-- End of Content Wrapper -->
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Bạn muốn đăng xuất ?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                        <a class="btn btn-primary" href="LogoutControl">Đăng Xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="manage/vendor/jquery/jquery.min.js"></script>
+        <script src="manage/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="manage/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="manage/js/sb-admin-2.min.js"></script>
+
+        <!-- Page level plugins -->
+        <script src="manage/vendor/chart.js/Chart.min.js"></script>
+
+        <!-- Page level custom scripts -->
+        <script src="manage/js/demo/chart-area-demo.js"></script>
+        <script src="manage/js/demo/chart-pie-demo.js"></script>
+    </body>
+</html>

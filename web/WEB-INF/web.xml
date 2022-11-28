@@ -116,6 +116,26 @@
         <servlet-name>NotificationController</servlet-name>
         <servlet-class>Controllers.Notification.NotificationController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChatController</servlet-name>
+        <servlet-class>Controllers.Chat.ChatController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChatAdminController</servlet-name>
+        <servlet-class>Controllers.Chat.ChatAdminController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChatContentController</servlet-name>
+        <servlet-class>Controllers.Chat.ChatContentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChatAdminSessionController</servlet-name>
+        <servlet-class>Controllers.Chat.ChatAdminSessionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChatAdminContentController</servlet-name>
+        <servlet-class>Controllers.Chat.ChatAdminContentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Forum</servlet-name>
         <url-pattern>/Forum/*</url-pattern>
@@ -231,6 +251,26 @@
     <servlet-mapping>
         <servlet-name>NotificationController</servlet-name>
         <url-pattern>/NotificationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatController</servlet-name>
+        <url-pattern>/ChatController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatAdminController</servlet-name>
+        <url-pattern>/ChatAdminController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatContentController</servlet-name>
+        <url-pattern>/ChatContentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatAdminSessionController</servlet-name>
+        <url-pattern>/ChatAdminSessionController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatAdminContentController</servlet-name>
+        <url-pattern>/ChatAdminContentController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

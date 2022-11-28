@@ -92,7 +92,7 @@
                     <span id="title" style="font-weight: bold; font-size: 32px;"><%=cTitle%></span><br>
                     <span id="time" style="font-style: italic; font-size: 16px;">Đăng bởi <%=cPoster%> vào <%=cTime%></span><br><br><br>
                     <span id="details" style="font-size: 18px;"><%=cDetails%></span><br><br>
-                    <span><a href="<%= request.getContextPath()%>/HomeControl" style="text-decoration: none; color: #9dcaeb;">Quay lại Trang chủ</a>
+                    <span><a href="<%= request.getContextPath()%>/HomeControl" style="text-decoration: none; color: #000;">Quay lại Trang chủ</a>
                 </div>
             </div>
             <div class="side">
@@ -117,7 +117,7 @@
                         if (status == 0) {
                             notifNo += 1;
                     %>
-                    <a href="<%=request.getContextPath()%>/NotificationController?id=<%=id%>" style="text-decoration: none;"><span><%=time%></span><span> - </span><span style="font-weight: bold; color: #000;"><%=title%></span></a><br>
+                    <a href="<%=request.getContextPath()%>/NotificationController?id=<%=id%>" style="text-decoration: none;"><span style="color: #000;"><%=time%></span><span> - </span><span style="font-weight: bold; color: #000;"><%=title%></span></a><br>
                             <%
                                     }
                                 }

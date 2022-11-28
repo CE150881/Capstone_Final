@@ -7,21 +7,23 @@ package Models;
 
 /**
  *
- * @author ACER
+ * @author Admin
  */
-public class ChatSession {
+public class ChatSession2 {
 
     private int sessionID;
     private int userID;
     private int status; // 0 is open, 1 is closed
+    private int messageID;
 
-    public ChatSession(int sessionID, int userID, int status) {
+    public ChatSession2(int sessionID, int userID, int status, int messageID) {
         this.sessionID = sessionID;
         this.userID = userID;
         this.status = status;
+        this.messageID = messageID;
     }
 
-    public ChatSession() {
+    public ChatSession2() {
     }
 
     public int getSessionID() {
@@ -46,5 +48,13 @@ public class ChatSession {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getMessageID() {
+        return messageID;
+    }
+
+    public void setMessageID(int messageID) {
+        this.messageID = messageID;
     }
 }
