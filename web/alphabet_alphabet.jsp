@@ -75,14 +75,14 @@
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="Kanji?level=${w.level}">${w.level}</a></li>
+                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="Grammar?level=${e.level}">${e.level}</a></li>
+                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>

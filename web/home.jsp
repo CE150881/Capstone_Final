@@ -75,14 +75,14 @@
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="Kanji?level=${w.level}">${w.level}</a></li>
+                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="Grammar?level=${e.level}">${e.level}</a></li>
+                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
@@ -99,10 +99,10 @@
                     <c:if test="${sessionScope.acc.role == 'Người dùng'}">
                         <!-- đã đăng nhập -->
 
-                        <a href="account_profile.jsp" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="account_profile.jsp">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
