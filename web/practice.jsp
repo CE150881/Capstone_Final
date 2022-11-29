@@ -52,6 +52,11 @@
             {
                 border: 1px solid #ccc;
             }
+            .draw
+            {
+                color: blue
+            }
+            
         </style>
     </head>
 
@@ -183,7 +188,31 @@
                         <div data-bs-parent="#myGroup" class="collapse  multi-collapse" id="multiCollapseExample1">
                             <div class="card mb-4 box-shadow">
                                 <div class="card-body">
+                                    <div class="card-body text-center">
+                                        <textarea name="sentence" rows="3" class="form-control" required="required" id="text"></textarea>
+                                        <br>
+                                        <button class="btn btn-primary" onclick="myFunction()" >Phát Âm</button>
+                                    </div>
+                                    <script>
+                                        function myFunction() {
+                                            var text = document.getElementById("text").value
+                                            document.getElementById("text").value = text;
 
+                                            var msg = new SpeechSynthesisUtterance();
+                                            var voices = window.speechSynthesis.getVoices();
+
+                                            msg.volume = 1; // 0 to 1
+                                            msg.rate = 1; // 0.1 to 10                
+                                            msg.text = text;
+                                            msg.lang = 'ja-JP';
+
+                                            msg.onend = function (e) {
+                                                console.log('Finished in ' + event.elapsedTime + ' seconds.');
+                                            };
+                                            speechSynthesis.speak(msg);
+                                        }
+
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -235,7 +264,7 @@
                                     </script>
                                     <button type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2"
                                             aria-expanded="false" aria-controls="multiCollapseExample2"
-                                            class="btn btn-sm btn-outline-secondary">Đóng</button>
+                                            class="btn btn-outline-secondary">Đóng</button>
                                 </div>
 
                             </div>
@@ -271,10 +300,10 @@
                                                 %>
                                             </div>
                                             <br>
-                                            <button type="submit" name="translate" value="translate" class="btn btn-sm btn-outline-secondary">Dịch</button>
+                                            <button type="submit" name="translate" value="translate" class="btn btn-primary">Dịch</button>
                                             <button type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3"
                                                     aria-expanded="false" aria-controls="multiCollapseExample3"
-                                                    class="btn btn-sm btn-outline-secondary">Đóng</button>
+                                                    class="btn btn-outline-secondary">Đóng</button>
                                         </form>
                                     </div>
                                     <div class="card-body">
@@ -315,8 +344,8 @@
                                         <div class="card mb-4 box-shadow">
                                             <div class="card-body text-center">
                                                 <div class="tools">
-                                                    <a href="#colors_sketch" data-tool="marker">Vẽ</a> <a href="#colors_sketch" data-tool="eraser">
-                                                        Xoá</a>
+                                                    <a class="draw" href="#colors_sketch" data-tool="marker">Vẽ</a> 
+                                                    <a class="draw" href="#colors_sketch" data-tool="eraser">Xoá</a>
                                                 </div>
                                                 <br />
                                                 <canvas id="colors_sketch" width="200" height="200">
@@ -342,7 +371,7 @@
                                                 %>
                                                 <br />
                                                 <br />
-                                                <input type="button" id="btnSave" value="Nhận Diện" />
+                                                <input type="button" class="btn btn-primary" id="btnSave" value="Nhận Diện" />
 
                                                 <form style="display: none" id="formSubmitImage64" method="post" action="SubmitImage">
                                                     <input id="imageBase64" name="imageBase64" value=""></input>

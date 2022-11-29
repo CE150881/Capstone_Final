@@ -45,9 +45,9 @@
                     </ul>
                 </li>
                 <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
-                <li><a class="nav-link scrollto" href="u-practice.html">Luyện Tập</a></li>
-                <li><a class="nav-link scrollto" href="u-forum.html">Cộng Đồng</a></li>
-                <li><a class="nav-link scrollto" href="u-forum.html">Liên Hệ</a></li>
+                <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
