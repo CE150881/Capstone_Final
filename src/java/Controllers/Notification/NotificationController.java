@@ -38,7 +38,7 @@ public class NotificationController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NotificationController</title>");            
+            out.println("<title>Servlet NotificationController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet NotificationController at " + request.getContextPath() + "</h1>");
@@ -60,13 +60,20 @@ public class NotificationController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        int notificationID = Integer.parseInt(request.getParameter("id"));
-        Notification n = NotificationDAO.getNotificationByID(notificationID);
+        String path = request.getRequestURI();
         
-        HttpSession session = request.getSession();
-        session.setAttribute("cNotification", n);
-        
-        response.sendRedirect(request.getContextPath() + "/notification_details.jsp");
+        if (path.startsWith(request.getContextPath() + "/Notification")) {
+            String[] s = path.split("/");
+            //int notificationID = Integer.parseInt(request.getParameter("id"));
+            int notificationID = Integer.parseInt(s[s.length - 1]);
+            Notification n = NotificationDAO.getNotificationByID(notificationID);
+
+            HttpSession session = request.getSession();
+            session.setAttribute("cNotification", n);
+
+            //response.sendRedirect(request.getContextPath() + "/notification_details.jsp");
+            request.getRequestDispatcher("/notification_details.jsp").forward(request, response);
+        }
     }
 
     /**

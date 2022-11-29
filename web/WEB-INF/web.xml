@@ -250,7 +250,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>NotificationController</servlet-name>
-        <url-pattern>/NotificationController</url-pattern>
+        <url-pattern>/Notification/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChatController</servlet-name>
