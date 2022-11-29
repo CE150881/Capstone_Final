@@ -158,14 +158,8 @@
             </section><!-- End Breadcrumbs -->
 
             <!-- Điền nội dung -->
-            <%
-                User u = (User) session.getAttribute("acc");
-                ResultSet rnUser = null;
-                if (u != null) {
-                    int userID = u.getUserID();
-                    int count = ReportNotificationDAO.markAllRead(userID);
-                    rnUser = ReportNotificationDAO.getAllReportNotificationByUserID(userID);
-                }
+            <%                
+                ResultSet rnUser = (ResultSet) session.getAttribute("ForumNotification");
             %>
             <div class="album py-4 bg-light">
                 <div class="container">

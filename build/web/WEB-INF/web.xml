@@ -136,6 +136,10 @@
         <servlet-name>ChatAdminContentController</servlet-name>
         <servlet-class>Controllers.Chat.ChatAdminContentController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ForumNotification</servlet-name>
+        <servlet-class>Controllers.Forum.ForumNotification</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Forum</servlet-name>
         <url-pattern>/Forum/*</url-pattern>
@@ -271,6 +275,10 @@
     <servlet-mapping>
         <servlet-name>ChatAdminContentController</servlet-name>
         <url-pattern>/ChatAdminContentController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForumNotification</servlet-name>
+        <url-pattern>/ForumNotification/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
