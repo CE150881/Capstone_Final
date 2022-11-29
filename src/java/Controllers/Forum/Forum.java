@@ -109,7 +109,7 @@ public class Forum extends HttpServlet {
                 String[] s = path.split("/");
                 String offset = s[s.length - 1];
                 int offset2 = Integer.parseInt(offset);
-                if (offset2 <= 1) {
+                if (offset2 <= 1 || offset2 > totalPage) {
                     response.sendRedirect(request.getContextPath() + "/Forum");
                 } else {
                     offset2 = (offset2 - 1) * 10;

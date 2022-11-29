@@ -55,7 +55,7 @@
 
                 <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
-                
+
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
@@ -89,9 +89,9 @@
                         <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto active" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
                         <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
-                        <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
-                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
-                        </c:if>
+                            <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                            <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
+                            </c:if>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
@@ -251,6 +251,7 @@
                 <%
                     }
                 %>
+
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <%
@@ -267,7 +268,7 @@
                         <li class="page-item">
                             <div class="input-group">
                                 <form id="myformPage" onsubmit="window.location = '<%= request.getContextPath()%>/Forum/' + search.value; return false;">
-                                    <input type="number" size="4" value="1" min="1" max="<%= totalPage%>" class="form-control" name="search">
+                                    <input required type="number" size="4" value="1" min="1" max="<%= totalPage%>" class="form-control" name="search">
                                 </form>
                                 <div class="input-group-append">
                                     <span class="input-group-text">/<%= totalPage%></span>
@@ -309,7 +310,7 @@
                         <li class="page-item">
                             <div class="input-group">
                                 <form id="myformPage" onsubmit="window.location = '<%= request.getContextPath()%>/Forum/' + search.value; return false;">
-                                    <input type="number" size="4" value="<%= currentPageInt%>" min="1" max="<%= totalPage%>" class="form-control" name="search">
+                                    <input required type="number" size="4" value="<%= currentPageInt%>" min="1" max="<%= totalPage%>" class="form-control" name="search">
                                 </form>
                                 <div class="input-group-append">
                                     <span class="input-group-text">/<%= totalPage%></span>
@@ -345,7 +346,7 @@
                         <li class="page-item">
                             <div class="input-group">
                                 <form id="myformPage" onsubmit="window.location = '<%= request.getContextPath()%>/Forum/' + search.value; return false;">
-                                    <input type="number" size="4" value="<%= currentPageInt%>" min="1" max="<%= totalPage%>" class="form-control" name="search">
+                                    <input required type="number" size="4" value="<%= currentPageInt%>" min="1" max="<%= totalPage%>" class="form-control" name="search">
                                 </form>
                                 <div class="input-group-append">
                                     <span class="input-group-text">/<%= totalPage%></span>
@@ -379,6 +380,7 @@
 
                     </ul>
                 </nav>
+                        
             </div>
 
         </main><!-- End #main -->
