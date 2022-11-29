@@ -6,7 +6,8 @@ input:focus, textarea:focus {
     height: 100vh;
 }
 
-.container {
+.chat-container {
+    
     border: 2px solid #ccc; 
     border-radius: 15px; 
     height: 100%; 

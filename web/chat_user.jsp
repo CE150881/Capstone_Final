@@ -8,6 +8,7 @@
 <%@page import="Models.ChatSession"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Models.User"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,57 +32,224 @@
         src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        
+
         <link href="chat/css/chat.css" rel="stylesheet" type="text/css"/>
         <script src="chat/js/chat.js" type="text/javascript"></script>
+
+        <!-- Favicons -->
+        <link href="${pageContext.request.contextPath}/user/img/logo.jpg" rel="icon">
+        <link href="${pageContext.request.contextPath}/user/img/logo.jpg" rel="apple-touch-icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="${pageContext.request.contextPath}/user/vendor/aos/aos.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/remixicon/remixicon.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+        <!-- Template Main CSS File -->
+        <link href="${pageContext.request.contextPath}/user/css/style.css" rel="stylesheet">
     </head>
     <body>
-        
-        <%
-            User u = (User) session.getAttribute("acc");
-            int cUID = -1;
-            if (u == null) {
-                response.sendRedirect(request.getContextPath() + "/account_login.jsp");
-            } else {
-                cUID = u.getUserID();
-                int sessionID = -1;
+        <!-- ======= Header ======= -->
+        <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
+            <div class="container d-flex align-items-center justify-content-lg-between">
 
-                while (sessionID == -1) {
-                    // Get user's latest opening chat session
-                    ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
-                    for (ChatSession cs : csList) {
-                        int tmpUID = cs.getUserID();
-                        int tmpStatus = cs.getStatus();
+                <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
 
-                        if (tmpUID == cUID && tmpStatus == 0) {
-                            sessionID = cs.getSessionID();
-                            break;
-                        }
-                    }
 
-                    if (sessionID == -1) {
-                        ChatSession ncs = new ChatSession();
-                        ncs.setUserID(cUID);
-                        ncs.setStatus(0);
+                <nav id="navbar" class="navbar order-last order-lg-0">
+                    <ul>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
+                        <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
+                                    <ul>
+                                        <c:forEach items="${listT}" var="q">
+                                            <li><a href="AlphabetControl?type=${q.type}">${q.type}</a></li>
+                                            </c:forEach>
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
+                                    <ul>
+                                        <c:forEach items="${listL}" var="w">
+                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
+                                            </c:forEach> 
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
+                                    <ul>
+                                        <c:forEach items="${listL}" var="e">
+                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
+                                            </c:forEach>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
+                        <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
+                        <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
+                            <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                            <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
+                            </c:if>
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav><!-- .navbar -->
+                <ul>
+                    <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                        <!-- đã đăng nhập -->
 
-                        ChatSessionDAO.addNewChatSession(ncs);
-                    }
-                }
-            }
-        %>
-        <div class="album py-4 bg-light height-100vh">
-            <div class="container bg-white">
-                <!-- Chat content -->
-                <div id="message-list"></div>
+                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
+                        </ul>
+                    </c:if>
 
-                <div id="chat-form-container">
-                    <form action="/" id="chat-form" method="POST" autocomplete="off">
-                        <textarea type="text" name="chatContent" id="chat-content" placeholder="Nhập tin nhắn..."></textarea>
-                        <input type="hidden" name="chatUserID" id="chat-user-id" value="<%=cUID%>">
-                        <button type="submit" id="chat-submit" title="Gửi"><i class="fa-solid fa-paper-plane"></i></button>
-                    </form>
+                    <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
+                        <a href="<%= request.getContextPath()%>/account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
+                        <a href="<%= request.getContextPath()%>/account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
+                    </c:if>
+                </ul>
+
+            </div>
+
+        </header><!-- End Header -->
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Bạn muốn đăng xuất ?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
+                        <a class="btn" style="background-color: #f5b8c5; color: white" href="<%= request.getContextPath()%>/LogoutControl">Đăng Xuất</a>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- ======= Breadcrumbs ======= -->
+        <section id="breadcrumbs" class="breadcrumbs bg-light">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 style="display: inline-block;">Hỗ Trợ</h2>                            
+                    </div>
+
+                    <ol>                                                       
+                        <li><a href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
+                        <li>Hỗ Trợ</li>
+                    </ol>
+                </div>
+
+            </div>
+        </section><!-- End Breadcrumbs -->
+        <main id="main" class="bg-light">
+        <div class="container bg-light">
+            <%
+                User u = (User) session.getAttribute("acc");
+                int cUID = -1;
+                if (u == null) {
+                    response.sendRedirect(request.getContextPath() + "/account_login.jsp");
+                } else {
+                    cUID = u.getUserID();
+                    int sessionID = -1;
+
+                    while (sessionID == -1) {
+                        // Get user's latest opening chat session
+                        ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
+                        for (ChatSession cs : csList) {
+                            int tmpUID = cs.getUserID();
+                            int tmpStatus = cs.getStatus();
+
+                            if (tmpUID == cUID && tmpStatus == 0) {
+                                sessionID = cs.getSessionID();
+                                break;
+                            }
+                        }
+
+                        if (sessionID == -1) {
+                            ChatSession ncs = new ChatSession();
+                            ncs.setUserID(cUID);
+                            ncs.setStatus(0);
+
+                            ChatSessionDAO.addNewChatSession(ncs);
+                        }
+                    }
+                }
+            %>
+            <div class="album py-4 bg-light height-100vh">
+                <div class="chat-container bg-white">
+                    <!-- Chat content -->
+                    <div id="message-list"></div>
+
+                    <div id="chat-form-container">
+                        <form action="/" id="chat-form" method="POST" autocomplete="off">
+                            <textarea type="text" name="chatContent" id="chat-content" placeholder="Nhập tin nhắn..."></textarea>
+                            <input type="hidden" name="chatUserID" id="chat-user-id" value="<%=cUID%>">
+                            <button type="submit" id="chat-submit" title="Gửi"><i class="fa-solid fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </main>
+                            
+        <!-- ======= Footer ======= -->
+        <footer id="footer">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-6">
+                            <div class="footer-info">
+                                <h3>JPD<span>.</span></h3>
+                                <p>
+                                    600 Nguyễn Văn Cừ <br>
+                                    An Bình, Cần Thơ<br><br>
+                                    <strong>Số Điện Thoại:</strong> 0349554811<br>
+                                    <strong>Email:</strong> noreply.jpd@gmail.com<br>
+                                </p>                                
+                            </div>
+                        </div>                                              
+                    </div>
+                </div>
+            </div>
+        </footer><!-- End Footer -->
+
+        <div id="preloader"></div>
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+        <!-- Vendor JS Files -->
+        <script src="${pageContext.request.contextPath}/user/vendor/purecounter/purecounter_vanilla.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/aos/aos.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/php-email-form/validate.js"></script>
+
+        <!-- Template Main JS File -->
+        <script src="${pageContext.request.contextPath}/user/js/main.js"></script>
+
     </body>
+
 </html>
+
