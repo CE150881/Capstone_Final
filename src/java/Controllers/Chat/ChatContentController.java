@@ -109,7 +109,7 @@ public class ChatContentController extends HttpServlet {
                                     // set as SOLO
                                     if (cUserID == mUID) {
                                         // move chat bubble to the right
-                                        altInitContent += "<div><div class='chat-bubble-right-label'>" + mUser + " (Người dùng) - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
+                                        altInitContent += "<div><div class='chat-bubble-right-label'>Bạn - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                     } else {
                                         altInitContent += "<div><div class='chat-bubble-left-label'>" + mUser + " (Quản trị viên) - " + mTime + "</div><div class='chat-bubble-left-container'><div class='chat-bubble-left' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                     }
@@ -140,7 +140,7 @@ public class ChatContentController extends HttpServlet {
                                             // set as TOP
                                             if (cUserID == mUID) {
                                                 // move chat bubble to the right
-                                                altInitContent += "<div><div class='chat-bubble-right-label'>" + mUser + " (Người dùng) - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right-top' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
+                                                altInitContent += "<div><div class='chat-bubble-right-label'>Bạn - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right-top' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                             } else {
                                                 altInitContent += "<div><div class='chat-bubble-left-label'>" + mUser + " (Quản trị viên) - " + mTime + "</div><div class='chat-bubble-left-container'><div class='chat-bubble-left-top' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                             }
@@ -148,7 +148,7 @@ public class ChatContentController extends HttpServlet {
                                             // set as SOLO
                                             if (cUserID == mUID) {
                                                 // move chat bubble to the right
-                                                altInitContent += "<div><div class='chat-bubble-right-label'>" + mUser + " (Người dùng) - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
+                                                altInitContent += "<div><div class='chat-bubble-right-label'>Bạn - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                             } else {
                                                 altInitContent += "<div><div class='chat-bubble-left-label'>" + mUser + " (Quản trị viên) - " + mTime + "</div><div class='chat-bubble-left-container'><div class='chat-bubble-left' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                             }
@@ -163,7 +163,7 @@ public class ChatContentController extends HttpServlet {
                                         // set as SOLO
                                         if (cUserID == mUID) {
                                             // move chat bubble to the right
-                                            altInitContent += "<div><div class='chat-bubble-right-label'>" + mUser + " (Người dùng) - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
+                                            altInitContent += "<div><div class='chat-bubble-right-label'>Bạn - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                         } else {
                                             altInitContent += "<div><div class='chat-bubble-left-label'>" + mUser + " (Quản trị viên) - " + mTime + "</div><div class='chat-bubble-left-container'><div class='chat-bubble-left' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                         }
@@ -176,7 +176,7 @@ public class ChatContentController extends HttpServlet {
                                             // set as TOP
                                             if (cUserID == mUID) {
                                                 // move chat bubble to the right
-                                                altInitContent += "<div><div class='chat-bubble-right-label'>" + mUser + " (Người dùng) - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right-top' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
+                                                altInitContent += "<div><div class='chat-bubble-right-label'>Bạn - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right-top' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                             } else {
                                                 altInitContent += "<div><div class='chat-bubble-left-label'>" + mUser + " (Quản trị viên) - " + mTime + "</div><div class='chat-bubble-left-container'><div class='chat-bubble-left-top' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                             }
@@ -184,7 +184,7 @@ public class ChatContentController extends HttpServlet {
                                             // set as SOLO
                                             if (cUserID == mUID) {
                                                 // move chat bubble to the right
-                                                altInitContent += "<div><div class='chat-bubble-right-label'>" + mUser + " (Người dùng) - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
+                                                altInitContent += "<div><div class='chat-bubble-right-label'>Bạn - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                             } else {
                                                 altInitContent += "<div><div class='chat-bubble-left-label'>" + mUser + " (Quản trị viên) - " + mTime + "</div><div class='chat-bubble-left-container'><div class='chat-bubble-left' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                             }
@@ -209,7 +209,7 @@ public class ChatContentController extends HttpServlet {
                                         // set as SOLO
                                         if (cUserID == mUID) {
                                             // move chat bubble to the right
-                                            altInitContent += "<div><div class='chat-bubble-right-label'>" + mUser + " (Người dùng) - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
+                                            altInitContent += "<div><div class='chat-bubble-right-label'>Bạn - " + mTime + "</div><div class='chat-bubble-right-container'><div class='chat-bubble-right' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                         } else {
                                             altInitContent += "<div><div class='chat-bubble-left-label'>" + mUser + " (Quản trị viên) - " + mTime + "</div><div class='chat-bubble-left-container'><div class='chat-bubble-left' title='Gửi vào " + mTime + "'>" + tmpMessage + "</div></div></div>";
                                         }

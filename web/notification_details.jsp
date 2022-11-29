@@ -61,6 +61,25 @@
                 box-shadow: 0px 0px 30px 5px #cfcfcf;
             }
 
+            #load-more-btn-container {
+                text-align: left;
+                margin-top: 2vh;
+            }
+
+            #load-more-btn:hover, #back-home-btn:hover {
+                transition: 0.3s;
+                background-color: #000;
+                color: #fff;
+            }
+
+            #load-more-btn, #back-home-btn {
+                text-decoration: none;
+                color: #000;
+                border: 1px solid #222;
+                border-radius: 5px;
+                padding: 1vh 1vw;
+            }
+
             /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
             @media screen and (max-width: 700px) {
                 .row, .navbar {   
@@ -92,7 +111,7 @@
                     <span id="title" style="font-weight: bold; font-size: 32px;"><%=cTitle%></span><br>
                     <span id="time" style="font-style: italic; font-size: 16px;">Đăng bởi <%=cPoster%> vào <%=cTime%></span><br><br><br>
                     <span id="details" style="font-size: 18px;"><%=cDetails%></span><br><br>
-                    <span><a href="<%= request.getContextPath()%>/HomeControl" style="text-decoration: none; color: #000;">Quay lại Trang chủ</a>
+                    <br><span><a href="<%= request.getContextPath()%>/HomeControl" id="back-home-btn">Quay lại Trang chủ</a>
                 </div>
             </div>
             <div class="side">
@@ -106,7 +125,7 @@
                         while (rs1.next()) {
                             if (notifNo >= limit) {
                     %>
-                    <div style="text-align: right; margin-top: 2vh"><a href="<%=request.getContextPath()%>/notification_all.jsp" style="text-decoration: none; color: #000;">Xem thêm...</a></div>
+                    <br><div id="load-more-btn-container"><a href="<%=request.getContextPath()%>/notification_all.jsp" id="load-more-btn">Xem thêm</a></div>
                     <%
                             break;
                         }

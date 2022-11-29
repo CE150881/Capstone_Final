@@ -50,6 +50,25 @@
         .dropdown-menu li:hover>a{
             background-color: #f5b8c5;
         }
+        
+        #load-more-btn-container {
+            text-align: left;
+            margin-top: 2vh;
+        }
+        
+        #load-more-btn:hover {
+            transition: 0.3s;
+            background-color: #000;
+            color: #fff;
+        }
+        
+        #load-more-btn {
+            text-decoration: none;
+            color: #000;
+            border: 1px solid #222;
+            border-radius: 5px;
+            padding: 1vh 1vw;
+        }
     </style>
 
     <body>
@@ -210,7 +229,7 @@
                                 while (rs1.next()) {
                                     if (notifNo >= limit) {
                             %>
-                            <div style="text-align: left; margin-top: 2vh"><a href="<%=request.getContextPath()%>/notification_all.jsp" style="text-decoration: none; color: #000;">Xem thêm...</a></div>
+                            <br><div id="load-more-btn-container"><a href="<%=request.getContextPath()%>/notification_all.jsp" id="load-more-btn">Xem thêm</a></div>
                             <%
                                     break;
                                 }
