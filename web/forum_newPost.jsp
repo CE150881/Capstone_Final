@@ -167,14 +167,14 @@
                                 <input name="userID" value="<%= u.getUserID()%>" style="display: none">
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Tiêu Đề</label>
-                                    <textarea class="form-control" required="required" name="post_title" id="exampleFormControlTextarea1"
-                                              rows="1" placeholder="Chủ đề"></textarea>
+                                    <textarea maxlength="100" class="form-control" required="required" name="post_title" id="exampleFormControlTextarea1"
+                                              rows="1" placeholder="Chủ đề (Tối đa 100 chứ cái)"></textarea>
                                 </div>
                                 <br>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Nội Dung</label>
-                                    <textarea class="form-control" required="required" name="post_content" id="exampleFormControlTextarea2"
-                                              rows="10" placeholder="Nội dung"></textarea>
+                                    <textarea maxlength="500" class="form-control" required="required" name="post_content" id="exampleFormControlTextarea2"
+                                              rows="10" placeholder="Nội dung (Tối đa 500 chứ cái)"></textarea>
                                 </div>
                                 <br>
                                 <div class="row">

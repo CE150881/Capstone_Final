@@ -237,11 +237,11 @@
                                             </select>
                                             <br>
                                             <label for="exampleFormControlTextarea1">Chỉnh Sửa Tiêu Đề</label>
-                                            <textarea name="post_title" class="form-control" id="exampleFormControlTextarea1"
+                                            <textarea required="required" maxlength="100" name="post_title" class="form-control" id="exampleFormControlTextarea1"
                                                       rows="1"><%= p.getPost_title()%></textarea>
                                                       <br>
                                             <label for="exampleFormControlTextarea1">Chỉnh Sửa Nội Dung</label>
-                                            <textarea name="post_content" class="form-control" id="exampleFormControlTextarea1"
+                                            <textarea required="required" maxlength="500" name="post_content" class="form-control" id="exampleFormControlTextarea1"
                                                       rows="3"><%= p.getPost_content()%></textarea>
                                                       <br>
                                         </div>
@@ -297,7 +297,7 @@
                                         Bạn có chắc khi báo cáo bài đăng này?
                                         <form id="myform" role='form' method="post" action="<%= request.getContextPath()%>/Report">
                                             <label for="exampleFormControlTextarea1">Lý Do</label>
-                                            <textarea name="report_post_reason" class="form-control" id="exampleFormControlTextarea1"
+                                            <textarea required="required" maxlength="500" placeholder="Nội dung (Tối đa 500 chứ cái)" name="report_post_reason" class="form-control" id="exampleFormControlTextarea1"
                                                       rows="3"></textarea>
                                             <input name="newReply" value="" style="display: none">
                                             <input name="edit" value="" style="display: none">
@@ -355,8 +355,8 @@
                                         <input name="post_id" value="<%= p.getPost_id()%>" style="display: none">
                                         <div class="form-group">
                                             <label for="exampleFormControlTextarea1">Bình Luận</label>
-                                            <textarea name="comment_content" class="form-control" id="exampleFormControlTextarea1"
-                                                      rows="10"></textarea>
+                                            <textarea maxlength="500" required="required" name="comment_content" class="form-control" id="exampleFormControlTextarea1"
+                                                      rows="10" placeholder="Nội dung (Tối đa 500 chứ cái)"></textarea>
                                         </div>
                                         <br>
                                         <button type="submit" value="New Reply" name="newReply" class="btn  btn-outline-secondary">Bình Luận</button>
@@ -425,7 +425,7 @@
                                             <input name="deletePost" value="" style="display: none">
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Chỉnh Sửa Bình Luận</label>
-                                                <textarea name="comment_content" class="form-control" id="exampleFormControlTextarea1"
+                                                <textarea maxlength="500" required="required" name="comment_content" class="form-control" id="exampleFormControlTextarea1"
                                                           rows="3"><%= rs.getString("comment_content")%></textarea>
                                             </div>
                                             <br>
@@ -482,7 +482,7 @@
                                             Bạn có chắc khi báo cáo bình luận này?
                                             <form id="myformComment<%= rs.getString("comment_id")%>" role='form' method="post" action="<%= request.getContextPath()%>/Report">
                                                 <label for="exampleFormControlTextarea1">Lý Do</label>
-                                                <textarea name="report_comment_reason" class="form-control" id="exampleFormControlTextarea1"
+                                                <textarea required="required" maxlength="500" placeholder="Nội dung (Tối đa 500 chứ cái)" name="report_comment_reason" class="form-control" id="exampleFormControlTextarea1"
                                                           rows="3"></textarea>
                                                 <input name="newReply" value="" style="display: none">
                                                 <input name="edit" value="" style="display: none">
