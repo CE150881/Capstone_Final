@@ -21,23 +21,23 @@
         <meta content="" name="keywords">
 
         <!-- Favicons -->
-        <link href="user/img/logo.jpg" rel="icon">
-        <link href="user/img/logo.jpg" rel="apple-touch-icon">
+        <link href="${pageContext.request.contextPath}/user/img/logo.jpg" rel="icon">
+        <link href="${pageContext.request.contextPath}/user/img/logo.jpg" rel="apple-touch-icon">
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
         <!-- Vendor CSS Files -->
-        <link href="user/vendor/aos/aos.css" rel="stylesheet">
-        <link href="user/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="user/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-        <link href="user/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-        <link href="user/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-        <link href="user/vendor/remixicon/remixicon.css" rel="stylesheet">
-        <link href="user/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/aos/aos.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/remixicon/remixicon.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
         <!-- Template Main CSS File -->
-        <link href="user/css/style.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/user/css/style.css" rel="stylesheet">
 
         <!-- =======================================================
         * Template Name: Gp - v4.9.1
@@ -55,7 +55,7 @@
 
                 <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="user/img/logo.png" alt="" class="img-fluid"></a>-->
+                
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
@@ -409,16 +409,16 @@
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
         <!-- Vendor JS Files -->
-        <script src="user/vendor/purecounter/purecounter_vanilla.js"></script>
-        <script src="user/vendor/aos/aos.js"></script>
-        <script src="user/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="user/vendor/glightbox/js/glightbox.min.js"></script>
-        <script src="user/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-        <script src="user/vendor/swiper/swiper-bundle.min.js"></script>
-        <script src="user/vendor/php-email-form/validate.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/purecounter/purecounter_vanilla.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/aos/aos.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="${pageContext.request.contextPath}/user/vendor/php-email-form/validate.js"></script>
 
         <!-- Template Main JS File -->
-        <script src="user/js/main.js"></script>
+        <script src="${pageContext.request.contextPath}/user/js/main.js"></script>
 
     </body>
 

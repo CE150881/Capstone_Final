@@ -7,10 +7,14 @@ package Controllers.Forum;
 
 import DAOs.Forum.PostDAO;
 import DAOs.Forum.TopicDAO;
+import DAOs.Material.MaterialDAO;
+import Models.LevelMaterial;
+import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -75,7 +79,14 @@ public class SearchPost extends HttpServlet {
                 //ResultSet rs = PostDAO.getAllPostBySearch(search);
                 ResultSet rs = PostDAO.getAllPostBySearchWithCommentCount(search);
                 ResultSet t = TopicDAO.getAllTopic();
+                MaterialDAO dao = new MaterialDAO();
+                List<Type> listT = dao.getAllType();
+                List<LevelMaterial> listL = dao.getAllLevel();
                 HttpSession session = request.getSession();
+
+                request.setAttribute("listT", listT);
+                request.setAttribute("listL", listL);
+                
                 session.setAttribute("allSearchPost", rs);
                 session.setAttribute("allTopic", t);
                 request.getRequestDispatcher("/forum_postBySearch.jsp").forward(request, response);

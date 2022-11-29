@@ -11,17 +11,21 @@ import DAOs.Forum.PostDAO;
 import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Forum.ReportPostDAO;
 import DAOs.Forum.TopicDAO;
+import DAOs.Material.MaterialDAO;
 import Models.Comment;
 import Models.ForumPost;
 import Models.ForumReportNotification;
 import Models.ForumReportPost;
 import Models.ForumTopic;
+import Models.LevelMaterial;
+import Models.Type;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -87,7 +91,13 @@ public class Post extends HttpServlet {
                 UserDAO dao = new UserDAO();
                 User u = dao.getUserByID2(p.getUser_id());
 
+                MaterialDAO dao2 = new MaterialDAO();
+                List<Type> listT = dao2.getAllType();
+                List<LevelMaterial> listL = dao2.getAllLevel();
                 HttpSession session = request.getSession();
+
+                request.setAttribute("listT", listT);
+                request.setAttribute("listL", listL);
                 session.setAttribute("singlePost", p);
                 session.setAttribute("userPost", u);
                 session.setAttribute("singleTopic", t);

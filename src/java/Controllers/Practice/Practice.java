@@ -5,6 +5,9 @@
  */
 package Controllers.Practice;
 
+import DAOs.Material.MaterialDAO;
+import Models.LevelMaterial;
+import Models.Type;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,10 +16,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,7 +46,7 @@ public class Practice extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Practice</title>");            
+            out.println("<title>Servlet Practice</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Practice at " + request.getContextPath() + "</h1>");
@@ -64,6 +69,14 @@ public class Practice extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         if (path.endsWith("/Practice")) {
+            MaterialDAO dao = new MaterialDAO();
+            List<Type> listT = dao.getAllType();
+            List<LevelMaterial> listL = dao.getAllLevel();
+            HttpSession session = request.getSession();
+
+            request.setAttribute("listT", listT);
+            request.setAttribute("listL", listL);
+
             request.getRequestDispatcher("practice.jsp").forward(request, response);
         }
     }
@@ -82,23 +95,22 @@ public class Practice extends HttpServlet {
         response.setContentType("UTF-8");
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         String text = request.getParameter("sentence");
         String translatedText = translate("ja", "vi", text);
-        
+
         request.setAttribute("text", text);
         request.setAttribute("translatedText", translatedText);
         request.getRequestDispatcher("practice.jsp").forward(request, response);
-        
-        
+
     }
 
     private static String translate(String langFrom, String langTo, String text) throws IOException {
         // INSERT YOU URL HERE
-        String urlStr = "https://script.google.com/macros/s/AKfycbzAOFOb-uW1zFOf-n7jzWStjsRjrtA-XEB9QOnL78s5qAXhq_rwvEUA5Kv-ZSSgWIYH/exec" +
-                "?q=" + URLEncoder.encode(text, "UTF-8") +
-                "&target=" + langTo +
-                "&source=" + langFrom;
+        String urlStr = "https://script.google.com/macros/s/AKfycbzAOFOb-uW1zFOf-n7jzWStjsRjrtA-XEB9QOnL78s5qAXhq_rwvEUA5Kv-ZSSgWIYH/exec"
+                + "?q=" + URLEncoder.encode(text, "UTF-8")
+                + "&target=" + langTo
+                + "&source=" + langFrom;
         URL url = new URL(urlStr);
         StringBuilder response = new StringBuilder();
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
