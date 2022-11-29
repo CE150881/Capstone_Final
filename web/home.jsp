@@ -54,31 +54,13 @@
             background-color: #f5b8c5;
         }
 
-        #load-more-btn-container {
-            text-align: left;
-            margin-top: 2vh;
-        }
-
-        #load-more-btn:hover {
-            transition: 0.3s;
-            background-color: #000;
-            color: #fff;
-        }
-
-        #load-more-btn {
-            text-decoration: none;
-            color: #000;
-            border: 1px solid #222;
-            border-radius: 5px;
-            padding: 1vh 1vw;
-        }
-
         .notif-title {
             text-decoration: none;
             color: #000;
         }
 
         .notif-title-span {
+            word-break: break-word;
             font-weight: bold;
         }
 

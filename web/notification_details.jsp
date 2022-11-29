@@ -92,18 +92,13 @@
                 box-shadow: 0px 0px 30px 5px #cfcfcf;
             }
 
-            #load-more-btn-container {
-                text-align: left;
-                margin-top: 2vh;
-            }
-
-            #load-more-btn:hover, #back-home-btn:hover {
+            #back-home-btn:hover {
                 transition: 0.3s;
                 background-color: #000;
                 color: #fff;
             }
 
-            #load-more-btn, #back-home-btn {
+            #back-home-btn {
                 text-decoration: none;
                 color: #000;
                 border: 1px solid #222;
@@ -117,6 +112,7 @@
             }
 
             .notif-title-span {
+                word-break: break-word;
                 font-weight: bold;
             }
 
@@ -386,9 +382,9 @@
                 <div class="row">            
                     <div class="main">
                         <div class="main-section">
-                            <span id="title" style="font-weight: bold; font-size: 32px;"><%=cTitle%></span><br>
-                            <span id="time" style="font-style: italic; font-size: 16px;">Đăng bởi <%=cPoster%> vào <%=cTime%></span><br><br><br>
-                            <span id="details" style="font-size: 18px;"><%=cDetails%></span><br><br>
+                            <span id="title" style="font-weight: bold; font-size: 32px; word-break: break-word;"><%=cTitle%></span><br>
+                            <span id="time" style="font-style: italic; font-size: 16px; word-break: break-word;">Đăng bởi <%=cPoster%> vào <%=cTime%></span><br><br><br>
+                            <span id="details" style="font-size: 18px; word-break: break-word;"><%=cDetails%></span><br><br>
                             <br><span><a href="<%= request.getContextPath()%>/HomeControl" id="back-home-btn">Quay lại Trang chủ</a>
                         </div>
                     </div>
