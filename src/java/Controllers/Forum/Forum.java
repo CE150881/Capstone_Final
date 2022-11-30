@@ -6,10 +6,12 @@
 package Controllers.Forum;
 
 import DAOs.Forum.PostDAO;
+import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
 import Models.LevelMaterial;
 import Models.Type;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -94,10 +96,19 @@ public class Forum extends HttpServlet {
                 MaterialDAO dao = new MaterialDAO();
                 List<Type> listT = dao.getAllType();
                 List<LevelMaterial> listL = dao.getAllLevel();
+                
                 HttpSession session = request.getSession();
 
                 request.setAttribute("listT", listT);
                 request.setAttribute("listL", listL);
+                
+                User u = (User) request.getSession().getAttribute("acc");
+                if (u != null) {
+                int userID = u.getUserID();
+                ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                session.setAttribute("notReadNotification", notReadNotification);
+                }
+                
                 session.setAttribute("allTopic", t);
                 session.setAttribute("totalPage", totalPage);
                 session.setAttribute("currentUrl", path);

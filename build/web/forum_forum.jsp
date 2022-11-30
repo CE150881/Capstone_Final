@@ -188,9 +188,10 @@
                         <div>
                             <a href="<%= request.getContextPath()%>/NewPost" class="btn btn-outline-success" role="button">Tạo Bài Đăng Mới</a>
                             <%
-                                int userID = u.getUserID();
-                                ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
-                                request.setAttribute("notReadNotification", notReadNotification);
+                                //int userID = u.getUserID();
+                                //ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                                //request.setAttribute("notReadNotification", notReadNotification);
+                                ResultSet notReadNotification = (ResultSet) session.getAttribute("notReadNotification");
                                 if (notReadNotification.next() == false) {
                             %>
                             <a href="<%= request.getContextPath()%>/ForumNotification/<%= u.getUserID() %>" style="color: black; padding-left: 10px; padding-right: 10px;">
