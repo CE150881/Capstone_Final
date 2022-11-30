@@ -96,7 +96,7 @@
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
                 <ul>
-                    <c:if test="${sessionScope.acc.role == 'Người dùng'}">
+                    <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                         <!-- đã đăng nhập -->
 
                         <a href="account_profile.jsp" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
@@ -107,7 +107,7 @@
                         </ul>
                     </c:if>
 
-                    <c:if test="${sessionScope.acc.role != 'Người dùng'}">                  
+                    <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">                   
                         <a href="account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
                         <a href="account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
                     </c:if>
