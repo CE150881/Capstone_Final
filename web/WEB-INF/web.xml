@@ -140,6 +140,10 @@
         <servlet-name>ForumNotification</servlet-name>
         <servlet-class>Controllers.Forum.ForumNotification</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChatInitController</servlet-name>
+        <servlet-class>Controllers.Chat.ChatInitController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Forum</servlet-name>
         <url-pattern>/Forum/*</url-pattern>
@@ -279,6 +283,10 @@
     <servlet-mapping>
         <servlet-name>ForumNotification</servlet-name>
         <url-pattern>/ForumNotification/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatInitController</servlet-name>
+        <url-pattern>/Chat/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -95,7 +95,7 @@
                         <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
                         <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
-                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
+                        <li><a class="nav-link scrollto active" href="<%= request.getContextPath()%>/Chat">Hỗ Trợ</a></li>
                             <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                             <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
                             </c:if>
@@ -162,56 +162,56 @@
             </div>
         </section><!-- End Breadcrumbs -->
         <main id="main" class="bg-light">
-        <div class="container bg-light">
-            <%
-                User u = (User) session.getAttribute("acc");
-                int cUID = -1;
-                if (u == null) {
-                    response.sendRedirect(request.getContextPath() + "/account_login.jsp");
-                } else {
-                    cUID = u.getUserID();
-                    int sessionID = -1;
+            <div class="container bg-light">
+                <%
+                    User u = (User) session.getAttribute("acc");
+                    int cUID = -1;
+                    if (u == null) {
+                        response.sendRedirect(request.getContextPath() + "/account_login.jsp");
+                    } else {
+                        cUID = u.getUserID();
+                        int sessionID = -1;
 
-                    while (sessionID == -1) {
-                        // Get user's latest opening chat session
-                        ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
-                        for (ChatSession cs : csList) {
-                            int tmpUID = cs.getUserID();
-                            int tmpStatus = cs.getStatus();
+                        while (sessionID == -1) {
+                            // Get user's latest opening chat session
+                            ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
+                            for (ChatSession cs : csList) {
+                                int tmpUID = cs.getUserID();
+                                int tmpStatus = cs.getStatus();
 
-                            if (tmpUID == cUID && tmpStatus == 0) {
-                                sessionID = cs.getSessionID();
-                                break;
+                                if (tmpUID == cUID && tmpStatus == 0) {
+                                    sessionID = cs.getSessionID();
+                                    break;
+                                }
+                            }
+
+                            if (sessionID == -1) {
+                                ChatSession ncs = new ChatSession();
+                                ncs.setUserID(cUID);
+                                ncs.setStatus(0);
+
+                                ChatSessionDAO.addNewChatSession(ncs);
                             }
                         }
-
-                        if (sessionID == -1) {
-                            ChatSession ncs = new ChatSession();
-                            ncs.setUserID(cUID);
-                            ncs.setStatus(0);
-
-                            ChatSessionDAO.addNewChatSession(ncs);
-                        }
                     }
-                }
-            %>
-            <div class="album py-4 bg-light height-100vh">
-                <div class="chat-container bg-white">
-                    <!-- Chat content -->
-                    <div id="message-list"></div>
+                %>
+                <div class="album py-4 bg-light height-100vh">
+                    <div class="chat-container bg-white">
+                        <!-- Chat content -->
+                        <div id="message-list"></div>
 
-                    <div id="chat-form-container">
-                        <form action="/" id="chat-form" method="POST" autocomplete="off">
-                            <textarea type="text" name="chatContent" id="chat-content" placeholder="Nhập tin nhắn..."></textarea>
-                            <input type="hidden" name="chatUserID" id="chat-user-id" value="<%=cUID%>">
-                            <button type="submit" id="chat-submit" title="Gửi"><i class="fa-solid fa-paper-plane"></i></button>
-                        </form>
+                        <div id="chat-form-container">
+                            <form action="/" id="chat-form" method="POST" autocomplete="off">
+                                <textarea type="text" name="chatContent" id="chat-content" placeholder="Nhập tin nhắn..."></textarea>
+                                <input type="hidden" name="chatUserID" id="chat-user-id" value="<%=cUID%>">
+                                <button type="submit" id="chat-submit" title="Gửi"><i class="fa-solid fa-paper-plane"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </main>
-                            
+
         <!-- ======= Footer ======= -->
         <footer id="footer">
             <div class="footer-top">
