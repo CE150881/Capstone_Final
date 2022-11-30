@@ -7,9 +7,9 @@ package DAOs.Material;
 
 import Connection.DBConnection;
 import Models.Alphabet;
+import Models.ExampleGrammar;
 import Models.Grammar;
 import Models.Kanji;
-import Models.Level;
 import Models.LevelMaterial;
 import Models.Type;
 import java.sql.Connection;
@@ -121,11 +121,7 @@ public class MaterialDAO {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8)
+                        rs.getString(4)
                 ));
             }
         } catch (Exception e) {
@@ -167,11 +163,7 @@ public class MaterialDAO {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8)
+                        rs.getString(4)
                 );
             }
         } catch (Exception e) {
@@ -232,11 +224,7 @@ public class MaterialDAO {
                             resultSet.getInt(1),
                             resultSet.getString(2),
                             resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7),
-                            resultSet.getString(8)
+                            resultSet.getString(4)
                     ));
                 }
             } catch (Exception e) {
@@ -281,18 +269,15 @@ public class MaterialDAO {
     }
 
     //create new grammar
-    public void addGrammar(String level, String structure, String use, String example1, String exampleM1, String example2, String exampleM2) {
-        String query = "INSERT INTO `grammar`(`level`, `structure`, `use`, `example1`, `exampleM1`, `example2`, `exampleM2`) VALUES (?,?,?,?,?,?,?)";
+    public void addGrammar(String level, String structure, String use) {
+        String query = "INSERT INTO `grammar`(`level`, `structure`, `use`) VALUES (?,?,?)";
         try {
             conn = new DBConnection().getConnection();       // call function form DBconnection
             ps = conn.prepareStatement(query);
             ps.setString(1, level);
             ps.setString(2, structure);
             ps.setString(3, use);
-            ps.setString(4, example1);
-            ps.setString(5, exampleM1);
-            ps.setString(6, example2);
-            ps.setString(7, exampleM2);
+
             ps.executeUpdate();
         } catch (Exception e) {
 
@@ -370,24 +355,20 @@ public class MaterialDAO {
         return null;
     }
 
-    public Grammar updateGrammar(String level, String structure, String use, String example1, String exampleM1, String example2, String exampleM2, String grammarID) {
+    public Grammar updateGrammar(String level, String structure, String use, String grammarID) {
         Connection con = null;
         PreparedStatement ps = null;
 
         try {
             con = DBConnection.getConnection();
             String sql = "UPDATE `grammar` "
-                    + "SET `level`= ?,`structure`= ?,`use`= ?,`example1`= ?,`exampleM1`= ?,`example2`= ?,`exampleM2`= ? "
+                    + "SET `level`= ?,`structure`= ?,`use`= ? "
                     + "WHERE grammar.`grammarID`= ?";
             ps = con.prepareStatement(sql);
             ps.setString(1, level);
             ps.setString(2, structure);
             ps.setString(3, use);
-            ps.setString(4, example1);
-            ps.setString(5, exampleM1);
-            ps.setString(6, example2);
-            ps.setString(7, exampleM2);
-            ps.setString(8, grammarID);
+            ps.setString(4, grammarID);
             ps.executeUpdate();
         } catch (Exception e) {
 
@@ -435,10 +416,102 @@ public class MaterialDAO {
         return null;
     }
 
+    // get example by grammarID
+    public List<ExampleGrammar> getExampleByGrammarID(String grammarID) {
+        List<ExampleGrammar> list = new ArrayList<>();
+        String query = "SELECT * FROM exampleGrammar WHERE grammarID = ?";
+        try {
+            conn = new DBConnection().getConnection(); // call function form DBconnection
+            ps = conn.prepareStatement(query);
+            ps.setString(1, grammarID);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new ExampleGrammar(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4)
+                ));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    //create new example grammar
+    public void addExampleGrammar(String grammarID, String exJ, String exV) {
+        String query = "INSERT INTO `exampleGrammar`(`grammarID`, `exJ`, `exV`) VALUES (?,?,?)";
+        try {
+            conn = new DBConnection().getConnection();       // call function form DBconnection
+            ps = conn.prepareStatement(query);
+            ps.setString(1, grammarID);
+            ps.setString(2, exJ);
+            ps.setString(3, exV);
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+
+        }
+    }
+
+    // delete example grammar
+    public void deleteExample(String exampleID) {
+        String query = "DELETE FROM exampleGrammar WHERE `exampleGrammar`.`exampleID` = ?";
+        try {
+            conn = new DBConnection().getConnection();       // call function form DBconnection
+            ps = conn.prepareStatement(query);
+            ps.setString(1, exampleID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    //get example grammar by exampleID
+    public ExampleGrammar getExampleByExampleID(String exampleID) {
+        String query = "SELECT * FROM `examplegrammar` WHERE `exampleID`=?";
+        try {
+            conn = new DBConnection().getConnection(); // call function form DBconnection
+            ps = conn.prepareStatement(query);
+            ps.setString(1, exampleID);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new ExampleGrammar(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4)
+                );
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    // update example
+    public ExampleGrammar updateExample(String exJ, String exV, String exampleID) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = DBConnection.getConnection();
+            String sql = "UPDATE exampleGrammar "
+                    + "SET exJ = ?, exV = ?"
+                    + "WHERE exampleGrammar.`exampleID` = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, exJ);
+            ps.setString(2, exV);
+            ps.setString(3, exampleID);
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         System.out.println("1");
         MaterialDAO dao = new MaterialDAO();
-        System.out.println(dao.getGrammarByLevel("N1"));
+        System.out.println(dao.getExampleByExampleID("4"));
         System.out.println("2");
     }
 }

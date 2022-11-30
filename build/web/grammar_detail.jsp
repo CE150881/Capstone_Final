@@ -4,6 +4,7 @@
     Author     : A Hi
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,21 +76,13 @@
                         <ul>
                             <p><strong>Cấu trúc: </strong>${detail.structure}</p>
                             <li><strong>Cấp độ: </strong>${detail.level}</li>
-                            <p><strong>Cách dùng: </strong>${detail.use}</p>
-                            <p><strong>Ví dụ: </strong></p>
-                            <p>
-                                ${detail.example1}
-                            </p>
-                            <p>
-                                ${detail.exampleM1}
-                            </p>
-                            <p><strong>Ví dụ: </strong></p>
-                            <p>
-                                ${detail.example2}
-                            </p>
-                            <p>
-                                ${detail.exampleM1}
-                            </p>
+                            <p><strong>Cách dùng: </strong>${detail.use}</p>                           
+                            <c:forEach items="${listE}" var="g">
+                                <br><a><strong>Ví Dụ: </strong></a><br>
+                                <a>${g.exJ}</a><br>
+                                <a>${g.exV}</a>
+
+                            </c:forEach>
                         </ul>
                     </div>
 

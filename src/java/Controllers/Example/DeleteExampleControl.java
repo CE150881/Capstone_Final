@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Grammar;
+package Controllers.Example;
 
 import DAOs.Material.MaterialDAO;
 import java.io.IOException;
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author A Hi
  */
-@WebServlet(name = "UpdateGrammarControl", urlPatterns = {"/UpdateGrammarControl"})
-public class UpdateGrammarControl extends HttpServlet {
+@WebServlet(name = "DeleteExampleControl", urlPatterns = {"/DeleteExampleControl"})
+public class DeleteExampleControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,17 +32,13 @@ public class UpdateGrammarControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-
-        String grammarID = request.getParameter("grammarID");
-        String structure = request.getParameter("structure");
-        String use = request.getParameter("use");
-        String level = request.getParameter("level");
+        response.setContentType("text/html;charset=UTF-8");
+        String exampleID = request.getParameter("exampleID");
 
         MaterialDAO dao = new MaterialDAO();
-        dao.updateGrammar(level, structure, use, grammarID);
+        dao.deleteExample(exampleID);
+        
+        
         response.sendRedirect("ManageGrammarControl");
     }
 

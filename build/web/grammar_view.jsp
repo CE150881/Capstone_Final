@@ -115,19 +115,6 @@
                                                     <label>Cách Dùng: ${detail.use}</label>
 
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Ví Dụ: </label><br>
-                                                    <label>1. ${detail.example1}</label>                                                       
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>${detail.exampleM1}</label>                                                     
-                                                </div>  
-                                                <div class="form-group">
-                                                    <label>2. ${detail.example2}</label>                                                        
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>${detail.exampleM2}</label>                                                       
-                                                </div>  
 
                                             </div>                                               
                                         </div>

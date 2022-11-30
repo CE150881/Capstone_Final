@@ -38,15 +38,11 @@ public class CreateGrammarControl extends HttpServlet {
 
         String grammarID = request.getParameter("grammarID");
         String structure = request.getParameter("structure");
-        String use = request.getParameter("use");
-        String example1 = request.getParameter("example1");
-        String exampleM1 = request.getParameter("exampleM1");
-        String example2 = request.getParameter("example2");
-        String exampleM2 = request.getParameter("exampleM2");
+        String use = request.getParameter("use");       
         String level = request.getParameter("level");
 
         MaterialDAO dao = new MaterialDAO();
-        dao.addGrammar(level, structure, use, example1, exampleM1, example2, exampleM2);
+        dao.addGrammar(level, structure, use);
         response.sendRedirect("ManageGrammarControl");
 
     }

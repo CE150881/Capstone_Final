@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Grammar;
+package Controllers.Example;
 
 import DAOs.Material.MaterialDAO;
 import java.io.IOException;
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author A Hi
  */
-@WebServlet(name = "UpdateGrammarControl", urlPatterns = {"/UpdateGrammarControl"})
-public class UpdateGrammarControl extends HttpServlet {
+@WebServlet(name = "UpdateExampleControl", urlPatterns = {"/UpdateExampleControl"})
+public class UpdateExampleControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,13 +36,13 @@ public class UpdateGrammarControl extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
 
-        String grammarID = request.getParameter("grammarID");
-        String structure = request.getParameter("structure");
-        String use = request.getParameter("use");
-        String level = request.getParameter("level");
+        String exampleID = request.getParameter("exampleID");
+        String exJ = request.getParameter("exJ");
+        String exV = request.getParameter("exV");
+        
 
         MaterialDAO dao = new MaterialDAO();
-        dao.updateGrammar(level, structure, use, grammarID);
+        dao.updateExample(exJ, exV, exampleID);
         response.sendRedirect("ManageGrammarControl");
     }
 

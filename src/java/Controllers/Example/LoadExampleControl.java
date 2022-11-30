@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Grammar;
+package Controllers.Example;
 
 import DAOs.Material.MaterialDAO;
+import Models.ExampleGrammar;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author A Hi
  */
-@WebServlet(name = "UpdateGrammarControl", urlPatterns = {"/UpdateGrammarControl"})
-public class UpdateGrammarControl extends HttpServlet {
+@WebServlet(name = "LoadExampleControl", urlPatterns = {"/LoadExampleControl"})
+public class LoadExampleControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,18 +33,15 @@ public class UpdateGrammarControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-
-        String grammarID = request.getParameter("grammarID");
-        String structure = request.getParameter("structure");
-        String use = request.getParameter("use");
-        String level = request.getParameter("level");
-
+        response.setContentType("text/html;charset=UTF-8");
+        String exampleID = request.getParameter("exampleID");
+        
         MaterialDAO dao = new MaterialDAO();
-        dao.updateGrammar(level, structure, use, grammarID);
-        response.sendRedirect("ManageGrammarControl");
+        ExampleGrammar eg = dao.getExampleByExampleID(exampleID);
+                 
+        request.setAttribute("eg", eg);       
+        
+        request.getRequestDispatcher("example_update.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

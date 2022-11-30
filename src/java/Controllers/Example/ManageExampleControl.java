@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Grammar;
+package Controllers.Example;
 
 import DAOs.Material.MaterialDAO;
+import Models.ExampleGrammar;
+import Models.Grammar;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author A Hi
  */
-@WebServlet(name = "UpdateGrammarControl", urlPatterns = {"/UpdateGrammarControl"})
-public class UpdateGrammarControl extends HttpServlet {
+@WebServlet(name = "ManageExampleControl", urlPatterns = {"/ManageExampleControl"})
+public class ManageExampleControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,18 +34,17 @@ public class UpdateGrammarControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         String grammarID = request.getParameter("grammarID");
-        String structure = request.getParameter("structure");
-        String use = request.getParameter("use");
-        String level = request.getParameter("level");
 
         MaterialDAO dao = new MaterialDAO();
-        dao.updateGrammar(level, structure, use, grammarID);
-        response.sendRedirect("ManageGrammarControl");
+        List<ExampleGrammar> listE = dao.getExampleByGrammarID(grammarID);
+        Grammar gm = dao.getGrammarByGrammarID(grammarID);
+
+        request.setAttribute("listE", listE);
+        request.setAttribute("gm", gm);
+        request.getRequestDispatcher("example_manage.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

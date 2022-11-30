@@ -85,10 +85,10 @@
                         <div class="table-title">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h2>Quản Lí Ngữ Pháp</h2>
+                                    <h2>Quản Lí Ví Dụ Ngữ Pháp: ${gm.structure}</h2>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a href="#addGrammar" class="btn btn-success" data-toggle="modal" data-target="#addGrammar" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Tạo Ngữ Pháp</span></a>                                             
+                                    <a href="#addExample" class="btn btn-success" data-toggle="modal" data-target="#addExample" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Thêm Ví Dụ</span></a>                                             
                                 </div>
                             </div>
                         </div>
@@ -96,53 +96,49 @@
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th hidden>ID</th>                                   
-                                    <th>Cấu Trúc</th>
-                                    <th>Xem</th>
+                                    <th hidden>ID G</th>
+                                    <th hidden>ID E</th>
+                                    <th>Câu Ví Dụ Tiếng Nhật</th>
+                                    <th>Nghĩa Tiếng Việt</th>
                                     <th>Sửa</th>
-                                    <th>Xóa</th>
-                                    <th>Ví Dụ</th>                                    
+                                    <th>Xóa</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${listG}" var="o">
+                                <c:forEach items="${listE}" var="o">
                                     <tr>
-                                        <td hidden>${o.grammarID}</td>     
-                                        <td>${o.structure}</td>                                                                                                       
-                                        <td><a href="ViewGrammarControl?grammarID=${o.grammarID}"><i class="edit" data-toggle="modal"><i class="fa fa-eye" data-toggle="tooltip" title="Xem"></i></a></td>
-                                        <td><a href="LoadGrammarControl?grammarID=${o.grammarID}"><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
-                                        <td><a href="DeleteGrammarControl?grammarID=${o.grammarID}"><i class="delete" data-toggle="modal"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>
-                                        <td><a href="ManageExampleControl?grammarID=${o.grammarID}"><i class="delete" data-toggle="modal"><i class="fa fa-list-alt" data-toggle="tooltip" title="Ví Dụ"></i></a></td>
+                                        <td hidden>${o.grammarID}</td>
+                                        <td hidden>${o.exampleID}</td>
+                                        <td>${o.exJ}</td>
+                                        <td>${o.exV}</td>                               
+                                        <td><a href="LoadExampleControl?exampleID=${o.exampleID}"><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
+                                        <td><a href="DeleteExampleControl?exampleID=${o.exampleID}"><i class="delete" data-toggle="modal"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>                                   
                                     </tr>
                                 </c:forEach>                              
                             </tbody>
                     </div>
 
                     <!-- Modal Add-->
-                    <div class="modal fade" id="addGrammar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="addExample" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="CreateGrammarControl" method="post">
+                                <form action="CreateExampleControl" method="post">
                                     <div class="modal-header">                      
-                                        <h4 class="modal-title">Thêm Ngữ Pháp</h4>
+                                        <h4 class="modal-title">Thêm Ví Dụ</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
-                                    <div class="modal-body">                    
-                                        <div class="form-group">
-                                            <label>Cấu Trúc</label>
-                                            <input name="structure" type="text" class="form-control" required>
+                                    <div class="modal-body"> 
+                                        <div class="form-group" hidden>
+                                            <label>ID G</label>
+                                            <input name="grammarID" value="${gm.grammarID}">
                                         </div>
                                         <div class="form-group">
-                                            <label>Cách Dùng</label>
-                                            <input name="use" type="text" class="form-control" required>
+                                            <label>Câu Ví Dụ</label>
+                                            <input name="exJ" type="text" class="form-control" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>Cấp Độ</label>
-                                            <select name="level" class="form-select" aria-label="Default select example">
-                                                <c:forEach items="${listL}" var="o">
-                                                    <option value="${o.level}">${o.level}</option>
-                                                </c:forEach>
-                                            </select>
+                                            <label>Nghĩa</label>
+                                            <input name="exV" type="text" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

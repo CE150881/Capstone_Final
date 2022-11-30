@@ -100,7 +100,8 @@
                                     <th>Cấu Trúc</th>
                                     <th>Xem</th>
                                     <th>Sửa</th>
-                                    <th>Xóa</th>                                    
+                                    <th>Xóa</th>
+                                    <th>Ví Dụ</th>                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -111,6 +112,7 @@
                                         <td><a href="ViewGrammarControl?grammarID=${o.grammarID}"><i class="edit" data-toggle="modal"><i class="fa fa-eye" data-toggle="tooltip" title="Xem"></i></a></td>
                                         <td><a href="LoadGrammarControl?grammarID=${o.grammarID}"><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
                                         <td><a href="DeleteGrammarControl?grammarID=${o.grammarID}"><i class="delete" data-toggle="modal"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>
+                                        <td><a href="ManageExampleControl?grammarID=${o.grammarID}"><i class="delete" data-toggle="modal"><i class="fa fa-list-alt" data-toggle="tooltip" title="Ví Dụ"></i></a></td>
                                     </tr>
                                 </c:forEach>                              
                             </tbody>
@@ -134,22 +136,6 @@
                                             <label>Cách Dùng</label>
                                             <input name="use" type="text" class="form-control" required>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Ví Dụ 1</label>
-                                            <input name="example1" type="text" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Nghĩa</label>
-                                            <textarea name="exampleM1" class="form-control" required></textarea>
-                                        </div> 
-                                        <div class="form-group">
-                                            <label>Ví Dụ 2</label>
-                                            <input name="example2" type="text" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Nghĩa</label>
-                                            <textarea name="exampleM2" class="form-control" required></textarea>
-                                        </div> 
                                         <div class="form-group">
                                             <label>Cấp Độ</label>
                                             <select name="level" class="form-select" aria-label="Default select example">

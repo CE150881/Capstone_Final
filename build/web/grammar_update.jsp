@@ -112,22 +112,7 @@
                                                     <label>Cách Dùng</label>
                                                     <input value="${detail.use}" name="use" type="text" class="form-control" required>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Ví Dụ 1</label>
-                                                    <input value="${detail.example1}" name="example1" type="text" class="form-control" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Nghĩa</label>
-                                                    <input value="${detail.exampleM1}" name="exampleM1" class="form-control" required>
-                                                </div>  
-                                                <div class="form-group">
-                                                    <label>Ví Dụ 2</label>
-                                                    <input value="${detail.example2}" name="example2" type="text" class="form-control" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Nghĩa</label>
-                                                    <input value="${detail.exampleM2}" name="exampleM2" class="form-control" required>
-                                                </div>  
+
                                                 <div class="form-group">
                                                     <label>Cấp Độ</label>
                                                     <select name="level" class="form-select" aria-label="Default select example">

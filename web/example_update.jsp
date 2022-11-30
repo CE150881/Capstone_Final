@@ -94,33 +94,25 @@
                             <div id="editEmployeeModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form action="UpdateGrammarControl" method="post">
+                                        <form action="UpdateExampleControl" method="post">
                                             <div class="modal-header">						
-                                                <h4 class="modal-title">Cập Nhật Ngữ Pháp</h4>
+                                                <h4 class="modal-title">Cập Nhật Ví Dụ</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             </div>
-                                            <div class="modal-body">	
+                                            <div class="modal-body">
                                                 <div class="form-group" hidden>
-                                                    <label>Cấu Trúc</label>
-                                                    <input value="${detail.grammarID}" name="grammarID" type="text" class="form-control" required>
+                                                    <label>ID</label>
+                                                    <input value="${eg.exampleID}" name="exampleID" type="text" class="form-control" required>
+                                                </div>
+                                                <div class="form-group" >
+                                                    <label>Câu Ví Dụ</label>
+                                                    <input value="${eg.exJ}" name="exJ" type="text" class="form-control" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Cấu Trúc</label>
-                                                    <input value="${detail.structure}" name="structure" type="text" class="form-control" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Cách Dùng</label>
-                                                    <input value="${detail.use}" name="use" type="text" class="form-control" required>
+                                                    <label>Nghĩa</label>
+                                                    <input value="${eg.exV}" name="exV" type="text" class="form-control" required>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label>Cấp Độ</label>
-                                                    <select name="level" class="form-select" aria-label="Default select example">
-                                                        <c:forEach items="${listL}" var="o">
-                                                            <option value="${o.level}">${o.level}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
 
                                             </div>
                                             <div class="modal-footer">

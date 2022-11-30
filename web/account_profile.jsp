@@ -74,21 +74,21 @@
                                     <ul>
                                         <c:forEach items="${listT}" var="q">
                                             <li><a href="AlphabetControl?type=${q.type}">${q.type}</a></li>
-                                        </c:forEach>
+                                            </c:forEach>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
                                             <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
-                                        </c:forEach> 
+                                            </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
                                             <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
-                                        </c:forEach>
+                                            </c:forEach>
                                     </ul>
                                 </li>
                             </ul>
@@ -116,6 +116,25 @@
             </div>
 
         </header><!-- End Header -->
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Bạn muốn đăng xuất ?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
+                        <a class="btn" style="background-color: #f5b8c5; color: white" href="LogoutControl">Đăng Xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <main id="main">
 
