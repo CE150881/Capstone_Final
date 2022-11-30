@@ -9,6 +9,8 @@ import DAOs.Account.UserDAO;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +42,7 @@ public class LoginControl extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginControl</title>");            
+            out.println("<title>Servlet LoginControl</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginControl at " + request.getContextPath() + "</h1>");
@@ -75,12 +77,18 @@ public class LoginControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       response.setContentType("text/html;charset=UTF-8");
-        
+        response.setContentType("text/html;charset=UTF-8");
+
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String password = request.getParameter("password"); 
+        String md5Password = "";
+        try {
+            md5Password = MD5(password);
+        } catch (Exception ex) {
+            
+        }
         UserDAO dao = new UserDAO();
-        User u = dao.login(email, password);
+        User u = dao.login(email, md5Password);
         User a = dao.checkAdmin(email);
         User b = dao.checkContentManager(email);
 
@@ -105,6 +113,12 @@ public class LoginControl extends HttpServlet {
                 }
             }
         }
+    }
+
+    private static String MD5(String s) throws Exception {
+        MessageDigest m = MessageDigest.getInstance("MD5");
+        m.update(s.getBytes(), 0, s.length());
+        return new BigInteger(1, m.digest()).toString(16);
     }
 
     /**
