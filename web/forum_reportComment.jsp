@@ -112,11 +112,11 @@
                                 <tr>
                                     <td><%= rs.getString("report_comment_reason")%></td>
                                     <td><%= rs.getString("comment_content")%></td>
-                                    <td><%= rs.getString("comment_edit_date")%></td>
+                                    <td><%= rs.getString("comment_edit_date").substring(0, Math.min(rs.getString("comment_edit_date").length(), 19))%></td>
                                     <td><%= rs.getString("post_title")%></td>
                                     <td><%= rs.getString("post_content")%></td>
                                     <td><%= rs.getString("username")%></td>
-                                    <td><%= rs.getString("report_comment_date")%></td>
+                                    <td><%= rs.getString("report_comment_date").substring(0, Math.min(rs.getString("report_comment_date").length(), 19))%></td>
                                     <td>
                                         <form method="post" action="<%= request.getContextPath()%>/ReportComment" style="display: inline">
                                             <input name="report_comment_id" value="<%= rs.getString("report_comment_id")%>" style="display: none">

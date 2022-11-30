@@ -7,9 +7,13 @@ package Controllers.Forum;
 
 import DAOs.Forum.PostDAO;
 import DAOs.Forum.TopicDAO;
+import DAOs.Material.MaterialDAO;
+import Models.LevelMaterial;
+import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +43,7 @@ public class OneTopic extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OneTopic</title>");            
+            out.println("<title>Servlet OneTopic</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet OneTopic at " + request.getContextPath() + "</h1>");
@@ -61,22 +65,28 @@ public class OneTopic extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.startsWith(request.getContextPath()+"/OneTopic")) {
+        if (path.startsWith(request.getContextPath() + "/OneTopic")) {
             String[] s = path.split("/");
             String topic_id = s[s.length - 1];
             int topic_id2 = Integer.parseInt(topic_id);
             //ResultSet p = PostDAO.getAllPostByTopic(topic_id2);
             ResultSet p = PostDAO.getAllPostByTopicWithCommentCount(topic_id2);
             ResultSet t = TopicDAO.getAllTopic();
-            if(p == null){
-                response.sendRedirect(request.getContextPath()+"/Forum");
-            }else{
+            if (p == null) {
+                response.sendRedirect(request.getContextPath() + "/Forum");
+            } else {
+                MaterialDAO dao = new MaterialDAO();
+                List<Type> listT = dao.getAllType();
+                List<LevelMaterial> listL = dao.getAllLevel();
                 HttpSession session = request.getSession();
+
+                request.setAttribute("listT", listT);
+                request.setAttribute("listL", listL);
                 session.setAttribute("allTopic", t);
                 session.setAttribute("postByTopic", p);
-                request.getRequestDispatcher("/forum_postByTopic.jsp").forward(request, response);           
+                request.getRequestDispatcher("/forum_postByTopic.jsp").forward(request, response);
             }
-           
+
         }
     }
 

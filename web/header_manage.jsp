@@ -105,7 +105,7 @@
                     <div id="collapseTwou" class="collapse" aria-labelledby="collapseTwou" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Quản Lý Tin Nhắn:</h6>
-                            <a class="collapse-item" href="a-manageNoti.html">Hỗ Trợ Người Dùng</a>
+                            <a class="collapse-item" href="<%= request.getContextPath()%>/chat_manage.jsp">Hỗ Trợ Người Dùng</a>
                         </div>
                     </div>
                 </li>

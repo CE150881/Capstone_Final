@@ -7,10 +7,14 @@ package Controllers.Forum;
 
 import DAOs.Forum.PostDAO;
 import DAOs.Forum.TopicDAO;
+import DAOs.Material.MaterialDAO;
+import Models.LevelMaterial;
+import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -42,7 +46,7 @@ public class Forum extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Forum</title>");            
+            out.println("<title>Servlet Forum</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Forum at " + request.getContextPath() + "</h1>");
@@ -72,12 +76,12 @@ public class Forum extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(Forum.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(totalPage <= 10){
+        if (totalPage <= 10) {
             totalPage = 1;
-        }else{
+        } else {
             totalPage = totalPage / 10 + 1;
         }
-        
+
         String path = request.getRequestURI();
         if (path.endsWith("/Forum")) {
             int offset = 0;
@@ -87,7 +91,13 @@ public class Forum extends HttpServlet {
             if (rs == null) {
                 request.getRequestDispatcher("home.jsp").forward(request, response);
             } else {
+                MaterialDAO dao = new MaterialDAO();
+                List<Type> listT = dao.getAllType();
+                List<LevelMaterial> listL = dao.getAllLevel();
                 HttpSession session = request.getSession();
+
+                request.setAttribute("listT", listT);
+                request.setAttribute("listL", listL);
                 session.setAttribute("allTopic", t);
                 session.setAttribute("totalPage", totalPage);
                 session.setAttribute("currentUrl", path);
@@ -99,7 +109,7 @@ public class Forum extends HttpServlet {
                 String[] s = path.split("/");
                 String offset = s[s.length - 1];
                 int offset2 = Integer.parseInt(offset);
-                if (offset2 <= 1) {
+                if (offset2 <= 1 || offset2 > totalPage) {
                     response.sendRedirect(request.getContextPath() + "/Forum");
                 } else {
                     offset2 = (offset2 - 1) * 10;
@@ -108,14 +118,20 @@ public class Forum extends HttpServlet {
                     if (rs == null) {
                         request.getRequestDispatcher("home.jsp").forward(request, response);
                     } else {
+                        MaterialDAO dao = new MaterialDAO();
+                        List<Type> listT = dao.getAllType();
+                        List<LevelMaterial> listL = dao.getAllLevel();
                         HttpSession session = request.getSession();
+
+                        request.setAttribute("listT", listT);
+                        request.setAttribute("listL", listL);
                         session.setAttribute("totalPage", totalPage);
                         session.setAttribute("currentUrl", path);
                         session.setAttribute("allPost", rs);
                         request.getRequestDispatcher("/forum_forum.jsp").forward(request, response);
                     }
                 }
-            }else{
+            } else {
                 response.sendRedirect(request.getContextPath() + "/Forum");
             }
         }

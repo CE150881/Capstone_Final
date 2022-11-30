@@ -77,14 +77,14 @@
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="Kanji?level=${w.level}">${w.level}</a></li>
+                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="Grammar?level=${e.level}">${e.level}</a></li>
+                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
@@ -93,7 +93,7 @@
                         <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
                         <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
-                        <li><a class="nav-link scrollto" href="">Hỗ Trợ</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->

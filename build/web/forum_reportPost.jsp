@@ -112,9 +112,9 @@
                                     <td><%= rs.getString("report_post_reason")%></td>
                                     <td><%= rs.getString("post_title")%></td>
                                     <td><%= rs.getString("post_content")%></td>
-                                    <td><%= rs.getString("post_edit_date")%></td>
+                                    <td><%= rs.getString("post_edit_date").substring(0, Math.min(rs.getString("post_edit_date").length(), 19))%></td>
                                     <td><%= rs.getString("username")%></td>
-                                    <td><%= rs.getString("report_post_date")%></td>
+                                    <td><%= rs.getString("report_post_date").substring(0, Math.min(rs.getString("report_post_date").length(), 19))%></td>
                                     <td>
                                         <form method="post" action="<%= request.getContextPath()%>/ReportPost" style="display: inline">
                                             <input name="report_post_id" value="<%= rs.getString("report_post_id")%>" style="display: none">

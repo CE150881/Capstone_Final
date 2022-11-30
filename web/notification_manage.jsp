@@ -203,12 +203,6 @@
                 font-size: 14px;
                 overflow: hidden;
             }
-
-            td.td-details {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                word-break: break-word;
-            }
         </style>
 
         <script>
@@ -377,8 +371,8 @@
                                 %>
                                 <tr>
                                     <td><%=orderNo%></td>
-                                    <td><%=title%></td>
-                                    <td class="td-details"><%=details%></td>
+                                    <td style="word-break: break-word;"><%=title%></td>
+                                    <td style="word-break: break-word;"><%=details%></td>
                                     <td><%=time%></td>
                                     <td><%=poster%></td>
                                     <td><%=statusStr%></td>

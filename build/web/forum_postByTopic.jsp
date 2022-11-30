@@ -7,6 +7,7 @@
 <%@page import="DAOs.Forum.ReportNotificationDAO"%>
 <%@page import="Models.User"%>
 <%@page import="java.sql.ResultSet"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,60 +53,89 @@
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
             <div class="container d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="u-home.html">JPD<span>.</span></a></h1>
+                <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="user/img/logo.png" alt="" class="img-fluid"></a>-->
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto" href="u-home.html">Trang Chủ</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
                         <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
-                                <li class="dropdown"><a href="u-alphabet.html"><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
+                                <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
-                                        <li><a href="#">Deep Drop Down 1</a></li>
-                                        <li><a href="#">Deep Drop Down 2</a></li>
+                                        <c:forEach items="${listT}" var="q">
+                                            <li><a href="AlphabetControl?type=${q.type}">${q.type}</a></li>
+                                            </c:forEach>
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href="u-kanji.html"><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
+                                <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
-                                        <li><a href="#">N1</a></li>
-                                        <li><a href="#">N2</a></li>
-                                        <li><a href="#">N3</a></li>
-                                        <li><a href="#">N4</a></li>
-                                        <li><a href="#">N5</a></li>
+                                        <c:forEach items="${listL}" var="w">
+                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
+                                            </c:forEach> 
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href="u-grammar.html"><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
+                                <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
-                                        <li><a href="#">N1</a></li>
-                                        <li><a href="#">N2</a></li>
-                                        <li><a href="#">N3</a></li>
-                                        <li><a href="#">N4</a></li>
-                                        <li><a href="#">N5</a></li>
+                                        <c:forEach items="${listL}" var="e">
+                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
+                                            </c:forEach>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                         <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
-                        <li><a class="nav-link scrollto " href="u-practice.html">Luyện Tập</a></li>
+                        <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto active" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
+                        <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
+                        </c:if>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
                 <ul>
-                    <!-- đã đăng nhập -->                    
-                    <a href="u-home.html" class="logo me-auto me-lg-0" ><img src="${pageContext.request.contextPath}/user/img/logo.jpg" alt="" class="rounded-circle"></a>
-                    <a class="scrollto" href="u-profile.html">Thanh Tâm</a>
+                    <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                        <!-- đã đăng nhập -->
 
-                    <!-- chưa đăng nhập
-                      <a href="signup.html" class="get-started-btn scrollto">Đăng Ký</a>
-                    <a href="login.html" class="get-started-btn scrollto">Đăng Nhập</a>
-                    -->
+                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
+                        </ul>
+                    </c:if>
 
+                    <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
+                        <a href="<%= request.getContextPath()%>/account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
+                        <a href="<%= request.getContextPath()%>/account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
+                    </c:if>
                 </ul>
+
             </div>
+
         </header><!-- End Header -->
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Bạn muốn đăng xuất ?</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
+                        <a class="btn" style="background-color: #f5b8c5; color: white" href="<%= request.getContextPath()%>/LogoutControl">Đăng Xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <main id="main" class="bg-light">
 
@@ -114,9 +144,12 @@
                 <div class="container">
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>Cộng Đồng</h2>
-                        <ol>
-                            <li><a href="u-home.html">Trang Chủ</a></li>
+                        <div>
+                            <h2 style="display: inline-block;">Cộng Đồng</h2>                            
+                        </div>
+
+                        <ol>                                                       
+                            <li><a href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
                             <li>Cộng Đồng</li>
                         </ol>
                     </div>
@@ -161,17 +194,16 @@
                                 if (notReadNotification.next() == false) {
                             %>
                             <a href="<%= request.getContextPath()%>/forum_reportNotification.jsp" style="color: black; padding-left: 10px; padding-right: 10px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
-                                </svg>                                
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                                </svg>                              
                             </a>
                             <%
                             } else {
                             %>
                             <a href="<%= request.getContextPath()%>/forum_reportNotification.jsp" style="color: black; padding-left: 10px; padding-right: 10px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-envelope-exclamation-fill" viewBox="0 0 16 16">
-                                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 4.697v4.974A4.491 4.491 0 0 0 12.5 8a4.49 4.49 0 0 0-1.965.45l-.338-.207L16 4.697Z"/>
-                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1.5a.5.5 0 0 1-1 0V11a.5.5 0 0 1 1 0Zm0 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                                 </svg>
                             </a>
                             <%
@@ -185,11 +217,9 @@
                         <%
                             }
                         %>
-                        <form class="form-inline" onsubmit="window.location = '<%= request.getContextPath()%>/SearchPost/' + search.value; return false;">
-                            <div class="input-group">
-                                <input type="search" class="form-control" placeholder="Tìm Kiếm" aria-label="Tìm Kiếm" name="search" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Tìm Kiếm</button>
-                            </div>
+                        <form class="d-flex" role="search" onsubmit="window.location = '<%= request.getContextPath()%>/SearchPost/' + search.value; return false;">
+                            <input required="required" maxlength="100" class="form-control me-2" type="search" placeholder="Tìm Kiếm" name="search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </div>
                 </div>
@@ -240,42 +270,9 @@
                                     An Bình, Cần Thơ<br><br>
                                     <strong>Số Điện Thoại:</strong> 0349554811<br>
                                     <strong>Email:</strong> noreply.jpd@gmail.com<br>
-                                </p>
-                                <div class="social-links mt-3">
-                                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                                </div>
+                                </p>                                
                             </div>
-                        </div>
-
-                        <div class="col-lg-2 col-md-6 footer-links">
-                            <h4>Dành Cho Bạn</h4>
-                            <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="">Trang Chủ</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Tài Liệu</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Kiểm Tra</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Luyện Tập</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Cộng Đồng</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>Dịch Vụ Của Chúng Tôi</h4>
-                            <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Nguyên Tắc Cộng Đồng</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Quyền Riêng Tư</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Điều Khoản</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-4 col-md-6 footer-newsletter">
-                            <h4>Nhận Thông Báo</h4>
-                            <p>Chúng tôi sẽ gửi email cho bạn khi có thông báo mới.</p>
-                            <form action="" method="post">
-                                <input type="email" name="email"><input type="submit" value="Gửi">
-                            </form>
-                        </div>
+                        </div>                                              
                     </div>
                 </div>
             </div>
