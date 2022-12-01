@@ -80,23 +80,38 @@
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
+                                            <li><a href="KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
+                                            <li><a href="GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-                        <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
+                        <li class="dropdown"><a class="nav-link scrollto"><span>Kiểm Tra</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <c:forEach items="${listtag}" var="i">
+                                    <li class="dropdown"><a><span>${i.desc}</span> <i class="bi bi-chevron-right"></i></a>
+                                        <ul>
+                                            <c:forEach items="${listlevel}" var="x">
+                                                <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
+                                                </c:forEach> 
+                                        </ul>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
                         <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
-                        <li><a class="nav-link scrollto" href="">Hỗ Trợ</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Chat">Hỗ Trợ</a></li>
+                            <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                            <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
+                            </c:if>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
@@ -107,15 +122,22 @@
                         <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>                           
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
-                </ul>
 
+                   
+                </ul>
             </div>
 
+            <style>
+                .dropdown-menu li:hover>a{
+                    background-color: #f5b8c5;
+                }
+            </style>
         </header><!-- End Header -->
+        
         <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">

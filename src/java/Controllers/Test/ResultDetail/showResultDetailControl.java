@@ -5,6 +5,7 @@
  */
 package Controllers.Test.ResultDetail;
 
+import DAOs.Material.MaterialDAO;
 import DAOs.Test.AnswerDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuestionDAO;
@@ -23,6 +24,7 @@ import Models.Result;
 import Models.ResultDetail;
 import Models.Tag;
 import Models.Test;
+import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -139,6 +141,18 @@ public class showResultDetailControl extends HttpServlet {
         //step5: show tất cả câu hỏi của bài test kèm câu trả lời
         request.setAttribute("listans", CaT);
 
+        // document
+        String typeID = request.getParameter("typeID");
+        String levelID = request.getParameter("levelID");
+
+        MaterialDAO dao = new MaterialDAO();
+        List<Type> listT = dao.getAllType();
+        List<Level> listL = dao.getAllLevel();
+
+        request.setAttribute("listT", listT);
+        request.setAttribute("listL", listL);
+        // end document
+        
         request.getRequestDispatcher("Test_multichoice_showResultdeatail.jsp").forward(request, response);
 
     }

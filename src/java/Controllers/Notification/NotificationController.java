@@ -5,10 +5,17 @@
  */
 package Controllers.Notification;
 
+import DAOs.Material.MaterialDAO;
 import DAOs.Notification.NotificationDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
+import Models.Level;
 import Models.Notification;
+import Models.Tag;
+import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -60,8 +67,29 @@ public class NotificationController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String path = request.getRequestURI();
+        String typeID = request.getParameter("typeID");
+        String levelID = request.getParameter("levelID");
+
+        MaterialDAO dao = new MaterialDAO();
+        List<Type> listT = dao.getAllType();
+        List<Level> listL = dao.getAllLevel();
+
+        request.setAttribute("listT", listT);
+        request.setAttribute("listL", listL);
+        // end document
+
+        // test
+        TagDAO tagdao = new TagDAO();
+        List<Tag> listtag = tagdao.getAllTag();
+
+        LevelDAO leveldao = new LevelDAO();
+        List<Level> listlevel = leveldao.getAllLevel();
+
+        request.setAttribute("listtag", listtag);
+        request.setAttribute("listlevel", listlevel);
         
+        String path = request.getRequestURI();
+
         if (path.startsWith(request.getContextPath() + "/Notification")) {
             String[] s = path.split("/");
             //int notificationID = Integer.parseInt(request.getParameter("id"));

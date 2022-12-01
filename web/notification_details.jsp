@@ -46,209 +46,9 @@
         * Author: BootstrapMade.com
         * License: https://bootstrapmade.com/license/
         ======================================================== -->
-        <style>
-            * {
-                box-sizing: border-box;
-            }
-
-            /* Column container */
-            .row {
-                top: 10vh;
-                display: flex;
-                flex-wrap: wrap;
-                width: 101%;
-            }
-
-            /* Content columns */
-            /* Main column, on the left */
-            .main {
-                flex: 60%;
-                padding: 0 5vw;
-            }
-
-            /* Sidebar column, on the right */
-            .side {
-                flex: 30%;
-                padding: 0 5vw;
-            }
-
-            .main-section {
-                width: 100%;
-                overflow: auto;
-                padding: 5vh 3vw;
-                margin: 10vh 0;
-                border-radius: 15px;
-                color: #000;
-                box-shadow: 0px 0px 30px 5px #cfcfcf;
-            }
-
-            .side-section {
-                width: 100%;
-                overflow: auto;
-                padding: 5vh 3vw;
-                margin: 10vh 0;
-                border-radius: 15px;
-                color: #000;
-                box-shadow: 0px 0px 30px 5px #cfcfcf;
-            }
-
-            #back-home-btn:hover {
-                transition: 0.3s;
-                background-color: #000;
-                color: #fff;
-            }
-
-            #back-home-btn {
-                text-decoration: none;
-                color: #000;
-                border: 1px solid #222;
-                border-radius: 5px;
-                padding: 1vh 1vw;
-            }
-
-            .notif-title {
-                text-decoration: none;
-                color: #000;
-            }
-
-            .notif-title-span {
-                word-break: break-word;
-                font-weight: bold;
-            }
-
-            .pagination {
-                display: inline-block;
-            }
-
-            .pagination a {
-                color: black;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-                transition: 0.3s;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                margin: 4px 4px;
-            }
-
-            .pagination a.active {
-                background-color: #000;
-                color: #fff;
-                border: 1px solid #000;
-            }
-
-            .page-num:hover:not(.active) {
-                background-color: #cfcfc4;
-                color: #fff;
-            }
-
-            #prevPage {
-                pointer-events: none;
-                cursor: default;
-                background-color: #e6e6e6;
-                color: #c5c5c5;
-            }
-
-            /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
-            @media screen and (max-width: 700px) {
-                .row, .navbar {   
-                    flex-direction: column;
-                }
-            }
-        </style>
-
-        <script>
-            var currentPage = 1;
-            const loadLimit = 5;
-
-            function prevPage() {
-                var lastActivePage = $('.pagination > .active');
-                var currentActivePage = $('.pagination > .active').prev();
-
-                // re-enable prev and next button
-                $('.prevNext').css("pointer-events", "auto");
-                $('.prevNext').css("cursor", "pointer");
-                $('.prevNext').css("background-color", "#fff");
-                $('.prevNext').css("color", "#000");
-
-                if (currentActivePage.prev().hasClass("prevNext")) {
-                    currentActivePage.prev().css("pointer-events", "none");
-                    currentActivePage.prev().css("cursor", "default");
-                    currentActivePage.prev().css("background-color", "#e6e6e6");
-                    currentActivePage.prev().css("color", "#c5c5c5");
-                }
-
-                lastActivePage.removeClass("active");
-                currentActivePage.addClass("active");
-
-                currentPage = currentPage - 1;
-                loadPage(currentPage);
-            }
-
-            function nextPage() {
-                var lastActivePage = $('.pagination > .active');
-                var currentActivePage = $('.pagination > .active').next();
-
-                // re-enable prev and next button
-                $('.prevNext').css("pointer-events", "auto");
-                $('.prevNext').css("cursor", "pointer");
-                $('.prevNext').css("background-color", "#fff");
-                $('.prevNext').css("color", "#000");
-
-                if (currentActivePage.next().hasClass("prevNext")) {
-                    currentActivePage.next().css("pointer-events", "none");
-                    currentActivePage.next().css("cursor", "default");
-                    currentActivePage.next().css("background-color", "#e6e6e6");
-                    currentActivePage.next().css("color", "#c5c5c5");
-                }
-
-                lastActivePage.removeClass("active");
-                currentActivePage.addClass("active");
-
-                currentPage = currentPage + 1;
-                loadPage(currentPage);
-            }
-
-            function loadPage(pageNum) {
-                // display none all child
-                $('#notif-container > .notif-title-container').css("display", "none");
-
-                // re-enable prev and next button
-                $('.prevNext').css("pointer-events", "auto");
-                $('.prevNext').css("cursor", "pointer");
-                $('.prevNext').css("background-color", "#fff");
-                $('.prevNext').css("color", "#000");
-
-                var lastActivePage = $('.pagination > .active');
-                var currentActivePage = $('#page-num-' + pageNum);
-                var startNum = ((pageNum - 1) * loadLimit) + 1;
-                var endNum = pageNum * loadLimit;
-
-                for (let i = startNum; i <= endNum; i++) {
-                    $('#notif-title-container-id-' + i).attr("style", "display: block !important");
-                }
-
-                if (currentActivePage.prev().hasClass("prevNext")) {
-                    currentActivePage.prev().css("pointer-events", "none");
-                    currentActivePage.prev().css("cursor", "default");
-                    currentActivePage.prev().css("background-color", "#e6e6e6");
-                    currentActivePage.prev().css("color", "#c5c5c5");
-                }
-
-                if (currentActivePage.next().hasClass("prevNext")) {
-                    currentActivePage.next().css("pointer-events", "none");
-                    currentActivePage.next().css("cursor", "default");
-                    currentActivePage.next().css("background-color", "#e6e6e6");
-                    currentActivePage.next().css("color", "#c5c5c5");
-                }
-
-                lastActivePage.removeClass("active");
-                currentActivePage.addClass("active");
-
-                currentPage = pageNum;
-            }
-        </script>
-
+        
+        <link href="${pageContext.request.contextPath}/notification/css/notification_details.css" rel="stylesheet" type="text/css"/>
+        <script src="${pageContext.request.contextPath}/notification/js/notification_details.js" type="text/javascript"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
 
@@ -258,13 +58,13 @@
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
             <div class="container d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
+                <h1 class="logo me-auto me-lg-0"><a href="HomeControl">JPD<span>.</span></a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
-
+                <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="user/img/logo.png" alt="" class="img-fluid"></a>-->
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
+                        <li><a class="nav-link scrollto" href="HomeControl">Trang Chủ</a></li>
                         <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
@@ -277,23 +77,35 @@
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
+                                            <li><a href="KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
+                                            <li><a href="GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-                        <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
-                        <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
-                        <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
-                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
+                        <li class="dropdown"><a class="nav-link scrollto"><span>Kiểm Tra</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <c:forEach items="${listtag}" var="i">
+                                    <li class="dropdown"><a><span>${i.desc}</span> <i class="bi bi-chevron-right"></i></a>
+                                        <ul>
+                                            <c:forEach items="${listlevel}" var="x">
+                                                <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
+                                                </c:forEach> 
+                                        </ul>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Chat">Hỗ Trợ</a></li>
                             <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                             <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
                             </c:if>
@@ -308,18 +120,23 @@
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
 
                     <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
-                        <a href="<%= request.getContextPath()%>/account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
-                        <a href="<%= request.getContextPath()%>/account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
+                        <a href="account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
+                        <a href="account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
                     </c:if>
                 </ul>
-
             </div>
 
+            <style>
+                .dropdown-menu li:hover>a{
+                    background-color: #f5b8c5;
+                }
+            </style>
         </header><!-- End Header -->
 
         <!-- Logout Modal-->

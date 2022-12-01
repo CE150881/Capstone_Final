@@ -48,10 +48,10 @@
                     <form id="edit-form" action="EditNotification" method="POST">
                         <input type="hidden" id="edit-id" name="editNotifID">
                         <label for="edit-title">Tiêu đề</label><br>
-                        <input type="text" id="edit-title" name="editTitle" placeholder="Nhập tiêu đề"><br>
+                        <input type="text" class="form-control" id="edit-title" name="editTitle" placeholder="Nhập tiêu đề"><br>
                         <label for="edit-details">Chi tiết</label><br>
-                        <textarea type="text" id="edit-details" name="editDetails" placeholder="Nhập chi tiết"></textarea><br>
-                        <button type="submit" id="edit-submit">Lưu</button><br>
+                        <textarea type="text" class="form-control" id="edit-details" name="editDetails" placeholder="Nhập chi tiết"></textarea><br>
+                        <button type="submit" class="btn btn-success" id="edit-submit">Lưu</button><br>
                     </form>
                 </div>
             </div>
@@ -198,9 +198,8 @@
                 box-sizing: border-box;
             }
             #edit-submit {
-                width: 4vw;
-                height: 4vh;
-                font-size: 14px;
+                background-color: #000 !important;
+                color: #fff !important;
                 overflow: hidden;
             }
         </style>
@@ -288,29 +287,16 @@
                         <div class="table-title">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h2>Quản Lí Tài Khoản</h2>
+                                    <h2>Quản Lí Thông Báo</h2>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a href="#addNoti" class="btn btn-success" data-toggle="modal" data-target="#addNoti" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Tạo Tài Khoản</span></a>                                             
+                                    <a href="#addNoti" class="btn btn-success" data-toggle="modal" data-target="#addNoti" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Tạo Thông Báo</span></a>                                             
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <!-- ///Add New Notification -->
-                        <button id="add-form-legend" onclick="dropdownAddNotification()"><i class="fa-regular fa-square-plus"></i> Thêm thông báo <i id="dropdown-arrow" class="fa-solid fa-angle-down"></i></button>
+                        <br>                       
                         <script>
-                            function dropdownAddNotification() {
-                                var tmp = document.getElementById('add-form-container');
-                                var tmpArrow = document.getElementById('dropdown-arrow');
-
-                                if (tmp.style.display === '' || tmp.style.display === 'none') {
-                                    tmp.style.display = 'block';
-                                    tmpArrow.style.transform = 'rotate(180deg) scaleX(-1)';
-                                } else {
-                                    tmp.style.display = 'none';
-                                    tmpArrow.style.transform = 'rotate(360deg) scaleX(-1)';
-                                }
-                            }
+                            
 
                             function notifFormDeleteConfirm(notifID) {
                                 $(document).on('click', '#notifDeleteBtn-' + notifID, function (e) {
@@ -329,14 +315,7 @@
                                 });
                             }
                         </script>
-                        <div id="add-form-container">
-                            <form id="add-form" action="AddNotification" method="POST">
-                                <input type="text" id="add-title" name="addTitle" placeholder="Nhập tiêu đề"><br>
-                                <textarea type="text" id="add-details" name="addDetails" placeholder="Nhập chi tiết"></textarea><br>
-                                <button type="submit" id="add-submit">Lưu</button><br>
-                            </form>
-                        </div><br><br>
-                        <!-- Add New Notification/// -->
+                        
 
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
@@ -404,7 +383,7 @@
                     <div class="modal fade" id="addNoti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="CreateAccountControl" method="post">
+                                <form action="AddNotification" method="post">
                                     <div class="modal-header">                      
                                         <h4 class="modal-title">Tạo Thông Báo</h4>
                                         
@@ -412,12 +391,12 @@
                                     <div class="modal-body">    
                                         <div class="form-group">
                                             <label>Tiêu Đề</label>
-                                            <input name="email" type="email" class="form-control" required>
+                                            <input type="text" id="add-title" class="form-control" name="addTitle" >
                                         </div>                            
                                         
                                         <div class="form-group">
                                             <label>Chi Tiết</label>
-                                            <textarea name="username" type="text" class="form-control" required></textarea>
+                                            <textarea type="text" id="add-details" class="form-control" name="addDetails"></textarea>
                                         </div>                                                        
                                     </div>
                                     <div class="modal-footer">
