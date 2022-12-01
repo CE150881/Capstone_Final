@@ -5,16 +5,21 @@
  */
 package Controllers.Chat;
 
+import DAOs.Chat.ChatSessionDAO;
 import DAOs.Material.MaterialDAO;
+import Models.ChatSession;
 import Models.LevelMaterial;
 import Models.Type;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -69,7 +74,40 @@ public class ChatInitController extends HttpServlet {
 
         request.setAttribute("listT", listT);
         request.setAttribute("listL", listL);
-        request.getRequestDispatcher("chat_user.jsp").forward(request, response);
+
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("acc");
+        int cUID;
+        if (u == null) {
+            response.sendRedirect(request.getContextPath() + "/account_login.jsp");
+        } else {
+            cUID = u.getUserID();
+            session.setAttribute("cUID", cUID);
+            int sessionID = -1;
+
+            while (sessionID == -1) {
+                // Get user's latest opening chat session
+                ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
+                for (ChatSession cs : csList) {
+                    int tmpUID = cs.getUserID();
+                    int tmpStatus = cs.getStatus();
+
+                    if (tmpUID == cUID && tmpStatus == 0) {
+                        sessionID = cs.getSessionID();
+                        break;
+                    }
+                }
+
+                if (sessionID == -1) {
+                    ChatSession ncs = new ChatSession();
+                    ncs.setUserID(cUID);
+                    ncs.setStatus(0);
+
+                    ChatSessionDAO.addNewChatSession(ncs);
+                }
+            }
+            request.getRequestDispatcher("chat_user.jsp").forward(request, response);
+        }
     }
 
     /**

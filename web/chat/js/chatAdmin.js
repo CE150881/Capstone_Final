@@ -5,6 +5,7 @@ var currentSessions;
 var lastDate;
 const inputMap = new Map();
 var tmpInputValue;
+var isLoadMessage = false;
 
 $(document).ready(function () {
     $("#init-session").click();
@@ -13,9 +14,11 @@ $(document).ready(function () {
     currentSID = document.getElementById("session-id").value;
 
     setInterval(function () {
-        loadAllSessions($("#search-content").val());
-        loadMessage(currentUID, currentSID); // this will run after every 3 seconds
-    }, 3000);
+        if (isLoadMessage === false) {
+            loadAllSessions($("#search-content").val());
+            loadMessage(currentUID, currentSID); // this will run after every 3 seconds
+        }
+    }, 5000);
 
     // Set newline key in textarea to SHIFT + ENTER
     $("textarea").keydown(function (e) {
@@ -29,6 +32,7 @@ $(document).ready(function () {
 
     // Send message to Servlet
     $("#chat-form").on("submit", function (e) {
+        isLoadMessage = true;
         var dataString = $("#chat-form").serialize();
         var map = deparam(dataString);
         var uid = map.chatUserID;
@@ -43,6 +47,7 @@ $(document).ready(function () {
                     $('#chat-content').val("");
                     inputMap.delete(sid);
                     loadMessage(uid, sid);
+                    isLoadMessage = false;
                 }
             });
         }
@@ -114,7 +119,7 @@ function loadAllSessions(searchContent) {
                     currentSessions = data;
 
                     lastDate = $('#init-session > div.user-list-item > div.uli-row > div.uli-info-container > div.uli-date').val();
-                    
+
                     // display all sessions
                     $('#session-container').html(data);
                     $('#user-session-' + currentSID).addClass("active-uli");

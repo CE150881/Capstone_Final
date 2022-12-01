@@ -35,7 +35,7 @@ public class ChatMessageDAO {
                     cm.setChatContent(rs.getString("chatContent"));
                     cm.setTime(rs.getString("time"));
                     cm.setSessionID(rs.getInt("sessionID"));
-
+                    
                     cmList.add(cm);
                 }
             }
@@ -54,10 +54,10 @@ public class ChatMessageDAO {
                         + " WHERE messageID = ?");
                 st.setInt(1, message_id);
                 ResultSet rs = st.executeQuery();
-
+                
                 if (rs.next()) {
                     cMessage = new ChatMessage();
-
+                    
                     cMessage.setMessageID(message_id);
                     cMessage.setUserID(rs.getInt("userID"));
                     cMessage.setChatContent(rs.getString("chatContent"));
@@ -79,10 +79,10 @@ public class ChatMessageDAO {
                 PreparedStatement st = conn.prepareStatement("SELECT messageID, userID, chatContent, date_format(time,'%Y-%m-%d %H:%i:%S') as time, sessionID FROM `message` WHERE sessionID = ? ORDER BY time DESC LIMIT 1");
                 st.setInt(1, session_id);
                 ResultSet rs = st.executeQuery();
-
+                
                 if (rs.next()) {
                     cMessage = new ChatMessage();
-
+                    
                     cMessage.setMessageID(rs.getInt("messageID"));
                     cMessage.setUserID(rs.getInt("userID"));
                     cMessage.setChatContent(rs.getString("chatContent"));
@@ -104,12 +104,12 @@ public class ChatMessageDAO {
                 PreparedStatement st = conn.prepareCall("INSERT INTO message"
                         + " (messageID, userID, chatContent, time, sessionID)"
                         + " VALUES (NULL, ?, ?, ?, ?);");
-
+                
                 st.setInt(1, cm.getUserID());
                 st.setString(2, cm.getChatContent());
                 st.setString(3, cm.getTime());
                 st.setInt(4, cm.getSessionID());
-
+                
                 st.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -123,13 +123,13 @@ public class ChatMessageDAO {
                 PreparedStatement st = conn.prepareCall("UPDATE message "
                         + "SET userID = ?, chatContent = ?, time = ?, sessionID = ?"
                         + "WHERE message.`messageID` = ?;");
-
+                
                 st.setInt(1, cm.getUserID());
                 st.setString(2, cm.getChatContent());
                 st.setString(3, cm.getTime());
                 st.setInt(4, cm.getSessionID());
                 st.setInt(5, cm.getMessageID());
-
+                
                 st.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -142,9 +142,9 @@ public class ChatMessageDAO {
             try (Connection conn = DBConnection.getConnection()) {
                 PreparedStatement st = conn.prepareCall("DELETE FROM message "
                         + "WHERE message.`messageID` = ?;");
-
+                
                 st.setInt(1, cm.getMessageID());
-
+                
                 st.executeUpdate();
             }
         } catch (SQLException ex) {

@@ -40,6 +40,14 @@ public class ChatAdminContentController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Chat</title>");            
+            out.println("<link href=\"chat/css/chat.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+            out.println("</head>");
+            out.println("<body>");
+            
             int cUserID;
             User cUser;
             //String username = null; UNUSED
@@ -223,6 +231,8 @@ public class ChatAdminContentController extends HttpServlet {
 
             out.println(altInitContent);
             out.println("</div>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
