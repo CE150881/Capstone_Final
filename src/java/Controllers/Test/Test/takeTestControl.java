@@ -85,6 +85,11 @@ public class takeTestControl extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
 
+        
+        HttpSession session = request.getSession();
+        String levelID = session.getAttribute("levelID").toString();
+        String tagID = session.getAttribute("tagID").toString();
+        
         String type = "Thực hiện bài kiểm tra";
 
         //lay id cua test da chon 
@@ -150,10 +155,12 @@ public class takeTestControl extends HttpServlet {
         request.setAttribute("testunis", testunis);
         request.setAttribute("type", type);
 
-        HttpSession session = request.getSession();
         session.setAttribute("TestID", TestID);
         session.setAttribute("starttime", formatted);
-
+        
+        request.setAttribute("levelID", levelID);
+        request.setAttribute("tagID", tagID);
+        
         request.getRequestDispatcher("Test_multichoice_takeTest.jsp").forward(request, response);
 
     }

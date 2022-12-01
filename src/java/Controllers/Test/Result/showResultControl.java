@@ -5,6 +5,7 @@
  */
 package Controllers.Test.Result;
 
+import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuizDAO;
 import DAOs.Test.ResultDAO;
@@ -15,6 +16,7 @@ import Models.Quiz;
 import Models.Result;
 import Models.Tag;
 import Models.Test;
+import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -112,6 +114,19 @@ public class showResultControl extends HttpServlet {
         request.setAttribute("tag", tag);
         request.setAttribute("totalScore", String.valueOf(totalScore));
         request.setAttribute("resultID", resultID);
+        
+        // document
+        String typeID = request.getParameter("typeID");
+        String levelID = request.getParameter("levelID");
+
+        MaterialDAO dao = new MaterialDAO();
+        List<Type> listT = dao.getAllType();
+        List<Level> listL = dao.getAllLevel();
+
+        request.setAttribute("listT", listT);
+        request.setAttribute("listL", listL);
+        // end document
+        
         request.getRequestDispatcher("Test_multichoice_showResult.jsp").forward(request, response);
     }
 

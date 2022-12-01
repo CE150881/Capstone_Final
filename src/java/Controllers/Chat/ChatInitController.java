@@ -7,12 +7,8 @@ package Controllers.Chat;
 
 import DAOs.Chat.ChatSessionDAO;
 import DAOs.Material.MaterialDAO;
-<<<<<<< HEAD
-import Models.Level;
-=======
 import Models.ChatSession;
-import Models.LevelMaterial;
->>>>>>> 8563087e55cd0c0119ad19f01d214765a16744c1
+import Models.Level;
 import Models.Type;
 import Models.User;
 import java.io.IOException;

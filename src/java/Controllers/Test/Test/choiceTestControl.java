@@ -106,6 +106,12 @@ public class choiceTestControl extends HttpServlet {
         request.setAttribute("choiceTestlist", listTest);
         request.setAttribute("level", level);
         request.setAttribute("tag", tag);
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("levelID", levelID);
+        session.setAttribute("tagID", tagID);
+
+        
         request.getRequestDispatcher("Test_multichoice_choiceTest.jsp").forward(request, response);
     }
 
