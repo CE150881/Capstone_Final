@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package Controllers.Account;
-
 import DAOs.Material.MaterialDAO;
 import Models.Level;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
+import Models.Tag;
 import Models.Type;
 import java.io.IOException;
 import java.util.List;
@@ -36,6 +38,7 @@ public class HomeControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        // document
         String typeID = request.getParameter("typeID");
         String levelID = request.getParameter("levelID");
 
@@ -43,18 +46,32 @@ public class HomeControl extends HttpServlet {
         List<Type> listT = dao.getAllType();
         List<Level> listL = dao.getAllLevel();
 
+        request.setAttribute("listT", listT);
+        request.setAttribute("listL", listL);
+        // end document
+        
+        // test
+        TagDAO tagdao = new TagDAO();
+        List<Tag> listtag = tagdao.getAllTag();
+        
+        LevelDAO leveldao = new LevelDAO();
+        List<Level> listlevel = leveldao.getAllLevel();
+
+        request.setAttribute("listtag", listtag);
+        request.setAttribute("listlevel", listlevel);
+        // end test
+
         
 //        TagDAO tagdao = new TagDAO();
 //        List<Tag> listtag = tagdao.getAllTag();
-//        
+//           
 //        LevelDAO leveldao = new LevelDAO();
 //        List<Level> listlevel = leveldao.getAllLevel();
 
 //        request.setAttribute("listtag", listtag);
 //        request.setAttribute("listlevel", listlevel);
         
-        request.setAttribute("listT", listT);
-        request.setAttribute("listL", listL);
+        
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
