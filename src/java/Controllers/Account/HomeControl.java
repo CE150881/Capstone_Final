@@ -6,7 +6,11 @@
 package Controllers.Account;
 
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
+import Models.Level;
 import Models.LevelMaterial;
+import Models.Tag;
 import Models.Type;
 import java.io.IOException;
 import java.util.List;
@@ -42,6 +46,15 @@ public class HomeControl extends HttpServlet {
         MaterialDAO dao = new MaterialDAO();
         List<Type> listT = dao.getAllType();
         List<LevelMaterial> listL = dao.getAllLevel();
+        
+        TagDAO tagdao = new TagDAO();
+        List<Tag> listtag = tagdao.getAllTag();
+        
+        LevelDAO leveldao = new LevelDAO();
+        List<Level> listlevel = leveldao.getAllLevel();
+
+        request.setAttribute("listtag", listtag);
+        request.setAttribute("listlevel", listlevel);
 
         request.setAttribute("listT", listT);
         request.setAttribute("listL", listL);
