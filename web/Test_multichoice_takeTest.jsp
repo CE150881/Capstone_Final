@@ -4,6 +4,7 @@
     Author     : Saing
 --%>
 
+<%@page import="Models.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -63,6 +64,13 @@
 
     <body>
 
+        <%
+                    User u = (User) session.getAttribute("acc");
+                    
+                    if (u == null) {
+                        response.sendRedirect(request.getContextPath() + "/account_login.jsp");
+                    }
+                    %>
         <!-- ======= Header ======= -->
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
             <div class="container d-flex align-items-center justify-content-lg-between">
