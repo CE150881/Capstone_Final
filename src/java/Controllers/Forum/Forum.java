@@ -9,7 +9,10 @@ import DAOs.Forum.PostDAO;
 import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
 import Models.Level;
+import Models.Tag;
 import Models.Type;
 import Models.User;
 import java.io.IOException;
@@ -75,7 +78,7 @@ public class Forum extends HttpServlet {
                 totalPage = Integer.parseInt(rs2.getString("total_post"));
             }
         } catch (SQLException ex) {
-            
+
         }
         if (totalPage <= 10) {
             totalPage = 1;
@@ -92,22 +95,39 @@ public class Forum extends HttpServlet {
             if (rs == null) {
                 request.getRequestDispatcher("home.jsp").forward(request, response);
             } else {
+
+                HttpSession session = request.getSession();
+
+                // document
+                String typeID = request.getParameter("typeID");
+                String levelID = request.getParameter("levelID");
+
                 MaterialDAO dao = new MaterialDAO();
                 List<Type> listT = dao.getAllType();
                 List<Level> listL = dao.getAllLevel();
-                
-                HttpSession session = request.getSession();
 
                 request.setAttribute("listT", listT);
                 request.setAttribute("listL", listL);
-                
+                // end document
+
+                // test
+                TagDAO tagdao = new TagDAO();
+                List<Tag> listtag = tagdao.getAllTag();
+
+                LevelDAO leveldao = new LevelDAO();
+                List<Level> listlevel = leveldao.getAllLevel();
+
+                request.setAttribute("listtag", listtag);
+                request.setAttribute("listlevel", listlevel);
+                // end test
+
                 User u = (User) request.getSession().getAttribute("acc");
                 if (u != null) {
-                int userID = u.getUserID();
-                ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
-                session.setAttribute("notReadNotification", notReadNotification);
+                    int userID = u.getUserID();
+                    ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                    session.setAttribute("notReadNotification", notReadNotification);
                 }
-                
+
                 session.setAttribute("allTopic", t);
                 session.setAttribute("totalPage", totalPage);
                 session.setAttribute("currentUrl", path);
@@ -128,13 +148,20 @@ public class Forum extends HttpServlet {
                     if (rs == null) {
                         request.getRequestDispatcher("home.jsp").forward(request, response);
                     } else {
+
+                        HttpSession session = request.getSession();
+                        // document
+                        String typeID = request.getParameter("typeID");
+                        String levelID = request.getParameter("levelID");
+
                         MaterialDAO dao = new MaterialDAO();
                         List<Type> listT = dao.getAllType();
                         List<Level> listL = dao.getAllLevel();
-                        HttpSession session = request.getSession();
 
                         request.setAttribute("listT", listT);
                         request.setAttribute("listL", listL);
+                        // end document
+
                         session.setAttribute("totalPage", totalPage);
                         session.setAttribute("currentUrl", path);
                         session.setAttribute("allPost", rs);

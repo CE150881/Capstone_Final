@@ -7,12 +7,19 @@ package Controllers.Forum;
 
 import DAOs.Forum.PostDAO;
 import DAOs.Forum.TopicDAO;
+import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
 import Models.ForumPost;
+import Models.Level;
+import Models.Tag;
+import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +49,7 @@ public class NewPost extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewPost</title>");            
+            out.println("<title>Servlet NewPost</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet NewPost at " + request.getContextPath() + "</h1>");
@@ -70,6 +77,28 @@ public class NewPost extends HttpServlet {
 
             } else {
                 HttpSession session = request.getSession();
+                // document
+                String typeID = request.getParameter("typeID");
+                String levelID = request.getParameter("levelID");
+
+                MaterialDAO dao = new MaterialDAO();
+                List<Type> listT = dao.getAllType();
+                List<Level> listL = dao.getAllLevel();
+
+                request.setAttribute("listT", listT);
+                request.setAttribute("listL", listL);
+                // end document
+
+                // test
+                TagDAO tagdao = new TagDAO();
+                List<Tag> listtag = tagdao.getAllTag();
+
+                LevelDAO leveldao = new LevelDAO();
+                List<Level> listlevel = leveldao.getAllLevel();
+
+                request.setAttribute("listtag", listtag);
+                request.setAttribute("listlevel", listlevel);
+                // end test
                 session.setAttribute("allTopic", t);
                 request.getRequestDispatcher("forum_newPost.jsp").forward(request, response);
             }

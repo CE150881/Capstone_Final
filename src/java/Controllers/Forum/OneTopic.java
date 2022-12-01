@@ -9,7 +9,10 @@ import DAOs.Forum.PostDAO;
 import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
 import Models.Level;
+import Models.Tag;
 import Models.Type;
 import Models.User;
 import java.io.IOException;
@@ -77,19 +80,37 @@ public class OneTopic extends HttpServlet {
             if (p == null) {
                 response.sendRedirect(request.getContextPath() + "/Forum");
             } else {
+
+                HttpSession session = request.getSession();
+                // document
+                String typeID = request.getParameter("typeID");
+                String levelID = request.getParameter("levelID");
+
                 MaterialDAO dao = new MaterialDAO();
                 List<Type> listT = dao.getAllType();
                 List<Level> listL = dao.getAllLevel();
-                
-                HttpSession session = request.getSession();
 
+                request.setAttribute("listT", listT);
+                request.setAttribute("listL", listL);
+                // end document
+
+                // test
+                TagDAO tagdao = new TagDAO();
+                List<Tag> listtag = tagdao.getAllTag();
+
+                LevelDAO leveldao = new LevelDAO();
+                List<Level> listlevel = leveldao.getAllLevel();
+
+                request.setAttribute("listtag", listtag);
+                request.setAttribute("listlevel", listlevel);
+                // end test
                 User u = (User) request.getSession().getAttribute("acc");
                 if (u != null) {
-                int userID = u.getUserID();
-                ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
-                session.setAttribute("notReadNotification", notReadNotification);
+                    int userID = u.getUserID();
+                    ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                    session.setAttribute("notReadNotification", notReadNotification);
                 }
-                
+
                 request.setAttribute("listT", listT);
                 request.setAttribute("listL", listL);
                 session.setAttribute("allTopic", t);
