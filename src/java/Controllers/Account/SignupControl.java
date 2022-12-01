@@ -8,6 +8,10 @@ package Controllers.Account;
 import DAOs.Account.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +39,11 @@ public class SignupControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+//        try {
+//            password = MD5(password);
+//        } catch (Exception ex) {
+//            Logger.getLogger(SignupControl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         String username = request.getParameter("username");
         String phone = request.getParameter("phone");
 
@@ -44,6 +53,14 @@ public class SignupControl extends HttpServlet {
 
         response.sendRedirect("account_login.jsp");
     }
+    
+    public static String MD5(String s) throws Exception {
+      MessageDigest m=MessageDigest.getInstance("MD5");
+      m.update(s.getBytes(),0,s.length());     
+      return new BigInteger(1,m.digest()).toString(16); 
+    }
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
