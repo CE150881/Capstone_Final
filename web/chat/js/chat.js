@@ -1,10 +1,13 @@
 var currentData;
+var isLoadMessage = false;
 
 $(document).ready(function () {
-    loadMessage(false); // This will run on page load
+    loadMessage(isLoadMessage); // This will run on page load
     setInterval(function () {
-        loadMessage(false); // this will run after every 1 seconds
-    }, 3000);
+        if (isLoadMessage === false) {
+            loadMessage(isLoadMessage); // this will run after every 3 seconds
+        }
+    }, 5000);
 
     // Set newline key in textarea to SHIFT + ENTER
     $("textarea").keydown(function (e) {
@@ -17,17 +20,22 @@ $(document).ready(function () {
     });
 
     $("#chat-form").on("submit", function (e) {
+        isLoadMessage = true;
         var dataString = $("#chat-form").serialize();
-        //var map = deparam(dataString);
+        var map = deparam(dataString);
+        var chatContent = map.chatContent;
         //var uid = map.chatUserID;
         //var sid = map.sessionID;
-        $.ajax({
-            type: "POST",
-            url: "ChatController?" + dataString,
-            success: function () {
-                loadMessage(true);
-            }
-        });
+        if (chatContent !== "") {
+            $.ajax({
+                type: "POST",
+                url: "ChatController?" + dataString,
+                success: function () {
+                    loadMessage(isLoadMessage);
+                    isLoadMessage = false;
+                }
+            });
+        }
         e.preventDefault();
     });
 });

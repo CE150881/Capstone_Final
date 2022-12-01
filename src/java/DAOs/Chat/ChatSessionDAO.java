@@ -58,7 +58,7 @@ public class ChatSessionDAO {
                     cs2.setUserID(rs.getInt("userID"));
                     cs2.setStatus(rs.getInt("status"));
                     cs2.setMessageID(rs.getInt("messageID"));
-
+                    
                     cs2List.add(cs2);
                 }
             }
@@ -77,10 +77,10 @@ public class ChatSessionDAO {
                         + " WHERE sessionID = ?");
                 st.setInt(1, session_id);
                 ResultSet rs = st.executeQuery();
-
+                
                 if (rs.next()) {
                     cSession = new ChatSession();
-
+                    
                     cSession.setSessionID(session_id);
                     cSession.setUserID(rs.getInt("userID"));
                     cSession.setStatus(rs.getInt("status"));
@@ -99,10 +99,10 @@ public class ChatSessionDAO {
                 PreparedStatement st = conn.prepareCall("INSERT INTO session"
                         + " (sessionID, userID, status)"
                         + " VALUES (NULL, ?, ?);");
-
+                
                 st.setInt(1, cs.getUserID());
                 st.setInt(2, cs.getStatus());
-
+                
                 st.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -116,11 +116,11 @@ public class ChatSessionDAO {
                 PreparedStatement st = conn.prepareCall("UPDATE session "
                         + "SET userID = ?, status = ?"
                         + "WHERE session.`sessionID` = ?;");
-
+                
                 st.setInt(1, cs.getUserID());
                 st.setInt(2, cs.getStatus());
                 st.setInt(3, cs.getSessionID());
-
+                
                 st.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -133,9 +133,9 @@ public class ChatSessionDAO {
             try (Connection conn = DBConnection.getConnection()) {
                 PreparedStatement st = conn.prepareCall("DELETE FROM session "
                         + "WHERE session.`sessionID` = ?;");
-
+                
                 st.setInt(1, cs.getSessionID());
-
+                
                 st.executeUpdate();
             }
         } catch (SQLException ex) {

@@ -35,6 +35,8 @@ public class UserDAO {
             ps.setString(4, phone);
             ps.setString(5, avatar);
             ps.executeUpdate();
+
+            conn.close();
         } catch (Exception e) {
 
         }
@@ -51,6 +53,8 @@ public class UserDAO {
             ps.setString(3, username);
             ps.setString(4, avatar);
             ps.executeUpdate();
+
+            conn.close();
         } catch (Exception e) {
 
         }
@@ -75,6 +79,8 @@ public class UserDAO {
                         rs.getString(6),
                         rs.getString(7));
             }
+
+            conn.close();
         } catch (Exception e) {
 
         }
@@ -99,6 +105,8 @@ public class UserDAO {
                         rs.getString(6),
                         rs.getString(7));
             }
+
+            conn.close();
         } catch (Exception e) {
 
         }
@@ -123,6 +131,8 @@ public class UserDAO {
                         rs.getString(6),
                         rs.getString(7));
             }
+
+            conn.close();
         } catch (Exception e) {
 
         }
@@ -146,6 +156,8 @@ public class UserDAO {
                         rs.getString(6),
                         rs.getString(7));
             }
+
+            conn.close();
         } catch (Exception e) {
 
         }
@@ -228,6 +240,8 @@ public class UserDAO {
             ps.setString(2, phone);
             ps.setString(3, email);
             ps.executeUpdate();
+
+            conn.close();
         } catch (Exception e) {
 
         }
@@ -244,6 +258,8 @@ public class UserDAO {
             ps.setString(1, avatar);
             ps.setString(2, email);
             ps.executeUpdate();
+
+            conn.close();
         } catch (Exception e) {
 
         }
@@ -258,6 +274,8 @@ public class UserDAO {
             ps.setString(1, password);
             ps.setString(2, email);
             ps.executeUpdate();
+
+            conn.close();
         } catch (Exception e) {
 
         }
@@ -282,6 +300,8 @@ public class UserDAO {
                         rs.getString(7)
                 );
             }
+
+            conn.close();
         } catch (Exception e) {
         }
         return null;
@@ -290,24 +310,35 @@ public class UserDAO {
     // get all account
     public List<User> getAllAccount() {
         List<User> list = new ArrayList<>();
-        ResultSet resultSet = DBConnection.querySet("select * from user");
-        if (resultSet != null) {
-            try {
-                while (resultSet.next()) {
-                    list.add(new User(
-                            resultSet.getInt(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4),
-                            resultSet.getString(5),
-                            resultSet.getString(6),
-                            resultSet.getString(7)
-                    ));
+        String query = "SELECT * FROM user";
+        try {
+            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            //ResultSet resultSet = DBConnection.querySet("select * from user");
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet != null) {
+                try {
+                    while (resultSet.next()) {
+                        list.add(new User(
+                                resultSet.getInt(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getString(5),
+                                resultSet.getString(6),
+                                resultSet.getString(7)
+                        ));
+                    }
+                } catch (Exception e) {
                 }
-            } catch (Exception e) {
+                conn.close();
+                return list;
             }
+            
+        } catch (Exception e) {
+            
         }
-        return list;
+        return null;
     }
 
     public User getUserByID(String userID) {
@@ -328,6 +359,8 @@ public class UserDAO {
                         rs.getString(7)
                 );
             }
+
+            conn.close();
         } catch (Exception e) {
         }
         return null;
@@ -351,6 +384,8 @@ public class UserDAO {
                         rs.getString(7)
                 );
             }
+
+            conn.close();
         } catch (Exception e) {
         }
         return null;
