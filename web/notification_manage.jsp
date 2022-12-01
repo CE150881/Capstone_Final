@@ -288,7 +288,10 @@
                         <div class="table-title">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h2>Quản Lí Thông Báo</h2>
+                                    <h2>Quản Lí Tài Khoản</h2>
+                                </div>
+                                <div class="col-sm-6">
+                                    <a href="#addNoti" class="btn btn-success" data-toggle="modal" data-target="#addNoti" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Tạo Tài Khoản</span></a>                                             
                                 </div>
                             </div>
                         </div>
@@ -308,7 +311,7 @@
                                     tmpArrow.style.transform = 'rotate(360deg) scaleX(-1)';
                                 }
                             }
-                            
+
                             function notifFormDeleteConfirm(notifID) {
                                 $(document).on('click', '#notifDeleteBtn-' + notifID, function (e) {
                                     e.preventDefault();
@@ -334,7 +337,7 @@
                             </form>
                         </div><br><br>
                         <!-- Add New Notification/// -->
-                        
+
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -395,7 +398,37 @@
                                 %>                             
                             </tbody>
                         </table>
-                    </div>    
+                    </div>  
+
+                    <!-- Modal Add-->
+                    <div class="modal fade" id="addNoti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form action="CreateAccountControl" method="post">
+                                    <div class="modal-header">                      
+                                        <h4 class="modal-title">Tạo Thông Báo</h4>
+                                    </div>
+                                    <div class="modal-body">    
+                                        <div class="form-group">
+                                            <label>Tiêu Đề</label>
+                                            <input name="email" type="email" class="form-control" required>
+                                        </div>                            
+                                        
+                                        <div class="form-group">
+                                            <label>Chi Tiết</label>
+                                            <textarea name="username" type="text" class="form-control" required></textarea>
+                                        </div>                                                        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                                        <input type="submit" class="btn btn-success" style="background-color: #000000;" value="Tạo Thông Báo">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> 
+
+
                     <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
