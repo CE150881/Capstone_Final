@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
-import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *
@@ -47,7 +47,7 @@ public class SubmitImage extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SubmitImage</title>");            
+            out.println("<title>Servlet SubmitImage</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet SubmitImage at " + request.getContextPath() + "</h1>");
@@ -106,7 +106,6 @@ public class SubmitImage extends HttpServlet {
 
         // jpg needs BufferedImage.TYPE_INT_RGB
         // png needs BufferedImage.TYPE_INT_ARGB
-
         // create a blank, RGB, same width and height
         BufferedImage newBufferedImage = new BufferedImage(
                 originalImage.getWidth(),
@@ -123,7 +122,7 @@ public class SubmitImage extends HttpServlet {
 
         // save an image
         ImageIO.write(newBufferedImage, "jpg", target.toFile());
-                
+
         Tesseract tesseract = new Tesseract();
         try {
             String filePath = getServletContext().getRealPath("") + "/tessdata";
