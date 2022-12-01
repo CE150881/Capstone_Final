@@ -19,12 +19,24 @@
         <link rel="stylesheet" href="user/css/login.css">
 
     </head>
+     <style>
+        .aa a {
+            width: 100%;
+            display: block;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #000;
+            background: #fff; }
+        .aa a:hover {
+            background: #f5b8c5;
+            color: #fff;
+            border-color: #f5b8c5; }
+        </style>
     <body class="img js-fullheight" style="background-image: url(user/img/13.jpg);">
         <section class="ftco-section">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 text-center mb-5">
-                        <h2 class="heading-section">Đăng Ký</h2>
+                        <h2 class="heading-section">ĐĂNG KÝ</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -49,7 +61,7 @@
                                 </div>
                             </form>
                             <p class="w-100 text-center">&mdash; hoặc đăng ký với &mdash;</p>
-                            <div class="social d-flex text-center">
+                            <div class="aa d-flex text-center">
                                 <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8084/Capstone_Final/SignupWithGoogleControl&response_type=code
                                    &client_id=385719648415-f3cmsdtcnus0srmpkn5897b5brdes37s.apps.googleusercontent.com&approval_prompt=force" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Google</a>
                             </div>
