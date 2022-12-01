@@ -42,7 +42,7 @@ public class UserDAO {
 
     //create new account
     public void signupContentManager(String email, String password, String username, String avatar) {
-        String query = "INSERT INTO `user`(`email`, `password`, `username`, `phone`, `avatar`, `role`) VALUES (?,?,?,'',?,'Quản lí nội dung')";
+        String query = "INSERT INTO `user`(`email`, `password`, `username`, `phone`, `avatar`, `role`) VALUES (?,MD5(?),?,'',?,'Quản lí nội dung')";
         try {
             conn = new DBConnection().getConnection();       // call function form DBconnection
             ps = conn.prepareStatement(query);
