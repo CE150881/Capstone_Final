@@ -7,7 +7,7 @@ package Controllers.Alphabet;
 
 import DAOs.Material.MaterialDAO;
 import Models.Alphabet;
-import Models.LevelMaterial;
+import Models.Level;
 import Models.Type;
 import java.io.IOException;
 import java.util.List;
@@ -42,7 +42,7 @@ public class AlphabetControl extends HttpServlet {
 
         MaterialDAO dao = new MaterialDAO();
         List<Type> listT = dao.getAllType();
-        List<LevelMaterial> listL = dao.getAllLevel();
+        List<Level> listL = dao.getAllLevel();
         List<Alphabet> listA = dao.getAlphabetByType(type);
 
         request.setAttribute("type", type);

@@ -6,7 +6,7 @@
 package Controllers.Account;
 
 import DAOs.Material.MaterialDAO;
-import Models.LevelMaterial;
+import Models.Level;
 import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +42,7 @@ public class ProfileUserControl extends HttpServlet {
 
         MaterialDAO dao = new MaterialDAO();
         List<Type> listT = dao.getAllType();
-        List<LevelMaterial> listL = dao.getAllLevel();
+        List<Level> listL = dao.getAllLevel();
 
         request.setAttribute("listT", listT);
         request.setAttribute("listL", listL);

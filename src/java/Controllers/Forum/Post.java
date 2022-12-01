@@ -17,7 +17,7 @@ import Models.ForumPost;
 import Models.ForumReportNotification;
 import Models.ForumReportPost;
 import Models.ForumTopic;
-import Models.LevelMaterial;
+import Models.Level;
 import Models.Type;
 import Models.User;
 import java.io.IOException;
@@ -93,7 +93,7 @@ public class Post extends HttpServlet {
 
                 MaterialDAO dao2 = new MaterialDAO();
                 List<Type> listT = dao2.getAllType();
-                List<LevelMaterial> listL = dao2.getAllLevel();
+                List<Level> listL = dao2.getAllLevel();
                 HttpSession session = request.getSession();
 
                 request.setAttribute("listT", listT);

@@ -44,11 +44,7 @@
         ======================================================== -->
     </head>
 
-    <style>
-        .dropdown-menu li:hover>a{
-            background-color: #f5b8c5;
-        }
-    </style>
+
 
     <body>
 
@@ -62,8 +58,8 @@
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto active" href="HomeControl">Trang Chủ</a></li>
-                        <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
+                        <li><a class="nav-link scrollto" href="HomeControl">Trang Chủ</a></li>
+                        <li class="dropdown"><a class="active" href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
@@ -75,23 +71,38 @@
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
+                                            <li><a href="KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
+                                            <li><a href="GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-                        <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
+                        <li class="dropdown"><a class="nav-link scrollto"><span>Kiểm Tra</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <c:forEach items="${listtag}" var="i">
+                                    <li class="dropdown"><a><span>${i.desc}</span> <i class="bi bi-chevron-right"></i></a>
+                                        <ul>
+                                            <c:forEach items="${listlevel}" var="x">
+                                                <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
+                                                </c:forEach> 
+                                        </ul>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
                         <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
-                        <li><a class="nav-link scrollto" href="">Hỗ Trợ</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Chat">Hỗ Trợ</a></li>
+                            <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                            <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
+                            </c:if>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
@@ -99,15 +110,15 @@
                     <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                         <!-- đã đăng nhập -->
 
-                        <a href="account_profile.jsp" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="account_profile.jsp">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
 
-                    <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">                   
+                    <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
                         <a href="account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
                         <a href="account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
                     </c:if>
@@ -115,6 +126,11 @@
 
             </div>
 
+            <style>
+                .dropdown-menu li:hover>a{
+                    background-color: #f5b8c5;
+                }
+            </style>
         </header><!-- End Header -->
 
 
@@ -163,10 +179,29 @@
 
                         <c:forEach items="${listA}" var="g">
                             <div class="col-xl-3 col-md-4">
-                                <div class="icon-box">
-                                    <h4><a href="">${g.alphabet}</a></h4>
-                                    <p>${g.pronounce}</p>
+                                <div class="icon-box" onclick="myFunction()">
+                                    <h4><input id="text" value="${g.alphabet}" style="display: none"><a>${g.alphabet}</a></input></h4>
+                                    <p>${g.pronounce}</p>                                    
                                 </div>
+                                <script>
+                                    function myFunction() {
+                                        var text = document.getElementById("text").value
+                                        document.getElementById("text").value = text;
+
+                                        var msg = new SpeechSynthesisUtterance();
+                                        var voices = window.speechSynthesis.getVoices();
+
+                                        msg.volume = 1; // 0 to 1
+                                        msg.rate = 1; // 0.1 to 10                
+                                        msg.text = text;
+                                        msg.lang = 'ja-JP';
+
+                                        msg.onend = function (e) {
+                                            console.log('Finished in ' + event.elapsedTime + ' seconds.');
+                                        };
+                                        speechSynthesis.speak(msg);
+                                    }
+                                </script>
                             </div>
                         </c:forEach>
 

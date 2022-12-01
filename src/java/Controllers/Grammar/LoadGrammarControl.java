@@ -7,7 +7,7 @@ package Controllers.Grammar;
 
 import DAOs.Material.MaterialDAO;
 import Models.Grammar;
-import Models.LevelMaterial;
+import Models.Level;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -39,7 +39,7 @@ public class LoadGrammarControl extends HttpServlet {
 
         MaterialDAO dao = new MaterialDAO();
         Grammar a = dao.getGrammarByGrammarID(grammarID);
-        List<LevelMaterial> listL = dao.getAllLevel();
+        List<Level> listL = dao.getAllLevel();
 
         request.setAttribute("listL", listL);
         request.setAttribute("detail", a);

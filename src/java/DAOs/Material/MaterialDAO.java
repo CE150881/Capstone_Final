@@ -10,7 +10,7 @@ import Models.Alphabet;
 import Models.ExampleGrammar;
 import Models.Grammar;
 import Models.Kanji;
-import Models.LevelMaterial;
+import Models.Level;
 import Models.Type;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,14 +29,15 @@ public class MaterialDAO {
     ResultSet rs = null;
 
     // get all level
-    public List<LevelMaterial> getAllLevel() {
-        List<LevelMaterial> list = new ArrayList<>();
+    public List<Level> getAllLevel() {
+        List<Level> list = new ArrayList<>();
         ResultSet resultSet = DBConnection.querySet("select * from level");
         if (resultSet != null) {
             try {
                 while (resultSet.next()) {
-                    list.add(new LevelMaterial(
-                            resultSet.getString(1)
+                    list.add(new Level(
+                            resultSet.getInt(1),
+                            resultSet.getString(2)
                     ));
                 }
             } catch (Exception e) {
@@ -84,14 +85,14 @@ public class MaterialDAO {
         return list;
     }
 
-    // get kanji by level
-    public List<Kanji> getKanjiByLevel(String level) {
+    // get kanji by level ID
+    public List<Kanji> getKanjiByLevelID(String levelID) {
         List<Kanji> list = new ArrayList<>();
-        String query = "SELECT * FROM kanji WHERE level = ?";
+        String query = "SELECT * FROM kanji WHERE levelID = ?";
         try {
             conn = new DBConnection().getConnection(); // call function form DBconnection
             ps = conn.prepareStatement(query);
-            ps.setString(1, level);
+            ps.setString(1, levelID);
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Kanji(
@@ -106,15 +107,15 @@ public class MaterialDAO {
         }
         return list;
     }
-
-    // get grammar by level
-    public List<Grammar> getGrammarByLevel(String level) {
+ 
+    // get grammar by level ID
+    public List<Grammar> getGrammarByLevelID(String levelID) {
         List<Grammar> list = new ArrayList<>();
-        String query = "SELECT * FROM grammar WHERE level = ?";
+        String query = "SELECT * FROM grammar WHERE levelID = ?";
         try {
             conn = new DBConnection().getConnection(); // call function form DBconnection
             ps = conn.prepareStatement(query);
-            ps.setString(1, level);
+            ps.setString(1, levelID);
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Grammar(

@@ -215,14 +215,14 @@
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
+                                            <li><a href="KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
+                                            <li><a href="GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
@@ -295,31 +295,31 @@
                 <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
                     <div class="col-xl-2 col-md-4">
                         <div class="icon-box">
-                            <i class="ri-store-line"></i>
+                            <i class="bi bi-house"></i>
                             <h3><a href="HomeControl">Trang Chủ</a></h3>
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-4">
                         <div class="icon-box">
-                            <i class="ri-bar-chart-box-line"></i>
+                            <i class="bi bi-file-earmark-text"></i>
                             <h3><a href="">Tài Liệu</a></h3>
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-4">
                         <div class="icon-box">
-                            <i class="ri-calendar-todo-line"></i>
+                            <i class="bi bi-card-checklist"></i>
                             <h3><a href="">Kiểm Tra</a></h3>
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-4">
                         <div class="icon-box">
-                            <i class="ri-paint-brush-line"></i>
+                            <i class="bi bi-journal-arrow-up"></i>
                             <h3><a href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></h3>
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-4">
                         <div class="icon-box">
-                            <i class="ri-database-2-line"></i>
+                            <i class="bi bi-chat-left-quote"></i>
                             <h3><a href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></h3>
                         </div>
                     </div>
@@ -399,22 +399,22 @@
                         <div class="image col-lg-6" style='background-image: url("user/img/3.jpg");' data-aos="fade-right"></div>
                         <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
                             <div class="icon-box mt-5 mt-lg-0" data-aos="zoom-in" data-aos-delay="150">
-                                <i class="bx bx-receipt"></i>
+                                <i class="bi bi-file-earmark-text"></i>
                                 <h4>Tài Liệu</h4>
                                 <p>Tra cứu bảng chữ cái, kanji theo cấp độ và ngữ pháp theo cấp độ</p>
                             </div>
                             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
-                                <i class="bx bx-cube-alt"></i>
+                                <i class="bi bi-card-checklist"></i>
                                 <h4>Kiểm Tra</h4>
                                 <p>Thử sức với những bài thi JLPT ở mọi cấp độ</p>
                             </div>
                             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
-                                <i class="bx bx-images"></i>
+                                <i class="bi bi-journal-arrow-up"></i>
                                 <h4>Luyện Tập</h4>
                                 <p>Trau dồi kiến thức tiếng Nhật mọi kỹ năng</p>
                             </div>
                             <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
-                                <i class="bx bx-shield"></i>
+                                <i class="bi bi-chat-left-quote"></i>
                                 <h4>Cộng Đồng</h4>
                                 <p>Tham gia cộng đồng để trao đổi, giải đáp thắc mắc về tiếng Nhật</p>
                             </div>
@@ -489,12 +489,10 @@
                         <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
                             <div class="member" data-aos="fade-up" data-aos-delay="100">
                                 <div class="member-img">
-                                    <img src="user/img/team/team-1.jpg" class="img-fluid" alt="">
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
+                                    <img src="images/hung.jpg" class="img-fluid" alt="" width="300px">
+                                    <div class="social">                                       
+                                        <a href="https://www.facebook.com/hung.nguyenquoc.5686"><i class="bi bi-facebook"></i></a>
+                                        <a href=""><i class="bi bi-instagram"></i></a>                                       
                                     </div>
                                 </div>
                                 <div class="member-info">
@@ -507,12 +505,10 @@
                         <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
                             <div class="member" data-aos="fade-up" data-aos-delay="200">
                                 <div class="member-img">
-                                    <img src="user/img/team/team-2.jpg" class="img-fluid" alt="">
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
+                                    <img src="images/tam.jpg" class="img-fluid" alt="" width="400px">
+                                    <div class="social">                                       
+                                        <a href="https://www.facebook.com/ahi812/"><i class="bi bi-facebook"></i></a>
+                                        <a href=""><i class="bi bi-instagram"></i></a>                                       
                                     </div>
                                 </div>
                                 <div class="member-info">
@@ -525,12 +521,10 @@
                         <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
                             <div class="member" data-aos="fade-up" data-aos-delay="300">
                                 <div class="member-img">
-                                    <img src="user/img/team/team-3.jpg" class="img-fluid" alt="">
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
+                                    <img src="images/tan.jpg" class="img-fluid" alt="" width="400px">
+                                    <div class="social">                                        
+                                        <a href="https://www.facebook.com/nomoto.atarashii"><i class="bi bi-facebook"></i></a>
+                                        <a href=""><i class="bi bi-instagram"></i></a>                                       
                                     </div>
                                 </div>
                                 <div class="member-info">
@@ -543,12 +537,10 @@
                         <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
                             <div class="member" data-aos="fade-up" data-aos-delay="400">
                                 <div class="member-img">
-                                    <img src="user/img/team/team-4.jpg" class="img-fluid" alt="">
-                                    <div class="social">
-                                        <a href=""><i class="bi bi-twitter"></i></a>
-                                        <a href=""><i class="bi bi-facebook"></i></a>
-                                        <a href=""><i class="bi bi-instagram"></i></a>
-                                        <a href=""><i class="bi bi-linkedin"></i></a>
+                                    <img src="images/sang.jpg" class="img-fluid" alt="" width="300px">
+                                    <div class="social">                                       
+                                        <a href="https://www.facebook.com/sang.nguyenlam.58"><i class="bi bi-facebook"></i></a>
+                                        <a href=""><i class="bi bi-instagram"></i></a>                                       
                                     </div>
                                 </div>
                                 <div class="member-info">

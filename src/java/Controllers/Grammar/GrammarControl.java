@@ -7,7 +7,7 @@ package Controllers.Grammar;
 
 import DAOs.Material.MaterialDAO;
 import Models.Grammar;
-import Models.LevelMaterial;
+import Models.Level;
 import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,14 +37,14 @@ public class GrammarControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String level = request.getParameter("level");
+        String levelID = request.getParameter("levelID");
 
         MaterialDAO dao = new MaterialDAO();
         List<Type> listT = dao.getAllType();
-        List<LevelMaterial> listL = dao.getAllLevel();
-        List<Grammar> listG = dao.getGrammarByLevel(level);
+        List<Level> listL = dao.getAllLevel();
+        List<Grammar> listG = dao.getGrammarByLevelID(levelID);
 
-        request.setAttribute("level", level);
+        request.setAttribute("level", levelID);
         request.setAttribute("listT", listT);
         request.setAttribute("listL", listL);
         request.setAttribute("listG", listG);

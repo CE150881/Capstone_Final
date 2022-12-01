@@ -407,6 +407,7 @@
                                 <form action="CreateAccountControl" method="post">
                                     <div class="modal-header">                      
                                         <h4 class="modal-title">Tạo Thông Báo</h4>
+                                        
                                     </div>
                                     <div class="modal-body">    
                                         <div class="form-group">

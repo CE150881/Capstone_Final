@@ -7,7 +7,7 @@ package Controllers.Kanji;
 
 import DAOs.Material.MaterialDAO;
 import Models.Kanji;
-import Models.LevelMaterial;
+import Models.Level;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -40,7 +40,7 @@ public class LoadKanjiPictureControl extends HttpServlet {
 
         MaterialDAO dao = new MaterialDAO();
         Kanji a = dao.getKanjiByKanjiID(kanjiID);
-        List<LevelMaterial> listL = dao.getAllLevel();
+        List<Level> listL = dao.getAllLevel();
 
         request.setAttribute("listL", listL);
         request.setAttribute("detail", a);

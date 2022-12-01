@@ -170,6 +170,9 @@
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="pw-tab" data-bs-toggle="tab" data-bs-target="#pw" type="button" role="tab" aria-controls="pw" aria-selected="false">Cập Nhật Mật Khẩu</a>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">Lịch Sử Kiểm Tra</a>
+                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
 
@@ -242,6 +245,12 @@
                                 </form>
                             </div>
                         </div>
+
+                        <div class="tab-pane fade" style="margin-top: 50px; margin-left: 300px;" id="profile" role="tabpanel" aria-labelledby="history-tab">
+                            <p>lich su o day </p>
+                        </div>
+                                            
+                                            
                     </div>
                 </div>
                 </div>

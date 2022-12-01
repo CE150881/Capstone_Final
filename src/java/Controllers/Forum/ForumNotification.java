@@ -7,7 +7,7 @@ package Controllers.Forum;
 
 import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Material.MaterialDAO;
-import Models.LevelMaterial;
+import Models.Level;
 import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -73,7 +73,7 @@ public class ForumNotification extends HttpServlet {
 
             MaterialDAO dao2 = new MaterialDAO();
             List<Type> listT = dao2.getAllType();
-            List<LevelMaterial> listL = dao2.getAllLevel();
+            List<Level> listL = dao2.getAllLevel();
             HttpSession session = request.getSession();
 
             request.setAttribute("listT", listT);

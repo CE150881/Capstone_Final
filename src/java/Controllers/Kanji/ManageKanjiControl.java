@@ -7,7 +7,7 @@ package Controllers.Kanji;
 
 import DAOs.Material.MaterialDAO;
 import Models.Kanji;
-import Models.LevelMaterial;
+import Models.Level;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -37,7 +37,7 @@ public class ManageKanjiControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         MaterialDAO dao = new MaterialDAO();
-        List<LevelMaterial> listL = dao.getAllLevel();
+        List<Level> listL = dao.getAllLevel();
         List<Kanji> listK = dao.getAllKanji();
 
         request.setAttribute("listL", listL);

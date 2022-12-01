@@ -9,7 +9,7 @@ import DAOs.Forum.PostDAO;
 import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
-import Models.LevelMaterial;
+import Models.Level;
 import Models.Type;
 import Models.User;
 import java.io.IOException;
@@ -17,7 +17,6 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -76,7 +75,7 @@ public class Forum extends HttpServlet {
                 totalPage = Integer.parseInt(rs2.getString("total_post"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Forum.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         if (totalPage <= 10) {
             totalPage = 1;
@@ -95,7 +94,7 @@ public class Forum extends HttpServlet {
             } else {
                 MaterialDAO dao = new MaterialDAO();
                 List<Type> listT = dao.getAllType();
-                List<LevelMaterial> listL = dao.getAllLevel();
+                List<Level> listL = dao.getAllLevel();
                 
                 HttpSession session = request.getSession();
 
@@ -131,7 +130,7 @@ public class Forum extends HttpServlet {
                     } else {
                         MaterialDAO dao = new MaterialDAO();
                         List<Type> listT = dao.getAllType();
-                        List<LevelMaterial> listL = dao.getAllLevel();
+                        List<Level> listL = dao.getAllLevel();
                         HttpSession session = request.getSession();
 
                         request.setAttribute("listT", listT);

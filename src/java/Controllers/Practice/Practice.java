@@ -6,7 +6,7 @@
 package Controllers.Practice;
 
 import DAOs.Material.MaterialDAO;
-import Models.LevelMaterial;
+import Models.Level;
 import Models.Type;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -71,7 +71,7 @@ public class Practice extends HttpServlet {
         if (path.endsWith("/Practice")) {
             MaterialDAO dao = new MaterialDAO();
             List<Type> listT = dao.getAllType();
-            List<LevelMaterial> listL = dao.getAllLevel();
+            List<Level> listL = dao.getAllLevel();
             HttpSession session = request.getSession();
 
             request.setAttribute("listT", listT);

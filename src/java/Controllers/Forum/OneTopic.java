@@ -9,7 +9,7 @@ import DAOs.Forum.PostDAO;
 import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
-import Models.LevelMaterial;
+import Models.Level;
 import Models.Type;
 import Models.User;
 import java.io.IOException;
@@ -79,7 +79,7 @@ public class OneTopic extends HttpServlet {
             } else {
                 MaterialDAO dao = new MaterialDAO();
                 List<Type> listT = dao.getAllType();
-                List<LevelMaterial> listL = dao.getAllLevel();
+                List<Level> listL = dao.getAllLevel();
                 
                 HttpSession session = request.getSession();
 
