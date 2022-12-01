@@ -6,7 +6,10 @@
 package Controllers.Account;
 
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
 import Models.Level;
+import Models.Tag;
 import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -46,6 +49,18 @@ public class ProfileUserControl extends HttpServlet {
 
         request.setAttribute("listT", listT);
         request.setAttribute("listL", listL);
+        
+         // test
+        TagDAO tagdao = new TagDAO();
+        List<Tag> listtag = tagdao.getAllTag();
+        
+        LevelDAO leveldao = new LevelDAO();
+        List<Level> listlevel = leveldao.getAllLevel();
+
+        request.setAttribute("listtag", listtag);
+        request.setAttribute("listlevel", listlevel);
+        // end test
+        
         request.getRequestDispatcher("account_profile.jsp").forward(request, response);
     }
 

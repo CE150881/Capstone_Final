@@ -288,29 +288,16 @@
                         <div class="table-title">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h2>Quản Lí Tài Khoản</h2>
+                                    <h2>Quản Lí Thông Báo</h2>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a href="#addNoti" class="btn btn-success" data-toggle="modal" data-target="#addNoti" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Tạo Tài Khoản</span></a>                                             
+                                    <a href="#addNoti" class="btn btn-success" data-toggle="modal" data-target="#addNoti" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Tạo Thông Báo</span></a>                                             
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <!-- ///Add New Notification -->
-                        <button id="add-form-legend" onclick="dropdownAddNotification()"><i class="fa-regular fa-square-plus"></i> Thêm thông báo <i id="dropdown-arrow" class="fa-solid fa-angle-down"></i></button>
+                        <br>                       
                         <script>
-                            function dropdownAddNotification() {
-                                var tmp = document.getElementById('add-form-container');
-                                var tmpArrow = document.getElementById('dropdown-arrow');
-
-                                if (tmp.style.display === '' || tmp.style.display === 'none') {
-                                    tmp.style.display = 'block';
-                                    tmpArrow.style.transform = 'rotate(180deg) scaleX(-1)';
-                                } else {
-                                    tmp.style.display = 'none';
-                                    tmpArrow.style.transform = 'rotate(360deg) scaleX(-1)';
-                                }
-                            }
+                            
 
                             function notifFormDeleteConfirm(notifID) {
                                 $(document).on('click', '#notifDeleteBtn-' + notifID, function (e) {
@@ -329,14 +316,7 @@
                                 });
                             }
                         </script>
-                        <div id="add-form-container">
-                            <form id="add-form" action="AddNotification" method="POST">
-                                <input type="text" id="add-title" name="addTitle" placeholder="Nhập tiêu đề"><br>
-                                <textarea type="text" id="add-details" name="addDetails" placeholder="Nhập chi tiết"></textarea><br>
-                                <button type="submit" id="add-submit">Lưu</button><br>
-                            </form>
-                        </div><br><br>
-                        <!-- Add New Notification/// -->
+                        
 
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
@@ -404,7 +384,7 @@
                     <div class="modal fade" id="addNoti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="CreateAccountControl" method="post">
+                                <form action="AddNotification" method="post">
                                     <div class="modal-header">                      
                                         <h4 class="modal-title">Tạo Thông Báo</h4>
                                         
@@ -412,12 +392,12 @@
                                     <div class="modal-body">    
                                         <div class="form-group">
                                             <label>Tiêu Đề</label>
-                                            <input name="email" type="email" class="form-control" required>
+                                            <input type="text" id="add-title" name="addTitle" >
                                         </div>                            
                                         
                                         <div class="form-group">
                                             <label>Chi Tiết</label>
-                                            <textarea name="username" type="text" class="form-control" required></textarea>
+                                            <textarea type="text" id="add-details" name="addDetails"></textarea>
                                         </div>                                                        
                                     </div>
                                     <div class="modal-footer">

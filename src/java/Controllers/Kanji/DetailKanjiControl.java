@@ -6,8 +6,11 @@
 package Controllers.Kanji;
 
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
 import Models.Kanji;
 import Models.Level;
+import Models.Tag;
 import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,6 +50,18 @@ public class DetailKanjiControl extends HttpServlet {
         request.setAttribute("detail", a);
         request.setAttribute("listT", listT);
         request.setAttribute("listL", listL);
+        
+         // test
+        TagDAO tagdao = new TagDAO();
+        List<Tag> listtag = tagdao.getAllTag();
+        
+        LevelDAO leveldao = new LevelDAO();
+        List<Level> listlevel = leveldao.getAllLevel();
+
+        request.setAttribute("listtag", listtag);
+        request.setAttribute("listlevel", listlevel);
+        // end test
+        
         request.getRequestDispatcher("kanji_detail.jsp").forward(request, response);
     }
 
