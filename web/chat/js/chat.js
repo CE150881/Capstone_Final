@@ -1,7 +1,9 @@
 var currentData;
 var isLoadMessage = false;
+var isProcessing;
 
 $(document).ready(function () {
+    isProcessing = false;
     loadMessage(isLoadMessage); // This will run on page load
     setInterval(function () {
         if (isLoadMessage === false) {
@@ -59,25 +61,29 @@ function deparam(query) {
 }
 
 function loadMessage(loadAfterSend) {
-    $.ajax({
-        type: "GET",
-        url: "ChatContentController",
-        success: function (data) {
-            if (data !== null) {
-                // Only change message display if data is different
-                if (currentData !== data) {
-                    currentData = data;
+    if (isProcessing === false) {
+        isProcessing = true;
+        $.ajax({
+            type: "GET",
+            url: "ChatContentController",
+            success: function (data) {
+                if (data !== null) {
+                    // Only change message display if data is different
+                    if (currentData !== data) {
+                        currentData = data;
 
-                    $('#message-list').html(data);
-                    if (loadAfterSend === true) {
-                        $('#chat-content').val("");
+                        $('#message-list').html(data);
+                        if (loadAfterSend === true) {
+                            $('#chat-content').val("");
+                        }
+                        scrollToBottom();
                     }
-                    scrollToBottom();
                 }
             }
-        }
-
-    });
+        });
+        isProcessing = false;
+    }
+    
 }
 
 function scrollToBottom() {

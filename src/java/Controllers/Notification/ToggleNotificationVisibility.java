@@ -82,7 +82,7 @@ public class ToggleNotificationVisibility extends HttpServlet {
             NotificationDAO.showNotificationByID(notifID);
         }
         
-        response.sendRedirect(request.getContextPath() + "/notification_manage.jsp");
+        response.sendRedirect(request.getContextPath() + "/NotificationManage");
     }
 
     /**

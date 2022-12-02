@@ -4,6 +4,8 @@
     Author     : A Hi
 --%>
 
+<%@page import="Models.Notification"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="DAOs.Notification.NotificationDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -89,18 +91,29 @@
             background-color: #cfcfc4;
             color: #fff;
         }
-
-        #prevPage {
-            pointer-events: none;
-            cursor: default;
-            background-color: #e6e6e6;
-            color: #c5c5c5;
-        }
     </style>
 
     <script>
         var currentPage = 1;
         const loadLimit = 5;
+
+        $(document).ready(function () {
+            var initActivePage = $('#page-num-1');
+
+            if (initActivePage.prev().hasClass("prevNext")) {
+                initActivePage.prev().css("pointer-events", "none");
+                initActivePage.prev().css("cursor", "default");
+                initActivePage.prev().css("background-color", "#e6e6e6");
+                initActivePage.prev().css("color", "#c5c5c5");
+            }
+
+            if (initActivePage.next().hasClass("prevNext")) {
+                initActivePage.next().css("pointer-events", "none");
+                initActivePage.next().css("cursor", "default");
+                initActivePage.next().css("background-color", "#e6e6e6");
+                initActivePage.next().css("color", "#c5c5c5");
+            }
+        });
 
         function prevPage() {
             var lastActivePage = $('.pagination > .active');
@@ -235,7 +248,7 @@
                                         <ul>
                                             <c:forEach items="${listlevel}" var="x">
                                                 <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
-                                            </c:forEach> 
+                                                </c:forEach> 
                                         </ul>
                                     </li>
                                 </c:forEach>
@@ -258,7 +271,6 @@
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
-                            <li><a class="dropdown-item" href="viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
@@ -358,14 +370,15 @@
                                         <h3>Bảng Tin</h3><br>
                                         <%                        // Get All Notification
                                             int loadLimit = 5;
-                                            int notifCount = 1;
+                                            int notifCount = 0;
                                             int totalNotifCount;
-                                            ResultSet rs1 = NotificationDAO.getAllNotification();
-                                            while (rs1.next()) {
-                                                int id = rs1.getInt("notificationID");
-                                                String title = rs1.getString("title");
-                                                String time = rs1.getString("time");
-                                                int status = rs1.getInt("status");
+                                            ArrayList<Notification> nList = (ArrayList<Notification>) session.getAttribute("allNotification");
+                                            for (Notification n : nList) {
+                                                notifCount = notifCount + 1;
+                                                int id = n.getNotificationID();
+                                                String title = n.getTitle();
+                                                String time = n.getTime();
+                                                int status = n.getStatus();
                                                 if (status == 0) {
                                                     if (notifCount <= loadLimit) {
                                         %>
@@ -376,7 +389,6 @@
                                         <div class="notif-title-container" id="notif-title-container-id-<%=notifCount%>"  style="display: none;"><a href="<%=request.getContextPath()%>/Notification/<%=id%>" class="notif-title" id="notif-title-id-<%=notifCount%>"><span><%=time%></span><span> - </span><span class="notif-title-span"><%=title%></span></a><br></div>
                                                     <%
                                                                 }
-                                                                notifCount = notifCount + 1;
                                                             }
                                                         }
                                                         totalNotifCount = notifCount;
@@ -385,7 +397,13 @@
                                             <a href="javascript:void(0);" onclick="prevPage()" class="prevNext" id="prevPage">Trước</a>
                                             <a href="javascript:void(0);" onclick="loadPage(1)" id="page-num-1" class="page-num active">1</a>
                                             <%
-                                                int pageCount = (totalNotifCount / loadLimit) + 1;
+                                                int pageCount;
+
+                                                if (totalNotifCount % loadLimit == 0) {
+                                                    pageCount = totalNotifCount / loadLimit;
+                                                } else {
+                                                    pageCount = (totalNotifCount / loadLimit) + 1;
+                                                }
 
                                                 for (int i = 2; i <= pageCount; i++) {
                                             %>

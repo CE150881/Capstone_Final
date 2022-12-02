@@ -89,7 +89,7 @@ public class EditNotification extends HttpServlet {
         
         NotificationDAO.editNotification(notifAfter);
         
-        response.sendRedirect(request.getContextPath() + "/notification_manage.jsp");
+        response.sendRedirect(request.getContextPath() + "/NotificationManage");
     }
 
     /**

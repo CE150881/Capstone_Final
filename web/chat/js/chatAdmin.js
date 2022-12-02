@@ -6,8 +6,10 @@ var lastDate;
 const inputMap = new Map();
 var tmpInputValue;
 var isLoadMessage = false;
+var isProcessing
 
 $(document).ready(function () {
+    isProcessing = false;
     $("#init-session").click();
 
     currentUID = document.getElementById("chat-user-id").value;
@@ -57,55 +59,59 @@ $(document).ready(function () {
 });
 
 function loadMessage(uid, sid) {
-    $.ajax({
-        type: "GET",
-        url: "ChatAdminContentController?cUID=" + uid,
-        success: function (data) {
-            if (data !== null) {
-                // Only change message display if data is different
-                if (currentData !== data) {
-                    currentData = data;
+    if (isProcessing === false) {
+        isProcessing = true;
+        $.ajax({
+            type: "GET",
+            url: "ChatAdminContentController?cUID=" + uid,
+            success: function (data) {
+                if (data !== null) {
+                    // Only change message display if data is different
+                    if (currentData !== data) {
+                        currentData = data;
 
-                    // If loaded data is from different session
-                    if (currentUID !== uid && currentSID !== sid) {
-                        // save the last session input into a map
-                        tmpInputValue = $('#chat-content').val();
-                        inputMap.set(currentSID, tmpInputValue);
-                        // remove other sessions highlight if have any
-                        $('.user-list-item').removeClass("active-uli");
-                        // highlight displaying session
-                        $('#user-session-' + sid).addClass("active-uli");
-                        if (!($('#user-session-' + sid).hasClass("init-session"))) {
-                            $('#user-session-' + sid).removeClass("unseen-uli");
+                        // If loaded data is from different session
+                        if (currentUID !== uid && currentSID !== sid) {
+                            // save the last session input into a map
+                            tmpInputValue = $('#chat-content').val();
+                            inputMap.set(currentSID, tmpInputValue);
+                            // remove other sessions highlight if have any
+                            $('.user-list-item').removeClass("active-uli");
+                            // highlight displaying session
+                            $('#user-session-' + sid).addClass("active-uli");
+                            if (!($('#user-session-' + sid).hasClass("init-session"))) {
+                                $('#user-session-' + sid).removeClass("unseen-uli");
+                            }
+                            // set hidden input data
+                            $('#session-id').val(sid);
+                            $('#chat-user-id').val(uid);
                         }
-                        // set hidden input data
-                        $('#session-id').val(sid);
-                        $('#chat-user-id').val(uid);
-                    }
 
-                    // display current session
-                    $('#message-list').html(data);
+                        // display current session
+                        $('#message-list').html(data);
 
-                    // display tmp input of session if has any
-                    if (inputMap.has(sid)) {
-                        $('#chat-content').val(inputMap.get(sid));
-                    } else {
-                        $('#chat-content').val("");
-                    }
+                        // display tmp input of session if has any
+                        if (inputMap.has(sid)) {
+                            $('#chat-content').val(inputMap.get(sid));
+                        } else {
+                            $('#chat-content').val("");
+                        }
 
-                    // Do not do animated scroll if display session is same as last session
-                    if (currentUID !== uid && currentSID !== sid) {
-                        // set display session to session of loaded data
-                        currentUID = uid;
-                        currentSID = sid;
-                        hardScrollToBottom();
-                    } else {
-                        scrollToBottom();
+                        // Do not do animated scroll if display session is same as last session
+                        if (currentUID !== uid && currentSID !== sid) {
+                            // set display session to session of loaded data
+                            currentUID = uid;
+                            currentSID = sid;
+                            hardScrollToBottom();
+                        } else {
+                            scrollToBottom();
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+        isProcessing = false;
+    }
 }
 
 function loadAllSessions(searchContent) {

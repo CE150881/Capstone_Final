@@ -74,7 +74,7 @@ public class DeleteNotification extends HttpServlet {
         int notifID = Integer.parseInt(request.getParameter("notifID"));
         NotificationDAO.deleteNotificationByID(notifID);
         
-        response.sendRedirect(request.getContextPath() + "/notification_manage.jsp");
+        response.sendRedirect(request.getContextPath() + "/NotificationManage");
     }
 
     /**

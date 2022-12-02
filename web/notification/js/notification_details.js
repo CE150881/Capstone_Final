@@ -1,6 +1,24 @@
 var currentPage = 1;
 const loadLimit = 5;
 
+$(document).ready(function () {
+    var initActivePage = $('#page-num-1');
+    
+    if (initActivePage.prev().hasClass("prevNext")) {
+        initActivePage.prev().css("pointer-events", "none");
+        initActivePage.prev().css("cursor", "default");
+        initActivePage.prev().css("background-color", "#e6e6e6");
+        initActivePage.prev().css("color", "#c5c5c5");
+    }
+
+    if (initActivePage.next().hasClass("prevNext")) {
+        initActivePage.next().css("pointer-events", "none");
+        initActivePage.next().css("cursor", "default");
+        initActivePage.next().css("background-color", "#e6e6e6");
+        initActivePage.next().css("color", "#c5c5c5");
+    }
+});
+
 function prevPage() {
     var lastActivePage = $('.pagination > .active');
     var currentActivePage = $('.pagination > .active').prev();

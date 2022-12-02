@@ -3,22 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Account;
+package Controllers.Notification;
+
 import DAOs.Account.UserDAO;
-import DAOs.Material.MaterialDAO;
 import DAOs.Notification.NotificationDAO;
-import Models.Level;
-import DAOs.Test.LevelDAO;
-import DAOs.Test.TagDAO;
 import Models.Notification;
-import Models.Tag;
-import Models.Type;
 import Models.User;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,10 +21,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author A Hi
+ * @author Admin
  */
-@WebServlet(name = "HomeControl", urlPatterns = {"/HomeControl"})
-public class HomeControl extends HttpServlet {
+public class NotificationManageController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,29 +37,6 @@ public class HomeControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        // document
-        String typeID = request.getParameter("typeID");
-        String levelID = request.getParameter("levelID");
-
-        MaterialDAO dao = new MaterialDAO();
-        List<Type> listT = dao.getAllType();
-        List<Level> listL = dao.getAllLevel();
-
-        request.setAttribute("listT", listT);
-        request.setAttribute("listL", listL);
-        // end document
-        
-        // test
-        TagDAO tagdao = new TagDAO();
-        List<Tag> listtag = tagdao.getAllTag();
-        
-        LevelDAO leveldao = new LevelDAO();
-        List<Level> listlevel = leveldao.getAllLevel();
-
-        request.setAttribute("listtag", listtag);
-        request.setAttribute("listlevel", listlevel);
-        
         HttpSession session = request.getSession();
         
         ArrayList<Notification> nList = NotificationDAO.getAllNotification();
@@ -74,20 +45,7 @@ public class HomeControl extends HttpServlet {
         session.setAttribute("allNotification", nList);
         session.setAttribute("allUserList", uList);
         
-        // end test
-
-        
-//        TagDAO tagdao = new TagDAO();
-//        List<Tag> listtag = tagdao.getAllTag();
-//           
-//        LevelDAO leveldao = new LevelDAO();
-//        List<Level> listlevel = leveldao.getAllLevel();
-
-//        request.setAttribute("listtag", listtag);
-//        request.setAttribute("listlevel", listlevel);
-        
-        
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        request.getRequestDispatcher("notification_manage.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

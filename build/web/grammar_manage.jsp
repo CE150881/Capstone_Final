@@ -140,7 +140,7 @@
                                             <label>Cấp Độ</label>
                                             <select name="level" class="form-select" aria-label="Default select example">
                                                 <c:forEach items="${listL}" var="o">
-                                                    <option value="${o.level}">${o.level}</option>
+                                                    <option value="${o.levelID}">${o.levelName}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>

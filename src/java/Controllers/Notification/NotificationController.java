@@ -5,6 +5,7 @@
  */
 package Controllers.Notification;
 
+import DAOs.Account.UserDAO;
 import DAOs.Material.MaterialDAO;
 import DAOs.Notification.NotificationDAO;
 import DAOs.Test.LevelDAO;
@@ -13,8 +14,10 @@ import Models.Level;
 import Models.Notification;
 import Models.Tag;
 import Models.Type;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -87,7 +90,7 @@ public class NotificationController extends HttpServlet {
 
         request.setAttribute("listtag", listtag);
         request.setAttribute("listlevel", listlevel);
-        
+
         String path = request.getRequestURI();
 
         if (path.startsWith(request.getContextPath() + "/Notification")) {
@@ -95,9 +98,18 @@ public class NotificationController extends HttpServlet {
             //int notificationID = Integer.parseInt(request.getParameter("id"));
             int notificationID = Integer.parseInt(s[s.length - 1]);
             Notification n = NotificationDAO.getNotificationByID(notificationID);
+            UserDAO userdao = new UserDAO();
+            User u = userdao.getUserByID2(n.getUserID());
 
             HttpSession session = request.getSession();
+
             session.setAttribute("cNotification", n);
+            session.setAttribute("nPoster", u);
+
+            ArrayList<Notification> nList = NotificationDAO.getAllNotification();
+            List<User> uList = userdao.getAllAccount();
+            session.setAttribute("allNotification", nList);
+            session.setAttribute("allUserList", uList);
 
             //response.sendRedirect(request.getContextPath() + "/notification_details.jsp");
             request.getRequestDispatcher("/notification_details.jsp").forward(request, response);

@@ -4,9 +4,9 @@
     Author     : Admin
 --%>
 
-<%@page import="DAOs.Notification.NotificationDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Models.User"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="DAOs.Account.UserDAO"%>
 <%@page import="Models.Notification"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -20,6 +20,9 @@
         <title>Cộng Đồng</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
+        
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
         <!-- Favicons -->
         <link href="${pageContext.request.contextPath}/user/img/logo.jpg" rel="icon">
@@ -46,7 +49,7 @@
         * Author: BootstrapMade.com
         * License: https://bootstrapmade.com/license/
         ======================================================== -->
-        
+
         <link href="${pageContext.request.contextPath}/notification/css/notification_details.css" rel="stylesheet" type="text/css"/>
         <script src="${pageContext.request.contextPath}/notification/js/notification_details.js" type="text/javascript"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -58,13 +61,13 @@
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
             <div class="container d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="HomeControl">JPD<span>.</span></a></h1>
+                <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="user/img/logo.png" alt="" class="img-fluid"></a>-->
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto" href="HomeControl">Trang Chủ</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
                         <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
@@ -126,8 +129,8 @@
                     </c:if>
 
                     <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
-                        <a href="account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
-                        <a href="account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
+                        <a href="<%= request.getContextPath()%>/account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
+                        <a href="<%= request.getContextPath()%>/account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
                     </c:if>
                 </ul>
             </div>
@@ -178,79 +181,85 @@
                 </div>
             </section><!-- End Breadcrumbs -->
 
-           
-                <%
-                    Notification cNotification = (Notification) session.getAttribute("cNotification");
-                    UserDAO userdao = new UserDAO();
 
-                    String cTitle = null;
-                    String cDetails = null;
-                    String cTime = null;
-                    String cPoster = null;
-                    if (cNotification != null) {
-                        cTitle = cNotification.getTitle();
-                        cDetails = cNotification.getDetails().replace("\r\n", "<br>");
-                        cTime = cNotification.getTime();
-                        cPoster = userdao.getUserByID2(cNotification.getUserID()).getUsername();
-                    }
+            <%
+                Notification cNotification = (Notification) session.getAttribute("cNotification");
+                User nPoster = (User) session.getAttribute("nPoster");
 
-                %>
+                String cTitle = null;
+                String cDetails = null;
+                String cTime = null;
+                String cPoster = null;
+                if (cNotification != null) {
+                    cTitle = cNotification.getTitle();
+                    cDetails = cNotification.getDetails().replace("\r\n", "<br>");
+                    cTime = cNotification.getTime();
+                    cPoster = nPoster.getUsername();
+                }
 
-                <div class="row">            
-                    <div class="main">
-                        <div class="main-section">
-                            <span id="title" style="font-weight: bold; font-size: 32px; word-break: break-word;"><%=cTitle%></span><br>
-                            <span id="time" style="font-style: italic; font-size: 16px; word-break: break-word;">Đăng bởi <%=cPoster%> vào <%=cTime%></span><br><br><br>
-                            <span id="details" style="font-size: 18px; word-break: break-word;"><%=cDetails%></span><br><br>
-                            <br><span><a href="<%= request.getContextPath()%>/HomeControl" id="back-home-btn">Quay lại Trang chủ</a>
-                        </div>
+            %>
+
+            <div class="row">            
+                <div class="main">
+                    <div class="main-section">
+                        <span id="title" style="font-weight: bold; font-size: 32px; word-break: break-word;"><%=cTitle%></span><br>
+                        <span id="time" style="font-style: italic; font-size: 16px; word-break: break-word;">Đăng bởi <%=cPoster%> vào <%=cTime%></span><br><br><br>
+                        <span id="details" style="font-size: 18px; word-break: break-word;"><%=cDetails%></span><br><br>
+                        <br><span><a href="<%= request.getContextPath()%>/HomeControl" id="back-home-btn">Quay lại Trang chủ</a>
                     </div>
-                    <div class="side">
-                        <div class="side-section" id="notif-container">
-                            <h2>Thông báo</h2>
-                            <%                        // Get All Notification
-                                int loadLimit = 5;
-                                int notifCount = 1;
-                                int totalNotifCount;
-                                ResultSet rs1 = NotificationDAO.getAllNotification();
-                                while (rs1.next()) {
-                                    int id = rs1.getInt("notificationID");
-                                    String title = rs1.getString("title");
-                                    String time = rs1.getString("time");
-                                    int status = rs1.getInt("status");
-                                    if (status == 0) {
-                                        if (notifCount <= loadLimit) {
-                            %>
-                            <div class="notif-title-container" id="notif-title-container-id-<%=notifCount%>"><a href="<%=request.getContextPath()%>/Notification/<%=id%>" class="notif-title" id="notif-title-id-<%=notifCount%>"><span><%=time%></span><span> - </span><span class="notif-title-span"><%=title%></span></a><br></div>
-                                        <%
-                                        } else {
-                                        %>
-                            <div class="notif-title-container" id="notif-title-container-id-<%=notifCount%>"  style="display: none;"><a href="<%=request.getContextPath()%>/Notification/<%=id%>" class="notif-title" id="notif-title-id-<%=notifCount%>"><span><%=time%></span><span> - </span><span class="notif-title-span"><%=title%></span></a><br></div>
-                                        <%
-                                                    }
-                                                    notifCount = notifCount + 1;
+                </div>
+                <div class="side">
+                    <div class="side-section" id="notif-container">
+                        <h2>Thông báo</h2>
+                        <%                        // Get All Notification
+                            int loadLimit = 5;
+                            int notifCount = 0;
+                            int totalNotifCount;
+                            ArrayList<Notification> nList = (ArrayList<Notification>) session.getAttribute("allNotification");
+                            for (Notification n : nList) {
+                                notifCount = notifCount + 1;
+                                int id = n.getNotificationID();
+                                String title = n.getTitle();
+                                String time = n.getTime();
+                                int status = n.getStatus();
+                                if (status == 0) {
+                                    if (notifCount <= loadLimit) {
+                        %>
+                        <div class="notif-title-container" id="notif-title-container-id-<%=notifCount%>"><a href="<%=request.getContextPath()%>/Notification/<%=id%>" class="notif-title" id="notif-title-id-<%=notifCount%>"><span><%=time%></span><span> - </span><span class="notif-title-span"><%=title%></span></a><br></div>
+                                    <%
+                                    } else {
+                                    %>
+                        <div class="notif-title-container" id="notif-title-container-id-<%=notifCount%>"  style="display: none;"><a href="<%=request.getContextPath()%>/Notification/<%=id%>" class="notif-title" id="notif-title-id-<%=notifCount%>"><span><%=time%></span><span> - </span><span class="notif-title-span"><%=title%></span></a><br></div>
+                                    <%
                                                 }
                                             }
-                                            totalNotifCount = notifCount;
-                                        %>
-                            <br><br><div class="pagination">
-                                <a href="javascript:void(0);" onclick="prevPage()" class="prevNext" id="prevPage">Trước</a>
-                                <a href="javascript:void(0);" onclick="loadPage(1)" id="page-num-1" class="page-num active">1</a>
-                                <%
-                                    int pageCount = (totalNotifCount / loadLimit) + 1;
+                                        }
+                                        totalNotifCount = notifCount;
+                                    %>
+                        <br><br><div class="pagination">
+                            <a href="javascript:void(0);" onclick="prevPage()" class="prevNext" id="prevPage">Trước</a>
+                            <a href="javascript:void(0);" onclick="loadPage(1)" id="page-num-1" class="page-num active">1</a>
+                            <%
+                                int pageCount;
 
-                                    for (int i = 2; i <= pageCount; i++) {
-                                %>
-                                <a href="javascript:void(0);" onclick="loadPage(<%=i%>)" id="page-num-<%=i%>" class="page-num"><%=i%></a>
-                                <%
-                                    }
-                                %>
-                                <a href="javascript:void(0);" onclick="nextPage()" class="prevNext" id="nextPage">Sau</a>
-                            </div>
+                                if (totalNotifCount % loadLimit == 0) {
+                                    pageCount = totalNotifCount / loadLimit;
+                                } else {
+                                    pageCount = (totalNotifCount / loadLimit) + 1;
+                                }
+
+                                for (int i = 2; i <= pageCount; i++) {
+                            %>
+                            <a href="javascript:void(0);" onclick="loadPage(<%=i%>)" id="page-num-<%=i%>" class="page-num"><%=i%></a>
+                            <%
+                                }
+                            %>
+                            <a href="javascript:void(0);" onclick="nextPage()" class="prevNext" id="nextPage">Sau</a>
                         </div>
                     </div>
                 </div>
-            
+            </div>
+
         </main>
 
         <!-- ======= Footer ======= -->

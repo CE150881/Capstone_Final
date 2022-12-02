@@ -68,7 +68,7 @@
                     <div id="collapseTwoo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Quản Lý Thông Báo:</h6>
-                            <a class="collapse-item" href="<%= request.getContextPath()%>/notification_manage.jsp">Danh Sách Thông Báo</a>
+                            <a class="collapse-item" href="<%= request.getContextPath()%>/NotificationManage">Danh Sách Thông Báo</a>
                         </div>
                     </div>
                 </li>
