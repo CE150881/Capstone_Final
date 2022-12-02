@@ -12,23 +12,23 @@ package Models;
 public class Kanji {
 
     private int kanjiID;
-    private String level;
+    private String levelID;
     private String kanji;
     private String meaning;
     private String picture;
 
     @Override
     public String toString() {
-        return "kanji{" + "kanjiID=" + kanjiID + ", level=" + level + ", kanji=" + kanji + ", meaning=" + meaning + ", picture=" + picture + '}';
+        return "kanji{" + "kanjiID=" + kanjiID + ", levelID=" + levelID + ", kanji=" + kanji + ", meaning=" + meaning + ", picture=" + picture + '}';
     }
 
     public Kanji() {
 
     }
 
-    public Kanji(int kanjiID, String level, String kanji, String meaning, String picture) {
+    public Kanji(int kanjiID, String levelID, String kanji, String meaning, String picture) {
         this.kanjiID = kanjiID;
-        this.level = level;
+        this.levelID = levelID;
         this.kanji = kanji;
         this.meaning = meaning;
         this.picture = picture;
@@ -43,11 +43,11 @@ public class Kanji {
     }
 
     public String getLevel() {
-        return level;
+        return levelID;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setLevel(String levelID) {
+        this.levelID = levelID;
     }
 
     public String getKanji() {

@@ -5,6 +5,7 @@
  */
 package Controllers.Kanji;
 
+import static Controllers.Account.UpdateAvatarControl.UPLOAD_DIR;
 import DAOs.Material.MaterialDAO;
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class CreateKanjiControl extends HttpServlet {
 
         String kanji = request.getParameter("kanji");
         String meaning = request.getParameter("meaning");
-        String level = request.getParameter("level");
+        String levelID = request.getParameter("level");
 
         Part part = request.getPart("file");//
         String fileName = extractFileName(part);//file name
@@ -79,7 +80,7 @@ public class CreateKanjiControl extends HttpServlet {
          part.write(savePath + File.separator + fileName);
          }*/
         MaterialDAO dao = new MaterialDAO();
-        dao.addKanji(level, kanji, meaning, dbFileName);
+        dao.addKanji(levelID, kanji, meaning, dbFileName);
         response.sendRedirect("ManageKanjiControl");
     }
 

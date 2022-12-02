@@ -7,7 +7,10 @@ package Controllers.Forum;
 
 import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
 import Models.Level;
+import Models.Tag;
 import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -71,13 +74,30 @@ public class ForumNotification extends HttpServlet {
             int count = ReportNotificationDAO.markAllRead(userID);
             ResultSet rnUser = ReportNotificationDAO.getAllReportNotificationByUserID(userID);
 
-            MaterialDAO dao2 = new MaterialDAO();
-            List<Type> listT = dao2.getAllType();
-            List<Level> listL = dao2.getAllLevel();
             HttpSession session = request.getSession();
+
+            // document
+            String typeID = request.getParameter("typeID");
+            String levelID = request.getParameter("levelID");
+
+            MaterialDAO dao = new MaterialDAO();
+            List<Type> listT = dao.getAllType();
+            List<Level> listL = dao.getAllLevel();
 
             request.setAttribute("listT", listT);
             request.setAttribute("listL", listL);
+            // end document
+
+            // test
+            TagDAO tagdao = new TagDAO();
+            List<Tag> listtag = tagdao.getAllTag();
+
+            LevelDAO leveldao = new LevelDAO();
+            List<Level> listlevel = leveldao.getAllLevel();
+
+            request.setAttribute("listtag", listtag);
+            request.setAttribute("listlevel", listlevel);
+            // end test
             session.setAttribute("ForumNotification", rnUser);
             request.getRequestDispatcher("/forum_reportNotification.jsp").forward(request, response);
         }

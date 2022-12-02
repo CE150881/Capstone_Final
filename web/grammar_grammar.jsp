@@ -156,24 +156,52 @@
                 <div class="container" data-aos="fade-up">
                     <div class="row gy-4 mt-4 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
                         <div class="container mt-4">        
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th hidden>ID</th>
-                                        <th>Ngữ Pháp</th>
-                                        <th>Cách Dùng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${listG}" var="g">
-                                        <tr onclick="location.href = 'DetailGrammarControl?grammarID=${g.grammarID}';" style="cursor: pointer;">               
-                                            <td hidden>${g.grammarID}</td>
-                                            <td>${g.structure}</td>
-                                            <td>${g.use}</td>
+
+                            <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th hidden>ID</th>
+                                            <th>Ngữ Pháp</th>
+                                            <th>Cách Dùng</th>
+                                            <th>Đã Học</th>
                                         </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listGH}" var="g">
+                                            <tr onclick="location.href = 'DetailGrammarControl?grammarID=${g.grammarID}';" style="cursor: pointer;">               
+                                                <td hidden>${g.grammarID}</td>
+                                                <td>${g.structure}</td>
+                                                <td>${g.use}</td>
+
+                                                <td>${g.grammarHistoryStatus}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:if>
+
+                            <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th hidden>ID</th>
+                                            <th>Ngữ Pháp</th>
+                                            <th>Cách Dùng</th>
+                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listG}" var="g">
+                                            <tr onclick="location.href = 'DetailGrammarControl?grammarID=${g.grammarID}';" style="cursor: pointer;">               
+                                                <td hidden>${g.grammarID}</td>
+                                                <td>${g.structure}</td>
+                                                <td>${g.use}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:if>
                         </div>
                     </div>
                 </div>

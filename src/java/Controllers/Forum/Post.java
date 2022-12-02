@@ -12,12 +12,15 @@ import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Forum.ReportPostDAO;
 import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
 import Models.Comment;
 import Models.ForumPost;
 import Models.ForumReportNotification;
 import Models.ForumReportPost;
 import Models.ForumTopic;
 import Models.Level;
+import Models.Tag;
 import Models.Type;
 import Models.User;
 import java.io.IOException;
@@ -88,16 +91,34 @@ public class Post extends HttpServlet {
                 ForumTopic t = TopicDAO.getTopicByID(p.getTopic_id());
                 ResultSet rt = TopicDAO.getAllTopic();
                 ResultSet a = CommentDAO.getAllCommentByPostID(post_id2);
-                UserDAO dao = new UserDAO();
-                User u = dao.getUserByID2(p.getUser_id());
+                UserDAO dao2 = new UserDAO();
+                User u = dao2.getUserByID2(p.getUser_id());
 
-                MaterialDAO dao2 = new MaterialDAO();
-                List<Type> listT = dao2.getAllType();
-                List<Level> listL = dao2.getAllLevel();
                 HttpSession session = request.getSession();
+
+                // document
+                String typeID = request.getParameter("typeID");
+                String levelID = request.getParameter("levelID");
+
+                MaterialDAO dao = new MaterialDAO();
+                List<Type> listT = dao.getAllType();
+                List<Level> listL = dao.getAllLevel();
 
                 request.setAttribute("listT", listT);
                 request.setAttribute("listL", listL);
+                // end document
+
+                // test
+                TagDAO tagdao = new TagDAO();
+                List<Tag> listtag = tagdao.getAllTag();
+
+                LevelDAO leveldao = new LevelDAO();
+                List<Level> listlevel = leveldao.getAllLevel();
+
+                request.setAttribute("listtag", listtag);
+                request.setAttribute("listlevel", listlevel);
+                // end test
+
                 session.setAttribute("singlePost", p);
                 session.setAttribute("userPost", u);
                 session.setAttribute("singleTopic", t);

@@ -6,7 +6,10 @@
 package Controllers.Practice;
 
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
 import Models.Level;
+import Models.Tag;
 import Models.Type;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -69,13 +72,31 @@ public class Practice extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         if (path.endsWith("/Practice")) {
+
+            HttpSession session = request.getSession();
+
+            // document
+            String typeID = request.getParameter("typeID");
+            String levelID = request.getParameter("levelID");
+
             MaterialDAO dao = new MaterialDAO();
             List<Type> listT = dao.getAllType();
             List<Level> listL = dao.getAllLevel();
-            HttpSession session = request.getSession();
 
             request.setAttribute("listT", listT);
             request.setAttribute("listL", listL);
+            // end document
+
+            // test
+            TagDAO tagdao = new TagDAO();
+            List<Tag> listtag = tagdao.getAllTag();
+
+            LevelDAO leveldao = new LevelDAO();
+            List<Level> listlevel = leveldao.getAllLevel();
+
+            request.setAttribute("listtag", listtag);
+            request.setAttribute("listlevel", listlevel);
+            // end test
 
             request.getRequestDispatcher("practice.jsp").forward(request, response);
         }

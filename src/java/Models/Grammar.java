@@ -12,22 +12,22 @@ package Models;
 public class Grammar {
 
     private int grammarID;
-    private String level;
+    private String levelID;
     private String structure;
     private String use;
 
     @Override
     public String toString() {
-        return "Grammar{" + "grammarID=" + grammarID + ", level=" + level + ", structure=" + structure + ", use=" + use + '}';
+        return "Grammar{" + "grammarID=" + grammarID + ", levelID=" + levelID + ", structure=" + structure + ", use=" + use + '}';
     }
 
     public Grammar() {
 
     }
 
-    public Grammar(int grammarID, String level, String structure, String use) {
+    public Grammar(int grammarID, String levelID, String structure, String use) {
         this.grammarID = grammarID;
-        this.level = level;
+        this.levelID = levelID;
         this.structure = structure;
         this.use = use;
 
@@ -42,11 +42,11 @@ public class Grammar {
     }
 
     public String getLevel() {
-        return level;
+        return levelID;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setLevel(String levelID) {
+        this.levelID = levelID;
     }
 
     public String getStructure() {

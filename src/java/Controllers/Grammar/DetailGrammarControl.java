@@ -9,9 +9,11 @@ import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
 import Models.Grammar;
+import Models.GrammarHistory;
 import Models.Level;
 import Models.Tag;
 import Models.Type;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -20,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -42,26 +45,33 @@ public class DetailGrammarControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String grammarID = request.getParameter("grammarID");
 
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("acc");
+
         MaterialDAO dao = new MaterialDAO();
         Grammar a = dao.getGrammarByGrammarID(grammarID);
         List<Type> listT = dao.getAllType();
         List<Level> listL = dao.getAllLevel();
 
+        if (user != null) {
+            dao.addGrammarHistory(user.getUserID(), grammarID);
+        }
+
         request.setAttribute("detail", a);
         request.setAttribute("listT", listT);
         request.setAttribute("listL", listL);
-        
-         // test
+
+        // test
         TagDAO tagdao = new TagDAO();
         List<Tag> listtag = tagdao.getAllTag();
-        
+
         LevelDAO leveldao = new LevelDAO();
         List<Level> listlevel = leveldao.getAllLevel();
 
         request.setAttribute("listtag", listtag);
         request.setAttribute("listlevel", listlevel);
         // end test
-        
+
         request.getRequestDispatcher("grammar_detail.jsp").forward(request, response);
     }
 

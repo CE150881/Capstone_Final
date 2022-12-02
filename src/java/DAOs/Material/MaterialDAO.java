@@ -9,6 +9,7 @@ import Connection.DBConnection;
 import Models.Alphabet;
 import Models.ExampleGrammar;
 import Models.Grammar;
+import Models.GrammarHistory;
 import Models.Kanji;
 import Models.Level;
 import Models.Type;
@@ -107,7 +108,7 @@ public class MaterialDAO {
         }
         return list;
     }
- 
+
     // get grammar by level ID
     public List<Grammar> getGrammarByLevelID(String levelID) {
         List<Grammar> list = new ArrayList<>();
@@ -270,12 +271,12 @@ public class MaterialDAO {
     }
 
     //create new grammar
-    public void addGrammar(String level, String structure, String use) {
-        String query = "INSERT INTO `grammar`(`level`, `structure`, `use`) VALUES (?,?,?)";
+    public void addGrammar(String levelID, String structure, String use) {
+        String query = "INSERT INTO `grammar`(`levelID`, `structure`, `use`) VALUES (?,?,?)";
         try {
             conn = new DBConnection().getConnection();       // call function form DBconnection
             ps = conn.prepareStatement(query);
-            ps.setString(1, level);
+            ps.setString(1, levelID);
             ps.setString(2, structure);
             ps.setString(3, use);
 
@@ -286,12 +287,12 @@ public class MaterialDAO {
     }
 
     //create new kanji
-    public void addKanji(String level, String kanji, String meaning, String picture) {
-        String query = "INSERT INTO `kanji`(`level`, `kanji`, `meaning`, `picture`) VALUES (?,?,?,?)";
+    public void addKanji(String levelID, String kanji, String meaning, String picture) {
+        String query = "INSERT INTO `kanji`(`levelID`, `kanji`, `meaning`, `picture`) VALUES (?,?,?,?)";
         try {
             conn = new DBConnection().getConnection();       // call function form DBconnection
             ps = conn.prepareStatement(query);
-            ps.setString(1, level);
+            ps.setString(1, levelID);
             ps.setString(2, kanji);
             ps.setString(3, meaning);
             ps.setString(4, picture);
@@ -509,10 +510,88 @@ public class MaterialDAO {
         return null;
     }
 
+    // grammar history   
+    public List<GrammarHistory> getGrammarHistory(String levelID, int userID) {
+        List<GrammarHistory> list = new ArrayList<>();
+        String query = "SELECT * FROM `grammar` LEFT JOIN `grammarhistory` ON `grammar`.`grammarID` = `grammarhistory`.`grammarID` WHERE `grammar`.`levelID` = ? AND (`grammarhistory`.`userID` = ? OR `grammarhistory`.`userID` IS NULL);";
+        try {
+            conn = new DBConnection().getConnection(); // call function form DBconnection
+            ps = conn.prepareStatement(query);
+            ps.setString(1, levelID);
+            ps.setInt(2, userID);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new GrammarHistory(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getString(7)
+                ));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+
+    // add grammar history 
+    public void addGrammarHistory(int userID, String grammarID) {
+        String query = "INSERT INTO `grammarhistory` (`userID`, `grammarID`, `grammarHistoryStatus`) VALUES (?, ?, 'Đã Học');";
+        try {
+            conn = new DBConnection().getConnection();       // call function form DBconnection
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userID);
+            ps.setString(2, grammarID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+
+        }
+    }
+//
+//    // kanji history   
+//    public List<GrammarHistory> getGrammarHistory(String levelID, int userID) {
+//        List<GrammarHistory> list = new ArrayList<>();
+//        String query = "SELECT * FROM `grammar` LEFT JOIN `grammarhistory` ON `grammar`.`grammarID` = `grammarhistory`.`grammarID` WHERE `grammar`.`levelID` = ? AND (`grammarhistory`.`userID` = ? OR `grammarhistory`.`userID` IS NULL);";
+//        try {
+//            conn = new DBConnection().getConnection(); // call function form DBconnection
+//            ps = conn.prepareStatement(query);
+//            ps.setString(1, levelID);
+//            ps.setInt(2, userID);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                list.add(new GrammarHistory(
+//                        rs.getInt(1),
+//                        rs.getInt(2),
+//                        rs.getString(3),
+//                        rs.getString(4),
+//                        rs.getInt(5),
+//                        rs.getString(7)
+//                ));
+//            }
+//        } catch (Exception e) {
+//        }
+//        return list;
+//    }
+//
+//    // add kanji history 
+//    public void addGrammarHistory(int userID, String grammarID) {
+//        String query = "INSERT INTO `grammarhistory` (`userID`, `grammarID`, `grammarHistoryStatus`) VALUES (?, ?, 'Đã Học');";
+//        try {
+//            conn = new DBConnection().getConnection();       // call function form DBconnection
+//            ps = conn.prepareStatement(query);
+//            ps.setInt(1, userID);
+//            ps.setString(2, grammarID);
+//            ps.executeUpdate();
+//        } catch (Exception e) {
+//
+//        }
+//    }
+    
     public static void main(String[] args) {
         System.out.println("1");
         MaterialDAO dao = new MaterialDAO();
-        System.out.println(dao.getExampleByExampleID("4"));
+        dao.addKanji("1", "g", "h", "f");
         System.out.println("2");
     }
 }

@@ -48,10 +48,10 @@
                     <form id="edit-form" action="EditNotification" method="POST">
                         <input type="hidden" id="edit-id" name="editNotifID">
                         <label for="edit-title">Tiêu đề</label><br>
-                        <input type="text" id="edit-title" name="editTitle" placeholder="Nhập tiêu đề"><br>
+                        <input type="text" class="form-control" id="edit-title" name="editTitle" placeholder="Nhập tiêu đề"><br>
                         <label for="edit-details">Chi tiết</label><br>
-                        <textarea type="text" id="edit-details" name="editDetails" placeholder="Nhập chi tiết"></textarea><br>
-                        <button type="submit" id="edit-submit">Lưu</button><br>
+                        <textarea type="text" class="form-control" id="edit-details" name="editDetails" placeholder="Nhập chi tiết"></textarea><br>
+                        <button type="submit" class="btn btn-success" id="edit-submit">Lưu</button><br>
                     </form>
                 </div>
             </div>
@@ -198,9 +198,8 @@
                 box-sizing: border-box;
             }
             #edit-submit {
-                width: 4vw;
-                height: 4vh;
-                font-size: 14px;
+                background-color: #000 !important;
+                color: #fff !important;
                 overflow: hidden;
             }
         </style>
@@ -392,12 +391,12 @@
                                     <div class="modal-body">    
                                         <div class="form-group">
                                             <label>Tiêu Đề</label>
-                                            <input type="text" id="add-title" name="addTitle" >
+                                            <input type="text" id="add-title" class="form-control" name="addTitle" >
                                         </div>                            
                                         
                                         <div class="form-group">
                                             <label>Chi Tiết</label>
-                                            <textarea type="text" id="add-details" name="addDetails"></textarea>
+                                            <textarea type="text" id="add-details" class="form-control" name="addDetails"></textarea>
                                         </div>                                                        
                                     </div>
                                     <div class="modal-footer">

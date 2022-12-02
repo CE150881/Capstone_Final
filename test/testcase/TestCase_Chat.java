@@ -39,19 +39,19 @@ public class TestCase_Chat {
         passInput.sendKeys("1234");
         passInput.sendKeys(Keys.ENTER);
 
-        // go to chat
-        driver.findElement(By.cssSelector("#navbar > ul > li:nth-child(6) > a")).click();
-
-        // enter chat
-        Thread.sleep(3000);
-        WebElement chatbox = driver.findElement(By.cssSelector("#chat-content"));
-        for (int i = 0; i < 35; i++) {
-            if (chatbox.getText().equals("")) {
-                chatbox.sendKeys("Xin Chào");
-                chatbox.sendKeys(Keys.ENTER);
-            } else {
-                i = i - 1;
-            }
-        }
+//        // go to chat
+//        driver.findElement(By.cssSelector("#navbar > ul > li:nth-child(6) > a")).click();
+//
+//        // enter chat
+//        Thread.sleep(3000);
+//        WebElement chatbox = driver.findElement(By.cssSelector("#chat-content"));
+//        for (int i = 0; i < 35; i++) {
+//            if (chatbox.getText().equals("")) {
+//                chatbox.sendKeys("Xin Chào");
+//                chatbox.sendKeys(Keys.ENTER);
+//            } else {
+//                i = i - 1;
+//            }
+//        }
     }
 }

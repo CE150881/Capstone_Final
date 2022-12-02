@@ -9,9 +9,11 @@ import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
 import Models.Grammar;
+import Models.GrammarHistory;
 import Models.Level;
 import Models.Tag;
 import Models.Type;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -20,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,30 +44,40 @@ public class GrammarControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String levelID = request.getParameter("levelID");
-
+        
         MaterialDAO dao = new MaterialDAO();
+        
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("acc");
+        
         List<Type> listT = dao.getAllType();
         List<Level> listL = dao.getAllLevel();
         List<Grammar> listG = dao.getGrammarByLevelID(levelID);
-
+       
+        
+        if (user != null) {
+            List<GrammarHistory> listGH = dao.getGrammarHistory(levelID, user.getUserID());
+            request.setAttribute("listGH", listGH);
+        }
+        
         request.setAttribute("level", levelID);
         request.setAttribute("listT", listT);
         request.setAttribute("listL", listL);
         request.setAttribute("listG", listG);
-        
-         // test
+
+        // test
         TagDAO tagdao = new TagDAO();
         List<Tag> listtag = tagdao.getAllTag();
         
         LevelDAO leveldao = new LevelDAO();
         List<Level> listlevel = leveldao.getAllLevel();
-
+        
         request.setAttribute("listtag", listtag);
         request.setAttribute("listlevel", listlevel);
         // end test
-        
-        
+
         request.getRequestDispatcher("grammar_grammar.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -36,13 +36,13 @@ public class CreateGrammarControl extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
 
-        String grammarID = request.getParameter("grammarID");
+//        String grammarID = request.getParameter("grammarID");
         String structure = request.getParameter("structure");
         String use = request.getParameter("use");       
-        String level = request.getParameter("level");
+        String levelID = request.getParameter("level");
 
         MaterialDAO dao = new MaterialDAO();
-        dao.addGrammar(level, structure, use);
+        dao.addGrammar(levelID, structure, use);
         response.sendRedirect("ManageGrammarControl");
 
     }

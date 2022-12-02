@@ -86,45 +86,45 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <form action="${pageContext.request.contextPath}/resultDetail" method="POST">
-                <table id="example" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>UserID</th>
-                            <th>Test</th>
-                            <th>Thời Gian Bắt Đầu</th>
-                            <th>Thời Gian Kết Thúc</th>
-                            <th>Tổng Điểm</th>
-                            <th>Xem Chi Tiết</th>
-                            <th>Tổng Đáp Án Đúng</th>
-                        </tr>
-                    <tbody>
-                        <c:forEach items="${listResult}" var="o" varStatus="i">
-                            <tr>
-                                <td>${i.index+1}</td>
-                                <td>${o.user}</td>
-                                <td>${o.test}</td>
-                                <td>${o.timeBigin}</td>
-                                <td>${o.timeExpire}</td>
-                                <td>${o.score}</td>
-                                <td>${o.trueQuestion}</td>
-                                <td><a href="resultDetailControl?resultID=${o.resultID}" class="btn btn-success" tabindex="-1" role="button">Quản Lý Câu Hỏi</a></td>
-                            </tr>
-                        </c:forEach>
-                    <tfoot>
-                        <tr>
-                            <th>STT</th>
-                            <th>UserID</th>
-                            <th>Test</th>
-                            <th>Thời Gian Bắt Đầu</th>
-                            <th>Thời Gian Kết Thúc</th>
-                            <th>Tổng Điểm</th>
-                            <th>Xem Chi Tiết</th>
-                            <th>Tổng Đáp Án Đúng</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </form>
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>UserID</th>
+                                        <th>Test</th>
+                                        <th>Thời Gian Bắt Đầu</th>
+                                        <th>Thời Gian Kết Thúc</th>
+                                        <th>Tổng Điểm</th>
+                                        <th>Xem Chi Tiết</th>
+                                        <th>Tổng Đáp Án Đúng</th>
+                                    </tr>
+                                <tbody>
+                                    <c:forEach items="${listResult}" var="o" varStatus="i">
+                                        <tr>
+                                            <td>${i.index+1}</td>
+                                            <td>${o.user}</td>
+                                            <td>${o.test}</td>
+                                            <td>${o.timeBigin}</td>
+                                            <td>${o.timeExpire}</td>
+                                            <td>${o.score}</td>
+                                            <td>${o.trueQuestion}</td>
+                                            <td><a href="resultDetailControl?resultID=${o.resultID}" class="btn btn-success" tabindex="-1" role="button">Quản Lý Câu Hỏi</a></td>
+                                        </tr>
+                                    </c:forEach>
+                                <tfoot>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>UserID</th>
+                                        <th>Test</th>
+                                        <th>Thời Gian Bắt Đầu</th>
+                                        <th>Thời Gian Kết Thúc</th>
+                                        <th>Tổng Điểm</th>
+                                        <th>Xem Chi Tiết</th>
+                                        <th>Tổng Đáp Án Đúng</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </form>
                     </div> 
 
                     <!-- /.container-fluid -->

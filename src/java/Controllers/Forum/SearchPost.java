@@ -9,7 +9,10 @@ import DAOs.Forum.PostDAO;
 import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
 import Models.Level;
+import Models.Tag;
 import Models.Type;
 import Models.User;
 import java.io.IOException;
@@ -46,7 +49,7 @@ public class SearchPost extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchPost</title>");            
+            out.println("<title>Servlet SearchPost</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet SearchPost at " + request.getContextPath() + "</h1>");
@@ -70,37 +73,54 @@ public class SearchPost extends HttpServlet {
         String path = request.getRequestURI();
         if (path.endsWith("/SearchPost/")) {
             response.sendRedirect(request.getContextPath() + "/Forum");
-        }else{
+        } else {
             if (path.startsWith(request.getContextPath() + "/SearchPost/")) {
                 path = java.net.URLDecoder.decode(path, StandardCharsets.UTF_8.name());
                 String[] s = path.split("/");
                 String search = s[s.length - 1];
                 search = search.replaceAll(" +", " ");
                 search = search.trim();
-                
+
                 //ResultSet rs = PostDAO.getAllPostBySearch(search);
                 ResultSet rs = PostDAO.getAllPostBySearchWithCommentCount(search);
                 ResultSet t = TopicDAO.getAllTopic();
+
+                HttpSession session = request.getSession();
+
+                // document
+                String typeID = request.getParameter("typeID");
+                String levelID = request.getParameter("levelID");
+
                 MaterialDAO dao = new MaterialDAO();
                 List<Type> listT = dao.getAllType();
                 List<Level> listL = dao.getAllLevel();
-                
-                HttpSession session = request.getSession();
 
                 request.setAttribute("listT", listT);
                 request.setAttribute("listL", listL);
-                
+                // end document
+
+                // test
+                TagDAO tagdao = new TagDAO();
+                List<Tag> listtag = tagdao.getAllTag();
+
+                LevelDAO leveldao = new LevelDAO();
+                List<Level> listlevel = leveldao.getAllLevel();
+
+                request.setAttribute("listtag", listtag);
+                request.setAttribute("listlevel", listlevel);
+                // end test
+
                 User u = (User) request.getSession().getAttribute("acc");
                 if (u != null) {
-                int userID = u.getUserID();
-                ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
-                session.setAttribute("notReadNotification", notReadNotification);
+                    int userID = u.getUserID();
+                    ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                    session.setAttribute("notReadNotification", notReadNotification);
                 }
-                
+
                 session.setAttribute("allSearchPost", rs);
                 session.setAttribute("allTopic", t);
                 request.getRequestDispatcher("/forum_postBySearch.jsp").forward(request, response);
-                
+
             }
         }
     }
