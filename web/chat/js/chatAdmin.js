@@ -7,7 +7,7 @@ const inputMap = new Map();
 var tmpInputValue;
 
 $(document).ready(function () {
-    $("#init-session").click();
+    loadAllSessionsInit("");
 
     currentUID = document.getElementById("chat-user-id").value;
     currentSID = document.getElementById("session-id").value;
@@ -119,6 +119,28 @@ function loadAllSessions(searchContent) {
                     $('#session-container').html(data);
                     $('#user-session-' + currentSID).addClass("active-uli");
                 }
+            }
+        }
+    });
+}
+
+function loadAllSessionsInit(searchContent) {
+    $.ajax({
+        type: "GET",
+        url: "ChatAdminSessionController?searchContent=" + searchContent,
+        success: function (data) {
+            if (data !== null) {
+                // Only change message display if data is different
+                if (currentSessions !== data) {
+                    currentSessions = data;
+
+                    lastDate = $('#init-session > div.user-list-item > div.uli-row > div.uli-info-container > div.uli-date').val();
+
+                    // display all sessions
+                    $('#session-container').html(data);
+                    $('#user-session-' + currentSID).addClass("active-uli");
+                }
+                $("#init-session").click();
             }
         }
     });

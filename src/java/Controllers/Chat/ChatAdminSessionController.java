@@ -24,6 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -89,6 +90,8 @@ public class ChatAdminSessionController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
+            HttpSession session = request.getSession();
+            User cAdmin = (User) session.getAttribute("acc");
             csList = sortSessionByLastMessage(csList);
             String searchContent = request.getParameter("searchContent");
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -113,7 +116,7 @@ public class ChatAdminSessionController extends HttpServlet {
                     ChatMessage lastCM = ChatMessageDAO.getLastChatMessageBySessionID(sID);
                     String lmContent = lastCM.getChatContent();
                     String lastMessage;
-                    if (lastCM.getUserID() == 1) {
+                    if (lastCM.getUserID() == cAdmin.getUserID()) {
                         lastMessage = "Bạn : " + lmContent;
                     } else {
                         lastMessage = lmContent;
