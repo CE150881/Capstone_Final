@@ -96,8 +96,6 @@ public class ChatAdminController extends HttpServlet {
         tmpCM.setSessionID(sessionID);
         // Push new message to db
         ChatMessageDAO.addNewChatMessage(tmpCM);
-        
-        response.sendRedirect(request.getContextPath() + "/chat_manage.jsp");
     }
 
     /**

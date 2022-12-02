@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class QuestionDAO {
 
-    Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
 
@@ -27,7 +26,7 @@ public class QuestionDAO {
         List<Question> list = new ArrayList<>();
         String query = "SELECT * FROM `question`;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -36,16 +35,17 @@ public class QuestionDAO {
                         rs.getInt(3),
                         rs.getString(4)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
     }
-    
+
     public Question getLastQuestion() {
         Question a = new Question();
         String query = "SELECT * FROM `question` ORDER BY question.QuestionID DESC LIMIT 1;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -54,6 +54,7 @@ public class QuestionDAO {
                         rs.getInt(3),
                         rs.getString(4));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
@@ -63,7 +64,7 @@ public class QuestionDAO {
         List<Question> list = new ArrayList<>();
         String query = "SELECT * FROM `question` WHERE `TagID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, TagID);
             rs = ps.executeQuery();
@@ -73,6 +74,7 @@ public class QuestionDAO {
                         rs.getInt(3),
                         rs.getString(4)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -82,7 +84,7 @@ public class QuestionDAO {
         List<Question> list = new ArrayList<>();
         String query = "SELECT * FROM `question` WHERE `LevelID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, LevelID);
             rs = ps.executeQuery();
@@ -92,16 +94,17 @@ public class QuestionDAO {
                         rs.getInt(3),
                         rs.getString(4)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
     }
-    
-    public List<Question> getByLevelandTag(int TagID,int LevelID) {
+
+    public List<Question> getByLevelandTag(int TagID, int LevelID) {
         List<Question> list = new ArrayList<>();
         String query = "SELECT * FROM `question` WHERE `LevelID` = ? AND `TagID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, TagID);
             ps.setInt(2, LevelID);
@@ -112,6 +115,7 @@ public class QuestionDAO {
                         rs.getInt(3),
                         rs.getString(4)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -121,7 +125,7 @@ public class QuestionDAO {
         Question a = new Question();
         String query = "SELECT * FROM `question` WHERE `QuestionID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, QuestionID);
             rs = ps.executeQuery();
@@ -131,6 +135,7 @@ public class QuestionDAO {
                         rs.getInt(3),
                         rs.getString(4));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
@@ -139,12 +144,13 @@ public class QuestionDAO {
     public void insertQuestion(int TagID, int LevelID, String Question) {
         String query = "INSERT INTO `question`(`TagID`, `LevelID`, `Question`) VALUES (?,?,?)";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, TagID);
             ps.setInt(2, LevelID);
             ps.setString(3, Question);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -152,10 +158,11 @@ public class QuestionDAO {
     public void deleteQuestion(int QuestionID) {
         String query = "DELETE FROM `question` WHERE `QuestionID`= ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, QuestionID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -163,26 +170,26 @@ public class QuestionDAO {
     public void editQuestion(int QuestionID, int TagID, int LevelID, String Question) {
         String query = "UPDATE `question` SET `TagID`=?,`LevelID`=?,`Question`=? WHERE `QuestionID`= ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, TagID);
             ps.setInt(2, LevelID);
             ps.setString(3, Question);
             ps.setInt(4, QuestionID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
 
     public static void main(String[] args) {
-        Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         QuestionDAO dao = new QuestionDAO();
         List<Question> list = dao.getAllQuestion();
 
         for (Question o : list) {
-             System.out.println("QuestionID: " + o.getQuestionID() + " Question: " + o.getQuestion());
+            System.out.println("QuestionID: " + o.getQuestionID() + " Question: " + o.getQuestion());
         }
 //        Question a = dao.getQuestionByID(4);
 //        System.out.println("QuestionID: " + a.getQuestionID() + " Question: " + a.getQuestion());

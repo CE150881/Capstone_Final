@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class AnswerDAO {
     
-    Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
     
@@ -27,7 +26,7 @@ public class AnswerDAO {
         List<Answer> list = new ArrayList<>();
         String query = "select * from `answer`";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -36,6 +35,7 @@ public class AnswerDAO {
                                      rs.getString(3),
                                      rs.getInt(4)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -45,7 +45,7 @@ public class AnswerDAO {
         Answer a = new Answer();
         String query = "select * from `answer` where `AnswerID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, AnswerID);
             rs = ps.executeQuery();
@@ -55,6 +55,7 @@ public class AnswerDAO {
                                 rs.getString(3),
                                 rs.getInt(4));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
@@ -64,7 +65,7 @@ public class AnswerDAO {
         Answer a = new Answer();
         String query = "SELECT * FROM `answer` WHERE `Answer`= ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, Answer);
             rs = ps.executeQuery();
@@ -74,6 +75,7 @@ public class AnswerDAO {
                                 rs.getString(3),
                                 rs.getInt(4));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
@@ -83,7 +85,7 @@ public class AnswerDAO {
         List<Answer> list = new ArrayList<>();
         String query = "select * from `answer` where `QuestionID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, QuestionID);
             rs = ps.executeQuery();
@@ -93,6 +95,7 @@ public class AnswerDAO {
                                 rs.getString(3),
                                 rs.getInt(4)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -102,7 +105,7 @@ public class AnswerDAO {
         Answer a = new Answer();
         String query = "select * from `answer` where `QuestionID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, TestID);
             rs = ps.executeQuery();
@@ -112,6 +115,7 @@ public class AnswerDAO {
                                 rs.getString(3),
                                 rs.getInt(4));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
@@ -120,12 +124,13 @@ public class AnswerDAO {
     public void insertAnswer(int QuestionID, String Answer, int isCorrect){
         String query = "INSERT INTO `answer`(`QuestionID`, `Answer`, `isCorrect`) VALUES (?,?,?);";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, QuestionID);
             ps.setString(2, Answer);
             ps.setInt(3, isCorrect);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -133,10 +138,11 @@ public class AnswerDAO {
     public void deleteAnswer(int AnswerID) {
         String query = "DELETE from `answer` WHERE `AnswerID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, AnswerID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -144,13 +150,14 @@ public class AnswerDAO {
     public void editAnswer(int AnswerID, int QuestionID, String Answer, int isCorrect){
         String query = " UPDATE `answer` SET `QuestionID` = ?,`Answer` = ?,`isCorrect` = ? WHERE `AnswerID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, QuestionID);
             ps.setString(2, Answer);
             ps.setInt(3, isCorrect);
             ps.setInt(4, AnswerID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }

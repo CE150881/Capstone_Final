@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.dbutils.DbUtils;
 
 /**
  *
@@ -23,24 +24,30 @@ import java.util.logging.Logger;
 public class ChatSessionDAO {
 
     public static ArrayList<ChatSession> getAllChatSession() {
+        Connection conn = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
         try {
             ArrayList<ChatSession> csList;
-            try (Connection conn = DBConnection.getConnection()) {
-                PreparedStatement st = conn.prepareStatement("SELECT sessionID, userID, status FROM `session` ORDER BY sessionID DESC");
-                ResultSet rs = st.executeQuery();
-                csList = new ArrayList<>();
-                while (rs.next()) {
-                    ChatSession cs = new ChatSession();
-                    cs.setSessionID(rs.getInt("sessionID"));
-                    cs.setUserID(rs.getInt("userID"));
-                    cs.setStatus(rs.getInt("status"));
+            conn = DBConnection.getConnection();
+            st = conn.prepareStatement("SELECT sessionID, userID, status FROM `session` ORDER BY sessionID DESC");
+            rs = st.executeQuery();
+            csList = new ArrayList<>();
+            while (rs.next()) {
+                ChatSession cs = new ChatSession();
+                cs.setSessionID(rs.getInt("sessionID"));
+                cs.setUserID(rs.getInt("userID"));
+                cs.setStatus(rs.getInt("status"));
 
-                    csList.add(cs);
-                }
+                csList.add(cs);
             }
             return csList;
         } catch (SQLException ex) {
             Logger.getLogger(ChatSessionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(st);
+            DbUtils.closeQuietly(conn);
         }
         return null;
     }
@@ -58,9 +65,11 @@ public class ChatSessionDAO {
                     cs2.setUserID(rs.getInt("userID"));
                     cs2.setStatus(rs.getInt("status"));
                     cs2.setMessageID(rs.getInt("messageID"));
-                    
+
                     cs2List.add(cs2);
                 }
+                st.close();
+                rs.close();
             }
             return cs2List;
         } catch (SQLException ex) {
@@ -77,14 +86,16 @@ public class ChatSessionDAO {
                         + " WHERE sessionID = ?");
                 st.setInt(1, session_id);
                 ResultSet rs = st.executeQuery();
-                
+
                 if (rs.next()) {
                     cSession = new ChatSession();
-                    
+
                     cSession.setSessionID(session_id);
                     cSession.setUserID(rs.getInt("userID"));
                     cSession.setStatus(rs.getInt("status"));
                 }
+                st.close();
+                rs.close();
             }
             return cSession;
         } catch (SQLException ex) {
@@ -94,19 +105,24 @@ public class ChatSessionDAO {
     }
 
     public static void addNewChatSession(ChatSession cs) {
+        Connection conn = null;
+        PreparedStatement st = null;
         try {
-            try (Connection conn = DBConnection.getConnection()) {
-                PreparedStatement st = conn.prepareCall("INSERT INTO session"
-                        + " (sessionID, userID, status)"
-                        + " VALUES (NULL, ?, ?);");
-                
-                st.setInt(1, cs.getUserID());
-                st.setInt(2, cs.getStatus());
-                
-                st.executeUpdate();
-            }
+            conn = DBConnection.getConnection();
+            st = conn.prepareCall("INSERT INTO session"
+                    + " (sessionID, userID, status)"
+                    + " VALUES (NULL, ?, ?);");
+
+            st.setInt(1, cs.getUserID());
+            st.setInt(2, cs.getStatus());
+
+            st.executeUpdate();
+
         } catch (SQLException ex) {
             Logger.getLogger(ChatSessionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(st);
+            DbUtils.closeQuietly(conn);
         }
     }
 
@@ -116,12 +132,13 @@ public class ChatSessionDAO {
                 PreparedStatement st = conn.prepareCall("UPDATE session "
                         + "SET userID = ?, status = ?"
                         + "WHERE session.`sessionID` = ?;");
-                
+
                 st.setInt(1, cs.getUserID());
                 st.setInt(2, cs.getStatus());
                 st.setInt(3, cs.getSessionID());
-                
+
                 st.executeUpdate();
+                st.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(ChatSessionDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,10 +150,12 @@ public class ChatSessionDAO {
             try (Connection conn = DBConnection.getConnection()) {
                 PreparedStatement st = conn.prepareCall("DELETE FROM session "
                         + "WHERE session.`sessionID` = ?;");
-                
+
                 st.setInt(1, cs.getSessionID());
-                
+
                 st.executeUpdate();
+
+                st.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(ChatSessionDAO.class.getName()).log(Level.SEVERE, null, ex);

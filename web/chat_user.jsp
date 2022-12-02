@@ -181,36 +181,7 @@
         <main id="main" class="bg-light">
             <div class="container bg-light">
                 <%
-                    User u = (User) session.getAttribute("acc");
-                    int cUID = -1;
-                    if (u == null) {
-                        response.sendRedirect(request.getContextPath() + "/account_login.jsp");
-                    } else {
-                        cUID = u.getUserID();
-                        int sessionID = -1;
-
-                        while (sessionID == -1) {
-                            // Get user's latest opening chat session
-                            ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
-                            for (ChatSession cs : csList) {
-                                int tmpUID = cs.getUserID();
-                                int tmpStatus = cs.getStatus();
-
-                                if (tmpUID == cUID && tmpStatus == 0) {
-                                    sessionID = cs.getSessionID();
-                                    break;
-                                }
-                            }
-
-                            if (sessionID == -1) {
-                                ChatSession ncs = new ChatSession();
-                                ncs.setUserID(cUID);
-                                ncs.setStatus(0);
-
-                                ChatSessionDAO.addNewChatSession(ncs);
-                            }
-                        }
-                    }
+                    int cUID = Integer.parseInt(request.getAttribute("chatUID").toString());
                 %>
                 <div class="album py-4 bg-light height-100vh">
                     <div class="chat-container bg-white">

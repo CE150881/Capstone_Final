@@ -18,7 +18,6 @@ import java.util.List;
  * @author Saing
  */
 public class TagDAO {
-    Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
     
@@ -26,13 +25,14 @@ public class TagDAO {
         List<Tag> list = new ArrayList<>();
         String query = "SELECT * FROM `tag`;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Tag(rs.getInt(1),
                                   rs.getString(2)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -42,7 +42,7 @@ public class TagDAO {
         Tag a = new Tag();
         String query = "SELECT * FROM `tag` where TagID = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, TagID);
             rs = ps.executeQuery();
@@ -50,6 +50,7 @@ public class TagDAO {
                 a = new Tag(rs.getInt(1),
                                   rs.getString(2));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
@@ -58,10 +59,11 @@ public class TagDAO {
     public void insertTag(String Desc){
         String query = "insert into tag(tag.Desc) value(?);";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, Desc);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -69,10 +71,11 @@ public class TagDAO {
     public void deleteTag(int TagID) {
         String query = "delete from `tag` where `TagID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, TagID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -80,17 +83,17 @@ public class TagDAO {
     public void editTag(int TagID, String Desc){
         String query = "update `tag` SET `Desc` = ? where `TagID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, Desc);
             ps.setInt(2, TagID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
     
     public static void main(String[] args) {
-        Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         TagDAO dao = new TagDAO();

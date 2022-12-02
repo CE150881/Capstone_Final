@@ -5,15 +5,18 @@
  */
 package Controllers.Chat;
 
+import DAOs.Chat.ChatSessionDAO;
 import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
+import Models.ChatSession;
 import Models.Level;
 import Models.Tag;
 import Models.Type;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -65,8 +68,34 @@ public class ChatInitController extends HttpServlet {
         HttpSession session = request.getSession();
         // Get attributes value
         User cUser = (User) session.getAttribute("acc");
+        int cUID = -1;
 
         if (cUser != null) {
+            cUID = cUser.getUserID();
+            int sessionID = -1;
+
+            while (sessionID == -1) {
+                // Get user's latest opening chat session
+                ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
+                for (ChatSession cs : csList) {
+                    int tmpUID = cs.getUserID();
+                    int tmpStatus = cs.getStatus();
+
+                    if (tmpUID == cUID && tmpStatus == 0) {
+                        sessionID = cs.getSessionID();
+                        break;
+                    }
+                }
+
+                if (sessionID == -1) {
+                    ChatSession ncs = new ChatSession();
+                    ncs.setUserID(cUID);
+                    ncs.setStatus(0);
+
+                    ChatSessionDAO.addNewChatSession(ncs);
+                }
+            }
+            request.setAttribute("chatUID", cUID);
             request.getRequestDispatcher("chat_user.jsp").forward(request, response);
         } else {
             response.sendRedirect(request.getContextPath() + "/account_login.jsp");

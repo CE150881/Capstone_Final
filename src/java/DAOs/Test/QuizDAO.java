@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class QuizDAO {
 
-    Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
 
@@ -27,7 +26,7 @@ public class QuizDAO {
         List<Quiz> list = new ArrayList<>();
         String query = "select * from `quiz`;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -36,6 +35,7 @@ public class QuizDAO {
                         rs.getInt(3),
                         rs.getInt(4)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -45,7 +45,7 @@ public class QuizDAO {
         List<Quiz> list = new ArrayList<>();
         String query = "select * from `quiz` where `TestID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, TestID);
             rs = ps.executeQuery();
@@ -55,6 +55,7 @@ public class QuizDAO {
                         rs.getInt(3),
                         rs.getInt(4)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -64,35 +65,37 @@ public class QuizDAO {
         Quiz a = new Quiz();
         String query = "select * from `quiz` where `QuizID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, QuizID);
             rs = ps.executeQuery();
             while (rs.next()) {
                 a = new Quiz(rs.getInt(1),
-                              rs.getString(2),
-                              rs.getInt(3),
-                              rs.getInt(4));
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
     }
-    
+
     public Quiz getbyQuestion(int QuestionID) {
         Quiz a = new Quiz();
         String query = "SELECT * FROM `quiz` WHERE `QuestionID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, QuestionID);
             rs = ps.executeQuery();
             while (rs.next()) {
                 a = new Quiz(rs.getInt(1),
-                              rs.getString(2),
-                              rs.getInt(3),
-                              rs.getInt(4));
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
@@ -101,12 +104,13 @@ public class QuizDAO {
     public void insertQuiz(String Name, int TestID, int QuestionID) {
         String query = "INSERT INTO `quiz` (`name`, `TestID`, `QuestionID`) VALUES (?, ?, ?);";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, Name);
             ps.setInt(2, TestID);
             ps.setInt(3, QuestionID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -114,10 +118,11 @@ public class QuizDAO {
     public void deleteQuiz(int QuizID) {
         String query = "delete from `quiz` where `QuizID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, QuizID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -127,19 +132,19 @@ public class QuizDAO {
                 + "set `Desc` = ?, `TestID` = ?, `QuestionID` = ?\n"
                 + "where `QuizID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, Name);
             ps.setInt(2, TestID);
             ps.setInt(3, QuestionID);
             ps.setInt(4, QuizID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
 
     public static void main(String[] args) {
-        Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         QuizDAO dao = new QuizDAO();

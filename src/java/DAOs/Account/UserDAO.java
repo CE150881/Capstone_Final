@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class UserDAO {
 
-    Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
 
@@ -27,7 +26,7 @@ public class UserDAO {
     public void signup(String email, String password, String username, String phone, String avatar) {
         String query = "INSERT INTO `user`(`email`, password, `username`, `phone`, `avatar`, `role`) VALUES (?,MD5(?),?,?,?,'Người dùng')";
         try {
-            conn = new DBConnection().getConnection();       // call function form DBconnection
+            Connection conn = DBConnection.getConnection();     // call function form DBconnection
             ps = conn.prepareStatement(query);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -46,7 +45,7 @@ public class UserDAO {
     public void signupContentManager(String email, String password, String username, String avatar) {
         String query = "INSERT INTO `user`(`email`, `password`, `username`, `phone`, `avatar`, `role`) VALUES (?,MD5(?),?,'',?,'Quản lí nội dung')";
         try {
-            conn = new DBConnection().getConnection();       // call function form DBconnection
+            Connection conn = DBConnection.getConnection();        // call function form DBconnection
             ps = conn.prepareStatement(query);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -64,7 +63,7 @@ public class UserDAO {
     public User login(String email, String password) {
         String query = "SELECT * FROM user WHERE email = ? AND password =?";
         try {
-            conn = new DBConnection().getConnection();       // call function form DBconnection
+            Connection conn = DBConnection.getConnection();        // call function form DBconnection
             ps = conn.prepareStatement(query);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -91,7 +90,7 @@ public class UserDAO {
     public User loginWithEmail(String email) {
         String query = "SELECT * FROM user WHERE email = ?";
         try {
-            conn = new DBConnection().getConnection();       // call function form DBconnection
+            Connection conn = DBConnection.getConnection();        // call function form DBconnection
             ps = conn.prepareStatement(query);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -117,7 +116,7 @@ public class UserDAO {
     public User checkAdmin(String email) {
         String query = "SELECT * FROM user WHERE email = ? AND role = 'Quản trị viên' ";
         try {
-            conn = new DBConnection().getConnection();       // call function form DBconnection
+            Connection conn = DBConnection.getConnection();        // call function form DBconnection
             ps = conn.prepareStatement(query);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -142,7 +141,7 @@ public class UserDAO {
     public User checkContentManager(String email) {
         String query = "SELECT * FROM user WHERE email = ? AND role = 'Quản lí nội dung' ";
         try {
-            conn = new DBConnection().getConnection();       // call function form DBconnection
+            Connection conn = DBConnection.getConnection();       // call function form DBconnection
             ps = conn.prepareStatement(query);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -231,7 +230,7 @@ public class UserDAO {
 
     public User updateUser(String username, String phone, String email) {
         try {
-            conn = DBConnection.getConnection();
+            Connection conn = DBConnection.getConnection();
             String sql = "UPDATE user "
                     + "SET username = ?, phone = ?"
                     + "WHERE user.`email` = ?";
@@ -250,7 +249,7 @@ public class UserDAO {
 
     public User updateAvatar(String avatar, String email) {
         try {
-            conn = DBConnection.getConnection();
+            Connection conn = DBConnection.getConnection();
             String sql = "UPDATE user "
                     + "SET avatar = ? "
                     + "WHERE user.`email` = ?";
@@ -268,7 +267,7 @@ public class UserDAO {
 
     public boolean updatePassword(String password, String email) {
         try {
-            conn = DBConnection.getConnection();
+            Connection conn = DBConnection.getConnection();
             String sql = "UPDATE user " + "SET password = ? " + "WHERE user.`email` = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, password);
@@ -285,7 +284,7 @@ public class UserDAO {
     public User getUserByEmail(String email) {
         String query = "SELECT * FROM user WHERE email = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection(); //mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -312,7 +311,7 @@ public class UserDAO {
         List<User> list = new ArrayList<>();
         String query = "SELECT * FROM user";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection(); //mo ket noi voi sql
             ps = conn.prepareStatement(query);
             //ResultSet resultSet = DBConnection.querySet("select * from user");
             ResultSet resultSet = ps.executeQuery();
@@ -334,9 +333,9 @@ public class UserDAO {
                 conn.close();
                 return list;
             }
-            
+
         } catch (Exception e) {
-            
+
         }
         return null;
     }
@@ -344,7 +343,7 @@ public class UserDAO {
     public User getUserByID(String userID) {
         String query = "SELECT * FROM user WHERE userID = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection(); //mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, userID);
             rs = ps.executeQuery();
@@ -369,12 +368,12 @@ public class UserDAO {
     public User getUserByID2(int userID) {
         String query = "SELECT * FROM user WHERE userID = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection(); //mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, userID);
             rs = ps.executeQuery();
             while (rs.next()) {
-                return new User(
+                User u = new User(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -383,9 +382,10 @@ public class UserDAO {
                         rs.getString(6),
                         rs.getString(7)
                 );
+                conn.close();
+                return u;
             }
 
-            conn.close();
         } catch (Exception e) {
         }
         return null;

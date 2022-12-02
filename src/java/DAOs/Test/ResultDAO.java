@@ -19,8 +19,6 @@ import java.util.List;
  * @author Saing
  */
 public class ResultDAO {
-
-    Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
 
@@ -28,7 +26,7 @@ public class ResultDAO {
         List<Result> list = new ArrayList<>();
         String query = "SELECT * FROM `result`;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -40,6 +38,7 @@ public class ResultDAO {
                         rs.getInt(6),
                         rs.getInt(7)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -52,7 +51,7 @@ public class ResultDAO {
                        "ORDER BY  result.ResultID DESC\n" +
                        "LIMIT     1;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -64,6 +63,7 @@ public class ResultDAO {
                         rs.getInt(6),
                         rs.getInt(7));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
@@ -73,7 +73,7 @@ public class ResultDAO {
         List<Result> list = new ArrayList<>();
         String query = "select * from `result` where `TestID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, TestID);
             rs = ps.executeQuery();
@@ -86,6 +86,7 @@ public class ResultDAO {
                         rs.getInt(6),
                         rs.getInt(7)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -95,7 +96,7 @@ public class ResultDAO {
         List<Result> list = new ArrayList<>();
         String query = "select * from `result` where `UserID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, UserID);
             rs = ps.executeQuery();
@@ -108,6 +109,7 @@ public class ResultDAO {
                         rs.getInt(6),
                         rs.getInt(7)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
@@ -117,7 +119,7 @@ public class ResultDAO {
         Result a = new Result();
         String query = "select * from `result` where `ResultID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, ResultID);
             rs = ps.executeQuery();
@@ -130,6 +132,7 @@ public class ResultDAO {
                         rs.getInt(6),
                         rs.getInt(7));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
@@ -139,7 +142,7 @@ public class ResultDAO {
         String query = "insert into result (result.UserID,result.TestID,result.timeBigin,result.timeExpire,result.Score,result.trueQuestion)\n" +
                        "VALUES(?,?,?,?,?,?);";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, UserID);
             ps.setInt(2, TestID);
@@ -148,6 +151,7 @@ public class ResultDAO {
             ps.setInt(5, Score);
             ps.setInt(6, trueQuestion);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -155,10 +159,11 @@ public class ResultDAO {
     public void deleteResult(int ResultID) {
         String query = "delete from `result` where `ResultID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, ResultID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
@@ -168,7 +173,7 @@ public class ResultDAO {
                 + "set `UserID` = ?, `TestID` = ?,`timeBigin` = ?,`timeExpire` = ?, `Score` = ?, `trueQuestion` = ?\n"
                 + "where `ResultID` = ?;";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps.setInt(1, UserID);
             ps.setInt(2, TestID);
             ps.setInt(3, UserID);
@@ -177,12 +182,12 @@ public class ResultDAO {
             ps.setInt(6, trueQuestion);
             ps.setInt(7, ResultID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
 
     public static void main(String[] args) {
-        Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         ResultDAO dao = new ResultDAO();

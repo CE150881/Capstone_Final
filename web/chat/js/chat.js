@@ -1,15 +1,11 @@
 var currentData;
-var isLoadMessage = false;
-var isProcessing;
+const inputMap = new Map();
 
 $(document).ready(function () {
-    isProcessing = false;
-    loadMessage(isLoadMessage); // This will run on page load
+    loadMessage(); // This will run on page load
     setInterval(function () {
-        if (isLoadMessage === false) {
-            loadMessage(isLoadMessage); // this will run after every 3 seconds
-        }
-    }, 5000);
+        loadMessage(); // this will run after every 3 seconds
+    }, 1000);
 
     // Set newline key in textarea to SHIFT + ENTER
     $("textarea").keydown(function (e) {
@@ -22,7 +18,6 @@ $(document).ready(function () {
     });
 
     $("#chat-form").on("submit", function (e) {
-        isLoadMessage = true;
         var dataString = $("#chat-form").serialize();
         var map = deparam(dataString);
         var chatContent = map.chatContent;
@@ -33,8 +28,8 @@ $(document).ready(function () {
                 type: "POST",
                 url: "ChatController?" + dataString,
                 success: function () {
-                    loadMessage(isLoadMessage);
-                    isLoadMessage = false;
+                    $('#chat-content').val("");
+                    loadMessage();
                 }
             });
         }
@@ -60,30 +55,22 @@ function deparam(query) {
     return map;
 }
 
-function loadMessage(loadAfterSend) {
-    if (isProcessing === false) {
-        isProcessing = true;
-        $.ajax({
-            type: "GET",
-            url: "ChatContentController",
-            success: function (data) {
-                if (data !== null) {
-                    // Only change message display if data is different
-                    if (currentData !== data) {
-                        currentData = data;
+function loadMessage() {
+    $.ajax({
+        type: "GET",
+        url: "ChatContentController",
+        success: function (data) {
+            if (data !== null) {
+                // Only change message display if data is different
+                if (currentData !== data) {
+                    currentData = data;
 
-                        $('#message-list').html(data);
-                        if (loadAfterSend === true) {
-                            $('#chat-content').val("");
-                        }
-                        scrollToBottom();
-                    }
+                    $('#message-list').html(data);
+                    scrollToBottom();
                 }
             }
-        });
-        isProcessing = false;
-    }
-    
+        }
+    });
 }
 
 function scrollToBottom() {
