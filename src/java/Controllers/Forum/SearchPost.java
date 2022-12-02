@@ -11,6 +11,9 @@ import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
+import Models.ForumAllPostWithComment;
+import Models.ForumReportNotification;
+import Models.ForumTopic;
 import Models.Level;
 import Models.Tag;
 import Models.Type;
@@ -82,8 +85,11 @@ public class SearchPost extends HttpServlet {
                 search = search.trim();
 
                 //ResultSet rs = PostDAO.getAllPostBySearch(search);
-                ResultSet rs = PostDAO.getAllPostBySearchWithCommentCount(search);
-                ResultSet t = TopicDAO.getAllTopic();
+                //ResultSet rs = PostDAO.getAllPostBySearchWithCommentCount(search);
+                List<ForumAllPostWithComment> rs;
+                rs = PostDAO.getAllPostBySearchWithCommentCount2(search);
+                //ResultSet t = TopicDAO.getAllTopic();
+                List<ForumTopic> t = TopicDAO.getAllTopic2();
 
                 HttpSession session = request.getSession();
 
@@ -113,7 +119,8 @@ public class SearchPost extends HttpServlet {
                 User u = (User) request.getSession().getAttribute("acc");
                 if (u != null) {
                     int userID = u.getUserID();
-                    ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                    //ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                    List<ForumReportNotification> notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead2(userID);
                     session.setAttribute("notReadNotification", notReadNotification);
                 }
 

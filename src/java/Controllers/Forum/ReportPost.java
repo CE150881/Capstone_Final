@@ -8,12 +8,13 @@ package Controllers.Forum;
 import DAOs.Forum.PostDAO;
 import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Forum.ReportPostDAO;
+import Models.ForumAllReportPost;
 import Models.ForumPost;
 import Models.ForumReportNotification;
 import Models.ForumReportPost;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -66,14 +67,13 @@ public class ReportPost extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         if (path.endsWith("/ReportPost")){
-            ResultSet rs = ReportPostDAO.getAllReportPost();
-            if (rs == null){
-                
-            }else{
+            
+            List<ForumAllReportPost> rs = ReportPostDAO.getAllReportPost2();
+            
                 HttpSession session = request.getSession();
                 session.setAttribute("allReportPost", rs);
                 request.getRequestDispatcher("forum_reportPost.jsp").forward(request, response);
-            }
+            
         }
     }
 
@@ -105,7 +105,7 @@ public class ReportPost extends HttpServlet {
             post_id = Integer.parseInt(request.getParameter("post_id"));
             
             ForumReportPost rp = new ForumReportPost(report_post_id, user_report_id, report_post_reason, post_id, report_post_date);
-            int count = ReportPostDAO.deleteReportPost(rp);
+            int count = ReportPostDAO.deleteReportPost2(rp);
                     if (count > 0){                    
                         response.sendRedirect(request.getContextPath()+"/ReportPost");
                     } else {
@@ -129,19 +129,19 @@ public class ReportPost extends HttpServlet {
             post_id = Integer.parseInt(request.getParameter("post_id"));
             
             ForumReportPost rp = new ForumReportPost(report_post_id, user_report_id, report_post_reason, post_id, report_post_date);
-            int count = ReportPostDAO.deleteReportPostByPostID(rp);
+            int count = ReportPostDAO.deleteReportPostByPostID2(rp);
             
             ForumPost p = new ForumPost(post_id, topic_id, post_title, post_content, userID, post_date, post_edit_date, post_status);
-            int count2 = PostDAO.disablePost(p);
+            int count2 = PostDAO.disablePost2(p);
                         
                     if (count > 0 && count2 > 0) {
-                        p = PostDAO.getPostByID(post_id);
+                        p = PostDAO.getPostByID2(post_id);
                         int report_notification_id = 0;
                         int comment_id = 0;
                         String report_notification_status = "not read";
                         userID = p.getUser_id();                        
                         ForumReportNotification rn = new ForumReportNotification(report_notification_id, userID, report_notification_content, post_id, comment_id, report_notification_status);
-                        int count3 = ReportNotificationDAO.newReportNotificationPost(rn);
+                        int count3 = ReportNotificationDAO.newReportNotificationPost2(rn);
                         
                         response.sendRedirect(request.getContextPath()+"/ReportPost");
                     } else {

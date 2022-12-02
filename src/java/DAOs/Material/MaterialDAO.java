@@ -129,8 +129,8 @@ public class MaterialDAO {
         } catch (Exception e) {
         }
         return list;
-    }
-
+    }    
+    
     // get alphabet by alphabetID
     public Alphabet getAlphabetByAlphabetID(String alphabetID) {
         String query = "SELECT * FROM alphabet WHERE alphabetID = ?";
@@ -593,5 +593,5 @@ public class MaterialDAO {
         MaterialDAO dao = new MaterialDAO();
         dao.addKanji("1", "g", "h", "f");
         System.out.println("2");
-    }
+    }    
 }

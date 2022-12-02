@@ -9,6 +9,7 @@ import DAOs.Forum.ReportNotificationDAO;
 import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
+import Models.ForumAllNotification;
 import Models.Level;
 import Models.Tag;
 import Models.Type;
@@ -71,8 +72,9 @@ public class ForumNotification extends HttpServlet {
             String[] s = path.split("/");
             String stringUserID = s[s.length - 1];
             int userID = Integer.parseInt(stringUserID);
-            int count = ReportNotificationDAO.markAllRead(userID);
-            ResultSet rnUser = ReportNotificationDAO.getAllReportNotificationByUserID(userID);
+            int count = ReportNotificationDAO.markAllRead2(userID);
+            //ResultSet rnUser = ReportNotificationDAO.getAllReportNotificationByUserID(userID);
+            List<ForumAllNotification> rnUser = ReportNotificationDAO.getAllReportNotificationByUserID2(userID);
 
             HttpSession session = request.getSession();
 

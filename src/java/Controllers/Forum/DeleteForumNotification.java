@@ -73,7 +73,7 @@ public class DeleteForumNotification extends HttpServlet {
             throws ServletException, IOException {
         int report_notification_id = 0;
         report_notification_id = Integer.parseInt(request.getParameter("report_notification_id"));
-        int count = ReportNotificationDAO.deleteReportNotificationPostByID(report_notification_id);
+        int count = ReportNotificationDAO.deleteReportNotificationPostByID2(report_notification_id);
         if (count > 0) {
                         response.sendRedirect(request.getContextPath()+"/forum_reportNotification.jsp");
                     } else {

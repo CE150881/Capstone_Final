@@ -11,6 +11,7 @@ import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
 import Models.ForumPost;
+import Models.ForumTopic;
 import Models.Level;
 import Models.Tag;
 import Models.Type;
@@ -72,10 +73,9 @@ public class NewPost extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         if (path.endsWith("/NewPost")) {
-            ResultSet t = TopicDAO.getAllTopic();
-            if (t == null) {
-
-            } else {
+            //ResultSet t = TopicDAO.getAllTopic();
+            List<ForumTopic> t = TopicDAO.getAllTopic2();
+            
                 HttpSession session = request.getSession();
                 // document
                 String typeID = request.getParameter("typeID");
@@ -101,7 +101,7 @@ public class NewPost extends HttpServlet {
                 // end test
                 session.setAttribute("allTopic", t);
                 request.getRequestDispatcher("forum_newPost.jsp").forward(request, response);
-            }
+            
         }
     }
 
@@ -136,7 +136,7 @@ public class NewPost extends HttpServlet {
         topic_id = Integer.parseInt(request.getParameter("topic_id"));
 
         ForumPost p = new ForumPost(post_id, topic_id, post_title, post_content, userID, post_date, post_edit_date, post_status);
-        int count = PostDAO.newPost(p);
+        int count = PostDAO.newPost2(p);
         if (count > 0) {
             response.sendRedirect(request.getContextPath() + "/Forum");
         } else {

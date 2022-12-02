@@ -91,7 +91,7 @@ public class RestoreComment extends HttpServlet {
             comment_id = Integer.parseInt(request.getParameter("comment_id"));
 
             Comment a = new Comment(comment_id, comment_content, userID, comment_date, comment_edit_date, post_id, comment_status);
-            int count = CommentDAO.restoreComment(a);
+            int count = CommentDAO.restoreComment2(a);
             //int count2 = ReportNotificationDAO.deleteReportNotificationComment(comment_id);
 
             if (count > 0) {

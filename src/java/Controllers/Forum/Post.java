@@ -15,6 +15,7 @@ import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
 import Models.Comment;
+import Models.ForumAllComment;
 import Models.ForumPost;
 import Models.ForumReportNotification;
 import Models.ForumReportPost;
@@ -25,7 +26,6 @@ import Models.Type;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -84,13 +84,15 @@ public class Post extends HttpServlet {
             String[] s = path.split("/");
             String post_id = s[s.length - 1];
             int post_id2 = Integer.parseInt(post_id);
-            ForumPost p = PostDAO.getPostByID(post_id2);
+            ForumPost p = PostDAO.getPostByID2(post_id2);
             if (p == null) {
                 response.sendRedirect(request.getContextPath() + "/Forum");
             } else {
-                ForumTopic t = TopicDAO.getTopicByID(p.getTopic_id());
-                ResultSet rt = TopicDAO.getAllTopic();
-                ResultSet a = CommentDAO.getAllCommentByPostID(post_id2);
+                ForumTopic t = TopicDAO.getTopicByID2(p.getTopic_id());
+                
+                List<ForumTopic> rt = TopicDAO.getAllTopic2();
+                
+                List<ForumAllComment> a = CommentDAO.getAllCommentByPostID2(post_id2);
                 UserDAO dao2 = new UserDAO();
                 User u = dao2.getUserByID2(p.getUser_id());
 
@@ -166,10 +168,10 @@ public class Post extends HttpServlet {
             post_id = Integer.parseInt(request.getParameter("post_id"));
 
             Comment a = new Comment(comment_id, comment_content, userID, comment_date, comment_edit_date, post_id, comment_status);
-            int count = CommentDAO.newComment(a);
+            int count = CommentDAO.newComment2(a);
             if (userID != userID2) {
                 ForumReportNotification rn = new ForumReportNotification(report_notification_id, userID2, report_notification_content, post_id, comment_id, report_notification_status);
-                int count2 = ReportNotificationDAO.newReportNotificationPost(rn);
+                int count2 = ReportNotificationDAO.newReportNotificationPost2(rn);
             }
             if (count > 0) {
                 response.sendRedirect(request.getContextPath() + "/Post/" + post_id);
@@ -186,7 +188,7 @@ public class Post extends HttpServlet {
             post_id = Integer.parseInt(request.getParameter("post_id"));
 
             Comment a = new Comment(comment_id, comment_content, userID, comment_date, comment_edit_date, post_id, comment_status);
-            int count = CommentDAO.editComment(a);
+            int count = CommentDAO.editComment2(a);
             if (count > 0) {
                 response.sendRedirect(request.getContextPath() + "/Post/" + post_id);
             } else {
@@ -201,7 +203,7 @@ public class Post extends HttpServlet {
             post_id = Integer.parseInt(request.getParameter("post_id"));
 
             Comment a = new Comment(comment_id, comment_content, userID, comment_date, comment_edit_date, post_id, comment_status);
-            int count = CommentDAO.deleteComment(a);
+            int count = CommentDAO.deleteComment2(a);
             if (count > 0) {
                 response.sendRedirect(request.getContextPath() + "/Post/" + post_id);
             } else {
@@ -225,7 +227,7 @@ public class Post extends HttpServlet {
             topic_id = Integer.parseInt(request.getParameter("topic_id"));
 
             ForumPost p = new ForumPost(post_id, topic_id, post_title, post_content, userID, post_date, post_edit_date, post_status);
-            int count = PostDAO.editPost(p);
+            int count = PostDAO.editPost2(p);
             if (count > 0) {
                 response.sendRedirect(request.getContextPath() + "/Post/" + post_id);
             } else {
@@ -239,7 +241,7 @@ public class Post extends HttpServlet {
             post_id = Integer.parseInt(request.getParameter("post_id"));
 
             ForumPost p = new ForumPost(post_id, topic_id, post_title, post_content, userID, post_date, post_edit_date, post_status);
-            int count = PostDAO.disablePost(p);
+            int count = PostDAO.disablePost2(p);
             if (count > 0) {
                 response.sendRedirect(request.getContextPath() + "/Forum");
             } else {

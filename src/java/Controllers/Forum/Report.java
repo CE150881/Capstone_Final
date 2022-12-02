@@ -95,7 +95,7 @@ public class Report extends HttpServlet {
             user_report_id = Integer.parseInt(request.getParameter("userID"));
 
             ForumReportPost rp = new ForumReportPost(report_post_id, user_report_id, report_post_reason, post_id, report_post_date);
-            int count = ReportPostDAO.newReportPost(rp);
+            int count = ReportPostDAO.newReportPost2(rp);
             if (count > 0) {
                 HttpSession session = request.getSession();
                 session.setAttribute("report", "success");
@@ -118,7 +118,7 @@ public class Report extends HttpServlet {
             post_id = Integer.parseInt(request.getParameter("post_id"));
             user_report_id = Integer.parseInt(request.getParameter("userID"));
             ForumReportComment ra = new ForumReportComment(report_comment_id, user_report_id, report_comment_reason, comment_id, report_comment_date);
-            int count = ReportCommentDAO.newReportComment(ra);
+            int count = ReportCommentDAO.newReportComment2(ra);
             if (count > 0) {
                 HttpSession session = request.getSession();
                 session.setAttribute("report", "success");

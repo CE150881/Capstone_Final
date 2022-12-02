@@ -11,6 +11,9 @@ import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
+import Models.ForumAllPostWithComment;
+import Models.ForumReportNotification;
+import Models.ForumTopic;
 import Models.Level;
 import Models.Tag;
 import Models.Type;
@@ -19,6 +22,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -71,15 +75,11 @@ public class Forum extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ResultSet rs2 = PostDAO.getNumberPost();
+        //ResultSet rs2 = PostDAO.getNumberPost();
         int totalPage = 1;
-        try {
-            while (rs2.next()) {
-                totalPage = Integer.parseInt(rs2.getString("total_post"));
-            }
-        } catch (SQLException ex) {
-
-        }
+        int rs2 = PostDAO.getNumberPost2();
+        totalPage = rs2;
+        
         if (totalPage <= 10) {
             totalPage = 1;
         } else {
@@ -90,9 +90,12 @@ public class Forum extends HttpServlet {
         if (path.endsWith("/Forum")) {
             int offset = 0;
             //ResultSet rs = PostDAO.getAllPostByPage(offset);
-            ResultSet rs = PostDAO.getAllPostByPageWithCommentCount(offset);
-            ResultSet t = TopicDAO.getAllTopic();
-            if (rs == null) {
+            //ResultSet rs = PostDAO.getAllPostByPageWithCommentCount(offset);
+            List<ForumAllPostWithComment> f;
+            f = PostDAO.getAllPostByPageWithCommentCount2(offset);
+            //ResultSet t = TopicDAO.getAllTopic();
+            List<ForumTopic> t = TopicDAO.getAllTopic2();
+            if (f == null) {
                 request.getRequestDispatcher("home.jsp").forward(request, response);
             } else {
 
@@ -124,14 +127,16 @@ public class Forum extends HttpServlet {
                 User u = (User) request.getSession().getAttribute("acc");
                 if (u != null) {
                     int userID = u.getUserID();
-                    ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                    //ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                    List<ForumReportNotification> notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead2(userID);
                     session.setAttribute("notReadNotification", notReadNotification);
                 }
 
                 session.setAttribute("allTopic", t);
                 session.setAttribute("totalPage", totalPage);
                 session.setAttribute("currentUrl", path);
-                session.setAttribute("allPost", rs);
+                //session.setAttribute("allPost", rs);
+                session.setAttribute("allPost", f);
                 request.getRequestDispatcher("forum_forum.jsp").forward(request, response);
             }
         } else {
@@ -144,8 +149,10 @@ public class Forum extends HttpServlet {
                 } else {
                     offset2 = (offset2 - 1) * 10;
                     //ResultSet rs = PostDAO.getAllPostByPage(offset2);
-                    ResultSet rs = PostDAO.getAllPostByPageWithCommentCount(offset2);
-                    if (rs == null) {
+                    //ResultSet rs = PostDAO.getAllPostByPageWithCommentCount(offset2);
+                    List<ForumAllPostWithComment> f;
+                    f = PostDAO.getAllPostByPageWithCommentCount2(offset2);
+                    if (f == null) {
                         request.getRequestDispatcher("home.jsp").forward(request, response);
                     } else {
 
@@ -164,7 +171,7 @@ public class Forum extends HttpServlet {
 
                         session.setAttribute("totalPage", totalPage);
                         session.setAttribute("currentUrl", path);
-                        session.setAttribute("allPost", rs);
+                        session.setAttribute("allPost", f);
                         request.getRequestDispatcher("/forum_forum.jsp").forward(request, response);
                     }
                 }

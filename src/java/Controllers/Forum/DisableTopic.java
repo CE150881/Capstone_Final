@@ -12,6 +12,7 @@ import Models.ForumTopic;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -64,14 +65,13 @@ public class DisableTopic extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         if (path.endsWith("/DisableTopic")){
-            ResultSet rs = TopicDAO.getAllDisableTopic();
-            if (rs == null){
-                
-            }else{
+            //ResultSet rs = TopicDAO.getAllDisableTopic();
+            List<ForumTopic> rs = TopicDAO.getAllDisableTopic2();
+            
                 HttpSession session = request.getSession();
                 session.setAttribute("allDisableTopic", rs);
                 request.getRequestDispatcher("forum_disableTopic.jsp").forward(request, response);
-            }
+            
         }
     }
 
@@ -108,10 +108,10 @@ public class DisableTopic extends HttpServlet {
             String post_status = "active";
             
             ForumPost p = new ForumPost(post_id, topic_id, post_title, post_content, user_id, post_date, post_edit_date, post_status);
-            int count = PostDAO.disablePostByTopic(p);
+            int count = PostDAO.disablePostByTopic2(p);
             
             ForumTopic t = new ForumTopic(topic_id, topic_name, topic_status);
-            int count2 = TopicDAO.disableTopic(t);
+            int count2 = TopicDAO.disableTopic2(t);
             
             if (count2 > 0) {
                 response.sendRedirect(request.getContextPath() + "/DisableTopic");

@@ -6,9 +6,11 @@
 package Controllers.Forum;
 
 import DAOs.Forum.PostDAO;
+import Models.ForumAllPostWithComment;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +40,7 @@ public class DisablePost extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DisablePost</title>");            
+            out.println("<title>Servlet DisablePost</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet DisablePost at " + request.getContextPath() + "</h1>");
@@ -60,15 +62,14 @@ public class DisablePost extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.endsWith("/DisablePost")){
-            ResultSet rs = PostDAO.getAllDisablePostWithCommentCount();
-            if (rs == null){
-                
-            }else{
-                HttpSession session = request.getSession();
-                session.setAttribute("allDisablePost", rs);
-                request.getRequestDispatcher("forum_disablePost.jsp").forward(request, response);
-            }
+        if (path.endsWith("/DisablePost")) {
+            //ResultSet rs = PostDAO.getAllDisablePostWithCommentCount();
+            List<ForumAllPostWithComment> rs;
+            rs = PostDAO.getAllDisablePostWithCommentCount2();
+
+            HttpSession session = request.getSession();
+            session.setAttribute("allDisablePost", rs);
+            request.getRequestDispatcher("forum_disablePost.jsp").forward(request, response);
         }
     }
 
