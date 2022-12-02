@@ -4,6 +4,8 @@
     Author     : ACER
 --%>
 
+<%@page import="Models.ForumTopic"%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -79,7 +81,7 @@
 
                     </nav>
                     <!-- End of Topbar -->
-                    
+
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
 
@@ -104,30 +106,34 @@
                             </thead>
                             <tbody>
                                 <%
-                                    ResultSet rs = (ResultSet) session.getAttribute("allTopic");
-                                    while (rs.next()) {
+                                    //ResultSet rs = (ResultSet) session.getAttribute("allTopic");
+                                    //while (rs.next()) {
+                                    List<ForumTopic> t = (List<ForumTopic>) session.getAttribute("allTopic");
+                                    for (int i = 0; i < t.size(); i++) {
+                                        
+                                        
                                 %>
                                 <tr>
-                                    <td><%= rs.getString("topic_name")%>
+                                    <td><%= t.get(i).getTopic_name()%>
                                         <%
-                                            if (rs.getString("topic_id").equals("1")) {
+                                            if (t.get(i).getTopic_id() == 1) {
                                         %>(Chủ đề mặc định)<%
                                             }
                                         %>
                                     </td>                    
                                     <td>
-                                        <button type="button" data-toggle="modal" data-target="#exampleModalEdit<%= rs.getString("topic_id")%>"
+                                        <button type="button" data-toggle="modal" data-target="#exampleModalEdit<%= t.get(i).getTopic_id()%>"
                                                 class="btn btn-secondary">Chỉnh Sửa</button>
                                         <%
-                                            if (!rs.getString("topic_id").equals("1")) {
+                                            if (t.get(i).getTopic_id() != 1) {
                                         %>       
-                                        <button type="button" data-toggle="modal" data-target="#exampleModalDelete<%= rs.getString("topic_id")%>"
+                                        <button type="button" data-toggle="modal" data-target="#exampleModalDelete<%= t.get(i).getTopic_id()%>"
                                                 class="btn btn-danger">Xoá</button>
                                         <%
                                             }
                                         %>        
                                         <!-- Modal Edit Topic-->
-                                        <div class="modal fade" id="exampleModalEdit<%= rs.getString("topic_id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModalEdit<%= t.get(i).getTopic_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -138,22 +144,22 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         Tên Chủ Đề Mới
-                                                        <form id="myform<%= rs.getString("topic_id")%>" role='form' method="post" action="<%= request.getContextPath()%>/EditTopic">
+                                                        <form id="myform<%= t.get(i).getTopic_id()%>" role='form' method="post" action="<%= request.getContextPath()%>/EditTopic">
                                                             <label for="exampleFormControlTextarea1"></label>
-                                                            <input name="topic_name" value="<%= rs.getString("topic_name")%>" required="required">
-                                                            <input name="topic_id" value="<%= rs.getString("topic_id")%>" style="display: none">
+                                                            <input name="topic_name" value="<%= t.get(i).getTopic_name()%>" required="required">
+                                                            <input name="topic_id" value="<%= t.get(i).getTopic_id()%>" style="display: none">
                                                         </form>                                                        
                                                     </div>
                                                     <div class="modal-footer">  
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                                                        <button type="submit" form="myform<%= rs.getString("topic_id")%>" value="editTopic" name="editTopic" class="btn btn-danger">Chỉnh Sửa</button>
+                                                        <button type="submit" form="myform<%= t.get(i).getTopic_id()%>" value="editTopic" name="editTopic" class="btn btn-danger">Chỉnh Sửa</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Modal Delete Topic-->
-                                        <div class="modal fade" id="exampleModalDelete<%= rs.getString("topic_id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModalDelete<%= t.get(i).getTopic_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -166,14 +172,14 @@
                                                         Bạn có chắc chắn muốn xoá chủ đề này?
                                                         <br>
                                                         Những bài đăng thuộc chủ đề này sẽ bị xoá
-                                                        <form id="myformDelete<%= rs.getString("topic_id")%>" role='form' method="post" action="<%= request.getContextPath()%>/DisableTopic">
+                                                        <form id="myformDelete<%= t.get(i).getTopic_id()%>" role='form' method="post" action="<%= request.getContextPath()%>/DisableTopic">
                                                             <label for="exampleFormControlTextarea1"></label>
-                                                            <input name="topic_id" value="<%= rs.getString("topic_id")%>" style="display: none">
+                                                            <input name="topic_id" value="<%= t.get(i).getTopic_id()%>" style="display: none">
                                                         </form>                                                        
                                                     </div>
                                                     <div class="modal-footer">  
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                                                        <button type="submit" form="myformDelete<%= rs.getString("topic_id")%>" value="disableTopic" name="disableTopic" class="btn btn-danger">Xoá</button>
+                                                        <button type="submit" form="myformDelete<%= t.get(i).getTopic_id()%>" value="disableTopic" name="disableTopic" class="btn btn-danger">Xoá</button>
                                                     </div>
                                                 </div>
                                             </div>

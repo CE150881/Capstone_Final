@@ -6,9 +6,10 @@
 package Controllers.Forum;
 
 import DAOs.Forum.CommentDAO;
+import Models.ForumAllComment;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class DisableComment extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DisableComment</title>");            
+            out.println("<title>Servlet DisableComment</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet DisableComment at " + request.getContextPath() + "</h1>");
@@ -60,15 +61,14 @@ public class DisableComment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.endsWith("/DisableComment")){
-            ResultSet rs = CommentDAO.getAllDisableComment();
-            if (rs == null){
-                
-            }else{
-                HttpSession session = request.getSession();
-                session.setAttribute("allDisableComment", rs);
-                request.getRequestDispatcher("forum_disableComment.jsp").forward(request, response);
-            }
+        if (path.endsWith("/DisableComment")) {
+            
+            List<ForumAllComment> rs = CommentDAO.getAllDisableComment2();
+
+            HttpSession session = request.getSession();
+            session.setAttribute("allDisableComment", rs);
+            request.getRequestDispatcher("forum_disableComment.jsp").forward(request, response);
+
         }
     }
 

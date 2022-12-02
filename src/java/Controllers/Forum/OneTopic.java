@@ -11,6 +11,9 @@ import DAOs.Forum.TopicDAO;
 import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
+import Models.ForumAllPostWithComment;
+import Models.ForumReportNotification;
+import Models.ForumTopic;
 import Models.Level;
 import Models.Tag;
 import Models.Type;
@@ -75,8 +78,11 @@ public class OneTopic extends HttpServlet {
             String topic_id = s[s.length - 1];
             int topic_id2 = Integer.parseInt(topic_id);
             //ResultSet p = PostDAO.getAllPostByTopic(topic_id2);
-            ResultSet p = PostDAO.getAllPostByTopicWithCommentCount(topic_id2);
-            ResultSet t = TopicDAO.getAllTopic();
+            //ResultSet p = PostDAO.getAllPostByTopicWithCommentCount(topic_id2);
+            List<ForumAllPostWithComment> p;
+            p = PostDAO.getAllPostByTopicWithCommentCount2(topic_id2);
+            //ResultSet t = TopicDAO.getAllTopic();
+            List<ForumTopic> t = TopicDAO.getAllTopic2();
             if (p == null) {
                 response.sendRedirect(request.getContextPath() + "/Forum");
             } else {
@@ -107,7 +113,8 @@ public class OneTopic extends HttpServlet {
                 User u = (User) request.getSession().getAttribute("acc");
                 if (u != null) {
                     int userID = u.getUserID();
-                    ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
+                    List<ForumReportNotification> notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead2(userID);
+                    
                     session.setAttribute("notReadNotification", notReadNotification);
                 }
 

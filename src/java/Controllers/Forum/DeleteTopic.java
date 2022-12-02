@@ -96,7 +96,7 @@ public class DeleteTopic extends HttpServlet {
             //int count = PostDAO.changeTopicPost(p);
             
             ForumTopic t = new ForumTopic(topic_id, topic_name, topic_status);
-            int count2 = TopicDAO.deleteTopic(t);
+            int count2 = TopicDAO.deleteTopic2(t);
             
             //if (count > 0 && count2 > 0) {
             if (count2 > 0) {

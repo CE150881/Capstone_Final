@@ -87,7 +87,7 @@ public class NewTopic extends HttpServlet {
         topic_name = request.getParameter("topic_name");
         
         ForumTopic t = new ForumTopic(topic_id, topic_name, topic_status);
-                    int count = TopicDAO.newTopic(t);
+                    int count = TopicDAO.newTopic2(t);
                     if (count > 0) {
                         response.sendRedirect(request.getContextPath()+"/Topic");
                     } else {

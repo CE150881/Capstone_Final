@@ -96,10 +96,10 @@ public class RestoreTopic extends HttpServlet {
             String post_status = "active";
             
             ForumPost p = new ForumPost(post_id, topic_id, post_title, post_content, user_id, post_date, post_edit_date, post_status);
-            int count = PostDAO.restorePostByTopic(p);
+            int count = PostDAO.restorePostByTopic2(p);
             
             ForumTopic t = new ForumTopic(topic_id, topic_name, topic_status);
-            int count2 = TopicDAO.restoreTopic(t);
+            int count2 = TopicDAO.restoreTopic2(t);
             
             if (count2 > 0) {
                 response.sendRedirect(request.getContextPath() + "/DisableTopic");

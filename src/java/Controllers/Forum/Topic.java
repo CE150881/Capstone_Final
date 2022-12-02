@@ -6,9 +6,11 @@
 package Controllers.Forum;
 
 import DAOs.Forum.TopicDAO;
+import Models.ForumTopic;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -61,14 +63,13 @@ public class Topic extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         if (path.endsWith("/Topic")){
-            ResultSet rs = TopicDAO.getAllTopic();
-            if (rs == null){
-                
-            }else{
+            //ResultSet rs = TopicDAO.getAllTopic();
+            List<ForumTopic> rs = TopicDAO.getAllTopic2();
+            
                 HttpSession session = request.getSession();
                 session.setAttribute("allTopic", rs);
                 request.getRequestDispatcher("forum_topic.jsp").forward(request, response);
-            }
+            
         }
     }
 

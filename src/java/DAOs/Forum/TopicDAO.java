@@ -6,151 +6,241 @@
 package DAOs.Forum;
 
 import Connection.DBConnection;
+import Controllers.Forum.Topic;
 import Models.ForumTopic;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.dbutils.DbUtils;
 
 /**
  *
  * @author ACER
  */
 public class TopicDAO {
-    public static ResultSet getAllTopic(){
+    
+    public static List<ForumTopic> getAllTopic2() {
+        ArrayList results = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Statement st = DBConnection.getConnection().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM `forum_topic` WHERE topic_status = 'active' ORDER BY topic_id ASC;");
-            return rs;
+            conn = DBConnection.getConnection();            
+            ps = conn.prepareStatement("SELECT * FROM `forum_topic` "
+                    + "WHERE topic_status = 'active' ORDER BY topic_id ASC;");
+
+            rs = ps.executeQuery();
+            
+            ForumTopic topic = null;
+            while (rs.next()) {
+                topic = new ForumTopic();
+                topic.setTopic_id(rs.getInt("topic_id"));
+                topic.setTopic_name(rs.getString("topic_name"));
+                topic.setTopic_status(rs.getString("topic_status"));
+                results.add(topic);
+            }            
+            return results;
         } catch (SQLException ex) {
             Logger.getLogger(TopicDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return null;
     }
-    
-    public static ResultSet getAllDisableTopic(){
+
+    public static List<ForumTopic> getAllDisableTopic2() {
+        ArrayList results = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Statement st = DBConnection.getConnection().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM `forum_topic` WHERE topic_status = 'disable' ORDER BY topic_id ASC;");
-            return rs;
+            conn = DBConnection.getConnection();            
+            ps = conn.prepareStatement("SELECT * FROM `forum_topic` WHERE topic_status = 'disable' ORDER BY topic_id ASC;");
+            rs = ps.executeQuery();
+            
+            ForumTopic topic = null;
+            while (rs.next()) {
+                topic = new ForumTopic();
+                topic.setTopic_id(rs.getInt("topic_id"));
+                topic.setTopic_name(rs.getString("topic_name"));
+                topic.setTopic_status(rs.getString("topic_status"));
+                results.add(topic);
+            }            
+            return results;
         } catch (SQLException ex) {
             Logger.getLogger(TopicDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return null;
-    }
-    
-    public static ForumTopic getTopicByID (int topic_id){
+    }   
+
+    public static ForumTopic getTopicByID2(int topic_id) {
         ForumTopic t = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM `forum_topic` "
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM `forum_topic` "
                     + "WHERE topic_id = ?;");
-            st.setInt(1, topic_id);
-            ResultSet rs = st.executeQuery();            
-            if(rs.next()){
+            ps.setInt(1, topic_id);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
                 t = new ForumTopic();
                 t.setTopic_id(topic_id);
                 t.setTopic_name(rs.getString("topic_name"));
                 t.setTopic_status(rs.getString("topic_status"));
-                                
+
             }
+            return t;
         } catch (SQLException ex) {
             Logger.getLogger(TopicDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return t;
     }
-    
-    public static int newTopic(ForumTopic t){
-        int rs = 0;
-        Connection conn;
+
+    public static int newTopic2(ForumTopic t) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("INSERT INTO `forum_topic` (`topic_id`, `topic_name`, `topic_status`) "
+            ps = conn.prepareStatement("INSERT INTO `forum_topic` (`topic_id`, `topic_name`, `topic_status`) "
                     + "VALUES (NULL, ?, 'active');");
-            
-            st.setString(1, t.getTopic_name());            
-            
-            rs = st.executeUpdate();
+
+            ps.setString(1, t.getTopic_name());
+
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(TopicDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
-    
-    public static int editTopic(ForumTopic t){
-        int rs = 0;
-        Connection conn;
+
+    public static int editTopic2(ForumTopic t) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_topic` "
+            ps = conn.prepareStatement("UPDATE `forum_topic` "
                     + "SET `topic_name` = ? "
                     + "WHERE `forum_topic`.`topic_id` = ?;");
-            
-            st.setString(1, t.getTopic_name());
-            st.setInt(2, t.getTopic_id());
-            
-            rs = st.executeUpdate();
+
+            ps.setString(1, t.getTopic_name());
+            ps.setInt(2, t.getTopic_id());
+
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(TopicDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
-    
-    public static int disableTopic(ForumTopic t){
-        int rs = 0;
-        Connection conn;
+
+    public static int disableTopic2(ForumTopic t) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_topic` "
+            ps = conn.prepareStatement("UPDATE `forum_topic` "
                     + "SET `topic_status` = 'disable' "
                     + "WHERE `forum_topic`.`topic_id` = ?;");
-            
-            
-            st.setInt(1, t.getTopic_id());
-            
-            rs = st.executeUpdate();
+
+            ps.setInt(1, t.getTopic_id());
+
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(TopicDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
-    
-    public static int restoreTopic(ForumTopic t){
-        int rs = 0;
-        Connection conn;
+
+    public static int restoreTopic2(ForumTopic t) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_topic` "
+            ps = conn.prepareStatement("UPDATE `forum_topic` "
                     + "SET `topic_status` = 'active' "
                     + "WHERE `forum_topic`.`topic_id` = ?;");
-            
-            
-            st.setInt(1, t.getTopic_id());
-            
-            rs = st.executeUpdate();
+
+            ps.setInt(1, t.getTopic_id());
+
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(TopicDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
-    
-    public static int deleteTopic(ForumTopic t){
-        int rs = 0;
-        Connection conn;
+
+    public static int deleteTopic2(ForumTopic t) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("DELETE FROM `forum_topic` "
+            ps = conn.prepareStatement("DELETE FROM `forum_topic` "
                     + "WHERE `forum_topic`.`topic_id` = ?");
-            
-            st.setInt(1, t.getTopic_id());
-            
-            rs = st.executeUpdate();
+
+            ps.setInt(1, t.getTopic_id());
+
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(TopicDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
 }

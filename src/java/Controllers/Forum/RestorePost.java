@@ -92,7 +92,7 @@ public class RestorePost extends HttpServlet {
             post_id = Integer.parseInt(request.getParameter("post_id"));
             
             ForumPost p = new ForumPost(post_id, topic_id, post_title, post_content, userID, post_date, post_edit_date, post_status);
-            int count = PostDAO.restorePost(p);            
+            int count = PostDAO.restorePost2(p);            
             //int count2 = ReportNotificationDAO.deleteReportNotificationPost(post_id);
             
                     if (count > 0) {

@@ -91,7 +91,7 @@ public class DeletePost extends HttpServlet {
             post_id = Integer.parseInt(request.getParameter("post_id"));
             
             ForumPost p = new ForumPost(post_id, topic_id, post_title, post_content, userID, post_date, post_edit_date, post_status);
-            int count = PostDAO.deletePost(p);            
+            int count = PostDAO.deletePost2(p);            
             
                     if (count > 0) {
                         response.sendRedirect(request.getContextPath()+"/DisablePost");

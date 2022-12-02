@@ -67,18 +67,19 @@ public class AdminForum extends HttpServlet {
         if (path.endsWith("/AdminForum")){
             String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             //String date = "2022-10-18";
-            ResultSet rs = PostDAO.getNumberUserActiveForum(date);
-            ResultSet rs2 = PostDAO.getNumberPostToday(date);
-            ResultSet rs3 = CommentDAO.getNumberCommentToday(date);
-            if (rs == null && rs2 == null && rs3 == null){
-                
-            }else{
+            //ResultSet rs = PostDAO.getNumberUserActiveForum(date);
+            int rs = PostDAO.getNumberUserActiveForum2(date);
+            //ResultSet rs2 = PostDAO.getNumberPostToday(date);
+            int rs2 = PostDAO.getNumberPostToday2(date);
+            //ResultSet rs3 = CommentDAO.getNumberCommentToday(date);
+            int rs3 = CommentDAO.getNumberCommentToday2(date);
+            
                 HttpSession session = request.getSession();
                 session.setAttribute("activeUser", rs);
                 session.setAttribute("postToday", rs2);
                 session.setAttribute("commentToday", rs3);
                 request.getRequestDispatcher("forum_adminForum.jsp").forward(request, response);
-            }
+            
             
         }
     }

@@ -6,14 +6,18 @@
 package DAOs.Forum;
 
 import Connection.DBConnection;
+import Models.ForumAllPostWithComment;
 import Models.ForumPost;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.dbutils.DbUtils;
 
 /**
  *
@@ -21,39 +25,14 @@ import java.util.logging.Logger;
  */
 public class PostDAO {
 
-    public static ResultSet getAllPost() {
+    public static List<ForumAllPostWithComment> getAllPostByPageWithCommentCount2(int offset) {
+        ArrayList results = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Statement st = DBConnection.getConnection().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM `forum_post` NATURAL JOIN `user` NATURAL JOIN `forum_topic` "
-                    + "WHERE post_status = 'active'  "
-                    + "ORDER BY post_date DESC;");
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-    
-    public static ResultSet getAllPostByPage(int offset) {
-        try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM `forum_post` "
-                    + "NATURAL JOIN `user` NATURAL JOIN `forum_topic` "
-                    + "WHERE post_status = 'active'  "
-                    + "ORDER BY post_date DESC LIMIT 10 OFFSET ? ;");
-            st.setInt(1, offset);
-            ResultSet rs = st.executeQuery();
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-    
-    public static ResultSet getAllPostByPageWithCommentCount(int offset) {
-        try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
                     + "COUNT(b.post_id) AS 'comment_count' "
                     + "FROM `forum_post` a "
                     + "LEFT JOIN `forum_comment` b ON a.post_id = b.post_id "
@@ -64,32 +43,43 @@ public class PostDAO {
                     + "GROUP BY  a.post_id "
                     + "ORDER BY a.post_date "
                     + "DESC LIMIT 10 OFFSET ? ;");
-            st.setInt(1, offset);
-            ResultSet rs = st.executeQuery();
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+            ps.setInt(1, offset);
 
-    public static ResultSet getAllDisablePost() {
-        try {
-            Statement st = DBConnection.getConnection().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM `forum_post` NATURAL JOIN `user` NATURAL JOIN `forum_topic` "
-                    + "WHERE post_status = 'disable'  "
-                    + "ORDER BY post_date DESC;");
-            return rs;
+            rs = ps.executeQuery();
+
+            ForumAllPostWithComment f = null;
+            while (rs.next()) {
+                f = new ForumAllPostWithComment();
+                f.setPost_id(rs.getInt("post_id"));
+                f.setTopic_id(rs.getInt("topic_id"));
+                f.setPost_title(rs.getString("post_title"));
+                f.setPost_content(rs.getString("post_content"));
+                f.setPost_date(rs.getString("post_date"));
+                f.setTopic_name(rs.getString("topic_name"));
+                f.setUsername(rs.getString("username"));
+                f.setAvatar(rs.getString("avatar"));
+                f.setComment_count(rs.getInt("comment_count"));
+                results.add(f);
+            }
+            return results;
         } catch (SQLException ex) {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return null;
     }
     
-    public static ResultSet getAllDisablePostWithCommentCount() {
+    public static List<ForumAllPostWithComment> getAllDisablePostWithCommentCount2() {
+        ArrayList results = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
                     + "COUNT(b.post_id) AS 'comment_count' "
                     + "FROM `forum_post` a "
                     + "LEFT JOIN `forum_comment` b ON a.post_id = b.post_id "
@@ -99,24 +89,46 @@ public class PostDAO {
                     + "AND (b.comment_status = 'active' OR b.comment_status IS NULL) "
                     + "GROUP BY  a.post_id "
                     + "ORDER BY a.post_date DESC ;");
-                    
-            
-            ResultSet rs = st.executeQuery();
-            return rs;
+
+            rs = ps.executeQuery();
+
+            ForumAllPostWithComment f = null;
+            while (rs.next()) {
+                f = new ForumAllPostWithComment();
+                f.setPost_id(rs.getInt("post_id"));
+                f.setTopic_id(rs.getInt("topic_id"));
+                f.setPost_title(rs.getString("post_title"));
+                f.setPost_content(rs.getString("post_content"));
+                f.setPost_date(rs.getString("post_date"));
+                f.setTopic_name(rs.getString("topic_name"));
+                f.setUsername(rs.getString("username"));
+                f.setAvatar(rs.getString("avatar"));
+                f.setComment_count(rs.getInt("comment_count"));
+                results.add(f);
+            }
+            return results;
         } catch (SQLException ex) {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return null;
     }
 
-    public static ForumPost getPostByID(int post_id) {
+    public static ForumPost getPostByID2(int post_id) {
         ForumPost p = null;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM `forum_post` "
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM `forum_post` "
                     + "WHERE post_id = ?;");
-            st.setInt(1, post_id);
-            ResultSet rs = st.executeQuery();
+            ps.setInt(1, post_id);
+            rs = ps.executeQuery();
+
             if (rs.next()) {
                 p = new ForumPost();
                 p.setPost_id(post_id);
@@ -128,31 +140,25 @@ public class PostDAO {
                 p.setPost_status(rs.getString("post_status"));
 
             }
+            return p;
         } catch (SQLException ex) {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return p;
     }
 
-    public static ResultSet getAllPostByTopic(int topic_id) {
+    public static List<ForumAllPostWithComment> getAllPostByTopicWithCommentCount2(int topic_id) {
+        ArrayList results = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM `forum_post` NATURAL JOIN `user` NATURAL JOIN `forum_topic` "
-                    + "WHERE post_status = 'active' AND topic_id = ? "
-                    + "ORDER BY post_date DESC;");
-            st.setInt(1, topic_id);
-            ResultSet rs = st.executeQuery();
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-    
-    public static ResultSet getAllPostByTopicWithCommentCount(int topic_id) {
-        try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
                     + "COUNT(b.post_id) AS 'comment_count' "
                     + "FROM `forum_post` a "
                     + "LEFT JOIN `forum_comment` b ON a.post_id = b.post_id "
@@ -162,37 +168,42 @@ public class PostDAO {
                     + "AND (b.comment_status = 'active' OR b.comment_status IS NULL) "
                     + "GROUP BY  a.post_id "
                     + "ORDER BY a.post_date DESC ;");
-            st.setInt(1, topic_id);        
-            
-            ResultSet rs = st.executeQuery();
-            return rs;
+            ps.setInt(1, topic_id);
+            rs = ps.executeQuery();
+
+            ForumAllPostWithComment f = null;
+            while (rs.next()) {
+                f = new ForumAllPostWithComment();
+                f.setPost_id(rs.getInt("post_id"));
+                f.setTopic_id(rs.getInt("topic_id"));
+                f.setPost_title(rs.getString("post_title"));
+                f.setPost_content(rs.getString("post_content"));
+                f.setPost_date(rs.getString("post_date"));
+                f.setTopic_name(rs.getString("topic_name"));
+                f.setUsername(rs.getString("username"));
+                f.setAvatar(rs.getString("avatar"));
+                f.setComment_count(rs.getInt("comment_count"));
+                results.add(f);
+            }
+            return results;
         } catch (SQLException ex) {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return null;
     }
-    
-    public static ResultSet getAllPostBySearch(String search) {
+
+    public static List<ForumAllPostWithComment> getAllPostBySearchWithCommentCount2(String search) {
+        ArrayList results = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM `forum_post` NATURAL JOIN `user` NATURAL JOIN `forum_topic` "
-                    + "WHERE post_status = 'active' AND post_title LIKE ? OR post_content LIKE ? "
-                    + "ORDER BY post_date DESC;");
-            st.setString(1, "%" + search + "%");
-            st.setString(2, "%" + search + "%");
-            
-            ResultSet rs = st.executeQuery();
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-    
-    public static ResultSet getAllPostBySearchWithCommentCount(String search) {
-        try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
                     + "COUNT(b.post_id) AS 'comment_count' "
                     + "FROM `forum_post` a "
                     + "LEFT JOIN `forum_comment` b ON a.post_id = b.post_id "
@@ -202,221 +213,303 @@ public class PostDAO {
                     + "AND (b.comment_status = 'active' OR b.comment_status IS NULL) "
                     + "GROUP BY  a.post_id "
                     + "ORDER BY a.post_date DESC ;");
-            
-            st.setString(1, "%" + search + "%");
-            st.setString(2, "%" + search + "%");
-            
-            ResultSet rs = st.executeQuery();
-            return rs;
+
+            ps.setString(1, "%" + search + "%");
+            ps.setString(2, "%" + search + "%");
+            rs = ps.executeQuery();
+
+            ForumAllPostWithComment f = null;
+            while (rs.next()) {
+                f = new ForumAllPostWithComment();
+                f.setPost_id(rs.getInt("post_id"));
+                f.setTopic_id(rs.getInt("topic_id"));
+                f.setPost_title(rs.getString("post_title"));
+                f.setPost_content(rs.getString("post_content"));
+                f.setPost_date(rs.getString("post_date"));
+                f.setTopic_name(rs.getString("topic_name"));
+                f.setUsername(rs.getString("username"));
+                f.setAvatar(rs.getString("avatar"));
+                f.setComment_count(rs.getInt("comment_count"));
+                results.add(f);
+            }
+            return results;
         } catch (SQLException ex) {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return null;
     }
 
-    public static int restorePost(ForumPost p) {
-        int rs = 0;
-        Connection conn;
+    public static int getNumberUserActiveForum2(String date) {
+        int userActive = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_post` "
-                    + "SET `post_status` = 'active' "
-                    + "WHERE `forum_post`.`post_id` = ?;");
-
-            st.setInt(1, p.getPost_id());
-
-            rs = st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return rs;
-    }
-
-    public static int restorePostByTopic(ForumPost p) {
-        int rs = 0;
-        Connection conn;
-        try {
-            conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_post` "
-                    + "SET `post_status` = 'active' "
-                    + "WHERE `forum_post`.`topic_id` = ?;");
-
-            st.setInt(1, p.getTopic_id());
-
-            rs = st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return rs;
-    }
-
-    public static int newPost(ForumPost p) {
-        int rs = 0;
-        Connection conn;
-        try {
-            conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("INSERT INTO `forum_post` "
-                    + "(`post_id`, `topic_id`, `post_title`, `post_content`, `userID`, `post_date`, `post_edit_date`, `post_status`) "
-                    + "VALUES (NULL, ?, ?, ?, ?, ?, ?, 'active');");
-
-            st.setInt(1, p.getTopic_id());
-            st.setString(2, p.getPost_title());
-            st.setString(3, p.getPost_content());
-            st.setInt(4, p.getUser_id());
-            st.setString(5, p.getPost_date());
-            st.setString(6, p.getPost_edit_date());
-
-            rs = st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return rs;
-    }
-
-    public static int editPost(ForumPost p) {
-        int rs = 0;
-        Connection conn;
-        try {
-            conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_post` "
-                    + "SET `topic_id` = ?, `post_title` = ?, `post_content` = ?, `post_edit_date` = ? "
-                    + "WHERE `forum_post`.`post_id` = ?;");
-
-            st.setInt(1, p.getTopic_id());
-            st.setString(2, p.getPost_title());
-            st.setString(3, p.getPost_content());
-            st.setString(4, p.getPost_edit_date());
-            st.setInt(5, p.getPost_id());
-
-            rs = st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return rs;
-    }
-
-    public static int deletePost(ForumPost p) {
-        int rs = 0;
-        Connection conn;
-        try {
-            conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("DELETE FROM `forum_post`"
-                    + " WHERE `forum_post`.`post_id` = ?");
-
-            st.setInt(1, p.getPost_id());
-
-            rs = st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return rs;
-    }
-
-    public static int disablePost(ForumPost p) {
-        int rs = 0;
-        Connection conn;
-        try {
-            conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_post` "
-                    + "SET `post_status` = 'disable' "
-                    + "WHERE `forum_post`.`post_id` = ?;");
-
-            st.setInt(1, p.getPost_id());
-
-            rs = st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return rs;
-    }
-
-    public static int disablePostByTopic(ForumPost p) {
-        int rs = 0;
-        Connection conn;
-        try {
-            conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_post` "
-                    + "SET `post_status` = 'disable' "
-                    + "WHERE `forum_post`.`topic_id` = ?;");
-
-            st.setInt(1, p.getTopic_id());
-
-            rs = st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return rs;
-    }
-
-    public static int changeTopicPost(ForumPost p) {
-        int rs = 0;
-        Connection conn;
-        try {
-            conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_post` "
-                    + "SET `topic_id` = 1 "
-                    + "WHERE `forum_post`.`topic_id` = ?;");
-
-            st.setInt(1, p.getTopic_id());
-
-            rs = st.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return rs;
-    }
-
-    public static ResultSet getNumberUserActiveForum(String date) {
-        try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT COUNT(*) "
+            ps = conn.prepareStatement("SELECT COUNT(*) "
                     + "AS total_user "
                     + "FROM (SELECT `forum_post`.`userID` FROM `forum_post` "
                     + "WHERE post_date LIKE ? "
                     + "UNION SELECT `forum_comment`.`userID` "
                     + "FROM `forum_comment` WHERE comment_date LIKE ?) "
                     + "total_user;");
-            st.setString(1, "%" + date + "%");
-            st.setString(2, "%" + date + "%");
+            ps.setString(1, "%" + date + "%");
+            ps.setString(2, "%" + date + "%");
+            rs = ps.executeQuery();
 
-            ResultSet rs = st.executeQuery();
-            return rs;
+            while (rs.next()) {
+                userActive = rs.getInt("total_user");
+            }
+            return userActive;
 
         } catch (SQLException ex) {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return null;
+        return userActive;
     }
-     
-    public static ResultSet getNumberPostToday(String date) {
+
+    public static int getNumberPostToday2(String date) {
+        int numberPost = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT COUNT(post_id) AS total_post "
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("SELECT COUNT(post_id) AS total_post "
                     + "FROM `forum_post` WHERE post_date LIKE ? ;");
-            st.setString(1, "%" + date + "%");
-            
-            ResultSet rs = st.executeQuery();
-            return rs;
+            ps.setString(1, "%" + date + "%");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                numberPost = rs.getInt("total_post");
+            }
+            return numberPost;
 
         } catch (SQLException ex) {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return null;
+        return numberPost;
     }
-    
-    public static ResultSet getNumberPost() {
+
+    public static int getNumberPost2() {
+        int numberPost = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT COUNT(post_id) AS total_post "
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("SELECT COUNT(post_id) AS total_post "
                     + "FROM `forum_post` WHERE post_status = 'active' ;");
-            
-            
-            ResultSet rs = st.executeQuery();
-            return rs;
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                numberPost = rs.getInt("total_post");
+            }
+            return numberPost;
 
         } catch (SQLException ex) {
             Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return null;
+        return numberPost;
+    }
+
+    public static int restorePost2(ForumPost p) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("UPDATE `forum_post` "
+                    + "SET `post_status` = 'active' "
+                    + "WHERE `forum_post`.`post_id` = ?;");
+
+            ps.setInt(1, p.getPost_id());
+            count = ps.executeUpdate();
+
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+        return count;
+    }
+
+    public static int restorePostByTopic2(ForumPost p) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("UPDATE `forum_post` "
+                    + "SET `post_status` = 'active' "
+                    + "WHERE `forum_post`.`topic_id` = ?;");
+
+            ps.setInt(1, p.getTopic_id());
+            count = ps.executeUpdate();
+
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+        return count;
+    }
+
+    public static int newPost2(ForumPost p) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("INSERT INTO `forum_post` "
+                    + "(`post_id`, `topic_id`, `post_title`, `post_content`, `userID`, `post_date`, `post_edit_date`, `post_status`) "
+                    + "VALUES (NULL, ?, ?, ?, ?, ?, ?, 'active');");
+
+            ps.setInt(1, p.getTopic_id());
+            ps.setString(2, p.getPost_title());
+            ps.setString(3, p.getPost_content());
+            ps.setInt(4, p.getUser_id());
+            ps.setString(5, p.getPost_date());
+            ps.setString(6, p.getPost_edit_date());
+            count = ps.executeUpdate();
+
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+        return count;
+    }
+
+    public static int editPost2(ForumPost p) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("UPDATE `forum_post` "
+                    + "SET `topic_id` = ?, `post_title` = ?, `post_content` = ?, `post_edit_date` = ? "
+                    + "WHERE `forum_post`.`post_id` = ?;");
+
+            ps.setInt(1, p.getTopic_id());
+            ps.setString(2, p.getPost_title());
+            ps.setString(3, p.getPost_content());
+            ps.setString(4, p.getPost_edit_date());
+            ps.setInt(5, p.getPost_id());
+            count = ps.executeUpdate();
+
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+        return count;
+    }
+
+    public static int deletePost2(ForumPost p) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("DELETE FROM `forum_post`"
+                    + " WHERE `forum_post`.`post_id` = ?");
+
+            ps.setInt(1, p.getPost_id());
+            count = ps.executeUpdate();
+
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+        return count;
+    }
+
+    public static int disablePost2(ForumPost p) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("UPDATE `forum_post` "
+                    + "SET `post_status` = 'disable' "
+                    + "WHERE `forum_post`.`post_id` = ?;");
+
+            ps.setInt(1, p.getPost_id());
+            count = ps.executeUpdate();
+
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+        return count;
+    }
+
+    public static int disablePostByTopic2(ForumPost p) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("UPDATE `forum_post` "
+                    + "SET `post_status` = 'disable' "
+                    + "WHERE `forum_post`.`topic_id` = ?;");
+
+            ps.setInt(1, p.getTopic_id());
+
+            count = ps.executeUpdate();
+
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+        return count;
     }
 }

@@ -5,159 +5,255 @@
  */
 package DAOs.Forum;
 
+import Models.ForumAllNotification;
 import Connection.DBConnection;
 import Models.ForumReportNotification;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.dbutils.DbUtils;
 
 /**
  *
  * @author ACER
  */
 public class ReportNotificationDAO {
-    
-    public static ResultSet getAllReportNotificationByUserID(int userID) {
+            
+    public static List<ForumAllNotification> getAllReportNotificationByUserID2(int userID) {
+        ArrayList results = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM `forum_report_notification` "
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM `forum_report_notification` "
                     + "LEFT JOIN `forum_post` "
                     + "ON `forum_report_notification`.`post_id` = `forum_post`.`post_id` "
                     + "LEFT JOIN `forum_comment` "
                     + "ON `forum_report_notification`.`comment_id` = `forum_comment`.`comment_id` "
                     + "WHERE `forum_report_notification`.`userID` = ? ORDER BY `forum_report_notification`.`report_notification_id` DESC ");
-            st.setInt(1, userID);
-            ResultSet rs = st.executeQuery();
-            return rs;
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            
+            ForumAllNotification a = null;
+            while (rs.next()) {
+                a = new ForumAllNotification();
+                a.setReport_notification_id(rs.getInt(1));
+                a.setUserID(rs.getInt(2));
+                a.setReport_notification_content(rs.getString(3));
+                a.setPost_id(rs.getInt(4));
+                a.setComment_id(rs.getInt(5));
+                a.setPost_title(rs.getString(9));
+                a.setPost_content(rs.getString(10));
+                a.setPost_date(rs.getString(12));                
+                a.setComment_content(rs.getString(17));
+                a.setComment_date(rs.getString(19));
+                results.add(a);
+            }
+            return results;
         } catch (SQLException ex) {
             Logger.getLogger(ReportNotificationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
         return null;
     }
-    
-    public static ResultSet getAllReportNotificationByUserIDNotRead(int userID) {
-        try {
-            Connection conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM `forum_report_notification` "
-                    + "WHERE userID = ? AND report_notification_status = 'not read' ;");
-            st.setInt(1, userID);
-            ResultSet rs = st.executeQuery();
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(ReportNotificationDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-    
-    public static int newReportNotificationPost(ForumReportNotification rn) {
-        int rs = 0;
-        Connection conn;
+            
+    public static List<ForumReportNotification> getAllReportNotificationByUserIDNotRead2(int userID) {
+        ArrayList results = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("INSERT INTO `forum_report_notification` "
+            ps = conn.prepareStatement("SELECT * FROM `forum_report_notification` "
+                    + "WHERE userID = ? AND report_notification_status = 'not read' ;");
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            
+            ForumReportNotification f = null;
+            while (rs.next()) {
+                f = new ForumReportNotification();
+                f.setReport_notification_id(rs.getInt("report_notification_id"));
+                f.setUserID(rs.getInt("userID"));
+                f.setReport_notification_content(rs.getString("report_notification_content"));
+                f.setPost_id(rs.getInt("post_id"));
+                f.setComment_id(rs.getInt("comment_id"));
+                f.setReport_notification_status(rs.getString("report_notification_status"));
+                results.add(f);
+            }
+            return results;
+        } catch (SQLException ex) {
+            Logger.getLogger(ReportNotificationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
+        }
+        return null;
+    }
+    
+    public static int newReportNotificationPost2(ForumReportNotification rn) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement("INSERT INTO `forum_report_notification` "
                     + "(`report_notification_id`, `userID`, `report_notification_content`, `post_id`, `comment_id`, `report_notification_status`) "
                     + "VALUES (NULL, ?, ?, ?, NULL, 'not read');");
 
-            st.setInt(1, rn.getUserID());
-            st.setString(2, rn.getReport_notification_content());
-            st.setInt(3, rn.getPost_id());
+            ps.setInt(1, rn.getUserID());
+            ps.setString(2, rn.getReport_notification_content());
+            ps.setInt(3, rn.getPost_id());
             
-            rs = st.executeUpdate();
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(ReportNotificationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
     
-    public static int newReportNotificationComment(ForumReportNotification rn) {
-        int rs = 0;
-        Connection conn;
+    public static int newReportNotificationComment2(ForumReportNotification rn) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("INSERT INTO `forum_report_notification` "
+            ps = conn.prepareStatement("INSERT INTO `forum_report_notification` "
                     + "(`report_notification_id`, `userID`, `report_notification_content`, `post_id`, `comment_id`, `report_notification_status`) "
                     + "VALUES (NULL, ?, ?, NULL, ?, 'not read');");
 
-            st.setInt(1, rn.getUserID());
-            st.setString(2, rn.getReport_notification_content());
-            st.setInt(3, rn.getComment_id());
+            ps.setInt(1, rn.getUserID());
+            ps.setString(2, rn.getReport_notification_content());
+            ps.setInt(3, rn.getComment_id());
             
-            rs = st.executeUpdate();
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(ReportNotificationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
     
-    public static int markAllRead(int userID) {
-        int rs = 0;
-        Connection conn;
+    public static int markAllRead2(int userID) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("UPDATE `forum_report_notification` "
+            ps = conn.prepareStatement("UPDATE `forum_report_notification` "
                     + "SET `report_notification_status` = 'read' "
                     + "WHERE userID = ?");
 
-            st.setInt(1, userID);
+            ps.setInt(1, userID);
 
-            rs = st.executeUpdate();
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(ReportNotificationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
     
-    public static int deleteReportNotificationPost(int post_id) {
-        int rs = 0;
-        Connection conn;
+    public static int deleteReportNotificationPost2(int post_id) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("DELETE FROM `forum_report_notification` "
+            ps = conn.prepareStatement("DELETE FROM `forum_report_notification` "
                     + "WHERE `forum_report_notification`.`post_id` = ?");
 
-            st.setInt(1, post_id);
+            ps.setInt(1, post_id);
 
-            rs = st.executeUpdate();
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(ReportNotificationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
     
-    public static int deleteReportNotificationPostByID(int report_notification_id) {
-        int rs = 0;
-        Connection conn;
+    public static int deleteReportNotificationPostByID2(int report_notification_id) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("DELETE FROM `forum_report_notification` "
+            ps = conn.prepareStatement("DELETE FROM `forum_report_notification` "
                     + "WHERE `forum_report_notification`.`report_notification_id` = ?");
 
-            st.setInt(1, report_notification_id);
+            ps.setInt(1, report_notification_id);
 
-            rs = st.executeUpdate();
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(ReportNotificationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
     
-    public static int deleteReportNotificationComment(int comment_id) {
-        int rs = 0;
-        Connection conn;
+    public static int deleteReportNotificationComment2(int comment_id) {
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            PreparedStatement st = conn.prepareCall("DELETE FROM `forum_report_notification` "
+            ps = conn.prepareStatement("DELETE FROM `forum_report_notification` "
                     + "WHERE `forum_report_notification`.`comment_id` = ?");
 
-            st.setInt(1, comment_id);
+            ps.setInt(1, comment_id);
 
-            rs = st.executeUpdate();
+            count = ps.executeUpdate();
+
+            return count;
         } catch (SQLException ex) {
             Logger.getLogger(ReportNotificationDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(ps);
+            DbUtils.closeQuietly(conn);
         }
-        return rs;
+        return count;
     }
 }

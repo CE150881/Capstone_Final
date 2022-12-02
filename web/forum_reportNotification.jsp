@@ -4,6 +4,8 @@
     Author     : ACER
 --%>
 
+<%@page import="Models.ForumAllNotification"%>
+<%@page import="java.util.List"%>
 <%@page import="DAOs.Forum.ReportNotificationDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="Models.User"%>
@@ -175,44 +177,46 @@
 
             <!-- Điền nội dung -->
             <%                
-                ResultSet rnUser = (ResultSet) session.getAttribute("ForumNotification");
+                //ResultSet rnUser = (ResultSet) session.getAttribute("ForumNotification");
+                List<ForumAllNotification> rnUser = (List<ForumAllNotification>) session.getAttribute("ForumNotification");                
             %>
             <div class="album py-4 bg-light">
                 <div class="container">
                     <%
-                        while (rnUser.next()) {
+                        for (int i = 0; i < rnUser.size(); i++) {
+                            
                     %>
 
 
                     <%
-                        if (rnUser.getString("post_title") != null) {
+                        if (rnUser.get(i).getPost_title() != null) {
                     %>
                     <div class="card mb-4 box-shadow">
                         <div>
-                            <div class="card-body" onclick="location.href = '<%= request.getContextPath()%>/Post/<%= rnUser.getString("post_id")%>';" style="cursor: pointer;">
+                            <div class="card-body" onclick="location.href = '<%= request.getContextPath()%>/Post/<%= rnUser.get(i).getPost_id()%>';" style="cursor: pointer;">
                                 <p>Bài Đăng</p>
-                                <h3 class="card-text"><%= rnUser.getString("post_title")%></h3>
-                                <p class="card-text"><%= rnUser.getString("post_content")%></p>
-                                <p class="card-text"><%= rnUser.getString("report_notification_content")%></p>
+                                <h3 class="card-text"><%= rnUser.get(i).getPost_title()%></h3>
+                                <p class="card-text"><%= rnUser.get(i).getPost_content()%></p>
+                                <p class="card-text"><%= rnUser.get(i).getReport_notification_content()%></p>
                                 <form method="post" action="<%= request.getContextPath()%>/DeleteForumNotification" style="display: inline">
-                                    <input name="report_notification_id" value="<%= rnUser.getString("report_notification_id")%>" style="display: none">                                            
+                                    <input name="report_notification_id" value="<%= rnUser.get(i).getReport_notification_id()%>" style="display: none">                                            
                                     <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-danger">Xoá</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <%
-                    } else {
+                    } else {                            
                     %>
                     <div class="container">
                         <div class="card mb-4 box-shadow">
                             <div>
                                 <div class="card-body" >
                                     <p>Bình Luận</p>
-                                    <p class="card-text"><%= rnUser.getString("comment_content")%></p>
-                                    <p class="card-text"><%= rnUser.getString("report_notification_content")%></p>
+                                    <p class="card-text"><%= rnUser.get(i).getComment_content()%></p>
+                                    <p class="card-text"><%= rnUser.get(i).getReport_notification_content()%></p>
                                     <form method="post" action="<%= request.getContextPath()%>/DeleteForumNotification" style="display: inline">
-                                        <input name="report_notification_id" value="<%= rnUser.getString("report_notification_id")%>" style="display: none">   
+                                        <input name="report_notification_id" value="<%= rnUser.get(i).getReport_notification_id()%>" style="display: none">   
                                         <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-danger">Xoá</button>
                                     </form>
                                 </div>

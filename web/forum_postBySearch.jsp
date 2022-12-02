@@ -4,6 +4,10 @@
     Author     : ACER
 --%>
 
+<%@page import="Models.ForumAllPostWithComment"%>
+<%@page import="Models.ForumReportNotification"%>
+<%@page import="Models.ForumTopic"%>
+<%@page import="java.util.List"%>
 <%@page import="DAOs.Forum.ReportNotificationDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="Models.User"%>
@@ -53,33 +57,31 @@
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
             <div class="container d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="HomeControl">JPD<span>.</span></a></h1>
-                <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="user/img/logo.png" alt="" class="img-fluid"></a>-->
-
+                <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
+                
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto" href="HomeControl">Trang Chủ</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
                         <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listT}" var="q">
-                                            <li><a href="AlphabetControl?type=${q.type}">${q.type}</a></li>
+                                            <li><a href="<%= request.getContextPath()%>/AlphabetControl?type=${q.type}">${q.type}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
+                                            <li><a href="<%= request.getContextPath()%>/KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
+                                            <li><a href="<%= request.getContextPath()%>/GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
@@ -91,7 +93,7 @@
                                     <li class="dropdown"><a><span>${i.desc}</span> <i class="bi bi-chevron-right"></i></a>
                                         <ul>
                                             <c:forEach items="${listlevel}" var="x">
-                                                <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
+                                                <li><a href="<%= request.getContextPath()%>/choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
                                                 </c:forEach> 
                                         </ul>
                                     </li>
@@ -111,17 +113,17 @@
                     <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                         <!-- đã đăng nhập -->
 
-                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a href="<%= request.getContextPath()%>/ProfileUserControl" class="logo me-auto me-lg-0" ><img src="<%= request.getContextPath()%>/${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/ProfileUserControl">Tài Khoản</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
 
                     <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
-                        <a href="account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
-                        <a href="account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
+                        <a href="<%= request.getContextPath()%>/account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
+                        <a href="<%= request.getContextPath()%>/account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
                     </c:if>
                 </ul>
             </div>
@@ -181,12 +183,15 @@
                             <p style="padding-left: 5px; padding-right: 5px; color: black; font-weight: bold; font-size: 1.2rem; display: inline-block">Chủ Đề: </p>
                             <a style="padding-left: 5px; padding-right: 5px; font-size: 1.2rem; display: inline-block" href="<%= request.getContextPath()%>/Forum">Tất Cả</a>
                             <%
-                                ResultSet allTopic = (ResultSet) session.getAttribute("allTopic");
-                                while (allTopic.next()) {
-
+                                //ResultSet allTopic = (ResultSet) session.getAttribute("allTopic");
+                                //while (allTopic.next()) {
+                                List<ForumTopic> t = (List<ForumTopic>) session.getAttribute("allTopic");
+                                for (int i = 0; i < t.size(); i++) {
+                                
                             %>
-                            <a style="padding-left: 5px; padding-right: 5px; font-size: 1.2rem; display: inline-block" href="<%= request.getContextPath()%>/OneTopic/<%= allTopic.getString("topic_id")%>">|<%= allTopic.getString("topic_name")%>|</a>
+                            <a style="padding-left: 5px; padding-right: 5px; font-size: 1.2rem; display: inline-block" href="<%= request.getContextPath()%>/OneTopic/<%= t.get(i).getTopic_id() %>">|<%= t.get(i).getTopic_name() %>|</a>
                             <%
+                                //}
                                 }
                             %>
                         </div>
@@ -208,10 +213,12 @@
                                 //int userID = u.getUserID();
                                 //ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);
                                 //request.setAttribute("notReadNotification", notReadNotification);
-                                ResultSet notReadNotification = (ResultSet) session.getAttribute("notReadNotification");
-                                if (notReadNotification.next() == false) {
+                                //ResultSet notReadNotification = (ResultSet) session.getAttribute("notReadNotification");
+                                //if (notReadNotification.next() == false) {
+                                List<ForumReportNotification> notReadNotification = (List<ForumReportNotification>) session.getAttribute("notReadNotification");
+                                if(notReadNotification.isEmpty()){
                             %>
-                            <a href="<%= request.getContextPath()%>/ForumNotification/<%= u.getUserID() %>" style="color: black; padding-left: 10px; padding-right: 10px;">
+                            <a href="<%= request.getContextPath()%>/ForumNotification/<%= u.getUserID()%>" style="color: black; padding-left: 10px; padding-right: 10px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                                 <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
                                 </svg>                              
@@ -219,8 +226,8 @@
                             <%
                             } else {
                             %>
-                            <a href="<%= request.getContextPath()%>/ForumNotification/<%= u.getUserID() %> style="color: black; padding-left: 10px; padding-right: 10px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                            <a href="<%= request.getContextPath()%>/ForumNotification/<%= u.getUserID()%>" style="color: black; padding-left: 10px; padding-right: 10px;">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
                                 <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                                 </svg>
                             </a>
@@ -244,24 +251,27 @@
                 <br>
 
                 <%
-                    ResultSet rs = (ResultSet) session.getAttribute("allSearchPost");
-                    while (rs.next()) {
+                    //ResultSet rs = (ResultSet) session.getAttribute("allSearchPost");
+                    //while (rs.next()) {
+                    List<ForumAllPostWithComment> f = (List<ForumAllPostWithComment>) session.getAttribute("allSearchPost");
+                    for (int i = 0; i < f.size(); i++) {
+                        
 
                 %>
-                <div onclick="location.href = '<%= request.getContextPath()%>/Post/<%= rs.getString("post_id")%>';" style="cursor: pointer;">
+                <div onclick="location.href = '<%= request.getContextPath()%>/Post/<%= f.get(i).getTopic_id()%>';" style="cursor: pointer;">
                         <div class="card mb-4 box-shadow">
                             <div class="card-body">
                                 <div class="d-flex">
-                                    <img src="<%= request.getContextPath()%>/<%= rs.getString("avatar")%>" class="rounded-circle" alt="" width="40" height="40">
-                                    <p class="text-muted p-2"><%= rs.getString("username")%></p>
-                                    <p class="text-muted ms-auto p-2"><%= rs.getString("post_date").substring(0, Math.min(rs.getString("post_date").length(), 19))%></p>
+                                    <img src="<%= request.getContextPath()%>/<%= f.get(i).getAvatar()%>" class="rounded-circle" alt="" width="40" height="40">
+                                    <p class="text-muted p-2"><%= f.get(i).getUsername()%></p>
+                                    <p class="text-muted ms-auto p-2"><%= f.get(i).getPost_date().substring(0, Math.min(f.get(i).getPost_date().length(), 19))%></p>
                                 </div>                            
                             </div>
                             <div class="card-body" >
-                                <h3 style="display: inline-block" class="card-text"><%= rs.getString("post_title")%></h3>
-                                <a style="color: blue" class="card-text" href="<%= request.getContextPath()%>/OneTopic/<%= rs.getString("topic_id")%>">#<%= rs.getString("topic_name")%></a>
-                                <p class="card-text"><%= rs.getString("post_content")%></p>
-                                <p class="card-text">Số Bình Luận: <%= rs.getString("comment_count")%></p>
+                                <h3 style="display: inline-block" class="card-text"><%= f.get(i).getPost_title()%></h3>
+                                <a style="color: blue" class="card-text" href="<%= request.getContextPath()%>/OneTopic/<%= f.get(i).getTopic_id()%>">#<%= f.get(i).getTopic_name()%></a>
+                                <p class="card-text"><%= f.get(i).getPost_content()%></p>
+                                <p class="card-text">Số Bình Luận: <%= f.get(i).getComment_count()%></p>
                             </div>
 
                         </div>
