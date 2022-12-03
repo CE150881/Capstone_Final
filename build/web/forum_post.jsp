@@ -4,6 +4,8 @@
     Author     : ACER
 --%>
 
+<%@page import="Models.ForumAllComment"%>
+<%@page import="java.util.List"%>
 <%@page import="Models.ForumTopic"%>
 <%@page import="Models.ForumPost"%>
 <%@page import="Models.User"%>
@@ -55,9 +57,7 @@
             <div class="container d-flex align-items-center justify-content-lg-between">
 
                 <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
-                <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="user/img/logo.png" alt="" class="img-fluid"></a>-->
-
+                
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
                         <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
@@ -66,33 +66,45 @@
                                 <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listT}" var="q">
-                                            <li><a href="AlphabetControl?type=${q.type}">${q.type}</a></li>
+                                            <li><a href="<%= request.getContextPath()%>/AlphabetControl?type=${q.type}">${q.type}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
+                                            <li><a href="<%= request.getContextPath()%>/KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
+                                            <li><a href="<%= request.getContextPath()%>/GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-                        <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
-                        <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
+                        <li class="dropdown"><a class="nav-link scrollto"><span>Kiểm Tra</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <c:forEach items="${listtag}" var="i">
+                                    <li class="dropdown"><a><span>${i.desc}</span> <i class="bi bi-chevron-right"></i></a>
+                                        <ul>
+                                            <c:forEach items="${listlevel}" var="x">
+                                                <li><a href="<%= request.getContextPath()%>/choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
+                                                </c:forEach> 
+                                        </ul>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto active" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
-                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
-                        <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
-                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
-                        </c:if>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Chat">Hỗ Trợ</a></li>
+                            <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                            <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
+                            </c:if>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
@@ -100,10 +112,10 @@
                     <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                         <!-- đã đăng nhập -->
 
-                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a href="<%= request.getContextPath()%>/ProfileUserControl" class="logo me-auto me-lg-0" ><img src="<%= request.getContextPath()%>/${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/ProfileUserControl">Tài Khoản</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
@@ -113,9 +125,13 @@
                         <a href="<%= request.getContextPath()%>/account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
                     </c:if>
                 </ul>
-
             </div>
 
+            <style>
+                .dropdown-menu li:hover>a{
+                    background-color: #f5b8c5;
+                }
+            </style>
         </header><!-- End Header -->
 
         <!-- Logout Modal-->
@@ -221,16 +237,16 @@
                                             <label for="exampleFormControlTextarea1">Chỉnh Sửa Chủ Đề</label>
                                             <select name="topic_id" class="form-select" aria-label="Default select example">
                                                 <%
-                                                    ResultSet rt = (ResultSet) session.getAttribute("allTopic");
-                                                    while (rt.next()) {
+                                                    List<ForumTopic> rt = (List<ForumTopic>) session.getAttribute("allTopic");
+                                                    for (int i = 0; i < rt.size(); i++) {
 
                                                 %>
-                                                <option <% if (p.getTopic_id() == Integer.parseInt(rt.getString("topic_id"))) {
+                                                <option <% if (p.getTopic_id() == rt.get(i).getTopic_id()) {
                                                     %>selected<%
                                                         }
 
                                                     %>
-                                                    value="<%= rt.getString("topic_id")%>"><%= rt.getString("topic_name")%></option>
+                                                    value="<%= rt.get(i).getTopic_id() %>"><%= rt.get(i).getTopic_name() %></option>
                                                 <%
                                                     }
                                                 %>
@@ -369,39 +385,42 @@
                         %>
 
                         <%
-                            ResultSet rs = (ResultSet) session.getAttribute("allComment");
+                            //ResultSet rs = (ResultSet) session.getAttribute("allComment");
 
-                            while (rs.next()) {
+                            //while (rs.next()) {
+                            List<ForumAllComment> rs = (List<ForumAllComment>) session.getAttribute("allComment");
+                            for (int i = 0; i < rs.size(); i++) {
+                                    
                         %>
                         <div class="container">
                             <div class="card mb-4 box-shadow">
                                 <div class="card-body">
                                     <div class="d-flex">
-                                        <img src="<%= request.getContextPath()%>/<%= rs.getString("avatar")%>" class="rounded-circle" alt="" width="40" height="40">
-                                        <p class="text-muted p-2"><%= rs.getString("username")%></p>
-                                        <p class="text-muted ms-auto p-2"><%= rs.getString("comment_date").substring(0, Math.min(rs.getString("comment_date").length(), 19))%></p>
+                                        <img src="<%= request.getContextPath()%>/<%= rs.get(i).getAvatar()%>" class="rounded-circle" alt="" width="40" height="40">
+                                        <p class="text-muted p-2"><%= rs.get(i).getUsername()%></p>
+                                        <p class="text-muted ms-auto p-2"><%= rs.get(i).getComment_date().substring(0, Math.min(rs.get(i).getComment_date().length(), 19))%></p>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text"><%= rs.getString("comment_content")%></p>
+                                    <p class="card-text"><%= rs.get(i).getComment_content()%></p>
                                 </div>                            
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <%
                                             if (u != null) {
-                                                if (Integer.parseInt(rs.getString("userID")) == u.getUserID()) {
+                                                if (rs.get(i).getUserID() == u.getUserID()) {
                                         %>
                                         <div>
-                                            <button type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample<%= rs.getString("comment_id")%>" aria-expanded="false" aria-controls="multiCollapseExample<%= rs.getString("comment_id")%>"
+                                            <button type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample<%= rs.get(i).getComment_id()%>" aria-expanded="false" aria-controls="multiCollapseExample<%= rs.get(i).getComment_id()%>"
                                                     class="btn btn-outline-secondary">Chỉnh Sửa</button>
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal<%= rs.getString("comment_id")%>"
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal<%= rs.get(i).getComment_id()%>"
                                                     class="btn btn-danger">Xoá</button>
                                         </div>                                    
                                         <%
                                         } else {
                                         %>
                                         <div class="btn-group">                                       
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModalCommentReport<%= rs.getString("comment_id")%>"
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModalCommentReport<%= rs.get(i).getComment_id()%>"
                                                     class="btn btn-danger">Báo Cáo</button>
                                         </div>
                                         <%
@@ -413,11 +432,11 @@
                                 </div>
                             </div>
                             <!-- Edit Comment-->
-                            <div class="collapse multi-collapse" id="multiCollapseExample<%= rs.getString("comment_id")%>">
+                            <div class="collapse multi-collapse" id="multiCollapseExample<%= rs.get(i).getComment_id()%>">
                                 <div class="card mb-4 box-shadow">
                                     <div class="card-body">
                                         <form role='form' method="post" action="Post">
-                                            <input name="comment_id" value="<%= rs.getString("comment_id")%>" style="display: none">
+                                            <input name="comment_id" value="<%= rs.get(i).getComment_id()%>" style="display: none">
                                             <input name="post_id" value="<%= p.getPost_id()%>" style="display: none">
                                             <input name="newReply" value="" style="display: none">
                                             <input name="delete" value="" style="display: none">
@@ -426,12 +445,12 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Chỉnh Sửa Bình Luận</label>
                                                 <textarea maxlength="500" required="required" name="comment_content" class="form-control" id="exampleFormControlTextarea1"
-                                                          rows="3"><%= rs.getString("comment_content")%></textarea>
+                                                          rows="3"><%= rs.get(i).getComment_content()%></textarea>
                                             </div>
                                             <br>
                                             <button type="submit" value="Edit" name="edit"
                                                     class="btn  btn-outline-secondary">Chỉnh Sửa</button>
-                                            <button type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample<%= rs.getString("comment_id")%>" aria-expanded="false" aria-controls="multiCollapseExample<%= rs.getString("comment_id")%>"
+                                            <button type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample<%= rs.get(i).getComment_id()%>" aria-expanded="false" aria-controls="multiCollapseExample<%= rs.get(i).getComment_id()%>"
                                                     class="btn  btn-outline-secondary">Đóng</button>
                                         </form>
 
@@ -440,7 +459,7 @@
                                 </div>
                             </div>
                             <!-- Modal Delete Comment-->
-                            <div class="modal fade" id="exampleModal<%= rs.getString("comment_id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModal<%= rs.get(i).getComment_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -459,7 +478,7 @@
                                                 <input name="edit" value="" style="display: none">
                                                 <input name="editPost" value="" style="display: none">
                                                 <input name="deletePost" value="" style="display: none">
-                                                <input name="comment_id" value="<%= rs.getString("comment_id")%>" style="display: none">
+                                                <input name="comment_id" value="<%= rs.get(i).getComment_id()%>" style="display: none">
                                                 <input name="post_id" value="<%= p.getPost_id()%>" style="display: none">                                                      
                                                 <button type="submit" value="Delete" name="delete" class="btn btn-danger">Xoá</button>
                                             </form>
@@ -469,7 +488,7 @@
                             </div>
 
                             <!-- Modal Report Comment-->
-                            <div class="modal fade" id="exampleModalCommentReport<%= rs.getString("comment_id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModalCommentReport<%= rs.get(i).getComment_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -480,7 +499,7 @@
                                         </div>
                                         <div class="modal-body">
                                             Bạn có chắc khi báo cáo bình luận này?
-                                            <form id="myformComment<%= rs.getString("comment_id")%>" role='form' method="post" action="<%= request.getContextPath()%>/Report">
+                                            <form id="myformComment<%= rs.get(i).getComment_id()%>" role='form' method="post" action="<%= request.getContextPath()%>/Report">
                                                 <label for="exampleFormControlTextarea1">Lý Do</label>
                                                 <textarea required="required" maxlength="500" placeholder="Nội dung (Tối đa 500 chứ cái)" name="report_comment_reason" class="form-control" id="exampleFormControlTextarea1"
                                                           rows="3"></textarea>
@@ -489,7 +508,7 @@
                                                 <input name="delete" value="" style="display: none">
                                                 <input name="editPost" value="" style="display: none">
                                                 <input name="post_id" value="<%= p.getPost_id()%>" style="display: none"> 
-                                                <input name="comment_id" value="<%= rs.getString("comment_id")%>" style="display: none">
+                                                <input name="comment_id" value="<%= rs.get(i).getComment_id()%>" style="display: none">
                                                 <%
                                                     if (u != null) {
                                                 %>
@@ -503,7 +522,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                            <button type="submit" form="myformComment<%= rs.getString("comment_id")%>" value="reportComment" name="reportComment" class="btn btn-danger">Báo Cáo</button>
+                                            <button type="submit" form="myformComment<%= rs.get(i).getComment_id()%>" value="reportComment" name="reportComment" class="btn btn-danger">Báo Cáo</button>
                                         </div>
                                     </div>
                                 </div>

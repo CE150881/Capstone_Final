@@ -4,6 +4,10 @@
     Author     : Admin
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Models.User"%>
+<%@page import="Models.Notification"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="DAOs.Account.UserDAO"%>
 <%@page import="DAOs.Notification.NotificationDAO"%>
 <%@page import="java.sql.ResultSet"%>
@@ -19,7 +23,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Quản Lí</title>
+        <title>Quản Lí Thông Báo</title>
         <link href="user/img/logo.jpg" rel="icon">
 
         <!-- Custom fonts for this template-->
@@ -296,7 +300,7 @@
                         </div>
                         <br>                       
                         <script>
-                            
+
 
                             function notifFormDeleteConfirm(notifID) {
                                 $(document).on('click', '#notifDeleteBtn-' + notifID, function (e) {
@@ -315,7 +319,7 @@
                                 });
                             }
                         </script>
-                        
+
 
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
@@ -335,19 +339,26 @@
                                 <%
                                     // Get All Notification
                                     int orderNo = 0;
-                                    ResultSet rs1 = NotificationDAO.getAllNotification();
-                                    UserDAO udao = new UserDAO();
-                                    while (rs1.next()) {
+                                    List<User> allUserList = (List<User>) session.getAttribute("allUserList");
+
+                                    ArrayList<Notification> nList = (ArrayList<Notification>) session.getAttribute("allNotification");
+                                    for (Notification n : nList) {
                                         orderNo += 1;
-                                        int id = rs1.getInt("notificationID");
-                                        String title = rs1.getString("title");
-                                        String details = rs1.getString("details").replace("\r\n", "<br>");
-                                        String time = rs1.getString("time");
-                                        String poster = udao.getUserByID2(rs1.getInt("userID")).getUsername();
+                                        int id = n.getNotificationID();
+                                        String title = n.getTitle();
+                                        String details = n.getDetails().replace("\r\n", "<br>");
+                                        String time = n.getTime();
+                                        String poster = "";
+                                        for (User u : allUserList) {
+                                            if (u.getUserID() == n.getUserID()) {
+                                                poster = u.getUsername();
+                                            }
+                                        }
+                                        int status = n.getStatus();
                                         String statusStr = "";
-                                        if (rs1.getInt("status") == 0) {
+                                        if (status == 0) {
                                             statusStr = "Hiện";
-                                        } else if (rs1.getInt("status") == 1) {
+                                        } else if (status == 1) {
                                             statusStr = "Ẩn";
                                         }
                                 %>
@@ -386,14 +397,14 @@
                                 <form action="AddNotification" method="post">
                                     <div class="modal-header">                      
                                         <h4 class="modal-title">Tạo Thông Báo</h4>
-                                        
+
                                     </div>
                                     <div class="modal-body">    
                                         <div class="form-group">
                                             <label>Tiêu Đề</label>
                                             <input type="text" id="add-title" class="form-control" name="addTitle" >
                                         </div>                            
-                                        
+
                                         <div class="form-group">
                                             <label>Chi Tiết</label>
                                             <textarea type="text" id="add-details" class="form-control" name="addDetails"></textarea>

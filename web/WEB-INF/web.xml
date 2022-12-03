@@ -144,6 +144,10 @@
         <servlet-name>ChatInitController</servlet-name>
         <servlet-class>Controllers.Chat.ChatInitController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NotificationManageController</servlet-name>
+        <servlet-class>Controllers.Notification.NotificationManageController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Forum</servlet-name>
         <url-pattern>/Forum/*</url-pattern>
@@ -284,23 +288,7 @@
         <servlet-name>ForumNotification</servlet-name>
         <url-pattern>/ForumNotification/*</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ChatInitController</servlet-name>
-        <url-pattern>/Chat/*</url-pattern>
-    </servlet-mapping>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-     <servlet>
+    <servlet>
         <servlet-name>insertTest_TestControl</servlet-name>
         <servlet-class>Controllers.Test.Test.insertTest_TestControl</servlet-class>
     </servlet>
@@ -348,7 +336,7 @@
         <servlet-name>insertTest_CreateQuestionControl</servlet-name>
         <servlet-class>Controllers.Test.Question.insertTest_CreateQuestionControl</servlet-class>
     </servlet>
-<servlet-mapping>
+    <servlet-mapping>
         <servlet-name>insertTest_TestControl</servlet-name>
         <url-pattern>/insertTest_Test</url-pattern>
     </servlet-mapping>
@@ -396,7 +384,6 @@
         <servlet-name>insertTest_CreateQuestionControl</servlet-name>
         <url-pattern>/insertTest_CreateQuestion</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>answerControl</servlet-name>
         <servlet-class>Controllers.Test.Answer.answerControl</servlet-class>
@@ -645,16 +632,14 @@
         <servlet-name>testEditController</servlet-name>
         <url-pattern>/testEdit</url-pattern>
     </servlet-mapping>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <servlet-mapping>
+        <servlet-name>ChatInitController</servlet-name>
+        <url-pattern>/Chat/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationManageController</servlet-name>
+        <url-pattern>/NotificationManage/*</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             3000

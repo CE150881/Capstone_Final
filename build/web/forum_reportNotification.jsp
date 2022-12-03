@@ -4,6 +4,8 @@
     Author     : ACER
 --%>
 
+<%@page import="Models.ForumAllNotification"%>
+<%@page import="java.util.List"%>
 <%@page import="DAOs.Forum.ReportNotificationDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="Models.User"%>
@@ -53,13 +55,13 @@
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
             <div class="container d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
+                <h1 class="logo me-auto me-lg-0"><a href="HomeControl">JPD<span>.</span></a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="user/img/logo.png" alt="" class="img-fluid"></a>-->
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
+                        <li><a class="nav-link scrollto" href="HomeControl">Trang Chủ</a></li>
                         <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
@@ -72,26 +74,38 @@
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="KanjiControl?level=${w.level}">${w.level}</a></li>
+                                            <li><a href="KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="GrammarControl?level=${e.level}">${e.level}</a></li>
+                                            <li><a href="GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-                        <li><a class="nav-link scrollto" href="">Kiểm Tra</a></li>
-                        <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
+                        <li class="dropdown"><a class="nav-link scrollto"><span>Kiểm Tra</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <c:forEach items="${listtag}" var="i">
+                                    <li class="dropdown"><a><span>${i.desc}</span> <i class="bi bi-chevron-right"></i></a>
+                                        <ul>
+                                            <c:forEach items="${listlevel}" var="x">
+                                                <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
+                                                </c:forEach> 
+                                        </ul>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto active" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
-                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/chat_user.jsp">Hỗ Trợ</a></li>
-                        <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
-                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
-                        </c:if>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Chat">Hỗ Trợ</a></li>
+                            <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                            <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
+                            </c:if>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
@@ -99,7 +113,7 @@
                     <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                         <!-- đã đăng nhập -->
 
-                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="<%= request.getContextPath()%>/${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
@@ -108,13 +122,17 @@
                     </c:if>
 
                     <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
-                        <a href="<%= request.getContextPath()%>/account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
-                        <a href="<%= request.getContextPath()%>/account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
+                        <a href="account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
+                        <a href="account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
                     </c:if>
                 </ul>
-
             </div>
 
+            <style>
+                .dropdown-menu li:hover>a{
+                    background-color: #f5b8c5;
+                }
+            </style>
         </header><!-- End Header -->
 
         <!-- Logout Modal-->
@@ -159,44 +177,46 @@
 
             <!-- Điền nội dung -->
             <%                
-                ResultSet rnUser = (ResultSet) session.getAttribute("ForumNotification");
+                //ResultSet rnUser = (ResultSet) session.getAttribute("ForumNotification");
+                List<ForumAllNotification> rnUser = (List<ForumAllNotification>) session.getAttribute("ForumNotification");                
             %>
             <div class="album py-4 bg-light">
                 <div class="container">
                     <%
-                        while (rnUser.next()) {
+                        for (int i = 0; i < rnUser.size(); i++) {
+                            
                     %>
 
 
                     <%
-                        if (rnUser.getString("post_title") != null) {
+                        if (rnUser.get(i).getPost_title() != null) {
                     %>
                     <div class="card mb-4 box-shadow">
                         <div>
-                            <div class="card-body" onclick="location.href = '<%= request.getContextPath()%>/Post/<%= rnUser.getString("post_id")%>';" style="cursor: pointer;">
+                            <div class="card-body" onclick="location.href = '<%= request.getContextPath()%>/Post/<%= rnUser.get(i).getPost_id()%>';" style="cursor: pointer;">
                                 <p>Bài Đăng</p>
-                                <h3 class="card-text"><%= rnUser.getString("post_title")%></h3>
-                                <p class="card-text"><%= rnUser.getString("post_content")%></p>
-                                <p class="card-text"><%= rnUser.getString("report_notification_content")%></p>
+                                <h3 class="card-text"><%= rnUser.get(i).getPost_title()%></h3>
+                                <p class="card-text"><%= rnUser.get(i).getPost_content()%></p>
+                                <p class="card-text"><%= rnUser.get(i).getReport_notification_content()%></p>
                                 <form method="post" action="<%= request.getContextPath()%>/DeleteForumNotification" style="display: inline">
-                                    <input name="report_notification_id" value="<%= rnUser.getString("report_notification_id")%>" style="display: none">                                            
+                                    <input name="report_notification_id" value="<%= rnUser.get(i).getReport_notification_id()%>" style="display: none">                                            
                                     <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-danger">Xoá</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <%
-                    } else {
+                    } else {                            
                     %>
                     <div class="container">
                         <div class="card mb-4 box-shadow">
                             <div>
                                 <div class="card-body" >
                                     <p>Bình Luận</p>
-                                    <p class="card-text"><%= rnUser.getString("comment_content")%></p>
-                                    <p class="card-text"><%= rnUser.getString("report_notification_content")%></p>
+                                    <p class="card-text"><%= rnUser.get(i).getComment_content()%></p>
+                                    <p class="card-text"><%= rnUser.get(i).getReport_notification_content()%></p>
                                     <form method="post" action="<%= request.getContextPath()%>/DeleteForumNotification" style="display: inline">
-                                        <input name="report_notification_id" value="<%= rnUser.getString("report_notification_id")%>" style="display: none">   
+                                        <input name="report_notification_id" value="<%= rnUser.get(i).getReport_notification_id()%>" style="display: none">   
                                         <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-danger">Xoá</button>
                                     </form>
                                 </div>

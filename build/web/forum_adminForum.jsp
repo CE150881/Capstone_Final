@@ -88,28 +88,31 @@
                             </div>
                             <div class="card-body">
                                 <%
-                                    ResultSet rs = (ResultSet) session.getAttribute("activeUser");
-                                    while (rs.next()) {
+                                    //ResultSet rs = (ResultSet) session.getAttribute("activeUser");
+                                    //while (rs.next()) {
+                                    int rs = (Integer) session.getAttribute("activeUser");
                                 %>
-                                <p>Thành viên hoạt động trên diễn đàn hôm nay: <%= rs.getString("total_user")%></p>
+                                <p>Thành viên hoạt động trên diễn đàn hôm nay: <%= rs %></p>
                                 <%
-                                    }
-                                %>
-                                <%
-                                    ResultSet rs2 = (ResultSet) session.getAttribute("postToday");
-                                    while (rs2.next()) {
-                                %>
-                                <p>Số bài đăng trên diễn đàn hôm nay: <%= rs2.getString("total_post")%></p>
-                                <%
-                                    }
+                                    
                                 %>
                                 <%
-                                    ResultSet rs3 = (ResultSet) session.getAttribute("commentToday");
-                                    while (rs3.next()) {
+                                    //ResultSet rs2 = (ResultSet) session.getAttribute("postToday");
+                                    //while (rs2.next()) {
+                                    int rs2 = (Integer) session.getAttribute("postToday");
                                 %>
-                                <p>Số bình luận trên diễn đàn hôm nay: <%= rs3.getString("total_comment")%></p>
+                                <p>Số bài đăng trên diễn đàn hôm nay: <%= rs2 %></p>
                                 <%
-                                    }
+                                    //}
+                                %>
+                                <%
+                                    //ResultSet rs3 = (ResultSet) session.getAttribute("commentToday");
+                                    //while (rs3.next()) {
+                                    int rs3 = (Integer) session.getAttribute("commentToday");
+                                %>
+                                <p>Số bình luận trên diễn đàn hôm nay: <%= rs3 %></p>
+                                <%
+                                    //}
                                 %>
                             </div>
                         </div>

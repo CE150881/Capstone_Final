@@ -18,79 +18,83 @@ import java.util.List;
  * @author Saing
  */
 public class LevelDAO {
-    Connection conn = null;
+
     PreparedStatement ps = null;
     ResultSet rs = null;
-    
+
     public List<Level> getAllLevel() {
         List<Level> list = new ArrayList<>();
         String query = "SELECT * FROM `level`";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Level(rs.getInt(1),
-                                    rs.getString(2)));
+                        rs.getString(2)));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return list;
     }
-    
+
     public Level getLevelbyID(int LevelID) {
         Level a = new Level();
         String query = "SELECT * FROM `level` WHERE `levelID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setInt(1, LevelID);
             rs = ps.executeQuery();
             while (rs.next()) {
                 a = new Level(rs.getInt(1),
-                               rs.getString(2));
+                        rs.getString(2));
             }
+            conn.close();
         } catch (Exception e) {
         }
         return a;
     }
-    
-    public void insertLevel(String Desc){
+
+    public void insertLevel(String Desc) {
         String query = "INSERT INTO `level`(`levelName`) VALUES (?);";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, Desc);
             ps.executeUpdate();
-        } catch (Exception e) {
-        }
-    }
-    
-    public void deleteLevel(int LevelID) {
-        String query = "DELETE from `level` WHERE `LevelID` = ?";
-        try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, LevelID);
-            ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
 
-    public void editLevel(int LevelID, String Desc){
+    public void deleteLevel(int LevelID) {
+        String query = "DELETE from `level` WHERE `LevelID` = ?";
+        try {
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, LevelID);
+            ps.executeUpdate();
+            conn.close();
+        } catch (Exception e) {
+        }
+    }
+
+    public void editLevel(int LevelID, String Desc) {
         String query = "UPDATE `level` SET `levelName` = ? WHERE `LevelID` = ?";
         try {
-            conn = new DBConnection().getConnection();//mo ket noi voi sql
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, Desc);
             ps.setInt(2, LevelID);
             ps.executeUpdate();
+            conn.close();
         } catch (Exception e) {
         }
     }
-    
+
     public static void main(String[] args) {
-        Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         LevelDAO dao = new LevelDAO();
@@ -100,7 +104,6 @@ public class LevelDAO {
 //        for (Level o : list) {
 //            System.out.println("LevelID: " + o.getLevelID()+ " Descriptions: " + o.getDesc());
 //        }
-
 
 //        int LevelID = 8; String Desc = "N12";
 //       String query = "INSERT INTO `level`(`LevelID`, `Desc`) VALUES (?,?)";

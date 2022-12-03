@@ -107,8 +107,6 @@ public class ChatController extends HttpServlet {
         tmpCM.setSessionID(sessionID);
         // Push new message to db
         ChatMessageDAO.addNewChatMessage(tmpCM);
-        
-        response.sendRedirect(request.getContextPath() + "/chat_user.jsp");
     }
 
     /**

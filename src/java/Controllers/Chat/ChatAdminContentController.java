@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,16 +41,11 @@ public class ChatAdminContentController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Chat</title>");            
-            out.println("<link href=\"chat/css/chat.css\" rel=\"stylesheet\" type=\"text/css\"/>");
-            out.println("</head>");
-            out.println("<body>");
-            
+            HttpSession session = request.getSession();
+
             int cUserID;
             User cUser;
+            UserDAO userdao = new UserDAO();
             //String username = null; UNUSED
             int sessionID = -1;
             //String initContent = ""; UNUSED
@@ -65,7 +61,6 @@ public class ChatAdminContentController extends HttpServlet {
             out.println("<div id='cadminContainer'>");
             try {
                 cUserID = Integer.parseInt(request.getParameter("cUID"));
-                UserDAO userdao = new UserDAO();
                 cUser = userdao.getUserByID2(cUserID);
                 //username = cUser.getUsername(); UNUSED
 
@@ -231,8 +226,6 @@ public class ChatAdminContentController extends HttpServlet {
 
             out.println(altInitContent);
             out.println("</div>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 

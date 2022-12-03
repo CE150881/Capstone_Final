@@ -4,6 +4,8 @@
     Author     : ACER
 --%>
 
+<%@page import="Models.ForumAllReportPost"%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -79,7 +81,7 @@
 
                     </nav>
                     <!-- End of Topbar -->
-                    
+
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
 
@@ -91,6 +93,7 @@
                             </div>
                         </div>
                         <br>
+                        
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -105,28 +108,31 @@
                             </thead>
                             <tbody>
                                 <%
-                                    ResultSet rs = (ResultSet) session.getAttribute("allReportPost");
-                                    while (rs.next()) {
+                                    //ResultSet rs = (ResultSet) session.getAttribute("allReportPost");
+                                    //while (rs.next()) {
+                                    List<ForumAllReportPost> rs = (List<ForumAllReportPost>) session.getAttribute("allReportPost");
+                                    for (int i = 0; i < rs.size(); i++) {
+
                                 %>
                                 <tr>
-                                    <td><%= rs.getString("report_post_reason")%></td>
-                                    <td><%= rs.getString("post_title")%></td>
-                                    <td><%= rs.getString("post_content")%></td>
-                                    <td><%= rs.getString("post_edit_date").substring(0, Math.min(rs.getString("post_edit_date").length(), 19))%></td>
-                                    <td><%= rs.getString("username")%></td>
-                                    <td><%= rs.getString("report_post_date").substring(0, Math.min(rs.getString("report_post_date").length(), 19))%></td>
+                                    <td><%= rs.get(i).getReport_post_reason()%></td>
+                                    <td><%= rs.get(i).getPost_title()%></td>
+                                    <td><%= rs.get(i).getPost_content()%></td>
+                                    <td><%= rs.get(i).getPost_edit_date().substring(0, Math.min(rs.get(i).getPost_edit_date().length(), 19))%></td>
+                                    <td><%= rs.get(i).getUsername()%></td>
+                                    <td><%= rs.get(i).getReport_post_date().substring(0, Math.min(rs.get(i).getReport_post_date().length(), 19))%></td>
                                     <td>
                                         <form method="post" action="<%= request.getContextPath()%>/ReportPost" style="display: inline">
-                                            <input name="report_post_id" value="<%= rs.getString("report_post_id")%>" style="display: none">
-                                            <input name="post_id" value="<%= rs.getString("post_id")%>" style="display: none">
+                                            <input name="report_post_id" value="<%= rs.get(i).getReport_post_id()%>" style="display: none">
+                                            <input name="post_id" value="<%= rs.get(i).getPost_id()%>" style="display: none">
                                             <input name="reportPostDelete" value="" style="display: none">
                                             <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-secondary">Bỏ Qua</button>
                                         </form>
-                                        <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.getString("report_post_id")%>"
+                                        <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getReport_post_id()%>"
                                                 class="btn btn-danger">Xoá</button>
 
                                         <!-- Modal Delete Report and Post-->
-                                        <div class="modal fade" id="exampleModalPost<%= rs.getString("report_post_id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModalPost<%= rs.get(i).getReport_post_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -137,18 +143,18 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         Bạn có chắc muốn xoá báo cáo này lẫn bài đăng?
-                                                        <form id="myform<%= rs.getString("report_post_id")%>" method="post" action="<%= request.getContextPath()%>/ReportPost">
+                                                        <form id="myform<%= rs.get(i).getReport_post_id()%>" method="post" action="<%= request.getContextPath()%>/ReportPost">
                                                             <textarea class="form-control" required="required" name="report_notification_content" id="exampleFormControlTextarea2"
                                                                       rows="6" placeholder="Nhập lý do xoá đê thông báo cho người dùng"></textarea>
-                                                            <input name="report_post_id" value="<%= rs.getString("report_post_id")%>" style="display: none">
-                                                            <input name="post_id" value="<%= rs.getString("post_id")%>" style="display: none">
+                                                            <input name="report_post_id" value="<%= rs.get(i).getReport_post_id()%>" style="display: none">
+                                                            <input name="post_id" value="<%= rs.get(i).getPost_id()%>" style="display: none">
                                                             <input name="reportIgnore" value="" style="display: none">
 
                                                         </form>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                        <button type="submit" form="myform<%= rs.getString("report_post_id")%>" value="reportPostDelete" name="reportPostDelete" class="btn btn-danger">Xoá</button>
+                                                        <button type="submit" form="myform<%= rs.get(i).getReport_post_id()%>" value="reportPostDelete" name="reportPostDelete" class="btn btn-danger">Xoá</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -227,9 +233,9 @@
                         "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
                         "info": "Hiển thị _END_ trên tổng số _TOTAL_ dữ liệu"
                     }
-                });
+                });                
             });
-            
+
         </script>
     </body>
 

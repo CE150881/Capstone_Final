@@ -100,7 +100,7 @@ public class AddNotification extends HttpServlet {
         
         NotificationDAO.addNewNotification(notifNew);
         
-        response.sendRedirect(request.getContextPath() + "/notification_manage.jsp");
+        response.sendRedirect(request.getContextPath() + "/NotificationManage");
     }
 
     /**

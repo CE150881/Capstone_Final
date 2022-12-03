@@ -32,18 +32,6 @@
         <title>Quản Lí Tin Nhắn</title>
         <link href="user/img/logo.jpg" rel="icon">
 
-        <!-- //// STYLE -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-              integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-        crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
-        <!-- STYLE ///-->
-
         <!-- ///CSS JS-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -74,6 +62,41 @@
 
                 <!-- Main Content -->
                 <div id="content">
+
+                    <!-- Topbar -->
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                        <!-- Sidebar Toggle (Topbar) -->
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+
+                        <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.acc.username}</span>
+                                    <img class="img-profile rounded-circle"
+                                         src="${sessionScope.acc.avatar}">
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng Xuất
+                                    </a>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </nav>
+                    <!-- End of Topbar -->
+
                     <div class="row">
                         <!-- SESSION LIST -->
                         <div class="side">
@@ -82,158 +105,7 @@
                                 <input type="text" name="searchContent" id="search-content" placeholder="Tìm kiếm...">
                             </div>
                             <div id="session-container">
-                                <%!
-                                    private static ArrayList<ChatSession> sortSessionByLastMessage(ArrayList<ChatSession> arr) {
-                                        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                        int n = arr.size();
-                                        ArrayList<ChatSession> beforeArr = arr;
-
-                                        // remove session without message
-                                        for (int i = 0; i < n; i++) {
-                                            ChatMessage tmpCM = ChatMessageDAO.getLastChatMessageBySessionID(arr.get(i).getSessionID());
-
-                                            if (tmpCM == null) {
-                                                arr.remove(i);
-                                                i = i - 1;
-                                                n = n - 1;
-                                            }
-                                        }
-
-                                        // bubble sort
-                                        for (int i = 0; i < n - 1; i++) {
-                                            for (int j = 0; j < n - i - 1; j++) {
-                                                ChatMessage tmpCM1 = ChatMessageDAO.getLastChatMessageBySessionID(arr.get(j).getSessionID());
-                                                ChatMessage tmpCM2 = ChatMessageDAO.getLastChatMessageBySessionID(arr.get(j + 1).getSessionID());
-
-                                                try {
-                                                    if (fmt.parse(tmpCM1.getTime()).before(fmt.parse(tmpCM2.getTime()))) {
-                                                        // swap arr[j+1] and arr[j]
-                                                        ChatSession tmpSwap = arr.get(j);
-                                                        arr.set(j, arr.get(j + 1));
-                                                        arr.set(j + 1, tmpSwap);
-                                                    }
-                                                } catch (ParseException ex) {
-                                                    return beforeArr;
-                                                }
-                                            }
-                                        }
-
-                                        return arr;
-                                    }
-                                %>
-                                <%
-                                    ArrayList<ChatSession> csList = ChatSessionDAO.getAllChatSession();
-                                    csList = sortSessionByLastMessage(csList);
-                                    UserDAO userdao = new UserDAO();
-                                    SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                                    long SECOND = 1000;
-                                    long MINUTE = 60 * SECOND;
-                                    long HOUR = 60 * MINUTE;
-                                    long DAY = 24 * HOUR;
-                                    long WEEK = 7 * DAY;
-                                    long MONTH = 30 * DAY;
-                                    long YEAR = 12 * MONTH;
-                                    boolean isInitial = true;
-                                    for (ChatSession cs : csList) {
-                                        User u = userdao.getUserByID2(cs.getUserID());
-                                        if (cs.getStatus() == 0 && u.getRole().equals("Người dùng")) {
-                                            int sID = cs.getSessionID();
-                                            int uID = u.getUserID();
-                                            String uName = u.getUsername();
-                                            String uAvatar = u.getAvatar();
-                                            ChatMessage lastCM = ChatMessageDAO.getLastChatMessageBySessionID(sID);
-                                            String lmContent = lastCM.getChatContent();
-                                            String lastMessage;
-                                            if (lastCM.getUserID() == 1) {
-                                                lastMessage = "Bạn : " + lmContent;
-                                            } else {
-                                                lastMessage = lmContent;
-                                            }
-
-                                            Date lmTime = fmt.parse(lastCM.getTime());
-                                            LocalDateTime ldtNow = LocalDateTime.now();
-                                            String currDate = dtf.format(ldtNow);
-                                            Date currTime = fmt.parse(currDate);
-                                            long offset = currTime.getTime() - lmTime.getTime();
-                                            String offsetStr;
-
-                                            if (offset < MINUTE) {
-                                                // SECOND
-                                                offsetStr = String.valueOf(offset / SECOND) + " giây trước";
-                                            } else if (offset < HOUR) {
-                                                // MINUTE
-                                                offsetStr = String.valueOf(offset / MINUTE) + " phút trước";
-                                            } else if (offset < DAY) {
-                                                // HOUR
-                                                offsetStr = String.valueOf(offset / HOUR) + " giờ trước";
-                                            } else if (offset < WEEK) {
-                                                // DAY
-                                                offsetStr = String.valueOf(offset / DAY) + " ngày trước";
-                                            } else if ((offset < MONTH) && (offset >= WEEK)) {
-                                                // WEEK
-                                                offsetStr = String.valueOf(offset / WEEK) + " tuần trước";
-                                            } else if (offset < YEAR) {
-                                                // MONTH
-                                                offsetStr = String.valueOf(offset / MONTH) + " tháng trước";
-                                            } else {
-                                                // YEAR
-                                                offsetStr = String.valueOf(offset / YEAR) + " năm trước";
-                                            }
-
-                                            if (isInitial) {
-                                %>
-                                <!-- The first session in the list -->
-                                <a href="javascript:void(0);" onclick="loadMessage(<%=uID%>, <%=sID%>)" class="text-decor-none" id="init-session">
-                                    <div class="user-list-item" id="user-session-<%=sID%>">
-                                        <div class="row uli-row">
-                                            <div class="col-md-2 uli-ava-container">
-                                                <%
-                                                    if (!uAvatar.equals("")) {
-                                                %>
-                                                <img src="<%=request.getContextPath()%>/<%=uAvatar%>" alt="" class="uli-ava"/>
-                                                <%
-                                                } else {
-                                                %>
-                                                <img src="<%=request.getContextPath()%>/chat/img/default_avatar.png" alt="" class="uli-ava"/>
-                                                <%
-                                                    }
-                                                %>
-                                            </div>
-                                            <div class="col-md-8 uli-info-container"><div class="uli-date"><%=lmTime%></div><div class="uli-name"><%=uName%></div><div class="uli-last-message"><%=lastMessage%></div><div class="uli-last-message-time"><%=offsetStr%></div></div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <%
-                                    isInitial = false;
-                                } else {
-                                %>
-                                <!-- Other sessions in the list -->
-                                <a href="javascript:void(0);" onclick="loadMessage(<%=uID%>, <%=sID%>)" class="text-decor-none">
-                                    <div class="user-list-item" id="user-session-<%=sID%>">
-                                        <div class="row uli-row">
-                                            <div class="col-md-2 uli-ava-container">
-                                                <%
-                                                    if (!uAvatar.equals("")) {
-                                                %>
-                                                <img src="<%=request.getContextPath()%>/<%=uAvatar%>" alt="" class="uli-ava"/>
-                                                <%
-                                                } else {
-                                                %>
-                                                <img src="<%=request.getContextPath()%>/chat/img/default_avatar.png" alt="" class="uli-ava"/>
-                                                <%
-                                                    }
-                                                %>
-                                            </div>
-                                            <div class="col-md-8 uli-info-container"><div class="uli-date"><%=lmTime%></div><div class="uli-name"><%=uName%></div><div class="uli-last-message"><%=lastMessage%></div><div class="uli-last-message-time"><%=offsetStr%></div></div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <%
-                                            }
-                                        }
-                                    }
-                                %>
+                                
                             </div>
                         </div>
 

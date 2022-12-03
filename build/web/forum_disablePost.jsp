@@ -4,7 +4,9 @@
     Author     : ACER
 --%>
 
-<%@page import="java.sql.ResultSet"%>
+<%@page import="Models.ForumAllPostWithComment"%>
+<%@page import="java.util.List"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,39 +94,41 @@
                         <br>
                         
                         <%
-                            ResultSet rs = (ResultSet) session.getAttribute("allDisablePost");
-                            while (rs.next()) {
-
+                            //ResultSet rs = (ResultSet) session.getAttribute("allDisablePost");
+                            //while (rs.next()) {
+                            List<ForumAllPostWithComment> rs = (List<ForumAllPostWithComment>) session.getAttribute("allDisablePost");
+                            for (int i = 0; i < rs.size(); i++) {                                   
+                            
                         %>
                         <div class="card mb-4 box-shadow">
-                            <div onclick="location.href = '<%= request.getContextPath()%>/Post/<%= rs.getString("post_id")%>';" style="cursor: pointer;">
+                            <div onclick="location.href = '<%= request.getContextPath()%>/Post/<%= rs.get(i).getPost_id()%>';" style="cursor: pointer;">
                                 <div class="card-body">
                                     <div class="d-flex">
-                                        <img src="<%= request.getContextPath()%>/<%= rs.getString("avatar")%>" class="rounded-circle" alt="" width="40" height="40">
-                                        <p class="text-muted p-2"><%= rs.getString("username")%></p>
-                                        <p class="text-muted ml-auto p-2"><%= rs.getString("post_date").substring(0, Math.min(rs.getString("post_date").length(), 19))%></p>
+                                        <img src="<%= request.getContextPath()%>/<%= rs.get(i).getAvatar()%>" class="rounded-circle" alt="" width="40" height="40">
+                                        <p class="text-muted p-2"><%= rs.get(i).getUsername()%></p>
+                                        <p class="text-muted ml-auto p-2"><%= rs.get(i).getPost_date().substring(0, Math.min(rs.get(i).getPost_date().length(), 19))%></p>
                                     </div>                                    
                                 </div>
                                 <div class="card-body" >
-                                    <h3 style="display: inline-block" class="card-text"><%= rs.getString("post_title")%></h3>
-                                    <a style="color: blue" class="card-text" href="<%= request.getContextPath()%>/OneTopic/<%= rs.getString("topic_id")%>">#<%= rs.getString("topic_name")%></a>
-                                    <p class="card-text"><%= rs.getString("post_content")%></p>
-                                    <p class="card-text">Số Bình Luận: <%= rs.getString("comment_count")%></p>
+                                    <h3 style="display: inline-block" class="card-text"><%= rs.get(i).getPost_title()%></h3>
+                                    <a style="color: blue" class="card-text" href="<%= request.getContextPath()%>/OneTopic/<%= rs.get(i).getTopic_id()%>">#<%= rs.get(i).getTopic_name()%></a>
+                                    <p class="card-text"><%= rs.get(i).getPost_content()%></p>
+                                    <p class="card-text">Số Bình Luận: <%= rs.get(i).getComment_count()%></p>
                                 </div>
                             </div>
                             <div class="card-body" >
                                 <form method="post" action="<%= request.getContextPath()%>/RestorePost" style="display: inline">
-                                    <input value="<%= rs.getString("post_id")%>" name="post_id" style="display: none">
+                                    <input value="<%= rs.get(i).getPost_id()%>" name="post_id" style="display: none">
                                     <button class="btn btn-secondary" type="sumbit" value="restorePost" name="restorePost">Phục Hồi</button>
                                 </form>
-                                <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.getString("post_id")%>"
+                                <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getPost_id()%>"
                                         class="btn btn-danger">Xoá Hoàn Toàn</button>
                             </div>
                         </div>
 
 
                         <!-- Modal Delete Post-->
-                        <div class="modal fade" id="exampleModalPost<%= rs.getString("post_id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModalPost<%= rs.get(i).getPost_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -139,7 +143,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                                         <form method="post" action="<%= request.getContextPath()%>/DeletePost">
-                                            <input name="post_id" value="<%= rs.getString("post_id")%>" style="display: none">
+                                            <input name="post_id" value="<%= rs.get(i).getPost_id()%>" style="display: none">
                                             <button type="submit" value="deletePost" name="deletePost" class="btn btn-danger">Xoá Hoàn Toàn</button>
                                         </form>
                                     </div>

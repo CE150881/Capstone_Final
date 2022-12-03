@@ -4,6 +4,8 @@
     Author     : A Hi
 --%>
 
+<%@page import="Models.Notification"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="DAOs.Notification.NotificationDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -40,6 +42,10 @@
 
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        
+        <!-- CSS and JS for Notification -->
+        <link href="notification/css/home_notification.css" rel="stylesheet" type="text/css"/>
+        <script src="notification/js/home_notification.js" type="text/javascript"></script>
 
         <!-- =======================================================
         * Template Name: Gp - v4.9.1
@@ -48,147 +54,6 @@
         * License: https://bootstrapmade.com/license/
         ======================================================== -->
     </head>
-
-    <style>
-        .dropdown-menu li:hover>a{
-            background-color: #f5b8c5;
-        }
-
-        .notif-title {
-            text-decoration: none;
-            color: #000;
-        }
-
-        .notif-title-span {
-            word-break: break-word;
-            font-weight: bold;
-        }
-
-        .pagination {
-            display: inline-block;
-        }
-
-        .pagination a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-            transition: 0.3s;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin: 0 4px;
-        }
-
-        .pagination a.active {
-            background-color: #000;
-            color: #fff;
-            border: 1px solid #000;
-        }
-
-        .page-num:hover:not(.active) {
-            background-color: #cfcfc4;
-            color: #fff;
-        }
-
-        #prevPage {
-            pointer-events: none;
-            cursor: default;
-            background-color: #e6e6e6;
-            color: #c5c5c5;
-        }
-    </style>
-
-    <script>
-        var currentPage = 1;
-        const loadLimit = 5;
-
-        function prevPage() {
-            var lastActivePage = $('.pagination > .active');
-            var currentActivePage = $('.pagination > .active').prev();
-
-            // re-enable prev and next button
-            $('.prevNext').css("pointer-events", "auto");
-            $('.prevNext').css("cursor", "pointer");
-            $('.prevNext').css("background-color", "#fff");
-            $('.prevNext').css("color", "#000");
-
-            if (currentActivePage.prev().hasClass("prevNext")) {
-                currentActivePage.prev().css("pointer-events", "none");
-                currentActivePage.prev().css("cursor", "default");
-                currentActivePage.prev().css("background-color", "#e6e6e6");
-                currentActivePage.prev().css("color", "#c5c5c5");
-            }
-
-            lastActivePage.removeClass("active");
-            currentActivePage.addClass("active");
-
-            currentPage = currentPage - 1;
-            loadPage(currentPage);
-        }
-
-        function nextPage() {
-            var lastActivePage = $('.pagination > .active');
-            var currentActivePage = $('.pagination > .active').next();
-
-            // re-enable prev and next button
-            $('.prevNext').css("pointer-events", "auto");
-            $('.prevNext').css("cursor", "pointer");
-            $('.prevNext').css("background-color", "#fff");
-            $('.prevNext').css("color", "#000");
-
-            if (currentActivePage.next().hasClass("prevNext")) {
-                currentActivePage.next().css("pointer-events", "none");
-                currentActivePage.next().css("cursor", "default");
-                currentActivePage.next().css("background-color", "#e6e6e6");
-                currentActivePage.next().css("color", "#c5c5c5");
-            }
-
-            lastActivePage.removeClass("active");
-            currentActivePage.addClass("active");
-
-            currentPage = currentPage + 1;
-            loadPage(currentPage);
-        }
-
-        function loadPage(pageNum) {
-            // display none all child
-            $('#notif-container > .notif-title-container').css("display", "none");
-
-            // re-enable prev and next button
-            $('.prevNext').css("pointer-events", "auto");
-            $('.prevNext').css("cursor", "pointer");
-            $('.prevNext').css("background-color", "#fff");
-            $('.prevNext').css("color", "#000");
-
-            var lastActivePage = $('.pagination > .active');
-            var currentActivePage = $('#page-num-' + pageNum);
-            var startNum = ((pageNum - 1) * loadLimit) + 1;
-            var endNum = pageNum * loadLimit;
-
-            for (let i = startNum; i <= endNum; i++) {
-                $('#notif-title-container-id-' + i).attr("style", "display: block !important");
-            }
-
-            if (currentActivePage.prev().hasClass("prevNext")) {
-                currentActivePage.prev().css("pointer-events", "none");
-                currentActivePage.prev().css("cursor", "default");
-                currentActivePage.prev().css("background-color", "#e6e6e6");
-                currentActivePage.prev().css("color", "#c5c5c5");
-            }
-
-            if (currentActivePage.next().hasClass("prevNext")) {
-                currentActivePage.next().css("pointer-events", "none");
-                currentActivePage.next().css("cursor", "default");
-                currentActivePage.next().css("background-color", "#e6e6e6");
-                currentActivePage.next().css("color", "#c5c5c5");
-            }
-
-            lastActivePage.removeClass("active");
-            currentActivePage.addClass("active");
-
-            currentPage = pageNum;
-        }
-    </script>
 
     <body>
 
@@ -235,7 +100,7 @@
                                         <ul>
                                             <c:forEach items="${listlevel}" var="x">
                                                 <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
-                                            </c:forEach> 
+                                                </c:forEach> 
                                         </ul>
                                     </li>
                                 </c:forEach>
@@ -357,14 +222,15 @@
                                         <h3>Bảng Tin</h3><br>
                                         <%                        // Get All Notification
                                             int loadLimit = 5;
-                                            int notifCount = 1;
+                                            int notifCount = 0;
                                             int totalNotifCount;
-                                            ResultSet rs1 = NotificationDAO.getAllNotification();
-                                            while (rs1.next()) {
-                                                int id = rs1.getInt("notificationID");
-                                                String title = rs1.getString("title");
-                                                String time = rs1.getString("time");
-                                                int status = rs1.getInt("status");
+                                            ArrayList<Notification> nList = (ArrayList<Notification>) session.getAttribute("allNotification");
+                                            for (Notification n : nList) {
+                                                notifCount = notifCount + 1;
+                                                int id = n.getNotificationID();
+                                                String title = n.getTitle();
+                                                String time = n.getTime();
+                                                int status = n.getStatus();
                                                 if (status == 0) {
                                                     if (notifCount <= loadLimit) {
                                         %>
@@ -375,7 +241,6 @@
                                         <div class="notif-title-container" id="notif-title-container-id-<%=notifCount%>"  style="display: none;"><a href="<%=request.getContextPath()%>/Notification/<%=id%>" class="notif-title" id="notif-title-id-<%=notifCount%>"><span><%=time%></span><span> - </span><span class="notif-title-span"><%=title%></span></a><br></div>
                                                     <%
                                                                 }
-                                                                notifCount = notifCount + 1;
                                                             }
                                                         }
                                                         totalNotifCount = notifCount;
@@ -384,7 +249,13 @@
                                             <a href="javascript:void(0);" onclick="prevPage()" class="prevNext" id="prevPage">Trước</a>
                                             <a href="javascript:void(0);" onclick="loadPage(1)" id="page-num-1" class="page-num active">1</a>
                                             <%
-                                                int pageCount = (totalNotifCount / loadLimit) + 1;
+                                                int pageCount;
+
+                                                if (totalNotifCount % loadLimit == 0) {
+                                                    pageCount = totalNotifCount / loadLimit;
+                                                } else {
+                                                    pageCount = (totalNotifCount / loadLimit) + 1;
+                                                }
 
                                                 for (int i = 2; i <= pageCount; i++) {
                                             %>

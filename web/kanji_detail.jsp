@@ -168,7 +168,7 @@
                             <ul>
                                 <li><strong>Kanji: </strong>${detail.kanji}</li>
                                 <li><strong>Cấp độ: </strong>${detail.level}</li>
-                                <li><strong>Nghĩa: </strong>${detail.meaning}y</li>
+                                <li><strong>Nghĩa: </strong>${detail.meaning}</li>
                             </ul>
                         </div>
 

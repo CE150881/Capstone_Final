@@ -4,6 +4,8 @@
     Author     : ACER
 --%>
 
+<%@page import="Models.ForumTopic"%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -100,27 +102,31 @@
                             </thead>
                             <tbody>
                                 <%
-                                    ResultSet rs = (ResultSet) session.getAttribute("allDisableTopic");
-                                    while (rs.next()) {
+                                    //ResultSet rs = (ResultSet) session.getAttribute("allDisableTopic");
+                                    //while (rs.next()) {
+                                    List<ForumTopic> rs = (List<ForumTopic>) session.getAttribute("allDisableTopic");
+                                    for (int i = 0; i < rs.size(); i++) {
+                                          
+                                      
                                 %>
                                 <tr>
-                                    <td><%= rs.getString("topic_name")%>
+                                    <td><%= rs.get(i).getTopic_name()%>
                                         <%
-                                            if (rs.getString("topic_id").equals("1")) {
+                                            if (rs.get(i).getTopic_id() == 1) {
                                         %>(Chủ đề mặc định)<%
                                             }
                                         %>
                                     </td>                    
                                     <td>
                                         <form method="post" style="display: inline" action="<%= request.getContextPath()%>/RestoreTopic">
-                                            <input value="<%= rs.getString("topic_id")%>" name="topic_id" style="display: none">
+                                            <input value="<%= rs.get(i).getTopic_id()%>" name="topic_id" style="display: none">
                                             <button class="btn btn-secondary" type="sumbit" value="restoreTopic" name="restoreTopic">Phục Hồi</button>
                                         </form>
                                         <%
-                                            if (!rs.getString("topic_id").equals("1")) {
+                                            if (rs.get(i).getTopic_id() != 1) {
                                         %>       
 
-                                        <button type="button" data-toggle="modal" data-target="#exampleModalDelete<%= rs.getString("topic_id")%>"
+                                        <button type="button" data-toggle="modal" data-target="#exampleModalDelete<%= rs.get(i).getTopic_id()%>"
                                                 class="btn btn-danger">Xoá Hoàn Toàn</button>
 
                                         <%
@@ -128,7 +134,7 @@
                                         %>        
 
                                         <!-- Modal Delete Topic-->
-                                        <div class="modal fade" id="exampleModalDelete<%= rs.getString("topic_id")%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="exampleModalDelete<%= rs.get(i).getTopic_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -141,14 +147,14 @@
                                                         Bạn có chắc chắn muốn xoá chủ đề này?
                                                         <br>
                                                         Các bài đăng thuộc chủ đề sẽ bị xoá
-                                                        <form id="myformDelete<%= rs.getString("topic_id")%>" role='form' method="post" action="<%= request.getContextPath()%>/DeleteTopic">
+                                                        <form id="myformDelete<%= rs.get(i).getTopic_id()%>" role='form' method="post" action="<%= request.getContextPath()%>/DeleteTopic">
                                                             <label for="exampleFormControlTextarea1"></label>
-                                                            <input name="topic_id" value="<%= rs.getString("topic_id")%>" style="display: none">
+                                                            <input name="topic_id" value="<%= rs.get(i).getTopic_id()%>" style="display: none">
                                                         </form>                                                        
                                                     </div>
                                                     <div class="modal-footer">  
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                                                        <button type="submit" form="myformDelete<%= rs.getString("topic_id")%>" value="deleteTopic" name="deleteTopic" class="btn btn-danger">Xoá Hoàn Toàn</button>
+                                                        <button type="submit" form="myformDelete<%= rs.get(i).getTopic_id()%>" value="deleteTopic" name="deleteTopic" class="btn btn-danger">Xoá Hoàn Toàn</button>
                                                     </div>
                                                 </div>
                                             </div>

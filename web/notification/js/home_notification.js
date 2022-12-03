@@ -3,7 +3,7 @@ const loadLimit = 5;
 
 $(document).ready(function () {
     var initActivePage = $('#page-num-1');
-    
+
     if (initActivePage.prev().hasClass("prevNext")) {
         initActivePage.prev().css("pointer-events", "none");
         initActivePage.prev().css("cursor", "default");
