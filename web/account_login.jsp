@@ -19,12 +19,13 @@
         <link rel="stylesheet" href="user/css/login.css">
 
     </head>
+
     <body class="img js-fullheight" style="background-image: url(user/img/13.jpg);">
         <section class="ftco-section">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 text-center mb-5">
-                        <h2 class="heading-section">Đăng Nhập</h2>
+                        <h2 class="heading-section">ĐĂNG NHẬP</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -39,7 +40,7 @@
                                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary submit px-3">ĐĂNG NHẬP</button>
+                                    <button type="submit" class="form-control btn submit px-3" style="background: #f5b8c5; color: white;">ĐĂNG NHẬP</button>
                                 </div>
                                 <div class="form-group d-md-flex">
 
@@ -49,12 +50,18 @@
                                 </div>
                             </form>
                             <p class="w-100 text-center">&mdash; hoặc đăng nhập với &mdash;</p>
-                            <div class="social d-flex text-center">
+                            <div class="social text-center">
                                 <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8084/Capstone_Final/LoginWithGoogleControl&response_type=code
-                                   &client_id=385719648415-f3cmsdtcnus0srmpkn5897b5brdes37s.apps.googleusercontent.com&approval_prompt=force" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Google</a>
-                            </div>
-                            <a href="account_signup.jsp" class="w-100 text-center" style="color: #fff; display: flex;
-                               justify-content: center; text-decoration: underline;">Bạn chưa có tài khoản?</a>
+                                   &client_id=385719648415-f3cmsdtcnus0srmpkn5897b5brdes37s.apps.googleusercontent.com&approval_prompt=force" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-facebook mr-2"></span> Google</a> 
+                                <style>
+                                    .login-wrap .social a:hover {
+                                        background: #f5b8c5;
+                                        color: white;
+                                        border-color: #f5b8c5; }
+                                    </style>
+                                </div>
+                                <a href="account_signup.jsp" class="w-100 text-center" style="color: #fff; display: flex;
+                                justify-content: center; text-decoration: underline;">Bạn chưa có tài khoản?</a>
                         </div>
                     </div>
                 </div>

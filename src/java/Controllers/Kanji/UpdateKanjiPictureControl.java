@@ -5,6 +5,7 @@
  */
 package Controllers.Kanji;
 
+import static Controllers.Kanji.CreateKanjiControl.UPLOAD_DIR;
 import DAOs.Material.MaterialDAO;
 import java.io.File;
 import java.io.IOException;
@@ -52,9 +53,7 @@ public class UpdateKanjiPictureControl extends HttpServlet {
         String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
         System.out.println("applicationPath:" + applicationPath);
         File fileUploadDirectory = new File(uploadPath);
-        if (!fileUploadDirectory.exists()) {
-            fileUploadDirectory.mkdirs();
-        }
+        
         String savePath = uploadPath + File.separator + fileName;
         System.out.println("savePath: " + savePath);
         String sRootPath = new File(savePath).getAbsolutePath();

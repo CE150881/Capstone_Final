@@ -42,19 +42,34 @@ public class viewHistoryTestControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet viewHistoryTestControl</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet viewHistoryTestControl at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("acc");
+        int userID = u.getUserID();
+
+        ResultDAO dao = new ResultDAO();
+        List<Result> listResult = dao.getResultByUser(userID);
+//        List<ResultUser> list = new ArrayList<ResultUser>();
+//
+//        String username = u.getUsername();
+//
+//        for (Result o : listResult) {
+//
+//            TestDAO testDAO = new TestDAO();
+//            String test = testDAO.getTestByID(o.getTestID()).getName();
+//
+//            list.add(new ResultUser(o.getResultID(), username, test, o.getTimeBigin(), o.getTimeExpire(), o.getScore(), o.getTrueQuestion()));
 //        }
+
+//        TagDAO tagdao = new TagDAO();
+//        List<Tag> listtag = tagdao.getAllTag();
+//
+//        LevelDAO leveldao = new LevelDAO();
+//        List<Level> listlevel = leveldao.getAllLevel();
+//        request.setAttribute("listtag", listtag);
+//        request.setAttribute("listlevel", listlevel);
+        //step2: load data to jsp
+        request.setAttribute("listResult", listResult);
+        request.getRequestDispatcher("account_profile.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -69,44 +84,7 @@ public class viewHistoryTestControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        HttpSession session = request.getSession();
-//        String email = session.getAttribute("email").toString();
-//        UserDAO userDAO = new UserDAO();
-//        int UserID = userDAO.getUserByEmail(email).getUserID();
-        User u = (User) session.getAttribute("acc");
-        int userID = u.getUserID();
-        
-        ResultDAO dao = new ResultDAO();
-        List<Result> listResult = dao.getResultByUser(userID);
-        List<ResultUser> list = new ArrayList<ResultUser>();
-        
-        
-        String username = u.getUsername();
 
-        
-        for (Result o : listResult) {
-            
-//            UserDAO userDAO = new UserDAO();
-//            String username = userDAO.getUserByID2(userID).getUsername();
-            
-            TestDAO testDAO = new TestDAO();
-            String test = testDAO.getTestByID(o.getTestID()).getName();
-            
-            list.add(new ResultUser(o.getResultID(),username, test, o.getTimeBigin(),o.getTimeExpire(),o.getScore(), o.getTrueQuestion()));
-        }
-        
-        TagDAO tagdao = new TagDAO();
-        List<Tag> listtag = tagdao.getAllTag();
-        
-        LevelDAO leveldao = new LevelDAO();
-        List<Level> listlevel = leveldao.getAllLevel();
-
-        request.setAttribute("listtag", listtag);
-        request.setAttribute("listlevel", listlevel);
-        //step2: load data to jsp
-        request.setAttribute("listResult", list);
-        request.getRequestDispatcher("Test_HistroyTest.jsp").forward(request, response);
     }
 
     /**
@@ -121,7 +99,7 @@ public class viewHistoryTestControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        
+
     }
 
     /**

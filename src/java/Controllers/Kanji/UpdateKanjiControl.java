@@ -41,10 +41,10 @@ public class UpdateKanjiControl extends HttpServlet {
         String kanjiID = request.getParameter("kanjiID");
         String kanji = request.getParameter("kanji");
         String meaning = request.getParameter("meaning");
-        String level = request.getParameter("level");
+        String levelID = request.getParameter("level");
 
         MaterialDAO dao = new MaterialDAO();
-        dao.updateKanji(level, kanji, meaning, kanjiID);
+        dao.updateKanji(levelID, kanji, meaning, kanjiID);
         response.sendRedirect("ManageKanjiControl");
     }
 

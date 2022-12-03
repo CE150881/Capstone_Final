@@ -163,7 +163,7 @@
                                 <br><a><strong>Ví Dụ: </strong></a><br>
                                 <a>${g.exJ}</a><br>
                                 <a>${g.exV}</a>
-
+                                <br>
                             </c:forEach>
                         </ul>
                     </div>

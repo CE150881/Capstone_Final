@@ -134,11 +134,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Câu Ví Dụ</label>
-                                            <input name="exJ" type="text" class="form-control" required>
+                                            <textarea name="exJ" type="text" class="form-control" required></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Nghĩa</label>
-                                            <input name="exV" type="text" class="form-control" required>
+                                            <textarea name="exV" type="text" class="form-control" required></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

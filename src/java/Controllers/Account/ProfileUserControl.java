@@ -61,6 +61,8 @@ public class ProfileUserControl extends HttpServlet {
         request.setAttribute("listlevel", listlevel);
         // end test
         
+        
+        
         request.getRequestDispatcher("account_profile.jsp").forward(request, response);
     }
 

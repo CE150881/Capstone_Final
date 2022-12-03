@@ -130,11 +130,11 @@
                                     <div class="modal-body">                    
                                         <div class="form-group">
                                             <label>Cấu Trúc</label>
-                                            <input name="structure" type="text" class="form-control" required>
+                                            <textarea name="structure" type="text" class="form-control" required></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Cách Dùng</label>
-                                            <input name="use" type="text" class="form-control" required>
+                                            <textarea name="use" type="text" class="form-control" required></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Cấp Độ</label>

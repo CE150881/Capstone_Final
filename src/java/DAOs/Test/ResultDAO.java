@@ -19,11 +19,11 @@ import java.util.List;
  * @author Saing
  */
 public class ResultDAO {
-
+    
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-
+    
     public List<Result> getAllResults() {
         List<Result> list = new ArrayList<>();
         String query = "SELECT * FROM `result`;";
@@ -44,13 +44,13 @@ public class ResultDAO {
         }
         return list;
     }
-
+    
     public Result getlastResults() {
         Result a = new Result();
-        String query = "SELECT    *\n" +
-                       "FROM      result\n" +
-                       "ORDER BY  result.ResultID DESC\n" +
-                       "LIMIT     1;";
+        String query = "SELECT    *\n"
+                + "FROM      result\n"
+                + "ORDER BY  result.ResultID DESC\n"
+                + "LIMIT     1;";
         try {
             conn = new DBConnection().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
@@ -68,7 +68,7 @@ public class ResultDAO {
         }
         return a;
     }
-
+    
     public List<Result> getResultByTest(int TestID) {
         List<Result> list = new ArrayList<>();
         String query = "select * from `result` where `TestID` = ?";
@@ -90,7 +90,7 @@ public class ResultDAO {
         }
         return list;
     }
-
+    
     public List<Result> getResultByUser(int UserID) {
         List<Result> list = new ArrayList<>();
         String query = "select * from `result` where `UserID` = ?";
@@ -112,7 +112,7 @@ public class ResultDAO {
         }
         return list;
     }
-
+    
     public Result getResultbyID(int ResultID) {
         Result a = new Result();
         String query = "select * from `result` where `ResultID` = ?";
@@ -134,10 +134,10 @@ public class ResultDAO {
         }
         return a;
     }
-
+    
     public void insertResult(int UserID, int TestID, String timeBigin, String timeExpire, int Score, int trueQuestion) {
-        String query = "insert into result (result.UserID,result.TestID,result.timeBigin,result.timeExpire,result.Score,result.trueQuestion)\n" +
-                       "VALUES(?,?,?,?,?,?);";
+        String query = "insert into result (result.UserID,result.TestID,result.timeBigin,result.timeExpire,result.Score,result.trueQuestion)\n"
+                + "VALUES(?,?,?,?,?,?);";
         try {
             conn = new DBConnection().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
@@ -151,7 +151,7 @@ public class ResultDAO {
         } catch (Exception e) {
         }
     }
-
+    
     public void deleteResult(int ResultID) {
         String query = "delete from `result` where `ResultID` = ?";
         try {
@@ -162,7 +162,7 @@ public class ResultDAO {
         } catch (Exception e) {
         }
     }
-
+    
     public void editResult(int ResultID, int UserID, int TestID, String timeBigin, String timeExpire, int Score, int trueQuestion) {
         String query = "update `result`\n"
                 + "set `UserID` = ?, `TestID` = ?,`timeBigin` = ?,`timeExpire` = ?, `Score` = ?, `trueQuestion` = ?\n"
@@ -180,7 +180,7 @@ public class ResultDAO {
         } catch (Exception e) {
         }
     }
-
+    
     public static void main(String[] args) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -216,5 +216,7 @@ public class ResultDAO {
 //            }
 //        } catch (Exception e) {
 //        }
+//        ResultDAO dao = new ResultDAO();
+        System.out.println(dao.getResultbyID(1));
     }
 }

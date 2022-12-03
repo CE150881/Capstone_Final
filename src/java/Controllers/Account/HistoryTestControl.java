@@ -5,32 +5,25 @@
  */
 package Controllers.Account;
 
-import DAOs.Account.UserDAO;
+import DAOs.Test.ResultDAO;
+import Models.Result;
 import Models.User;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
 /**
  *
  * @author A Hi
  */
-@WebServlet(name = "UpdateAvatarControl", urlPatterns = {"/UpdateAvatarControl"})
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 50, // 50MB
-        maxRequestSize = 1024 * 1024 * 50) // 50MB
-public class UpdateAvatarControl extends HttpServlet {
-
-    private static final long serialVersionUID = 1L;
-    public static final String folder = "upload";
+@WebServlet(name = "HistoryTestControl", urlPatterns = {"/HistoryTestControl"})
+public class HistoryTestControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,8 +36,16 @@ public class UpdateAvatarControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("acc");
+        int userID = u.getUserID();
 
-//        response.sendRedirect("account_login.jsp");
+        ResultDAO dao = new ResultDAO();
+        List<Result> listResult = dao.getResultByUser(userID);
+
+        request.setAttribute("listResult", listResult);
+        request.getRequestDispatcher("account_profile.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -73,50 +74,9 @@ public class UpdateAvatarControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("acc");
-        String email = user.getEmail();
-
-        for (Part part : request.getParts()) {
-            String fileName = extractFileName(part);
-            // refines the fileName in case it is an absolute path
-            fileName = new File(fileName).getName();
-            String dirUrl = request.getServletContext()
-                    .getRealPath("") + "/" + folder;
-            File folderUpload = new File(dirUrl);
-            if (!folderUpload.exists()) {
-                folderUpload.mkdirs();
-            }
-            String a = folder + File.separator + fileName;
-            part.write(dirUrl + File.separator + fileName);
-
-            UserDAO dao = new UserDAO();
-            dao.updateAvatar(a, email);
-        }
-
-        request.setAttribute("message", "Upload File Success!");
-        getServletContext().getRequestDispatcher("/account_login.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
-    /**
-     * Extracts file name from HTTP header content-disposition
-     */
-    private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length() - 1);
-            }
-        }
-        return "";
-    }
-
-//    public File getFolderUpload() {
-//
-//        return folderUpload;
-//    }
     /**
      * Returns a short description of the servlet.
      *

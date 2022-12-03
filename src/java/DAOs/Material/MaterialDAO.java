@@ -357,17 +357,17 @@ public class MaterialDAO {
         return null;
     }
 
-    public Grammar updateGrammar(String level, String structure, String use, String grammarID) {
+    public Grammar updateGrammar(String levelID, String structure, String use, String grammarID) {
         Connection con = null;
         PreparedStatement ps = null;
 
         try {
             con = DBConnection.getConnection();
             String sql = "UPDATE `grammar` "
-                    + "SET `level`= ?,`structure`= ?,`use`= ? "
+                    + "SET `levelID`= ?,`structure`= ?,`use`= ? "
                     + "WHERE grammar.`grammarID`= ?";
             ps = con.prepareStatement(sql);
-            ps.setString(1, level);
+            ps.setString(1, levelID);
             ps.setString(2, structure);
             ps.setString(3, use);
             ps.setString(4, grammarID);
@@ -378,17 +378,17 @@ public class MaterialDAO {
         return null;
     }
 
-    public Kanji updateKanji(String level, String kanji, String meaning, String kanjiID) {
+    public Kanji updateKanji(String levelID, String kanji, String meaning, String kanjiID) {
         Connection con = null;
         PreparedStatement ps = null;
 
         try {
             con = DBConnection.getConnection();
             String sql = "UPDATE kanji "
-                    + "SET level = ?, kanji = ?, meaning = ?"
+                    + "SET levelID = ?, kanji = ?, meaning = ?"
                     + "WHERE kanji.`kanjiID` = ?";
             ps = con.prepareStatement(sql);
-            ps.setString(1, level);
+            ps.setString(1, levelID);
             ps.setString(2, kanji);
             ps.setString(3, meaning);
             ps.setString(4, kanjiID);

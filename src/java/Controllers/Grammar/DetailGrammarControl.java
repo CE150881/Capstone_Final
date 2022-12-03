@@ -8,6 +8,7 @@ package Controllers.Grammar;
 import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
+import Models.ExampleGrammar;
 import Models.Grammar;
 import Models.GrammarHistory;
 import Models.Level;
@@ -52,6 +53,7 @@ public class DetailGrammarControl extends HttpServlet {
         Grammar a = dao.getGrammarByGrammarID(grammarID);
         List<Type> listT = dao.getAllType();
         List<Level> listL = dao.getAllLevel();
+        List<ExampleGrammar> listE = dao.getExampleByGrammarID(grammarID);
 
         if (user != null) {
             dao.addGrammarHistory(user.getUserID(), grammarID);
@@ -60,6 +62,7 @@ public class DetailGrammarControl extends HttpServlet {
         request.setAttribute("detail", a);
         request.setAttribute("listT", listT);
         request.setAttribute("listL", listL);
+        request.setAttribute("listE", listE);
 
         // test
         TagDAO tagdao = new TagDAO();

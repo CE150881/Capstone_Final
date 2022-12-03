@@ -39,10 +39,10 @@ public class UpdateGrammarControl extends HttpServlet {
         String grammarID = request.getParameter("grammarID");
         String structure = request.getParameter("structure");
         String use = request.getParameter("use");
-        String level = request.getParameter("level");
+        String levelID = request.getParameter("level");
 
         MaterialDAO dao = new MaterialDAO();
-        dao.updateGrammar(level, structure, use, grammarID);
+        dao.updateGrammar(levelID, structure, use, grammarID);
         response.sendRedirect("ManageGrammarControl");
     }
 

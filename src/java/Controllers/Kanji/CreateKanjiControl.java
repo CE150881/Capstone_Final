@@ -59,9 +59,7 @@ public class CreateKanjiControl extends HttpServlet {
         String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
         System.out.println("applicationPath:" + applicationPath);
         File fileUploadDirectory = new File(uploadPath);
-        if (!fileUploadDirectory.exists()) {
-            fileUploadDirectory.mkdirs();
-        }
+        
         String savePath = uploadPath + File.separator + fileName;
         System.out.println("savePath: " + savePath);
         String sRootPath = new File(savePath).getAbsolutePath();
@@ -72,6 +70,7 @@ public class CreateKanjiControl extends HttpServlet {
          and append that characters in fileName so that it will  make your each image name identical.*/
         dbFileName = UPLOAD_DIR + File.separator + fileName;
         part.write(savePath + File.separator);
+        
         //out.println(id+" "+firstName+" "+lastName+" "+fileName+" "+savePath);
         /*
          You need this loop if you submitted more than one file
