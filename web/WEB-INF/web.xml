@@ -148,6 +148,18 @@
         <servlet-name>NotificationManageController</servlet-name>
         <servlet-class>Controllers.Notification.NotificationManageController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PasswordRecovery</servlet-name>
+        <servlet-class>Controllers.Account.PasswordRecovery</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PasswordRecoveryValidate</servlet-name>
+        <servlet-class>Controllers.Account.PasswordRecoveryValidate</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PasswordRecoveryUpdate</servlet-name>
+        <servlet-class>Controllers.Account.PasswordRecoveryUpdate</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Forum</servlet-name>
         <url-pattern>/Forum/*</url-pattern>
@@ -639,6 +651,18 @@
     <servlet-mapping>
         <servlet-name>NotificationManageController</servlet-name>
         <url-pattern>/NotificationManage/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PasswordRecovery</servlet-name>
+        <url-pattern>/PasswordRecovery/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PasswordRecoveryValidate</servlet-name>
+        <url-pattern>/PasswordRecoveryValidate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PasswordRecoveryUpdate</servlet-name>
+        <url-pattern>/PasswordRecoveryUpdate</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
