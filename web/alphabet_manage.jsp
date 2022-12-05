@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
     <head>
 
@@ -113,7 +113,7 @@
                                         <td>${o.alphabet}</td>
                                         <td>${o.pronounce}</td>
                                         <td><a href="LoadAlphabetControl?alphabetID=${o.alphabetID}"><i class="fa fa-pen" title="Sửa"></i></a></td>
-                                        <td><a href="DeleteAlphabetControl?alphabetID=${o.alphabetID}"><i class="fa fa-trash" title="Xóa"></i></a></td>
+                                        <td><a href="DeleteAlphabetControl?alphabetID=${o.alphabetID}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash" title="Xóa"></i></a></td>
                                     </tr>
                                 </c:forEach>                              
                             </tbody>
@@ -131,11 +131,11 @@
                                     <div class="modal-body">                    
                                         <div class="form-group">
                                             <label>Chữ Cái</label>
-                                            <input name="alphabet" type="text" class="form-control" required>
+                                            <input name="alphabet" type="text" class="form-control" pattern="[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B" title="Chữ cái chỉ bao gồm kí tự tiếng Nhật!" required/>
                                         </div>
                                         <div class="form-group">
                                             <label>Cách Đọc</label>
-                                            <input name="pronounce" type="text" class="form-control" required>
+                                            <input name="pronounce" type="text" class="form-control" pattern="[a-zA-Z]+$" title="Cách phát âm chỉ bao gồm kí tự tiếng Việt!" required/>
                                         </div>                           
                                         <div class="form-group">
                                             <label>Bảng Chữ Cái</label>
@@ -149,9 +149,10 @@
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                                        <input type="submit" class="btn btn-success" value="Thêm">
+                                        <input type="submit" name="submit" class="btn btn-success" value="Thêm">
                                     </div>
                                 </form>
+                               
                             </div>
                         </div>
                     </div>    
@@ -170,6 +171,27 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
+        <!-- Delete Modal-->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Bạn muốn đăng xuất ?</div>
+                    <p>alphabetID</p>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                        <a class="btn btn-primary" href="DeleteAlphabetControl">Đăng Xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -213,9 +235,9 @@
         <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('#example').DataTable();
-            });
+                                    $(document).ready(function () {
+                                        $('#example').DataTable();
+                                    });
         </script>
     </body>
 

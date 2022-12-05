@@ -3,23 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Kanji;
+package Controllers.Account;
 
-import DAOs.Material.MaterialDAO;
+import DAOs.Account.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author A Hi
+ * @author Admin
  */
-@WebServlet(name = "UpdateKanjiControl", urlPatterns = {"/UpdateKanjiControl"})
-public class UpdateKanjiControl extends HttpServlet {
+public class PasswordRecoveryUpdate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,19 +34,25 @@ public class UpdateKanjiControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
 
-        String kanjiID = request.getParameter("kanjiID");
-        String kanji = request.getParameter("kanji");
-        String meaning = request.getParameter("meaning");
-        String levelID = request.getParameter("level");
+        String email = request.getParameter("email");
 
-        MaterialDAO dao = new MaterialDAO();
-        dao.updateKanji(levelID, kanji, meaning, kanjiID);
-        response.sendRedirect("ManageKanjiControl");
+        String password = MD5(request.getParameter("password"));
+
+        UserDAO dao = new UserDAO();
+        dao.updatePassword(password, email);
+    }
+
+    private static String MD5(String s) {
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(s.getBytes(), 0, s.length());
+            return new BigInteger(1, m.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

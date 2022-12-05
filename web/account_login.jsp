@@ -18,6 +18,7 @@
 
         <link rel="stylesheet" href="user/css/login.css">
 
+
     </head>
 
     <body class="img js-fullheight" style="background-image: url(user/img/13.jpg);">
@@ -33,19 +34,19 @@
                         <div class="login-wrap p-0">
                             <form action="LoginControl" method="POST" class="signin-form">
                                 <div class="form-group">
-                                    <input type="text" name="email" class="form-control" placeholder="Email" required>
+                                    <input id="email" type="text" name="email" class="form-control" placeholder="Email" required>
                                 </div>
                                 <div class="form-group">
                                     <input id="password-field" name="password" type="password" class="form-control" placeholder="Mật khẩu" required>
                                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="form-control btn submit px-3" style="background: #f5b8c5; color: white;">ĐĂNG NHẬP</button>
+                                    <button type="submit" class="form-control btn submit px-3" style="background: #f5b8c5; color: white;">ĐĂNG NHẬP</button>                                                                     
                                 </div>
                                 <div class="form-group d-md-flex">
 
                                     <div class="w-100 text-md-right">
-                                        <a href="#" style="color: #fff">Quên mật khẩu?</a>
+                                        <a href="<%=request.getContextPath()%>/account_recovery.jsp" style="color: #fff">Quên mật khẩu?</a>
                                     </div>
                                 </div>
                             </form>
@@ -66,11 +67,14 @@
                     </div>
                 </div>
             </div>
+
         </section>
 
         <script src="user/js/jquery.min.js"></script>
         <script src="user/js/bootstrap.min.js"></script>
         <script src="user/js/login.js"></script>
+
+
 
     </body>
 </html>

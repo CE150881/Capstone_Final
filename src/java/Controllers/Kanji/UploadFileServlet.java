@@ -5,21 +5,30 @@
  */
 package Controllers.Kanji;
 
-import DAOs.Material.MaterialDAO;
+import static Controllers.Account.UpdateAvatarControl.folder;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author A Hi
  */
-@WebServlet(name = "UpdateKanjiControl", urlPatterns = {"/UpdateKanjiControl"})
-public class UpdateKanjiControl extends HttpServlet {
+@WebServlet(name = "UploadFileServlet", urlPatterns = {"/UploadFileServlet"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 50, // 50MB
+        maxRequestSize = 1024 * 1024 * 50) // 50MB
+public class UploadFileServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+    public static final String folder = "upload";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,19 +42,7 @@ public class UpdateKanjiControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        
 
-        String kanjiID = request.getParameter("kanjiID");
-        String kanji = request.getParameter("kanji");
-        String meaning = request.getParameter("meaning");
-        String levelID = request.getParameter("level");
-
-        MaterialDAO dao = new MaterialDAO();
-        dao.updateKanji(levelID, kanji, meaning, kanjiID);
-        response.sendRedirect("ManageKanjiControl");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -74,7 +71,36 @@ public class UpdateKanjiControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+//        for (Part part : request.getParts()) {
+        Part part = request.getPart("file");//
+        String fileName = extractFileName(part);//file name
+
+//        String fileName = extractFileName(part);
+        // refines the fileName in case it is an absolute path
+        fileName = new File(fileName).getName();
+
+        String dirUrl = request.getServletContext()
+                .getRealPath("") + "/" + folder;
+        File folderUpload = new File(dirUrl);
+        if (!folderUpload.exists()) {
+            folderUpload.mkdirs();
+        }
+        part.write(dirUrl + File.separator + fileName);
+//        }
+        request.setAttribute("message", "Upload File Success!");
+        response.sendRedirect("account_login.jsp");
+    }
+
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
     }
 
     /**
