@@ -47,6 +47,7 @@
             .tools a
             {
                 text-decoration: none;
+                font-size: 1.5rem;
             }
             #colors_sketch
             {
@@ -56,7 +57,18 @@
             {
                 color: blue
             }
-            
+            #wrapper{
+                display: flex;
+                align-items: center;
+                justify-content: center;                    
+            }
+            #colors_sketch{
+                margin: 20px;
+            }
+            #imgCapture{
+                margin: 20px;
+            }
+
         </style>
     </head>
 
@@ -67,7 +79,7 @@
             <div class="container d-flex align-items-center justify-content-lg-between">
 
                 <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
-                
+
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
                         <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
@@ -205,18 +217,26 @@
                                     <div class="card-body text-center">
                                         <textarea name="sentence" rows="3" class="form-control" required="required" id="text"></textarea>
                                         <br>
+                                        <label for="speak">Chọn Tốc Độ</label>
+                                        <select id="speak">
+                                            <option value="0.5">0.5</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                        </select>
                                         <button class="btn btn-primary" onclick="myFunction()" >Phát Âm</button>
                                     </div>
                                     <script>
                                         function myFunction() {
                                             var text = document.getElementById("text").value
+                                            var speed = document.getElementById("speak").value
                                             document.getElementById("text").value = text;
 
                                             var msg = new SpeechSynthesisUtterance();
                                             var voices = window.speechSynthesis.getVoices();
 
                                             msg.volume = 1; // 0 to 1
-                                            msg.rate = 1; // 0.1 to 10                
+                                            //msg.rate = 1; // 0.1 to 10
+                                            msg.rate = speed; // 0.1 to 10  
                                             msg.text = text;
                                             msg.lang = 'ja-JP';
 
@@ -358,34 +378,39 @@
                                         <div class="card mb-4 box-shadow">
                                             <div class="card-body text-center">
                                                 <div class="tools">
-                                                    <a class="draw" href="#colors_sketch" data-tool="marker">Vẽ</a> 
-                                                    <a class="draw" href="#colors_sketch" data-tool="eraser">Xoá</a>
+                                                    <a class="draw" href="#colors_sketch" data-tool="marker">Vẽ &nbsp</a>                                                    
+                                                    <a class="draw" href="#colors_sketch" data-tool="eraser">&nbsp Xoá</a>
+
                                                 </div>
-                                                <br />
-                                                <canvas id="colors_sketch" width="200" height="200">
-                                                </canvas>
+                                                <br/>
+                                                <div id="wrapper">
+                                                    <canvas id="colors_sketch" width="200" height="200">
+                                                    </canvas>                                                    
+                                                    <input type="button" class="btn btn-primary" id="btnSave" value="Nhận Diện" />
+                                                </div>                                                
                                                 <br />
                                                 <%
                                                     String imageBase64 = (String) session.getAttribute("imageBase64");
                                                     if (imageBase64 != null) {
 
                                                 %>
+                                                <div id="wrapper">
+                                                    <img id = "imgCapture" src="<%= imageBase64%>" alt = "" style = "border:1px solid #ccc" />
+                                                    <%
+                                                        }
+                                                    %>
 
-                                                <img id = "imgCapture" src="<%= imageBase64%>" alt = "" style = "border:1px solid #ccc" />
-                                                <%
-                                                    }
-                                                %>
-
-                                                <%
-                                                    if (recognizeWord != null) {
-                                                %>
-                                                <p style="display: inline; font-size:100px; font-weight: bolder"><%= recognizeWord%></p>
+                                                    <%
+                                                        if (recognizeWord != null) {
+                                                    %>                                                    
+                                                    <p style="display: inline; font-size:100px; font-weight: bolder"><%= recognizeWord%></p>
+                                                </div>
                                                 <%
                                                     }
                                                 %>
                                                 <br />
                                                 <br />
-                                                <input type="button" class="btn btn-primary" id="btnSave" value="Nhận Diện" />
+
 
                                                 <form style="display: none" id="formSubmitImage64" method="post" action="SubmitImage">
                                                     <input id="imageBase64" name="imageBase64" value=""></input>
@@ -395,12 +420,13 @@
                                                 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
                                                 <script src="https://cdn.rawgit.com/mobomo/sketch.js/master/lib/sketch.min.js" type="text/javascript"></script>
                                                 <script type="text/javascript">
+                                                    
                                         $(function () {
                                             $('#colors_sketch').sketch();
                                             $(".tools a").eq(0).attr("style", "color:#000");
-                                            $(".tools a").click(function () {
+                                            $(".tools a").click(function () {                                                
                                                 $(".tools a").removeAttr("style");
-                                                $(this).attr("style", "color:#000");
+                                                $(this).attr("style", "color:#000");                                                
                                             });
                                             $("#btnSave").bind("click", function () {
                                                 var base64 = $('#colors_sketch')[0].toDataURL();
@@ -408,7 +434,7 @@
                                                 document.getElementById('formSubmitImage64').submit();
                                             });
                                         });
-                                                </script>
+                                                </script>                                                
                                             </div>
                                         </div>
 

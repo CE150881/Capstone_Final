@@ -262,12 +262,12 @@
                         <div class="tab-pane fade" style="margin-top: 50px; margin-left: 500px;" id="pw" role="tabpanel" aria-labelledby="pw-tab">
                             <div class="col-md-4">        
                                 <form action="UpdatePasswordControl" method="post">
-                                    <div class="mb-3 mt-3">
+                                    <div class="mb-3 mt-3 form-group">
                                         <label for="email" class="form-label">Mật Khẩu Mới:</label>
                                         <input type="password" class="form-control" placeholder="" id="txtPassword" name="newPassword" value="${newpass}">
                                         <span toggle="#txtPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
-                                    <div class="mb-3">
+                                    <div class="mb-3 form-group">
                                         <label for="pwd" class="form-label">Nhập Lại Mật Khẩu Mới:</label>
                                         <input type="password" class="form-control" placeholder="" id="txtConfirmPassword" name="reNewPassword" value="${renewpass}">
                                         <span toggle="#txtPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>

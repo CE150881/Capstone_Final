@@ -16,6 +16,7 @@
         <meta content="" name="description">
         <meta content="" name="keywords">
 
+         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Favicons -->
         <link href="user/img/logo.jpg" rel="icon">
         <link href="user/img/logo.jpg" rel="apple-touch-icon">
@@ -34,7 +35,6 @@
 
         <!-- Template Main CSS File -->
         <link href="user/css/style.css" rel="stylesheet">
-
         <!-- =======================================================
         * Template Name: Gp - v4.9.1
         * Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
@@ -127,7 +127,7 @@
                         </ul>
                     </c:if>
 
-                   
+
                 </ul>
             </div>
 
@@ -137,7 +137,7 @@
                 }
             </style>
         </header><!-- End Header -->
-        
+
         <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -193,7 +193,7 @@
                             <a class="nav-link" id="pw-tab" data-bs-toggle="tab" data-bs-target="#pw" type="button" role="tab" aria-controls="pw" aria-selected="false">Cập Nhật Mật Khẩu</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">Lịch Sử Kiểm Tra</a>
+                            <a class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false" href="viewHistoryTest">Lịch Sử Kiểm Tra</a>
                         </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
@@ -236,11 +236,12 @@
                         </div>
 
                         <div class="tab-pane fade" style="margin-top: 50px; margin-left: 500px;" id="avatar" role="tabpanel" aria-labelledby="avatar-tab">
-                            <div class="col-md-4">        
+                            <div class="col-md-4">  
+                                <!--
                                 <form action="UpdateAvatarControl" method="post" enctype="multipart/form-data">
                                     <div class="mb-3 mt-3">
                                         <div class="d-flex align-items-start">
-                                            <img src="${sessionScope.acc.avatar}" class="img" alt="avatar" width="70%">
+                                            <img src="" class="img" alt="avatar" width="70%">
                                             <div class="pl-sm-4 pl-2" id="img-section">
                                                 <p>Chấp nhận file .png. Ít hơn 1MB</p>
                                                 <input type="file" name="file">                     
@@ -248,6 +249,12 @@
                                         </div>
                                     </div>                  
                                     <button type="submit" class="btn " style="background-color: #f5b8c5; margin:auto; display:block;">Cập Nhật</button>
+                                </form> -->
+
+                                <img src="${sessionScope.acc.avatar}" class="img" alt="avatar" width="70%">
+                                <form method="post" action="UpdateAvatarControl" enctype="multipart/form-data">
+                                    Select file to upload: <input type="file" name="file" size="60" /><br /><br /> 
+                                    <input type="submit" value="Upload" />
                                 </form>
                             </div>
                         </div>
@@ -255,24 +262,53 @@
                         <div class="tab-pane fade" style="margin-top: 50px; margin-left: 500px;" id="pw" role="tabpanel" aria-labelledby="pw-tab">
                             <div class="col-md-4">        
                                 <form action="UpdatePasswordControl" method="post">
-                                    <div class="mb-3 mt-3">
+                                    <div class="mb-3 mt-3 form-group">
                                         <label for="email" class="form-label">Mật Khẩu Mới:</label>
                                         <input type="password" class="form-control" placeholder="" id="txtPassword" name="newPassword" value="${newpass}">
+                                        <span toggle="#txtPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
-                                    <div class="mb-3">
+                                    <div class="mb-3 form-group">
                                         <label for="pwd" class="form-label">Nhập Lại Mật Khẩu Mới:</label>
                                         <input type="password" class="form-control" placeholder="" id="txtConfirmPassword" name="reNewPassword" value="${renewpass}">
+                                        <span toggle="#txtPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
                                     <button type="submit" class="btn" onclick="return Validate()" style="background-color: #f5b8c5; margin:auto; display:block;">Cập Nhật</button>
                                 </form>
                             </div>
                         </div>
 
-                        <div class="tab-pane fade" style="margin-top: 50px; margin-left: 300px;" id="profile" role="tabpanel" aria-labelledby="history-tab">
-                            <p>lich su o day </p>
+                        <div class="tab-pane fade" style="margin-top: 50px; margin-left: 300px;" id="history" role="tabpanel" aria-labelledby="history-tab">
+
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>UserID</th>
+                                        <th>Test</th>
+                                        <th>Thời Gian Bắt Đầu</th>
+                                        <th>Thời Gian Kết Thúc</th>
+                                        <th>Tổng Điểm</th>
+                                        <th>Xem Chi Tiết</th>
+                                        <th>Tổng Đáp Án Đúng</th>
+                                    </tr>
+                                <tbody>
+                                    <c:forEach items="${listResult}" var="o" varStatus="i">
+                                        <tr>
+                                            <td>${i.index+1}</td>
+                                            <td>${o.user}</td>
+                                            <td>${o.test}</td>
+                                            <td>${o.timeBigin}</td>
+                                            <td>${o.timeExpire}</td>
+                                            <td>${o.score}</td>
+                                            <td>${o.trueQuestion}</td>
+                                            <td><a href="viewResultDetail?resultID=${o.resultID}" class="btn btn-success" tabindex="-1" role="button">Quản Lý Câu Hỏi</a></td>
+                                        </tr>
+                                    </c:forEach>                            
+                            </table>
+
                         </div>
-                                            
-                                            
+
+
                     </div>
                 </div>
                 </div>
@@ -300,8 +336,22 @@
     <script src="user/js/main.js"></script>
 
 
+
 </body>
 <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            $(".toggle-password").click(function () {
+
+                                                $(this).toggleClass("fa-eye fa-eye-slash");
+                                                var input = $($(this).attr("toggle"));
+                                                if (input.attr("type") == "password") {
+                                                    input.attr("type", "text");
+                                                } else {
+                                                    input.attr("type", "password");
+                                                }
+                                            });
+                                        });
+                                        
                                         function Validate() {
                                             var password = document.getElementById("txtPassword").value;
                                             var confirmPassword = document.getElementById("txtConfirmPassword").value;

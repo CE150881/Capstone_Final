@@ -156,7 +156,7 @@
                         <div class="portfolio-details-slider swiper">
                             <div class="align-items-center">
                                 <div class="swiper-slide">
-                                    <img src="${detail.picture}" alt="Kanji Picture" width="50%">
+                                    <img src="${detail.picture}" alt="Kanji Picture" width="30%">
                                 </div>
                             </div>
                         </div>
