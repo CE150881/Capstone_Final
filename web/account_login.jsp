@@ -37,7 +37,8 @@
                                     <input id="email" type="text" name="email" class="form-control" placeholder="Email" required>
                                 </div>
                                 <div class="form-group">
-                                    <input id="password" name="password" type="password" class="form-control" placeholder="Mật khẩu" required>
+                                    <input id="password-field" name="password" type="password" class="form-control" placeholder="Mật khẩu" required>
+                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="form-control btn submit px-3" style="background: #f5b8c5; color: white;">ĐĂNG NHẬP</button>                                                                     
@@ -45,7 +46,7 @@
                                 <div class="form-group d-md-flex">
 
                                     <div class="w-100 text-md-right">
-                                        <a href="#" style="color: #fff">Quên mật khẩu?</a>
+                                        <a href="<%=request.getContextPath()%>/account_recovery.jsp" style="color: #fff">Quên mật khẩu?</a>
                                     </div>
                                 </div>
                             </form>
