@@ -5,14 +5,13 @@
  */
 package Controllers.Test.Question;
 
+import DAOs.Test.AnswerDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuestionDAO;
-import DAOs.Test.QuizDAO;
 import DAOs.Test.TagDAO;
 import DAOs.Test.TestDAO;
 import Models.Level;
 import Models.Question;
-import Models.Quiz;
 import Models.Tag;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -68,17 +67,8 @@ public class insertTest_CreateQuestionControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        //get list tag and level for form input
-        LevelDAO leveldao = new LevelDAO();
-        List<Level> listlevel = leveldao.getAllLevel();
-        TagDAO tagdao = new TagDAO();
-        List<Tag> listtag = tagdao.getAllTag();
+        
 
-        request.setAttribute("listlevel", listlevel);
-        request.setAttribute("listtag", listtag);
-        request.getRequestDispatcher("Test_manage_createQuestion.jsp").forward(request, response);
     }
 
     /**
@@ -99,22 +89,18 @@ public class insertTest_CreateQuestionControl extends HttpServlet {
         
         HttpSession session = request.getSession();
         
-        String TestID = session.getAttribute("TestID").toString();
-        String test = new TestDAO().getTestByID(Integer.parseInt(TestID)).getName();
+        String TestID = session.getAttribute("testID").toString();
         //get data from jsp
-        String TagID = request.getParameter("listtag");
-        String tag = new TagDAO().getTagByID(Integer.parseInt(TagID)).getDesc();
-        String Levelid = request.getParameter("listlevel");
-        String level = new LevelDAO().getLevelbyID(Integer.parseInt(Levelid)).getLevelName();
         String Question = request.getParameter("question");
         
         //insert data into database
         QuestionDAO dao = new QuestionDAO();
-        dao.insertQuestion(Integer.parseInt(TagID), Integer.parseInt(Levelid), Question);
+        dao.insertQuestion(Question, Integer.parseInt(TestID));
         Question lastques = dao.getLastQuestion();
         
-        QuizDAO quizDAO = new QuizDAO();
-        quizDAO.insertQuiz(tag+" "+level+" "+test, Integer.parseInt(TestID), lastques.getQuestionID());
+        new AnswerDAO().insertAnswer(lastques.getQuestionID(), "dap an dung", 1);
+        
+        session.setAttribute("TestID", TestID);
         
         response.sendRedirect("insertTest_Test"); 
     }

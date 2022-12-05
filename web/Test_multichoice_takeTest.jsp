@@ -162,7 +162,7 @@
                         <h2>${type}</h2>
                         <ol>
                             <li><a href="HomeControl">Trang Chủ</a></li>
-                            <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">Lịch Sử Kiểm Tra</a></li>
+                            <li><a href="choiceTestControl?levelID=${levelID}&&tagID=${tagID}">Chọn bài kiểm tra</a></li>
                             <li>Làm bài kiểm tra</li>
                         </ol>
                     </div>
@@ -209,8 +209,6 @@
                     </div>
                 </form>
             </section><!-- End Services Section -->
-
-
 
         </main><!-- End #main -->
 

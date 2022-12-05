@@ -55,21 +55,6 @@ public class insertTest_EditAnswerControl extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
         
-        //step1: get AnswerID from jsp
-        String AnswerID = request.getParameter("answerID");
-        AnswerDAO dao = new AnswerDAO();
-        Answer answer = dao.getAnswerByID(Integer.parseInt(AnswerID));
-        
-        //get questionID for show question
-        QuestionDAO quesdao = new QuestionDAO();
-        Question ques = quesdao.getQuestionByID(answer.getQuestionID());
-        
-        //step2: load data to jsp
-        request.setAttribute("answer", answer);
-        request.setAttribute("ques", ques);
-        HttpSession session = request.getSession();
-        session.setAttribute("AnswerID", AnswerID);
-        request.getRequestDispatcher("Test_manage_insretTest_Answer.jsp").forward(request, response);
     }
 
     /**
@@ -89,15 +74,15 @@ public class insertTest_EditAnswerControl extends HttpServlet {
         
         HttpSession session = request.getSession();
         
-        String questionID = session.getAttribute("questionID").toString();
-        String answerID = session.getAttribute("AnswerID").toString();
+        String answerID = request.getParameter("answerID");
+        String answer = request.getParameter("answer");
         
-        String answer = request.getParameter("Answer");
-        String isCorrect = request.getParameter("isCorrect");
-        //insert data into database
         AnswerDAO dao = new AnswerDAO();
-        dao.editAnswer(Integer.parseInt(answerID), Integer.parseInt(questionID), answer, Integer.parseInt(isCorrect));
-        session.setAttribute("questionID",questionID);
+        Answer ans = dao.getAnswerByID(Integer.parseInt(answerID));
+        
+        dao.editAnswer(ans.getAnswerID(), ans.getQuestionID(), answer, ans.getIsCorrect());
+            
+        session.setAttribute("questionID", (ans.getQuestionID()));
         response.sendRedirect("insertTest_Question");
     }
 

@@ -92,40 +92,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="editEmployeeModal">
+                        <div id="editQuestionModal">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <form action="${pageContext.request.contextPath}/insertTest_EditQuestion" method="post">                         
-                                        <div class="modal-header">                      
-                                            <h4 class="modal-title">Cập Nhật Câu Hỏi</h4>
-                                        </div>
-                                        <div class="modal-body">    
+
+                                    <div class="modal-header">                      
+                                        <h4 class="modal-title">Cập Nhật Câu Hỏi</h4>
+                                    </div>
+                                    <div class="modal-body">    
+                                        <form action="${pageContext.request.contextPath}/insertTest_EditQuestion" method="post">  
                                             <div class="form-group">
                                                 <label>Câu hỏi:</label>
                                                 <input type="text" name="question" value="${question.question}" class="form-control" required>
-                                            </div>                            
-                                            <div class="form-group">
-                                                <label>Thể loại:</label>
-                                                <select name="listtag">
-                                                    <c:forEach items="${listtag}" var="o">
-                                                        <option value="${o.tagID}" ${o.tagID == question.tagID?"selected":""}>${o.desc}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Mức độ:</label>
-                                                <select name="listlevel">
-                                                    <c:forEach items="${listlevel}" var="o">
-                                                        <option value="${o.levelID}" ${o.levelID == question.levelID?"selected":""}>${o.levelName}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a href="insertTest_Test" class="btn btn-default" tabindex="-1" role="button">Hủy</a>
-                                            <input type="submit" class="btn btn-success" value="Cập Nhật">
-                                        </div>
-                                    </form>
+                                            </div>   
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="insertTest_Test" class="btn btn-default" tabindex="-1" role="button">Hủy</a>
+                                        <input type="submit" class="btn btn-success" value="Cập Nhật">
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -139,7 +125,7 @@
         <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
-
+    
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>

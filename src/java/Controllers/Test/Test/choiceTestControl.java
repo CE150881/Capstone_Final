@@ -6,10 +6,14 @@
 package Controllers.Test.Test;
 
 import DAOs.Material.MaterialDAO;
+import DAOs.Test.AnswerDAO;
 import DAOs.Test.LevelDAO;
+import DAOs.Test.QuestionDAO;
 import DAOs.Test.TagDAO;
 import DAOs.Test.TestDAO;
+import Models.Answer;
 import Models.Level;
+import Models.Question;
 
 import Models.Tag;
 import Models.Test;
@@ -78,8 +82,28 @@ public class choiceTestControl extends HttpServlet {
         String tagID = request.getParameter("tagID");
 
         TestDAO dao = new TestDAO();
-        List<Test> listTest = new ArrayList<>();
+        List<Test> listTest = new ArrayList<Test>();
+        List<Test> thasqanda = new ArrayList<Test>();
         listTest = dao.getByLevelandTag(Integer.parseInt(tagID), Integer.parseInt(levelID));
+        for (Test t : listTest) {
+            List<String> ques = new ArrayList<String>();
+            List<String> ans = new ArrayList<String>();
+            List<String> aoq = new ArrayList<String>();
+            
+            List<Question> listq = new QuestionDAO().getByTest(t.getTestID());
+            for (Question q : listq) {
+                ques.add(q.getQuestion());
+                List<Answer> lista = new AnswerDAO().getAnswerByQuestion(q.getQuestionID());
+                ans.add(String.valueOf(lista.size()));
+                if (lista.size()>=2) {
+                    aoq.add(q.getQuestion());
+                }
+            }
+                        
+            if (ques.size()==aoq.size()){
+                thasqanda.add(t);
+            }
+        }
         
         TagDAO tagdao = new TagDAO();
         Tag tag = tagdao.getTagByID(Integer.parseInt(tagID));
@@ -103,7 +127,7 @@ public class choiceTestControl extends HttpServlet {
         request.setAttribute("listlevel", listlevel);
         
         request.setAttribute("type", type);
-        request.setAttribute("choiceTestlist", listTest);
+        request.setAttribute("choiceTestlist", thasqanda);
         request.setAttribute("level", level);
         request.setAttribute("tag", tag);
         

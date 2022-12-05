@@ -41,6 +41,24 @@ public class AnswerDAO {
         return list;
     }
     
+    public Answer getLastAnswer() {
+        Answer a = new Answer();
+        String query = "SELECT * FROM `answer` ORDER BY answer.AnswerID DESC LIMIT 1;";
+        try {
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                a = new Answer(rs.getInt(1),
+                                rs.getInt(2),
+                                rs.getString(3),
+                                rs.getInt(4));
+            }
+        } catch (Exception e) {
+        }
+        return a;
+    }
+    
     public Answer getAnswerByID(int AnswerID) {
         Answer a = new Answer();
         String query = "select * from `answer` where `AnswerID` = ?";

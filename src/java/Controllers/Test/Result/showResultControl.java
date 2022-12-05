@@ -5,16 +5,18 @@
  */
 package Controllers.Test.Result;
 
+import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
-import DAOs.Test.QuizDAO;
+import DAOs.Test.QuestionDAO;
 import DAOs.Test.ResultDAO;
 import DAOs.Test.TagDAO;
 import DAOs.Test.TestDAO;
 import Models.Level;
-import Models.Quiz;
+import Models.Question;
 import Models.Result;
 import Models.Tag;
 import Models.Test;
+import Models.Type;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -86,8 +88,9 @@ public class showResultControl extends HttpServlet {
         Test test = testdao.getTestByID(result.getTestID());
         
         //step: lấy tất cả Id của question trong test a
-        QuizDAO Quizdao = new QuizDAO();
-        List<Quiz> QuestionOfTest = Quizdao.getallQuestionOfTest(result.getTestID());
+        QuestionDAO quesdao = new QuestionDAO();
+        List<Question> QuestionOfTest = quesdao.getByTest(result.getTestID());
+        
         
         int totalScore = QuestionOfTest.size();
         
@@ -112,6 +115,19 @@ public class showResultControl extends HttpServlet {
         request.setAttribute("tag", tag);
         request.setAttribute("totalScore", String.valueOf(totalScore));
         request.setAttribute("resultID", resultID);
+        
+        // document
+        String typeID = request.getParameter("typeID");
+        String levelID = request.getParameter("levelID");
+
+        MaterialDAO dao = new MaterialDAO();
+        List<Type> listT = dao.getAllType();
+        List<Level> listL = dao.getAllLevel();
+
+        request.setAttribute("listT", listT);
+        request.setAttribute("listL", listL);
+        // end document
+        
         request.getRequestDispatcher("Test_multichoice_showResult.jsp").forward(request, response);
     }
 

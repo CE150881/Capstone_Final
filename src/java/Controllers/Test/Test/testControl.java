@@ -6,13 +6,17 @@
 package Controllers.Test.Test;
 
 import DAOs.Test.LevelDAO;
+import DAOs.Test.ResultDAO;
 import DAOs.Test.TagDAO;
 import DAOs.Test.TestDAO;
 import Models.Level;
+import Models.Result;
 import Models.Tag;
 import Models.Test;
+import Models.TestHasResult;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -66,19 +70,30 @@ public class testControl extends HttpServlet {
 //        processRequest(request, response);
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         //khai báo
         TestDAO dao = new TestDAO();
         List<Test> listTest = dao.getAllTest();
-        
+        List<TestHasResult> listhasResult = new ArrayList<TestHasResult>();
+        for (Test o : listTest) {
+            int hasResult = 0;
+            List<Result> listresult = new ResultDAO().getResultByTest(o.getTestID());
+            if (!listresult.isEmpty()) {
+                hasResult += 1;
+            }
+
+            listhasResult.add(new TestHasResult(o.getTestID(), o.getName(), o.getTagID(), o.getLevelID(), hasResult));
+        }
+
         TagDAO tagdao = new TagDAO();
         List<Tag> listtag = tagdao.getAllTag();
-        
+
         LevelDAO leveldao = new LevelDAO();
         List<Level> listlevel = leveldao.getAllLevel();
-        
+
         //step2: load data to jsp
-        request.setAttribute("listTest", listTest);
+        
+        request.setAttribute("listTest", listhasResult);
         request.setAttribute("listtag", listtag);
         request.setAttribute("listlevel", listlevel);
         request.getRequestDispatcher("Test_manage_detailTest.jsp").forward(request, response);

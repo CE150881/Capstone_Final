@@ -80,6 +80,14 @@
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2>Đáp Án Của Bài Kiểm Tra</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                         <form action="${pageContext.request.contextPath}/showResultDetail" method="POST">
                             <div class="container mt-5">
                                 <div class="d-flex justify-content-center row">
@@ -120,6 +128,15 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div>
+                            <a href="resultControl" class="btn btn-outline-danger" tabindex="-1" role="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
+                                <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/>
+                                </svg>
+                                Quay lại
+                            </a>
+                        </div>
                     </div> 
 
                     <!-- /.container-fluid -->

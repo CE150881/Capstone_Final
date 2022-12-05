@@ -10,7 +10,6 @@ import DAOs.Material.MaterialDAO;
 import DAOs.Test.AnswerDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuestionDAO;
-import DAOs.Test.QuizDAO;
 import DAOs.Test.ResultDAO;
 import DAOs.Test.TagDAO;
 import DAOs.Test.TestDAO;
@@ -19,7 +18,6 @@ import Models.Answer;
 import Models.AnswerOfQuestion;
 import Models.Level;
 import Models.Question;
-import Models.Quiz;
 import Models.Tag;
 import Models.Test;
 import Models.Type;
@@ -96,12 +94,12 @@ public class takeTestControl extends HttpServlet {
         String TestID = request.getParameter("testID");
 
         //step: lấy tất cả Id của question trong test a
-        QuizDAO Quizdao = new QuizDAO();
-        List<Quiz> QuestionOfTest = Quizdao.getallQuestionOfTest(Integer.parseInt(TestID));
-//        
+        QuestionDAO quesdao = new QuestionDAO();
+        List<Question> QuestionOfTest = quesdao.getByTest(Integer.parseInt(TestID));
+        
         //step: lấy câu hỏi từ list câu hỏi trong quiz
         List<String> list = new ArrayList<String>();
-        for (Quiz o : QuestionOfTest) {
+        for (Question o : QuestionOfTest) {
             list.add(String.valueOf(o.getQuestionID()));
         }
 
@@ -112,7 +110,6 @@ public class takeTestControl extends HttpServlet {
         //step: lấy câu trả lời của từng câu hỏi
         List<AnswerOfQuestion> listAandQ = new ArrayList<AnswerOfQuestion>();
         for (String o : list) {
-            QuestionDAO quesdao = new QuestionDAO();
             Question ques = quesdao.getQuestionByID(Integer.parseInt(o));
             String question = ques.getQuestion();
 
@@ -193,11 +190,13 @@ public class takeTestControl extends HttpServlet {
 
         int trueans = 0;
 
-        QuizDAO Quizdao = new QuizDAO();
-        List<Quiz> QuestionOfTest = Quizdao.getallQuestionOfTest(Integer.parseInt(TestID));
-
+        //step: lấy tất cả Id của question trong test a
+        QuestionDAO quesdao = new QuestionDAO();
+        List<Question> QuestionOfTest = quesdao.getByTest(Integer.parseInt(TestID));
+        
+        //step: lấy câu hỏi từ list câu hỏi trong quiz
         List<String> list = new ArrayList<String>();
-        for (Quiz o : QuestionOfTest) {
+        for (Question o : QuestionOfTest) {
             list.add(String.valueOf(o.getQuestionID()));
         }
 

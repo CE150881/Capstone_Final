@@ -7,18 +7,29 @@ package Models;
 
 /**
  *
- * @author ACER
+ * @author Saing
  */
-public class Question {
+public class QuestionOfTest {
+    private int TestID;
     private int QuestionID;
     private String Question;
-    private int TestID;
-    
-    public Question(){}
+    private String Test;
 
-    public Question(int QuestionID, String Question, int TestID) {
+    public QuestionOfTest() {
+    }
+
+    public QuestionOfTest(int TestID, int QuestionID, String Question, String Test) {
+        this.TestID = TestID;
         this.QuestionID = QuestionID;
         this.Question = Question;
+        this.Test = Test;
+    }
+
+    public int getTestID() {
+        return TestID;
+    }
+
+    public void setTestID(int TestID) {
         this.TestID = TestID;
     }
 
@@ -38,17 +49,17 @@ public class Question {
         this.Question = Question;
     }
 
-    public int getTestID() {
-        return TestID;
+    public String getTest() {
+        return Test;
     }
 
-    public void setTestID(int TestID) {
-        this.TestID = TestID;
+    public void setTest(String Test) {
+        this.Test = Test;
     }
 
     @Override
     public String toString() {
-        return "Question{" + "QuestionID=" + QuestionID + ", Question=" + Question + ", TestID=" + TestID + '}';
+        return "QuestionOfTest{" + "TestID=" + TestID + ", QuestionID=" + QuestionID + ", Question=" + Question + ", Test=" + Test + '}';
     }
 
     

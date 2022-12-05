@@ -3,26 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Test.Quiz;
+package Controllers.Test.Tag;
 
-import DAOs.Test.QuestionDAO;
-import DAOs.Test.QuizDAO;
-import DAOs.Test.TestDAO;
-import Models.Question;
-import Models.Test;
+import DAOs.Test.TagDAO;
+import Models.Tag;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Saing
  */
-public class quizCreateControl extends HttpServlet {
+public class tagEditControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +38,10 @@ public class quizCreateControl extends HttpServlet {
 //            out.println("<!DOCTYPE html>");
 //            out.println("<html>");
 //            out.println("<head>");
-//            out.println("<title>Servlet quizCreateControl</title>");            
+//            out.println("<title>Servlet tagEditControl</title>");            
 //            out.println("</head>");
 //            out.println("<body>");
-//            out.println("<h1>Servlet quizCreateControl at " + request.getContextPath() + "</h1>");
+//            out.println("<h1>Servlet tagEditControl at " + request.getContextPath() + "</h1>");
 //            out.println("</body>");
 //            out.println("</html>");
 //        }
@@ -63,10 +60,18 @@ public class quizCreateControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        //set utf-8 for input vietnamese word
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
-        request.getRequestDispatcher("Test_manage_createQuiz.jsp").forward(request, response);
+        
+        String ID = request.getParameter("tagID");
+
+        TagDAO dao = new TagDAO();
+        Tag tag = dao.getTagByID(Integer.parseInt(ID));
+
+        HttpSession session = request.getSession();
+        session.setAttribute("tagID", ID);
+        request.setAttribute("tag", tag);
+        request.getRequestDispatcher("Test_manage_editTag.jsp").forward(request, response);
     }
 
     /**
@@ -84,33 +89,16 @@ public class quizCreateControl extends HttpServlet {
         //set utf-8 for input vietnamese word
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
+        
+        HttpSession session = request.getSession();
+        
         //get data from jsp
-        String name = request.getParameter("name");
-        
-        String test = request.getParameter("test");        
-        List<Test> listtest = (new TestDAO()).getAllTest();
-        int testID = 0;
-        
-        for (Test i : listtest) {
-            if (test.equals(i.getName())){
-            testID = i.getTestID();
-        }
-        }
-        
-        String question = request.getParameter("question");
-        List<Question> listques = (new QuestionDAO()).getAllQuestion();
-        int questionID = 0;
-        
-        for (Question o : listques) {
-            if (question.equals(o.getQuestion())){
-            questionID = o.getQuestionID();
-        }
-        }
-        
+        String tagID = session.getAttribute("tagID").toString();
+        String DESC = request.getParameter("DESC");
         //insert data into database
-        QuizDAO dao = new QuizDAO();
-        dao.insertQuiz(name, testID, questionID);
-        response.sendRedirect("quizControl");
+        TagDAO dao = new TagDAO();
+        dao.editTag(Integer.parseInt(tagID), DESC);
+        response.sendRedirect("tagControl");
     }
 
     /**

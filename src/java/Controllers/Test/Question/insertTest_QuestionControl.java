@@ -8,13 +8,17 @@ package Controllers.Test.Question;
 import DAOs.Test.AnswerDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuestionDAO;
+import DAOs.Test.ResultDAO;
 import DAOs.Test.TagDAO;
 import Models.Answer;
 import Models.Level;
 import Models.Question;
+import Models.Result;
 import Models.Tag;
+import Models.ansofques;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -69,21 +73,33 @@ public class insertTest_QuestionControl extends HttpServlet {
 //        processRequest(request, response);
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         HttpSession session = request.getSession();
-        
+
         String questionID = session.getAttribute("questionID").toString();
         
+        String ques = new QuestionDAO().getQuestionByID(Integer.parseInt(questionID)).getQuestion();
+
         //khai báo
         AnswerDAO ansdao = new AnswerDAO();
         List<Answer> listAnswer = ansdao.getAnswerByQuestion(Integer.parseInt(questionID));
-        
-        QuestionDAO quesdao = new QuestionDAO();
-        List<Question> listques = quesdao.getAllQuestion();
-        
+        List<ansofques> aoq = new ArrayList<ansofques>();
+        for (Answer a : listAnswer) {
+            aoq.add(new ansofques(a.getAnswerID(), a.getAnswer(), a.getQuestionID(), ques, a.getIsCorrect()));
+        }
+
+        int hasResult = 0;
+        List<Result> listresult = new ResultDAO().getResultByTest(new QuestionDAO().getQuestionByID(Integer.parseInt(questionID)).getTestID());
+        if (!listresult.isEmpty()) {
+            hasResult += 1;
+        }
+
+        session.setAttribute("hasResult", hasResult);
+        session.setAttribute("ques", ques);
+        session.setAttribute("questionID", questionID);
+
         //step2: load data to jsp
-        request.setAttribute("listAnswer", listAnswer);
-        request.setAttribute("listques", listques);
+        request.setAttribute("listAnswer", aoq);
         request.getRequestDispatcher("Test_manage_insretTest_question.jsp").forward(request, response);
     }
 

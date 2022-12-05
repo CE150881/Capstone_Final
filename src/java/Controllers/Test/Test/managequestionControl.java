@@ -7,12 +7,13 @@ package Controllers.Test.Test;
 
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuestionDAO;
-import DAOs.Test.QuizDAO;
+import DAOs.Test.ResultDAO;
 import DAOs.Test.TagDAO;
 import DAOs.Test.TestDAO;
 import Models.Level;
 import Models.Question;
-import Models.Quiz;
+import Models.QuestionOfTest;
+import Models.Result;
 import Models.Tag;
 import Models.Test;
 import java.io.IOException;
@@ -72,41 +73,37 @@ public class managequestionControl extends HttpServlet {
 //        processRequest(request, response);
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
-        //khai báo
-        
-               
+
         String TestID = request.getParameter("testID");
         Test test = new TestDAO().getTestByID(Integer.parseInt(TestID));
-        
+
         QuestionDAO quesdao = new QuestionDAO();
-        List<Question> listQuestion = new ArrayList<Question>();
-                
-        QuizDAO Quizdao = new QuizDAO();
-        List<Quiz> QuestionOfTest = Quizdao.getallQuestionOfTest(Integer.parseInt(TestID));
-//        
+        List<Question> QuestionOfTest = quesdao.getByTest(Integer.parseInt(TestID));
+        int numberques = 0;
+        for (Question o : QuestionOfTest) {
+                numberques += 1;
+        }
+
         //step: lấy câu hỏi từ list câu hỏi trong quiz
-        List<String> list = new ArrayList<String>();
-        for (Quiz o : QuestionOfTest) {
-            list.add(String.valueOf(o.getQuestionID()));
+        List<QuestionOfTest> list = new ArrayList<QuestionOfTest>();
+        for (Question o : QuestionOfTest) {
+            list.add(new QuestionOfTest(o.getTestID(), o.getQuestionID(), o.getQuestion(), new TestDAO().getTestByID(o.getTestID()).getName()));
         }
-        
-        for (String o : list) {
-            listQuestion.add(quesdao.getQuestionByID(Integer.parseInt(o)));
+
+        int hasResult = 0;
+        List<Result> listresult = new ResultDAO().getResultByTest(Integer.parseInt(TestID));
+        if (!listresult.isEmpty()) {
+            hasResult += 1;
         }
-        
-        TagDAO tagdao = new TagDAO();
-        List<Tag> listtag = tagdao.getAllTag();
-        
-        LevelDAO leveldao = new LevelDAO();
-        List<Level> listlevel = leveldao.getAllLevel();
-        
+
         //step2: load data to jsp
-        request.setAttribute("listQuestion", listQuestion);
-        request.setAttribute("listtag", listtag);
-        request.setAttribute("listlevel", listlevel);
+        request.setAttribute("listQuestion", list);
         request.setAttribute("nameTest", test.getName());
+        
         HttpSession session = request.getSession();
-        session.setAttribute("TestID", TestID);
+        session.setAttribute("testID", TestID);
+        session.setAttribute("hasResult", hasResult);
+        session.setAttribute("numberques", numberques);
         request.getRequestDispatcher("Test_manage_insretTest_Test.jsp").forward(request, response);
     }
 

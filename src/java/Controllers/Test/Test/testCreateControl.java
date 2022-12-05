@@ -64,18 +64,7 @@ public class testCreateControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-         //set utf-8 for input vietnamese word
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
         
-        LevelDAO leveldao = new LevelDAO();
-        List<Level> listlevel = leveldao.getAllLevel();
-        TagDAO tagdao = new TagDAO();
-        List<Tag> listtag = tagdao.getAllTag();
-        
-        request.setAttribute("listlevel", listlevel);
-        request.setAttribute("listtag", listtag);
-        request.getRequestDispatcher("Test_manage_createTest.jsp").forward(request, response);
     }
 
     /**
@@ -90,21 +79,23 @@ public class testCreateControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-         //set utf-8 for input vietnamese word
+        //set utf-8 for input vietnamese word
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
         //get data from jsp
         String name = request.getParameter("name");
-        String tagsID = request.getParameter("listtag");
-        String levelid = request.getParameter("listlevel");
+        String tagID = request.getParameter("listtag");
+        String levelID = request.getParameter("listlevel");
         //insert data into database
         TestDAO dao = new TestDAO();
-        dao.insertTest(name, Integer.parseInt(tagsID),Integer.parseInt(levelid));
+        dao.insertTest(name, Integer.parseInt(tagID),Integer.parseInt(levelID));
         
         int lasttest = dao.getLastTest().getTestID();
         
         HttpSession session = request.getSession();
-        session.setAttribute("TestID", lasttest);
+        session.setAttribute("testID", lasttest);
+        session.setAttribute("tagID", tagID);
+        session.setAttribute("levelID", levelID);
         response.sendRedirect("insertTest_Test");
     }
 

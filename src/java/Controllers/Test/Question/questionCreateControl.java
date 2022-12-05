@@ -8,6 +8,7 @@ package Controllers.Test.Question;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuestionDAO;
 import DAOs.Test.TagDAO;
+import DAOs.Test.TestDAO;
 import Models.Level;
 import Models.Tag;
 import java.io.IOException;
@@ -63,17 +64,7 @@ public class questionCreateControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        //get list tag and level for form input
-        LevelDAO leveldao = new LevelDAO();
-        List<Level> listlevel = leveldao.getAllLevel();
-        TagDAO tagdao = new TagDAO();
-        List<Tag> listtag = tagdao.getAllTag();
-
-        request.setAttribute("listlevel", listlevel);
-        request.setAttribute("listtag", listtag);
-        request.getRequestDispatcher("Test_manage_createQuestion.jsp").forward(request, response);
+        
     }
 
     /**
@@ -88,7 +79,7 @@ public class questionCreateControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-       //set utf-8 for input vietnamese word
+        //set utf-8 for input vietnamese word
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
         
@@ -96,11 +87,13 @@ public class questionCreateControl extends HttpServlet {
         String TagID = request.getParameter("listTag");
         String Levelid = request.getParameter("listLevel");
         String Question = request.getParameter("question");
+        String Test = request.getParameter("test");
+        int TestID = new TestDAO().getTestByName(Test).getTestID();
         
         //insert data into database
         QuestionDAO dao = new QuestionDAO();
-        dao.insertQuestion(Integer.parseInt(TagID), Integer.parseInt(Levelid), Question);
-        response.sendRedirect("questionColtrol"); 
+        dao.insertQuestion(Question,TestID);
+        response.sendRedirect("questionColtrol");
     }
 
     /**

@@ -9,7 +9,6 @@ import DAOs.Material.MaterialDAO;
 import DAOs.Test.AnswerDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuestionDAO;
-import DAOs.Test.QuizDAO;
 import DAOs.Test.ResultDAO;
 import DAOs.Test.TagDAO;
 import DAOs.Test.TestDAO;
@@ -19,7 +18,6 @@ import Models.AnswerOfQuestion;
 import Models.ChoiceAndTrueAns;
 import Models.Level;
 import Models.Question;
-import Models.Quiz;
 import Models.Result;
 import Models.ResultDetail;
 import Models.Tag;
@@ -93,12 +91,12 @@ public class showResultDetailControl extends HttpServlet {
         int TestID = (new TestDAO()).getTestByID(result.getTestID()).getTestID();
 
         //step: lấy tất cả Id của question trong test a
-        QuizDAO Quizdao = new QuizDAO();
-        List<Quiz> QuestionOfTest = Quizdao.getallQuestionOfTest(TestID);
-//        
+        QuestionDAO quesdao = new QuestionDAO();
+        List<Question> QuestionOfTest = quesdao.getByTest(result.getTestID());
+        
         //step: lấy câu hỏi từ list câu hỏi trong quiz
         List<String> list = new ArrayList<String>();
-        for (Quiz o : QuestionOfTest) {
+        for (Question o : QuestionOfTest) {
             list.add(String.valueOf(o.getQuestionID()));
         }
 
@@ -108,7 +106,6 @@ public class showResultDetailControl extends HttpServlet {
             int isTrueans = 0;
             String choice = new resultDetailDAO().getbyQuesResult(Integer.parseInt(resultID), Integer.parseInt(o)).getAnswer();
 
-            QuestionDAO quesdao = new QuestionDAO();
             Question ques = quesdao.getQuestionByID(Integer.parseInt(o));
             String question = ques.getQuestion();
             

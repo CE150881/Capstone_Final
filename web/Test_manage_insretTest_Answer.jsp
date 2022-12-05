@@ -88,49 +88,54 @@
                                         <div class="col-sm-6">
                                             <h2>Cập Nhật <b>Câu Trả Lời</b></h2>
                                         </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                             <div id="editEmployeeModal">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="${pageContext.request.contextPath}/insertTest_EditAnswer" method="post">                         
-                                            <div class="modal-header">                      
-                                                <h4 class="modal-title">Cập Nhật Câu Trả Lời</h4>
-                                            </div>
-                                            <div class="modal-body">    
-                                                <div class="form-group">
-                                                    <label>Câu hỏi:</label>
-                                                    <input type="text" name="Question" value="${ques.question}" class="form-control" readonly>
-                                                </div>                            
-                                                <div class="form-group">
-                                                    <label>Câu trả lời:</label>
-                                                    <input type="text" name="Answer" value="${answer.answer}" class="form-control" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Hãy cho biết câu trả lời này có đúng không:</label>
-                                                    <input type="text" name="isCorrect" value="${answer.isCorrect}" class="form-control" required>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="insertTest_Question" class="btn btn-default" tabindex="-1" role="button">Hủy</a>
-                                                <input type="submit" class="btn btn-success" value="Cập Nhật">
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> 
+                        <div id="editAnswerModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">                      
+                                        <h4 class="modal-title">Cập Nhật Câu Trả Lời</h4>
+                                    </div>
+                                    <div class="modal-body">    
+                                        <form action="${pageContext.request.contextPath}/insertTest_EditAnswer" method="post">
+                                            <div class="form-group">
+                                                <label>Câu hỏi:</label>
+                                                <input type="text" name="Question" value="${ques.question}" class="form-control" readonly>
+                                            </div>                            
+                                            <div class="form-group">
+                                                <label>Câu trả lời:</label>
+                                                <input type="text" name="Answer" value="${answer.answer}" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <label>Hãy chọn đáp án đúng cho câu hỏi này:</label>
+                                                </div>
+                                                <div>
+                                                    <label class="radio"> <input type="radio" name="isCorrect" value="1"> <span>Đúng</span></label>  <br>
+                                                    <label class="radio"> <input type="radio" name="isCorrect" value="0"> <span>Sai</span></label> 
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="insertTest_Question" class="btn btn-default" tabindex="-1" role="button">Hủy</a>
+                                        <input type="submit" class="btn btn-success" value="Cập Nhật">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
 
-                    <!-- /.container-fluid -->
-                </div>
-                <!-- End of Main Content -->
+                <!-- /.container-fluid -->
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Main Content -->
         </div>
-        <!-- End of Page Wrapper -->
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
 
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">

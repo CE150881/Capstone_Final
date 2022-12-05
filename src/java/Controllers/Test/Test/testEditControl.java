@@ -3,21 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers.Test.Quiz;
+package Controllers.Test.Test;
 
-import DAOs.Test.QuizDAO;
+import DAOs.Test.LevelDAO;
+import DAOs.Test.TagDAO;
+import DAOs.Test.TestDAO;
+import Models.Level;
+import Models.Tag;
+import Models.Test;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Saing
  */
-public class quizDeleteControl extends HttpServlet {
+public class testEditControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +43,10 @@ public class quizDeleteControl extends HttpServlet {
 //            out.println("<!DOCTYPE html>");
 //            out.println("<html>");
 //            out.println("<head>");
-//            out.println("<title>Servlet quizDeleteControl</title>");            
+//            out.println("<title>Servlet testEditControl</title>");            
 //            out.println("</head>");
 //            out.println("<body>");
-//            out.println("<h1>Servlet quizDeleteControl at " + request.getContextPath() + "</h1>");
+//            out.println("<h1>Servlet testEditControl at " + request.getContextPath() + "</h1>");
 //            out.println("</body>");
 //            out.println("</html>");
 //        }
@@ -58,12 +65,8 @@ public class quizDeleteControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        //step1: get AnswerID from jsp
-        String QuizID = request.getParameter("quizID");
-        //step2: pass AnswerID to DAO
-        QuizDAO dao = new QuizDAO();
-        dao.deleteQuiz(Integer.parseInt(QuizID));
-        response.sendRedirect("quizControl");
+        
+        
     }
 
     /**
@@ -78,7 +81,19 @@ public class quizDeleteControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        //set utf-8 for input vietnamese word
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
+        //get data from jsp
+        String testID = request.getParameter("testID");
+        String name = request.getParameter("name");
+        String tagID = request.getParameter("listtag");
+        String levelid = request.getParameter("listlevel");
+        //insert data into database
+        TestDAO dao = new TestDAO();
+        dao.editTest(Integer.parseInt(testID), name,Integer.parseInt(tagID),Integer.parseInt(levelid));
+        response.sendRedirect("testControl");
     }
 
     /**

@@ -5,7 +5,7 @@
  */
 package Controllers.Kanji;
 
-import static Controllers.Account.UpdateAvatarControl.UPLOAD_DIR;
+
 import DAOs.Material.MaterialDAO;
 import java.io.File;
 import java.io.IOException;

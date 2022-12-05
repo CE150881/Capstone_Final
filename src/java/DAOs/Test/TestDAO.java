@@ -106,8 +106,7 @@ public class TestDAO {
 
     public Test getTestByID(int TestID) {
         Test a = new Test();
-        String query = "select * from `test`\n"
-                + "where `TestID` = ?";
+        String query = "SELECT * FROM `test` WHERE `TestID` = ?;";
         try {
             Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
@@ -120,6 +119,25 @@ public class TestDAO {
                         rs.getInt(4));
             }
             conn.close();
+        } catch (Exception e) {
+        }
+        return a;
+    }
+    
+    public Test getTestByName(String Test) {
+        Test a = new Test();
+        String query = "SELECT * FROM `test` WHERE `Name` = ?;";
+        try {
+            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, Test);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                a = new Test(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4));
+            }
         } catch (Exception e) {
         }
         return a;
@@ -159,7 +177,7 @@ public class TestDAO {
     }
 
     public void deleteTest(int TestID) {
-        String query = "DELETE FROM `test` WHERE `TestID` = ?;";
+        String query = "DELETE FROM `test` WHERE `TestID`=?;";
         try {
             Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
@@ -171,9 +189,7 @@ public class TestDAO {
     }
 
     public void editTest(int TestID, String Name, int TagsID, int LevelID) {
-        String query = "update test \n"
-                + "set `Name` = ?, `TagID` = ?, `LevelID` = ?\n"
-                + "where `TestID` = ?";
+        String query = "UPDATE `test` SET `Name`=?,`TagID`=?,`levelID`=? WHERE `TestID`=?;";
         try {
             Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);

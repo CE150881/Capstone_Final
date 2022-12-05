@@ -6,13 +6,15 @@
 package Controllers.Test.Question;
 
 import DAOs.Test.QuestionDAO;
-import DAOs.Test.QuizDAO;
+import DAOs.Test.TestDAO;
+import Models.Question;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -59,14 +61,7 @@ public class insertTest_DeleteQuestionControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        //step1: get AnswerID from jsp
-        String QuestionID = request.getParameter("questionID");
-        //step2: pass AnswerID to DAO
-        QuestionDAO dao = new QuestionDAO();
-        dao.deleteQuestion(Integer.parseInt(QuestionID));
-        QuizDAO quizDAO= new QuizDAO();
-        quizDAO.deleteQuiz(quizDAO.getbyQuestion(Integer.parseInt(QuestionID)).getQuizID());
-        response.sendRedirect("insertTest_Test");
+
     }
 
     /**
@@ -80,7 +75,19 @@ public class insertTest_DeleteQuestionControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+
+        String QuestionID = request.getParameter("questionID");
+
+        //step2: pass AnswerID to DAO
+        QuestionDAO dao = new QuestionDAO();
+        Question ques = dao.getQuestionByID(Integer.parseInt(QuestionID));
+        int TestID = new TestDAO().getTestByID(ques.getTestID()).getTestID();
+        dao.deleteQuestion(Integer.parseInt(QuestionID));
+
+        HttpSession session = request.getSession();
+        session.setAttribute("testID", TestID);
+        response.sendRedirect("insertTest_Test");
     }
 
     /**

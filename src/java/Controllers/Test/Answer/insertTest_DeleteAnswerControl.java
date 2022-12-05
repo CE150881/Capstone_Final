@@ -6,12 +6,15 @@
 package Controllers.Test.Answer;
 
 import DAOs.Test.AnswerDAO;
+import DAOs.Test.QuestionDAO;
+import Models.Answer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -58,12 +61,7 @@ public class insertTest_DeleteAnswerControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        //step1: get AnswerID from jsp
-        String AnswerID = request.getParameter("answerID");
-        //step2: pass AnswerID to DAO
-        AnswerDAO dao = new AnswerDAO();
-        dao.deleteAnswer(Integer.parseInt(AnswerID));
-        response.sendRedirect("insertTest_Question");
+        
     }
 
     /**
@@ -77,7 +75,17 @@ public class insertTest_DeleteAnswerControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        String AnswerID = request.getParameter("answerID");
+        
+        AnswerDAO dao = new AnswerDAO();
+        Answer ans  = dao.getAnswerByID(Integer.parseInt(AnswerID));
+        int questionID = new QuestionDAO().getQuestionByID(ans.getQuestionID()).getQuestionID();
+        dao.deleteAnswer(Integer.parseInt(AnswerID));
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("questionID",questionID);
+        response.sendRedirect("insertTest_Question");
     }
 
     /**

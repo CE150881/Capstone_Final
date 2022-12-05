@@ -8,9 +8,7 @@ package Controllers.Test.Question;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuestionDAO;
 import DAOs.Test.TagDAO;
-import Models.Level;
 import Models.Question;
-import Models.Tag;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -65,24 +63,7 @@ public class insertTest_EditQuestionControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        //step1: get AnswerID from jsp
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        String QuestionID = request.getParameter("questionID");
-        
-        QuestionDAO dao = new QuestionDAO();
-        Question question = dao.getQuestionByID(Integer.parseInt(QuestionID));
-        LevelDAO leveldao = new LevelDAO();
-        List<Level> listlevel = leveldao.getAllLevel();
-        TagDAO tagdao = new TagDAO();
-        List<Tag> listtag = tagdao.getAllTag();
-        
-        request.setAttribute("listlevel", listlevel);
-        request.setAttribute("listtag", listtag);
-        request.setAttribute("question", question);
-        HttpSession session = request.getSession();
-        session.setAttribute("QuestionID", QuestionID);
-        request.getRequestDispatcher("Test_manage_insretTest_EditQuestion.jsp").forward(request, response);
+
     }
 
     /**
@@ -99,16 +80,18 @@ public class insertTest_EditQuestionControl extends HttpServlet {
 //        processRequest(request, response);
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
+
         HttpSession session = request.getSession();
-        //get data from jsp
-        String QuestionID = session.getAttribute("QuestionID").toString();
-        String TagID = request.getParameter("listtag");
-        String Levelid = request.getParameter("listlevel");
+
+        String TestID = request.getParameter("testID");
         String Question = request.getParameter("question");
-        //insert data into database
+        String QuestionID = request.getParameter("questionID");
+
         QuestionDAO dao = new QuestionDAO();
-        dao.editQuestion(Integer.parseInt(QuestionID),Integer.parseInt(TagID),Integer.parseInt(Levelid), Question);
-        response.sendRedirect("insertTest_Test");      
+        dao.editQuestion(Integer.parseInt(QuestionID), Question, Integer.parseInt(TestID));
+
+        session.setAttribute("testID", TestID);
+        response.sendRedirect("insertTest_Test");
     }
 
     /**

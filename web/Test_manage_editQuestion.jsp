@@ -120,6 +120,10 @@
                                                     </c:forEach>
                                                 </select>
                                             </div>
+                                            <div class="form-group">
+                                                <label>Tên bài kiểm tra</label>
+                                                <input type="text" name="test" class="form-control" required>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <a href="questionColtrol" class="btn btn-default" tabindex="-1" role="button">Hủy</a>

@@ -6,6 +6,7 @@
 package Controllers.Test.Answer;
 
 import DAOs.Test.AnswerDAO;
+import Models.Answer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -72,7 +73,8 @@ public class insertTest_CreateAnswerControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+
         //set utf-8 for input vietnamese word
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -82,12 +84,13 @@ public class insertTest_CreateAnswerControl extends HttpServlet {
         
         //get data from jsp
         String answer = request.getParameter("Answer");
-        String isCorrect = request.getParameter("isCorrect");
         
         //insert data into database
         AnswerDAO dao = new AnswerDAO();
-        dao.insertAnswer(Integer.valueOf(questionID), answer, Integer.valueOf(isCorrect));
+        dao.insertAnswer(Integer.valueOf(questionID), answer, 0);
+        Answer lastans = dao.getLastAnswer();
         
+        session.setAttribute("questionID",lastans.getQuestionID());
         response.sendRedirect("insertTest_Question");
     }
 

@@ -433,22 +433,6 @@
         <servlet-class>Controllers.Test.Question.questionEditControl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>quizControl</servlet-name>
-        <servlet-class>Controllers.Test.Quiz.quizControl</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>quizCreateControl</servlet-name>
-        <servlet-class>Controllers.Test.Quiz.quizCreateControl</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>quizDeleteControl</servlet-name>
-        <servlet-class>Controllers.Test.Quiz.quizDeleteControl</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>quizEditControl</servlet-name>
-        <servlet-class>Controllers.Test.Quiz.quizEditControl</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>resultControl</servlet-name>
         <servlet-class>Controllers.Test.Result.resultControl</servlet-class>
     </servlet>
@@ -477,8 +461,8 @@
         <servlet-class>Controllers.Test.Tag.tagDeleteControl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>tagEditController</servlet-name>
-        <servlet-class>Controllers.Test.Tag.tagEditController</servlet-class>
+        <servlet-name>tagEditControl</servlet-name>
+        <servlet-class>Controllers.Test.Tag.tagEditControl</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>choiceTestControl</servlet-name>
@@ -505,8 +489,8 @@
         <servlet-class>Controllers.Test.Test.testDeleteControl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>testEditController</servlet-name>
-        <servlet-class>Controllers.Test.Test.testEditController</servlet-class>
+        <servlet-name>testEditControl</servlet-name>
+        <servlet-class>Controllers.Test.Test.testEditControl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>answerControl</servlet-name>
@@ -557,22 +541,6 @@
         <url-pattern>/questionEdit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>quizControl</servlet-name>
-        <url-pattern>/quizControl</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>quizCreateControl</servlet-name>
-        <url-pattern>/quizCreate</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>quizDeleteControl</servlet-name>
-        <url-pattern>/quizDelete</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>quizEditControl</servlet-name>
-        <url-pattern>/quizEdit</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>resultControl</servlet-name>
         <url-pattern>/resultControl</url-pattern>
     </servlet-mapping>
@@ -601,7 +569,7 @@
         <url-pattern>/tagDelete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>tagEditController</servlet-name>
+        <servlet-name>tagEditControl</servlet-name>
         <url-pattern>/tagEdit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -629,7 +597,7 @@
         <url-pattern>/testDelete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>testEditController</servlet-name>
+        <servlet-name>testEditControl</servlet-name>
         <url-pattern>/testEdit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

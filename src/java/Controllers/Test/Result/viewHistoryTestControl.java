@@ -42,34 +42,31 @@ public class viewHistoryTestControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("acc");
-        int userID = u.getUserID();
-
-        ResultDAO dao = new ResultDAO();
-        List<Result> listResult = dao.getResultByUser(userID);
-//        List<ResultUser> list = new ArrayList<ResultUser>();
+        
+//        ResultDAO dao = new ResultDAO();
+//        List<Result> listResult = dao.getResultByUser(userID);
+////        List<ResultUser> list = new ArrayList<ResultUser>();
+////
+////        String username = u.getUsername();
+////
+////        for (Result o : listResult) {
+////
+////            TestDAO testDAO = new TestDAO();
+////            String test = testDAO.getTestByID(o.getTestID()).getName();
+////
+////            list.add(new ResultUser(o.getResultID(), username, test, o.getTimeBigin(), o.getTimeExpire(), o.getScore(), o.getTrueQuestion()));
+////        }
 //
-//        String username = u.getUsername();
-//
-//        for (Result o : listResult) {
-//
-//            TestDAO testDAO = new TestDAO();
-//            String test = testDAO.getTestByID(o.getTestID()).getName();
-//
-//            list.add(new ResultUser(o.getResultID(), username, test, o.getTimeBigin(), o.getTimeExpire(), o.getScore(), o.getTrueQuestion()));
-//        }
-
-//        TagDAO tagdao = new TagDAO();
-//        List<Tag> listtag = tagdao.getAllTag();
-//
-//        LevelDAO leveldao = new LevelDAO();
-//        List<Level> listlevel = leveldao.getAllLevel();
-//        request.setAttribute("listtag", listtag);
-//        request.setAttribute("listlevel", listlevel);
-        //step2: load data to jsp
-        request.setAttribute("listResult", listResult);
-        request.getRequestDispatcher("account_profile.jsp").forward(request, response);
+////        TagDAO tagdao = new TagDAO();
+////        List<Tag> listtag = tagdao.getAllTag();
+////
+////        LevelDAO leveldao = new LevelDAO();
+////        List<Level> listlevel = leveldao.getAllLevel();
+////        request.setAttribute("listtag", listtag);
+////        request.setAttribute("listlevel", listlevel);
+//        //step2: load data to jsp
+//        request.setAttribute("listResult", listResult);
+//        request.getRequestDispatcher("account_profile.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -84,7 +81,39 @@ public class viewHistoryTestControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+//        String email = session.getAttribute("email").toString();
+//        UserDAO userDAO = new UserDAO();
+//        int UserID = userDAO.getUserByEmail(email).getUserID();
+        User u = (User) session.getAttribute("acc");
+        int userID = u.getUserID();
+        
+        ResultDAO dao = new ResultDAO();
+        List<Result> listResult = dao.getResultByUser(userID);
+        List<ResultUser> list = new ArrayList<ResultUser>();
+        
+        
+        String username = u.getUsername();
 
+        
+        for (Result o : listResult) {
+            
+            String test = new TestDAO().getTestByID(o.getTestID()).getName();
+            
+            list.add(new ResultUser(o.getResultID(),username, test, o.getTimeBigin(),o.getTimeExpire(),o.getScore(), o.getTrueQuestion()));
+        }
+        
+        TagDAO tagdao = new TagDAO();
+        List<Tag> listtag = tagdao.getAllTag();
+        
+        LevelDAO leveldao = new LevelDAO();
+        List<Level> listlevel = leveldao.getAllLevel();
+
+        request.setAttribute("listtag", listtag);
+        request.setAttribute("listlevel", listlevel);
+        //step2: load data to jsp
+        request.setAttribute("listResult", list);
+        request.getRequestDispatcher("Test_HistroyTest.jsp").forward(request, response);
     }
 
     /**

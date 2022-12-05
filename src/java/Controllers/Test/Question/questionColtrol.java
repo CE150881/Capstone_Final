@@ -8,11 +8,14 @@ package Controllers.Test.Question;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.QuestionDAO;
 import DAOs.Test.TagDAO;
+import DAOs.Test.TestDAO;
 import Models.Level;
 import Models.Question;
+import Models.QuestionOfTest;
 import Models.Tag;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -69,6 +72,10 @@ public class questionColtrol extends HttpServlet {
         //khai báo
         QuestionDAO quesdao = new QuestionDAO();
         List<Question> listQuestion = quesdao.getAllQuestion();
+        List<QuestionOfTest> list = new ArrayList<QuestionOfTest>();
+        for (Question q : listQuestion) {
+            list.add(new QuestionOfTest(q.getTestID(), q.getQuestionID(),q.getQuestion(),new TestDAO().getTestByID(q.getTestID()).getName()));
+        }
         
         TagDAO tagdao = new TagDAO();
         List<Tag> listtag = tagdao.getAllTag();
@@ -77,7 +84,7 @@ public class questionColtrol extends HttpServlet {
         List<Level> listlevel = leveldao.getAllLevel();
         
         //step2: load data to jsp
-        request.setAttribute("listQuestion", listQuestion);
+        request.setAttribute("listQuestion", list);
         request.setAttribute("listtag", listtag);
         request.setAttribute("listlevel", listlevel);
         request.getRequestDispatcher("Test_manage_detailQuestion.jsp").forward(request, response);

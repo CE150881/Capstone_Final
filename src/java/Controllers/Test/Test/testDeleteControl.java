@@ -58,12 +58,7 @@ public class testDeleteControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        //step1: get AnswerID from jsp
-        String TestID = request.getParameter("testID");
-        //step2: pass AnswerID to DAO
-        TestDAO dao = new TestDAO();
-        dao.deleteTest(Integer.parseInt(TestID));
-        response.sendRedirect("testControl");
+        
     }
 
     /**
@@ -78,7 +73,12 @@ public class testDeleteControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        
+        //step1: get AnswerID from jsp
+        String TestID = request.getParameter("testID");
+        //step2: pass AnswerID to DAO
+        TestDAO dao = new TestDAO();
+        dao.deleteTest(Integer.parseInt(TestID));
+        response.sendRedirect("testControl");
     }
 
     /**

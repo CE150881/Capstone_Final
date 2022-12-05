@@ -31,9 +31,8 @@ public class QuestionDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Question(rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getString(4)));
+                                        rs.getString(2),
+                                        rs.getInt(3)));
             }
             conn.close();
         } catch (Exception e) {
@@ -50,9 +49,8 @@ public class QuestionDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 a = new Question(rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getString(4));
+                                 rs.getString(2),
+                                 rs.getInt(3));
             }
             conn.close();
         } catch (Exception e) {
@@ -60,9 +58,9 @@ public class QuestionDAO {
         return a;
     }
 
-    public List<Question> getByTag(int TagID) {
+    public List<Question> getByTest(int TagID) {
         List<Question> list = new ArrayList<>();
-        String query = "SELECT * FROM `question` WHERE `TagID` = ?;";
+        String query = "SELECT * FROM `question` WHERE `TestID` = ?;";
         try {
             Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
@@ -70,50 +68,8 @@ public class QuestionDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Question(rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getString(4)));
-            }
-            conn.close();
-        } catch (Exception e) {
-        }
-        return list;
-    }
-
-    public List<Question> getByLevel(int LevelID) {
-        List<Question> list = new ArrayList<>();
-        String query = "SELECT * FROM `question` WHERE `LevelID` = ?;";
-        try {
-            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, LevelID);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Question(rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getString(4)));
-            }
-            conn.close();
-        } catch (Exception e) {
-        }
-        return list;
-    }
-
-    public List<Question> getByLevelandTag(int TagID, int LevelID) {
-        List<Question> list = new ArrayList<>();
-        String query = "SELECT * FROM `question` WHERE `LevelID` = ? AND `TagID` = ?";
-        try {
-            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, TagID);
-            ps.setInt(2, LevelID);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Question(rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getString(4)));
+                                        rs.getString(2),
+                                        rs.getInt(3)));
             }
             conn.close();
         } catch (Exception e) {
@@ -131,9 +87,8 @@ public class QuestionDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 a = new Question(rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getString(4));
+                                 rs.getString(2),
+                                 rs.getInt(3));
             }
             conn.close();
         } catch (Exception e) {
@@ -141,14 +96,13 @@ public class QuestionDAO {
         return a;
     }
 
-    public void insertQuestion(int TagID, int LevelID, String Question) {
-        String query = "INSERT INTO `question`(`TagID`, `LevelID`, `Question`) VALUES (?,?,?)";
+   public void insertQuestion(String Question, int TestID) {
+        String query = "INSERT INTO `question`(`Question`, `TestID`) VALUES (?,?);";
         try {
             Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
-            ps.setInt(1, TagID);
-            ps.setInt(2, LevelID);
-            ps.setString(3, Question);
+            ps.setString(1, Question);
+            ps.setInt(2, TestID);
             ps.executeUpdate();
             conn.close();
         } catch (Exception e) {
@@ -167,15 +121,14 @@ public class QuestionDAO {
         }
     }
 
-    public void editQuestion(int QuestionID, int TagID, int LevelID, String Question) {
-        String query = "UPDATE `question` SET `TagID`=?,`LevelID`=?,`Question`=? WHERE `QuestionID`= ?;";
+    public void editQuestion(int QuestionID, String Question, int TestID) {
+        String query = "UPDATE `question` SET `Question`=?,`TestID`=? WHERE `QuestionID` =?;";
         try {
             Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
-            ps.setInt(1, TagID);
-            ps.setInt(2, LevelID);
-            ps.setString(3, Question);
-            ps.setInt(4, QuestionID);
+            ps.setString(1, Question);
+            ps.setInt(2, TestID);
+            ps.setInt(3, QuestionID);
             ps.executeUpdate();
             conn.close();
         } catch (Exception e) {
