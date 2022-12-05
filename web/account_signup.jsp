@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="user/css/login.css">
 
     </head>
+
     <body class="img js-fullheight" style="background-image: url(user/img/13.jpg);">
         <section class="ftco-section">
             <div class="container">
@@ -32,22 +33,22 @@
                         <div class="login-wrap p-0">
                             <form action="SignupControl" method="POST" class="signin-form">
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                    <input type="text" class="form-control" name="email" placeholder="Email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Địa chỉ email không hợp lệ!" required/>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="username" class="form-control" placeholder="Tên Người Dùng" required>
+                                    <input type="text" name="username" class="form-control"  pattern="[A-Za-z0-9]{1,20}" title="Tên người dùng ít hơn 20 kí tự!" placeholder="Tên Người Dùng" required/>
                                 </div>
                                 <div class="form-group">
-                                    <input id="password-field" name="password" type="password" class="form-control" placeholder="Mật Khẩu" required>
-                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    <input id="password-field" name="password" type="password" pattern="[A-Za-z0-9]{6,12}" title="Độ dài mật khẩu từ 6 đến 12 kí tự!" class="form-control" placeholder="Mật Khẩu" required/>                                    
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" name="phone" class="form-control" placeholder="Số Điện Thoại" required>
+                                    <input type="text" name="phone" class="form-control" placeholder="Số Điện Thoại" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b" title="Số điện thoại không hợp lệ!"/>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="form-control btn submit px-3" style="background: #f5b8c5; color: white;">Đăng Ký</button>
+                                    <button type="submit" name="submit" class="form-control btn submit px-3" style="background: #f5b8c5; color: white;">Đăng Kí</button>
                                 </div>
-                            </form>
+                            </form>                            
+                               
                             <p class="w-100 text-center">&mdash; hoặc đăng ký với &mdash;</p>
                             <div class="social d-flex text-center">
                                 <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8084/Capstone_Final/SignupWithGoogleControl&response_type=code
@@ -66,11 +67,10 @@
             </div>
         </section>
 
-        <script src="user/js/jquery.min.js"></script>
-        <script src="user/js/bootstrap.min.js"></script>
-        <script src="user/js/login.js"></script>
-
     </body>
+    <script src="user/js/jquery.min.js"></script>
+    <script src="user/js/bootstrap.min.js"></script>
+    <script src="user/js/login.js"></script>
 </html>
 
 

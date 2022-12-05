@@ -5,11 +5,9 @@
  */
 package Controllers.Kanji;
 
-import static Controllers.Account.UpdateAvatarControl.UPLOAD_DIR;
 import DAOs.Material.MaterialDAO;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -23,11 +21,13 @@ import javax.servlet.http.Part;
  * @author A Hi
  */
 @WebServlet(name = "CreateKanjiControl", urlPatterns = {"/CreateKanjiControl"})
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 50, // 50MB
+        maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class CreateKanjiControl extends HttpServlet {
 
-    public static final String UPLOAD_DIR = "images";
-    public String dbFileName = "";
+    private static final long serialVersionUID = 1L;
+    public static final String folder = "upload";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,58 +40,8 @@ public class CreateKanjiControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
 
-        String kanji = request.getParameter("kanji");
-        String meaning = request.getParameter("meaning");
-        String levelID = request.getParameter("level");
-
-        Part part = request.getPart("file");//
-        String fileName = extractFileName(part);//file name
-
-        /**
-         * *** Get The Absolute Path Of The Web Application ****
-         */
-        String applicationPath = getServletContext().getRealPath("");
-        String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
-        System.out.println("applicationPath:" + applicationPath);
-        File fileUploadDirectory = new File(uploadPath);
-        
-        String savePath = uploadPath + File.separator + fileName;
-        System.out.println("savePath: " + savePath);
-        String sRootPath = new File(savePath).getAbsolutePath();
-        System.out.println("sRootPath: " + sRootPath);
-        part.write(savePath + File.separator);
-        File fileSaveDir1 = new File(savePath);
-        /*if you may have more than one files with same name then you can calculate some random characters
-         and append that characters in fileName so that it will  make your each image name identical.*/
-        dbFileName = UPLOAD_DIR + File.separator + fileName;
-        part.write(savePath + File.separator);
-        
-        //out.println(id+" "+firstName+" "+lastName+" "+fileName+" "+savePath);
-        /*
-         You need this loop if you submitted more than one file
-         for (Part part : request.getParts()) {
-         String fileName = extractFileName(part);
-         part.write(savePath + File.separator + fileName);
-         }*/
-        MaterialDAO dao = new MaterialDAO();
-        dao.addKanji(levelID, kanji, meaning, dbFileName);
-        response.sendRedirect("ManageKanjiControl");
-    }
-
-    private String extractFileName(Part part) {//This method will print the file name.
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length() - 1);
-            }
-        }
-        return "";
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -120,7 +70,48 @@ public class CreateKanjiControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
+        String kanji = request.getParameter("kanji");
+        String meaning = request.getParameter("meaning");
+        String levelID = request.getParameter("level");
+
+//        for (Part part : request.getParts()) {
+        Part part = request.getPart("file");//
+        String fileName = extractFileName(part);//file name
+
+//        String fileName = extractFileName(part);
+        // refines the fileName in case it is an absolute path
+        fileName = new File(fileName).getName();
+
+        String dirUrl = request.getServletContext()
+                .getRealPath("") + "/" + folder;
+        File folderUpload = new File(dirUrl);
+        if (!folderUpload.exists()) {
+            folderUpload.mkdirs();
+        }
+        String a = folder + File.separator + fileName;
+        part.write(dirUrl + File.separator + fileName);
+//        }
+
+        MaterialDAO dao = new MaterialDAO();
+        dao.addKanji(levelID, kanji, meaning, a);
+
+        request.setAttribute("message", "Upload File Success!");
+        response.sendRedirect("ManageKanjiControl");
+    }
+
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
     }
 
     /**

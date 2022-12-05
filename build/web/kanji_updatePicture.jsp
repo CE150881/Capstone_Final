@@ -1,9 +1,3 @@
-<%-- 
-    Document   : dashboard
-    Created on : 25-Nov-2022, 14:15:59
-    Author     : A Hi
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

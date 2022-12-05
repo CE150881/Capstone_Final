@@ -32,7 +32,7 @@
 
     </head>
 
-    <body id="page-top">
+    <body id="page-top" onload="document.formUA.alphabet.focus();">
 
         <!-- Page Wrapper -->
         <div id="wrapper">
@@ -98,10 +98,9 @@
                             <div id="editEmployeeModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form action="UpdateAlphabetControl" method="post">                           
+                                        <form action="UpdateAlphabetControl" method="post" name='formUA'>                           
                                             <div class="modal-header">                      
-                                                <h4 class="modal-title">Cập Nhật Chữ Cái</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">Cập Nhật Chữ Cái</h4>                                               
                                             </div>
                                             <div class="modal-body">    
                                                 <div class="form-group" hidden>
@@ -110,11 +109,11 @@
                                                 </div>                            
                                                 <div class="form-group">
                                                     <label>Chữ Cái</label>
-                                                    <input value="${detail.alphabet}" name="alphabet" type="text" class="form-control" required>
+                                                    <input value="${detail.alphabet}" name="alphabet" type="text" pattern="[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B" title="Chữ cái chỉ bao gồm kí tự tiếng Nhật!" class="form-control">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Cách Đọc</label>
-                                                    <input value="${detail.pronounce}" name="pronounce" type="text" class="form-control" required>
+                                                    <input value="${detail.pronounce}" name="pronounce" type="text" pattern="[a-zA-Z]+$" title="Cách phát âm chỉ bao gồm kí tự tiếng Việt!" class="form-control" >
                                                 </div>                                                        
                                                 <div class="form-group">
                                                     <label>Cấp Độ</label>
@@ -127,9 +126,69 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                                <input type="submit" class="btn btn-success" value="Cập Nhật">
+                                                <input type="submit" name="submit" class="btn btn-success" value="Cập Nhật">
                                             </div>
                                         </form>
+                                        <script>
+                                            function formUAValidation()
+                                            {
+                                                var alphabet = document.formUA.alphabet;
+                                                var pronounce = document.formUA.pronounce;
+
+
+                                                if (alphabet_validation(alphabet))
+                                                {
+                                                    if (pronounce_validation(pronounce)) {
+                                                        window.location = "ManageAlphabetControl";
+                                                    }
+
+                                                }
+                                                return false;
+                                            }
+
+
+
+                                            function alphabet_validation(alphabet)
+                                            {
+                                                var letters = /^[A-Za-z]+$/;
+
+                                                if (alphabet.value == '')
+                                                {
+                                                    alert('Vui lòng nhập chữ cái!');
+                                                    alphabet.focus();
+                                                    return false;
+                                                } else if (alphabet.value.match(letters))
+                                                {
+                                                    return true;
+                                                } else
+                                                {
+                                                    alert('Chữ cái bao gồm chữ!');
+                                                    alphabet.focus();
+                                                    return false;
+                                                }
+                                            }
+
+                                            function pronounce_validation(pronounce)
+                                            {
+                                                var pronounceletters = /^[A-Za-z]+$/;
+
+                                                if (pronounce.value == '')
+                                                {
+                                                    alert('Vui lòng nhập phát âm chữ cái!');
+                                                    pronounce.focus();
+                                                    return false;
+                                                } else if (pronounce.value.match(pronounceletters))
+                                                {
+                                                    return true;
+                                                } else
+                                                {
+                                                    alert('Phát âm chữ cái bao gồm chữ!');
+                                                    pronounce.focus();
+                                                    return false;
+                                                }
+                                            }
+
+                                        </script>
                                     </div>
                                 </div>
                             </div>
@@ -191,9 +250,9 @@
             <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
             <script type="text/javascript">
-                $(document).ready(function () {
-                    $('#example').DataTable();
-                });
+                                            $(document).ready(function () {
+                                                $('#example').DataTable();
+                                            });
             </script>
     </body>
 

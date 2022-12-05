@@ -89,6 +89,7 @@
                                     <h2>Quản Lí Kanji</h2>
                                 </div>
                                 <div class="col-sm-6">
+                                                                  
                                     <a href="#addKanji" class="btn btn-success" data-toggle="modal" data-target="#addKanji" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Tạo Kanji</span></a>                                             
                                 </div>
                             </div>
@@ -124,7 +125,7 @@
                     <div class="modal fade" id="addKanji" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="CreateKanjiControl" method="post" enctype="multipart/form-data">
+                                <form method="post" action="CreateKanjiControl" enctype="multipart/form-data">
                                     <div class="modal-header">                      
                                         <h4 class="modal-title">Thêm Kanji</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -132,15 +133,15 @@
                                     <div class="modal-body">                    
                                         <div class="form-group">
                                             <label>Kanji</label>
-                                            <input name="kanji" type="text" class="form-control" required>
+                                            <input name="kanji" type="text" class="form-control" pattern="[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B" title="Kanji chỉ bao gồm kí tự tiếng Nhật!" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Nghĩa</label>
-                                            <input name="meaning" type="text" class="form-control" required>
+                                            <input name="meaning" type="text" class="form-control" pattern="[a-zA-Z]+$" title="Nghĩa kanji chỉ bao gồm kí tự tiếng Việt!" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Hình Vẽ</label>
-                                            <input type="file" name="file">  
+                                            <input type="file" name="file" size="60" required/> 
                                         </div>
 
                                         <div class="form-group">
@@ -155,9 +156,11 @@
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                                        <input type="submit" class="btn btn-success" value="Thêm">
+                                        <input type="submit" class="btn btn-success" value="Thêm"/>
                                     </div>
                                 </form>
+
+
                             </div>
                         </div>
                     </div>    
