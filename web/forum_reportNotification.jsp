@@ -199,6 +199,7 @@
                                 <p class="card-text"><%= rnUser.get(i).getPost_content()%></p>
                                 <p class="card-text"><%= rnUser.get(i).getReport_notification_content()%></p>
                                 <form method="post" action="<%= request.getContextPath()%>/DeleteForumNotification" style="display: inline">
+                                    <input name="userID" value="<%= rnUser.get(i).getUserID() %>" style="display: none">
                                     <input name="report_notification_id" value="<%= rnUser.get(i).getReport_notification_id()%>" style="display: none">                                            
                                     <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-danger">Xoá</button>
                                 </form>
@@ -216,6 +217,7 @@
                                     <p class="card-text"><%= rnUser.get(i).getComment_content()%></p>
                                     <p class="card-text"><%= rnUser.get(i).getReport_notification_content()%></p>
                                     <form method="post" action="<%= request.getContextPath()%>/DeleteForumNotification" style="display: inline">
+                                        <input name="userID" value="<%= rnUser.get(i).getUserID() %>" style="display: none">
                                         <input name="report_notification_id" value="<%= rnUser.get(i).getReport_notification_id()%>" style="display: none">   
                                         <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-danger">Xoá</button>
                                     </form>
