@@ -18,7 +18,7 @@
 
         <link rel="stylesheet" href="user/css/login.css">
 
-
+        <script src="user/js/jquery.min.js"></script>
     </head>
 
     <body class="img js-fullheight" style="background-image: url(user/img/13.jpg);">
@@ -34,15 +34,30 @@
                         <div class="login-wrap p-0">
                             <form action="LoginControl" method="POST" class="signin-form">
                                 <div class="form-group">
-                                    <input id="email" type="text" name="email" class="form-control" placeholder="Email" required>
+                                    <input id="email" type="text" name="email" class="form-control" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" oninvalid="this.setCustomValidity('Địa chỉ Email không hợp lệ!')" title="Nhập Email" placeholder="Email" required>
                                 </div>
                                 <div class="form-group">
-                                    <input id="password-field" name="password" type="password" class="form-control" placeholder="Mật khẩu" required>
+                                    <input id="password-field" name="password" type="password" class="form-control" title="Nhập Mật khẩu" placeholder="Mật khẩu" required>
                                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="form-control btn submit px-3" style="background: #f5b8c5; color: white;">ĐĂNG NHẬP</button>                                                                     
                                 </div>
+                                <%
+                                    try {
+                                        String invalidMailOrPassword = session.getAttribute("invalidMailOrPassword").toString();
+                                        if (invalidMailOrPassword != null) {
+                                %>
+                                <div class="form-group d-md-flex">
+                                    <div class='w-100 text-md-center' id='status-msg' style='color: #D0342C;'><%=invalidMailOrPassword%></div>
+                                </div>
+                                <%
+                                        }
+                                        session.removeAttribute("invalidMailOrPassword");
+                                    } catch (NullPointerException ex) {
+
+                                    }
+                                %>
                                 <div class="form-group d-md-flex">
 
                                     <div class="w-100 text-md-right">
@@ -71,11 +86,17 @@
 
         </section>
 
-        <script src="user/js/jquery.min.js"></script>
+
         <script src="user/js/bootstrap.min.js"></script>
         <script src="user/js/login.js"></script>
 
-
+        <script>
+            $(document).ready(function () {
+                $('input').click(function () {
+                    $('#status-msg').css("display", "none");
+                });
+            });
+        </script>
 
     </body>
 </html>

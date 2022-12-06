@@ -119,10 +119,9 @@
                             <div class="card-body" >
                                 <form method="post" action="<%= request.getContextPath()%>/RestorePost" style="display: inline">
                                     <input value="<%= rs.get(i).getPost_id()%>" name="post_id" style="display: none">
-                                    <button class="btn btn-secondary" type="sumbit" value="restorePost" name="restorePost">Phục Hồi</button>
+                                    <button class="btn btn-success" type="sumbit" value="restorePost" name="restorePost">Phục Hồi</button>
                                 </form>
-                                <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getPost_id()%>"
-                                        class="btn btn-danger">Xoá Hoàn Toàn</button>
+                                
                             </div>
                         </div>
 
@@ -144,7 +143,7 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                                         <form method="post" action="<%= request.getContextPath()%>/DeletePost">
                                             <input name="post_id" value="<%= rs.get(i).getPost_id()%>" style="display: none">
-                                            <button type="submit" value="deletePost" name="deletePost" class="btn btn-danger">Xoá Hoàn Toàn</button>
+                                            
                                         </form>
                                     </div>
                                 </div>

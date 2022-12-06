@@ -244,7 +244,7 @@
                         %>
                         <form class="d-flex" role="search" onsubmit="window.location = '<%= request.getContextPath()%>/SearchPost/' + search.value; return false;">
                             <input required="required" maxlength="100" class="form-control me-2" type="search" placeholder="Tìm Kiếm" name="search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            
                         </form>
                     </div>
                 </div>

@@ -97,7 +97,7 @@
                             <thead>
                                 <tr>
                                     <th>Tên Chủ Đề</th>                   
-                                    <th>Phục Hồi/Xoá</th>
+                                    <th>Phục Hồi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -120,14 +120,11 @@
                                     <td>
                                         <form method="post" style="display: inline" action="<%= request.getContextPath()%>/RestoreTopic">
                                             <input value="<%= rs.get(i).getTopic_id()%>" name="topic_id" style="display: none">
-                                            <button class="btn btn-secondary" type="sumbit" value="restoreTopic" name="restoreTopic">Phục Hồi</button>
+                                            <button class="btn btn-success" type="sumbit" value="restoreTopic" name="restoreTopic">Phục Hồi</button>
                                         </form>
                                         <%
                                             if (rs.get(i).getTopic_id() != 1) {
-                                        %>       
-
-                                        <button type="button" data-toggle="modal" data-target="#exampleModalDelete<%= rs.get(i).getTopic_id()%>"
-                                                class="btn btn-danger">Xoá Hoàn Toàn</button>
+                                        %>      
 
                                         <%
                                             }

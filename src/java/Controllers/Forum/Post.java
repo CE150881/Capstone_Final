@@ -184,7 +184,7 @@ public class Post extends HttpServlet {
         edit = request.getParameter("edit");
         if (!edit.equals("")) {
             comment_id = Integer.parseInt(request.getParameter("comment_id"));
-            comment_content = request.getParameter("comment_content");
+            comment_content = request.getParameter("comment_content").replace("\r\n", "<br>");
             post_id = Integer.parseInt(request.getParameter("post_id"));
 
             Comment a = new Comment(comment_id, comment_content, userID, comment_date, comment_edit_date, post_id, comment_status);
@@ -222,7 +222,7 @@ public class Post extends HttpServlet {
         editPost = request.getParameter("editPost");
         if (!editPost.equals("")) {
             post_title = request.getParameter("post_title");
-            post_content = request.getParameter("post_content");
+            post_content = request.getParameter("post_content").replace("\r\n", "<br>");
             post_id = Integer.parseInt(request.getParameter("post_id"));
             topic_id = Integer.parseInt(request.getParameter("topic_id"));
 

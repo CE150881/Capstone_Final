@@ -81,7 +81,7 @@
 
                     </nav>
                     <!-- End of Topbar -->
-                    
+
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
 
@@ -93,79 +93,70 @@
                             </div>
                         </div>
                         <br>
-                        <table id="example" class="table table-striped" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Lý Do Báo Cáo</th>
-                                    <th>Bình Luận</th>
-                                    <th>Ngày Chỉnh Sửa</th>
-                                    <th>Tiêu Đề</th>
-                                    <th>Nội Dung</th>
-                                    <th>Thành Viên Báo Cáo</th>
-                                    <th>Ngày Báo Cáo</th>
-                                    <th>Bỏ Qua/Xoá</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    //ResultSet rs = (ResultSet) session.getAttribute("allReportComment");
-                                    //while (rs.next()) {
-                                    List<ForumAllReportComment> rs = (List<ForumAllReportComment>) session.getAttribute("allReportComment");
-                                    for (int i = 0; i < rs.size(); i++) {
-                                        
-                                %>
-                                <tr>
-                                    <td><%= rs.get(i).getReport_comment_reason()%></td>
-                                    <td><%= rs.get(i).getComment_content()%></td>
-                                    <td><%= rs.get(i).getComment_edit_date().substring(0, Math.min(rs.get(i).getComment_edit_date().length(), 19))%></td>
-                                    <td><%= rs.get(i).getPost_title()%></td>
-                                    <td><%= rs.get(i).getPost_content()%></td>
-                                    <td><%= rs.get(i).getUsername()%></td>
-                                    <td><%= rs.get(i).getReport_comment_date().substring(0, Math.min(rs.get(i).getReport_comment_date().length(), 19))%></td>
-                                    <td>
-                                        <form method="post" action="<%= request.getContextPath()%>/ReportComment" style="display: inline">
+
+                        <%
+                            List<ForumAllReportComment> rs = (List<ForumAllReportComment>) session.getAttribute("allReportComment");
+                            for (int i = 0; i < rs.size(); i++) {
+                        %>
+                        <div>
+                            <div class="card mb-4 box-shadow">
+                                <div class="card-body">
+                                    <div class="d-flex">
+
+                                        <p class="text-muted p-2"><%= rs.get(i).getUsername()%></p>
+                                        <p class="text-muted ml-auto p-2"><%= rs.get(i).getComment_edit_date().substring(0, Math.min(rs.get(i).getComment_edit_date().length(), 19))%></p>
+                                    </div>                                    
+                                </div>
+                                <div class="card-body" >
+                                    <p class="card-text"><%= rs.get(i).getComment_content()%></p>
+                                </div>
+                                <div class="card-body" >
+                                    <p style="color: red">Lý Do Báo Cáo: <%= rs.get(i).getReport_comment_reason()%></p>
+                                    <p>Thành Viên Báo Cáo: <%= rs.get(i).getUsername()%></p>
+                                    <p>Ngày Báo Cáo: <%= rs.get(i).getReport_comment_date().substring(0, Math.min(rs.get(i).getReport_comment_date().length(), 19))%></p>
+                                    <form method="post" action="<%= request.getContextPath()%>/ReportComment" style="display: inline">
+                                        <input name="report_comment_id" value="<%= rs.get(i).getReport_comment_id()%>" style="display: none">
+                                        <input name="comment_id" value="<%= rs.get(i).getComment_id()%>" style="display: none">
+                                        <input name="reportCommentDelete" value="" style="display: none">
+                                        <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-secondary">Bỏ Qua</button>
+                                    </form>
+                                    <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getReport_comment_id()%>"
+                                            class="btn btn-danger">Xử Lý</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal Delete Report and Comment-->
+                        <div class="modal fade" id="exampleModalPost<%= rs.get(i).getReport_comment_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Xử Lý Báo Cáo</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bạn có chắc xử lý báo cáo này lẫn bình luận?
+                                        <form id="myform<%= rs.get(i).getReport_comment_id()%>" method="post" action="<%= request.getContextPath()%>/ReportComment">
+                                            <textarea class="form-control" required="required" name="report_notification_content" id="exampleFormControlTextarea2"
+                                                      rows="6" placeholder="Nhập lý do xoá để thông báo cho người dùng"></textarea>
                                             <input name="report_comment_id" value="<%= rs.get(i).getReport_comment_id()%>" style="display: none">
                                             <input name="comment_id" value="<%= rs.get(i).getComment_id()%>" style="display: none">
-                                            <input name="reportCommentDelete" value="" style="display: none">
-                                            <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-secondary">Bỏ Qua</button>
+                                            <input name="reportIgnore" value="" style="display: none">                                                            
                                         </form>
-                                        <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getReport_comment_id()%>"
-                                                class="btn btn-danger">Xoá</button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <button form="myform<%= rs.get(i).getReport_comment_id()%>" type="submit" value="reportCommentDelete" name="reportCommentDelete" class="btn btn-danger">Xử Lý</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                            }
+                        %>
 
-                                        <!-- Modal Delete Report and Comment-->
-                                        <div class="modal fade" id="exampleModalPost<%= rs.get(i).getReport_comment_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Bạn có chắc xoá báo cáo này lẫn bình luận?
-                                                        <form id="myform<%= rs.get(i).getReport_comment_id()%>" method="post" action="<%= request.getContextPath()%>/ReportComment">
-                                                            <textarea class="form-control" required="required" name="report_notification_content" id="exampleFormControlTextarea2"
-                                                                      rows="6" placeholder="Nhập lý do xoá đê thông báo cho người dùng"></textarea>
-                                                            <input name="report_comment_id" value="<%= rs.get(i).getReport_comment_id()%>" style="display: none">
-                                                            <input name="comment_id" value="<%= rs.get(i).getComment_id()%>" style="display: none">
-                                                            <input name="reportIgnore" value="" style="display: none">                                                            
-                                                        </form>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                        <button form="myform<%= rs.get(i).getReport_comment_id()%>" type="submit" value="reportCommentDelete" name="reportCommentDelete" class="btn btn-danger">Xoá</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <%
-                                    }
-                                %>
-                            </tbody>
-                        </table>
                     </div>
 
                     <!-- /.container-fluid -->

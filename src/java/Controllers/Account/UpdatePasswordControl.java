@@ -9,6 +9,8 @@ import DAOs.Account.UserDAO;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,10 +43,13 @@ public class UpdatePasswordControl extends HttpServlet {
         User user = (User) session.getAttribute("acc");
         String email = user.getEmail();
 
-        String password = request.getParameter("newPassword");
+        try {
+            String password = MD5(request.getParameter("newPassword"));
+            UserDAO dao = new UserDAO();
+            dao.updatePassword(password, email);
+        } catch (Exception ex) {
 
-        UserDAO dao = new UserDAO();
-        dao.updatePassword(password, email);
+        }
 
         response.sendRedirect("account_login.jsp");
     }
@@ -76,6 +81,12 @@ public class UpdatePasswordControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    private static String MD5(String s) throws Exception {
+        MessageDigest m = MessageDigest.getInstance("MD5");
+        m.update(s.getBytes(), 0, s.length());
+        return new BigInteger(1, m.digest()).toString(16);
     }
 
     /**

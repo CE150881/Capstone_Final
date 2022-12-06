@@ -20,11 +20,12 @@ public class ForumAllNotification {
     private int comment_id;    
     private String post_title;
     private String post_content;
-    private String post_date;    
+    private String post_date;
+    private String post_status;
     private String comment_content;
     private String comment_date;
 
-    public ForumAllNotification(int report_notification_id, int userID, String report_notification_content, int post_id, int comment_id, String post_title, String post_content, String post_date, String comment_content, String comment_date) {
+    public ForumAllNotification(int report_notification_id, int userID, String report_notification_content, int post_id, int comment_id, String post_title, String post_content, String post_date, String post_status, String comment_content, String comment_date) {
         this.report_notification_id = report_notification_id;
         this.userID = userID;
         this.report_notification_content = report_notification_content;
@@ -33,6 +34,7 @@ public class ForumAllNotification {
         this.post_title = post_title;
         this.post_content = post_content;
         this.post_date = post_date;
+        this.post_status = post_status;
         this.comment_content = comment_content;
         this.comment_date = comment_date;
     }
@@ -101,6 +103,14 @@ public class ForumAllNotification {
         this.post_date = post_date;
     }
 
+    public String getPost_status() {
+        return post_status;
+    }
+
+    public void setPost_status(String post_status) {
+        this.post_status = post_status;
+    }
+
     public String getComment_content() {
         return comment_content;
     }
@@ -117,6 +127,5 @@ public class ForumAllNotification {
         this.comment_date = comment_date;
     }
 
-    
     
 }

@@ -20,17 +20,19 @@ public class ForumAllPostWithComment {
     private String post_title;
     private String post_content;
     private String post_date;
+    private String post_edit_date;
     private String topic_name;
     private String username;
     private String avatar;
     private int comment_count;
 
-    public ForumAllPostWithComment(int post_id, int topic_id, String post_title, String post_content, String post_date, String topic_name, String username, String avatar, int comment_count) {
+    public ForumAllPostWithComment(int post_id, int topic_id, String post_title, String post_content, String post_date, String post_edit_date, String topic_name, String username, String avatar, int comment_count) {
         this.post_id = post_id;
         this.topic_id = topic_id;
         this.post_title = post_title;
         this.post_content = post_content;
         this.post_date = post_date;
+        this.post_edit_date = post_edit_date;
         this.topic_name = topic_name;
         this.username = username;
         this.avatar = avatar;
@@ -77,6 +79,14 @@ public class ForumAllPostWithComment {
         this.post_date = post_date;
     }
 
+    public String getPost_edit_date() {
+        return post_edit_date;
+    }
+
+    public void setPost_edit_date(String post_edit_date) {
+        this.post_edit_date = post_edit_date;
+    }
+
     public String getTopic_name() {
         return topic_name;
     }
@@ -108,6 +118,6 @@ public class ForumAllPostWithComment {
     public void setComment_count(int comment_count) {
         this.comment_count = comment_count;
     }
-    
 
+    
 }

@@ -63,7 +63,9 @@ public class ReportCommentDAO {
             conn = DBConnection.getConnection();
             ps = conn.prepareStatement("SELECT * FROM `forum_report_comment` NATURAL JOIN `forum_comment` "
                     + "LEFT JOIN `forum_post` ON `forum_comment`.`post_id` = `forum_post`.`post_id`"
-                    + "LEFT JOIN `user` ON `forum_report_comment`.`user_report_id` = `user`.`userID` ;");
+                    + "LEFT JOIN `user` ON `forum_report_comment`.`user_report_id` = `user`.`userID` "
+                    + "WHERE `forum_report_comment`.`status` = 'active'"
+                    + "ORDER BY `forum_report_comment`.`report_comment_id` DESC ;");
             rs = ps.executeQuery();
 
             ForumAllReportComment f = null;
@@ -98,8 +100,9 @@ public class ReportCommentDAO {
         ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            ps = conn.prepareStatement("DELETE FROM `forum_report_comment` "
-                    + "WHERE `forum_report_comment`.`report_comment_id` = ?");
+            ps = conn.prepareStatement("UPDATE `forum_report_comment` "
+                    + "SET `status` = 'disable' "
+                    + "WHERE `forum_report_comment`.`report_comment_id` = ? ;");
 
             ps.setInt(1, ra.getReport_comment_id());
 

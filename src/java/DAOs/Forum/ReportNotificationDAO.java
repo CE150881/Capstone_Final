@@ -36,7 +36,8 @@ public class ReportNotificationDAO {
                     + "ON `forum_report_notification`.`post_id` = `forum_post`.`post_id` "
                     + "LEFT JOIN `forum_comment` "
                     + "ON `forum_report_notification`.`comment_id` = `forum_comment`.`comment_id` "
-                    + "WHERE `forum_report_notification`.`userID` = ? ORDER BY `forum_report_notification`.`report_notification_id` DESC ");
+                    + "WHERE `forum_report_notification`.`userID` = ? AND `forum_report_notification`.`status` = 'active' "
+                    + "ORDER BY `forum_report_notification`.`report_notification_id` DESC ");
             ps.setInt(1, userID);
             rs = ps.executeQuery();
             
@@ -48,11 +49,12 @@ public class ReportNotificationDAO {
                 a.setReport_notification_content(rs.getString(3));
                 a.setPost_id(rs.getInt(4));
                 a.setComment_id(rs.getInt(5));
-                a.setPost_title(rs.getString(9));
-                a.setPost_content(rs.getString(10));
-                a.setPost_date(rs.getString(12));                
-                a.setComment_content(rs.getString(17));
-                a.setComment_date(rs.getString(19));
+                a.setPost_title(rs.getString(10));
+                a.setPost_content(rs.getString(11));
+                a.setPost_date(rs.getString(13));
+                a.setPost_status(rs.getString(15));
+                a.setComment_content(rs.getString(18));
+                a.setComment_date(rs.getString(20));
                 results.add(a);
             }
             return results;
@@ -214,8 +216,9 @@ public class ReportNotificationDAO {
         ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            ps = conn.prepareStatement("DELETE FROM `forum_report_notification` "
-                    + "WHERE `forum_report_notification`.`report_notification_id` = ?");
+            ps = conn.prepareStatement("UPDATE `forum_report_notification` "
+                    + "SET `status` = 'disable' "
+                    + "WHERE `forum_report_notification`.`report_notification_id` = ? ;");
 
             ps.setInt(1, report_notification_id);
 

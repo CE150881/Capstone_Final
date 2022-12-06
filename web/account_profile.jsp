@@ -16,6 +16,7 @@
         <meta content="" name="description">
         <meta content="" name="keywords">
 
+        <script src="user/js/jquery.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Favicons -->
         <link href="user/img/logo.jpg" rel="icon">
@@ -53,9 +54,40 @@
         .dropdown-menu li:hover>a{
             background-color: #f5b8c5;
         }
+        .toggle-form {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 5%;
+            bottom: 15%;
+        }
     </style>
 
     <body>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".toggle-password").click(function () {
+                    $(this).toggleClass("fa-eye fa-eye-slash");
+                    var input = $($(this).attr("toggle"));
+                    if (input.attr("type") === "password") {
+                        input.attr("type", "text");
+                    } else {
+                        input.attr("type", "password");
+                    }
+                });
+            });
+
+            function Validate() {
+                var password = document.getElementById("txtPassword").value;
+                var confirmPassword = document.getElementById("txtConfirmPassword").value;
+                if (password !== confirmPassword) {
+                    alert("Mật khẩu không trùng khớp!");
+                    return false;
+                }
+                return true;
+            }
+        </script>
 
         <!-- ======= Header ======= -->
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
@@ -262,15 +294,15 @@
                         <div class="tab-pane fade" style="margin-top: 50px; margin-left: 500px;" id="pw" role="tabpanel" aria-labelledby="pw-tab">
                             <div class="col-md-4">        
                                 <form action="UpdatePasswordControl" method="post">
-                                    <div class="mb-3 mt-3 form-group">
+                                    <div class="mb-3 mt-3 form-group toggle-form">
                                         <label for="email" class="form-label">Mật Khẩu Mới:</label>
-                                        <input type="password" class="form-control" placeholder="" id="txtPassword" name="newPassword" value="${newpass}">
+                                        <input type="password" class="form-control" placeholder="" id="txtPassword" name="newPassword" value="${newpass}" pattern="[A-Za-z0-9]{6,12}" oninvalid="this.setCustomValidity('Độ dài mật khẩu từ 6 đến 12 kí tự!')" title="Nhập Mật Khẩu Mới">
                                         <span toggle="#txtPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
-                                    <div class="mb-3 form-group">
+                                    <div class="mb-3 form-group toggle-form">
                                         <label for="pwd" class="form-label">Nhập Lại Mật Khẩu Mới:</label>
-                                        <input type="password" class="form-control" placeholder="" id="txtConfirmPassword" name="reNewPassword" value="${renewpass}">
-                                        <span toggle="#txtPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                        <input type="password" class="form-control" placeholder="" id="txtConfirmPassword" name="reNewPassword" value="${renewpass}" pattern="[A-Za-z0-9]{6,12}" oninvalid="this.setCustomValidity('Độ dài mật khẩu từ 6 đến 12 kí tự!')" title="Nhập Lại Mật Khẩu Mới">
+                                        <span toggle="#txtConfirmPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
                                     <button type="submit" class="btn" onclick="return Validate()" style="background-color: #f5b8c5; margin:auto; display:block;">Cập Nhật</button>
                                 </form>
@@ -279,43 +311,32 @@
 
                         <div class="tab-pane fade" style="margin-top: 50px; margin-left: 300px;" id="history" role="tabpanel" aria-labelledby="history-tab">
 
-                            <form action="${pageContext.request.contextPath}/resultDetail" method="POST">
-                                <table id="example" class="table table-striped" style="width:100%">
-                                    <thead>
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>UserID</th>
+                                        <th>Test</th>
+                                        <th>Thời Gian Bắt Đầu</th>
+                                        <th>Thời Gian Kết Thúc</th>
+                                        <th>Tổng Điểm</th>
+                                        <th>Xem Chi Tiết</th>
+                                        <th>Tổng Đáp Án Đúng</th>
+                                    </tr>
+                                <tbody>
+                                    <c:forEach items="${listResult}" var="o" varStatus="i">
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Test</th>
-                                            <th>Thời Gian Bắt Đầu</th>
-                                            <th>Thời Gian Kết Thúc</th>
-                                            <th>Tổng Điểm</th>
-                                            <th>Tổng Đáp Án Đúng</th>
-                                            <th>Xem Chi Tiết</th>
+                                            <td>${i.index+1}</td>
+                                            <td>${o.user}</td>
+                                            <td>${o.test}</td>
+                                            <td>${o.timeBigin}</td>
+                                            <td>${o.timeExpire}</td>
+                                            <td>${o.score}</td>
+                                            <td>${o.trueQuestion}</td>
+                                            <td><a href="viewResultDetail?resultID=${o.resultID}" class="btn btn-success" tabindex="-1" role="button">Quản Lý Câu Hỏi</a></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                    <div class="resultform">
-                                        <c:forEach items="${listResult}" var="o" varStatus="i">
-                                            <tr>
-                                                <td>${i.index+1}</td>
-                                                <td>${o.test}</td>
-                                                <td>${o.timeBigin}</td>
-                                                <td>${o.timeExpire}</td>
-                                                <td>${o.score}</td>
-                                                <td>${o.trueQuestion}</td>
-                                                <td><a href="viewResultDetail?resultID=${o.resultID}" class="btn btn-success" tabindex="-1" role="button">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                                                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                                                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-                                                        </svg>
-                                                        Đáp Án Chi tiết
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </div>
-                                    </tbody>
-                                </table>
-                            </form>
+                                    </c:forEach>                            
+                            </table>
 
                         </div>
 
@@ -347,30 +368,5 @@
     <script src="user/js/main.js"></script>
 
 
-
 </body>
-<script type="text/javascript">
-                                        $(document).ready(function () {
-                                            $(".toggle-password").click(function () {
-
-                                                $(this).toggleClass("fa-eye fa-eye-slash");
-                                                var input = $($(this).attr("toggle"));
-                                                if (input.attr("type") == "password") {
-                                                    input.attr("type", "text");
-                                                } else {
-                                                    input.attr("type", "password");
-                                                }
-                                            });
-                                        });
-
-                                        function Validate() {
-                                            var password = document.getElementById("txtPassword").value;
-                                            var confirmPassword = document.getElementById("txtConfirmPassword").value;
-                                            if (password != confirmPassword) {
-                                                alert("Mật khẩu không trùng khớp!");
-                                                return false;
-                                            }
-                                            return true;
-                                        }
-</script>
 </html>

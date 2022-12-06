@@ -55,6 +55,7 @@ public class PostDAO {
                 f.setPost_title(rs.getString("post_title"));
                 f.setPost_content(rs.getString("post_content"));
                 f.setPost_date(rs.getString("post_date"));
+                f.setPost_edit_date(rs.getString("post_edit_date"));
                 f.setTopic_name(rs.getString("topic_name"));
                 f.setUsername(rs.getString("username"));
                 f.setAvatar(rs.getString("avatar"));
@@ -100,6 +101,7 @@ public class PostDAO {
                 f.setPost_title(rs.getString("post_title"));
                 f.setPost_content(rs.getString("post_content"));
                 f.setPost_date(rs.getString("post_date"));
+                f.setPost_edit_date(rs.getString("post_edit_date"));
                 f.setTopic_name(rs.getString("topic_name"));
                 f.setUsername(rs.getString("username"));
                 f.setAvatar(rs.getString("avatar"));

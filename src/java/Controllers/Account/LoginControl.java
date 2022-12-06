@@ -80,12 +80,13 @@ public class LoginControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String email = request.getParameter("email");
-        String password = request.getParameter("password"); 
+        String password = request.getParameter("password");
+        HttpSession session = request.getSession();
         String md5Password = "";
         try {
             md5Password = MD5(password);
         } catch (Exception ex) {
-            
+
         }
         UserDAO dao = new UserDAO();
         User u = dao.login(email, md5Password);
@@ -93,21 +94,18 @@ public class LoginControl extends HttpServlet {
         User b = dao.checkContentManager(email);
 
         if (u == null) {
-//            request.setAttribute("mess", "Email hoặc mật khẩu không đúng.");
+            session.setAttribute("invalidMailOrPassword", "Email hoặc mật khẩu không đúng.");
             request.setAttribute("email", email);
             request.getRequestDispatcher("account_login.jsp").forward(request, response);
         } else {
             if (a != null) {
-                HttpSession session = request.getSession();
                 session.setAttribute("acc", u);
                 response.sendRedirect("dashboard.jsp");
             } else {
                 if (b != null) {
-                    HttpSession session = request.getSession();
                     session.setAttribute("acc", u);
                     response.sendRedirect("dashboard.jsp");
                 } else {
-                    HttpSession session = request.getSession();
                     session.setAttribute("acc", u);
                     response.sendRedirect("HomeControl");
                 }

@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <link rel="stylesheet" href="user/css/login.css">
-        
+
         <script src="user/js/jquery.min.js"></script>
     </head>
     <body class="img js-fullheight" style="background-image: url(user/img/13.jpg);">
@@ -44,8 +44,17 @@
                                 type: "GET",
                                 url: "PasswordRecoveryUpdate?" + dataString,
                                 success: function () {
+                                    // hide repassword check message
                                     repswCheck.css("display", "none");
+
+                                    // disable all inputs and button after change password
+                                    $('#password-field').css("pointer-events", "none");
+                                    $('#repassword-field').css("pointer-events", "none");
+                                    $('#update-password-btn').css("pointer-events", "none");
+                                    
+                                    // display success message
                                     $('#update-msg').css("display", "block");
+                                    $('#update-msg').css("color", "#00ff7f");
                                     $('#update-msg').text("Đổi mật khẩu thành công! Chuyển hướng đến đăng nhập...");
                                     window.setTimeout(function () {
                                         window.location = "${pageContext.request.contextPath}/account_login.jsp";
@@ -80,7 +89,6 @@
             String recoverEmail = "";
             try {
                 String isAuthorized = session.getAttribute("isAuthorizedPassChange").toString();
-                session.removeAttribute("isAuthorizedPassChange");
                 recoverEmail = session.getAttribute("recoverEmail").toString();
                 session.removeAttribute("recoverEmail");;
             } catch (NullPointerException npe) {
@@ -103,15 +111,15 @@
                                     <input type="hidden" name="email" class="form-control" placeholder="Email" value="<%=recoverEmail%>">
                                 </div>
                                 <div class="form-group">
-                                    <input id="password-field" name="password" type="password" class="form-control" placeholder="Mật khẩu mới" required>
+                                    <input id="password-field" name="password" type="password" class="form-control" placeholder="Mật khẩu mới" pattern="[A-Za-z0-9]{6,12}" oninvalid="this.setCustomValidity('Độ dài mật khẩu từ 6 đến 12 kí tự!')" title="Nhập Mật Khẩu Mới" required>
                                     <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input id="repassword-field" name="repassword" type="password" class="form-control" placeholder="Xác nhận Mật khẩu mới" required>
+                                    <input id="repassword-field" name="repassword" type="password" class="form-control" placeholder="Xác nhận Mật khẩu mới" pattern="[A-Za-z0-9]{6,12}" oninvalid="this.setCustomValidity('Độ dài mật khẩu từ 6 đến 12 kí tự!')" title="Nhập Lại Mật Khẩu Mới" required>
                                     <span toggle="#repassword-field" class="fa fa-fw fa-eye field-icon toggle-repassword"></span>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary submit px-3">XÁC NHẬN</button>
+                                    <button type="submit" class="form-control btn btn-primary submit px-3" id="update-password-btn">XÁC NHẬN</button>
                                 </div>
                                 <div class="form-group d-md-flex">
                                     <div class="w-100 text-md-center" id="repassword-check-msg" style="display: none;"></div>
@@ -122,7 +130,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group d-md-flex" id="update-msg-container">
-                                    <div class='w-100 text-md-center' id='update-msg' style="display: none; color: #00ff7f;"></div>
+                                    <div class='w-100 text-md-center' id='update-msg' style="display: none;"></div>
                                 </div>
                             </form>
                         </div>
@@ -131,7 +139,7 @@
             </div>
         </section>
 
-        
+
         <script src="user/js/bootstrap.min.js"></script>
         <script src="user/js/forgetPassword.js"></script>
 
