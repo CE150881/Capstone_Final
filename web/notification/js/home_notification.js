@@ -1,7 +1,17 @@
 var currentPage = 1;
-const loadLimit = 5;
+var loadLimit = -1;
+var pageLimit = -1;
+var pageCount = -1;
+var headPage = 1;
+var tailPage = -1;
+var maxHeadPage = -1;
 
 $(document).ready(function () {
+    loadLimit = $('#load-limit').text();
+    pageLimit = $('#page-limit').text();
+    pageCount = $('#page-count').text();
+    tailPage = pageLimit;
+    maxHeadPage = pageCount - pageLimit;
     var initActivePage = $('#page-num-1');
 
     if (initActivePage.prev().hasClass("prevNext")) {

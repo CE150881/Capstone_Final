@@ -42,7 +42,7 @@
 
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        
+
         <!-- CSS and JS for Notification -->
         <link href="notification/css/home_notification.css" rel="stylesheet" type="text/css"/>
         <script src="notification/js/home_notification.js" type="text/javascript"></script>
@@ -119,7 +119,7 @@
                     <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                         <!-- đã đăng nhập -->
 
-                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${pageContext.request.contextPath}/${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
@@ -223,16 +223,17 @@
                                         <h3>Bảng Tin</h3><br>
                                         <%                        // Get All Notification
                                             int loadLimit = 5;
+                                            int pageLimit = 3;
                                             int notifCount = 0;
                                             int totalNotifCount;
                                             ArrayList<Notification> nList = (ArrayList<Notification>) session.getAttribute("allNotification");
                                             for (Notification n : nList) {
-                                                notifCount = notifCount + 1;
                                                 int id = n.getNotificationID();
                                                 String title = n.getTitle();
                                                 String time = n.getTime();
                                                 int status = n.getStatus();
                                                 if (status == 0) {
+                                                    notifCount = notifCount + 1;
                                                     if (notifCount <= loadLimit) {
                                         %>
                                         <div class="notif-title-container" id="notif-title-container-id-<%=notifCount%>"><a href="<%=request.getContextPath()%>/Notification/<%=id%>" class="notif-title" id="notif-title-id-<%=notifCount%>"><span><%=time%></span><span> - </span><span class="notif-title-span"><%=title%></span></a><br></div>
@@ -259,13 +260,22 @@
                                                 }
 
                                                 for (int i = 2; i <= pageCount; i++) {
+                                                    if (i <= pageLimit) {
                                             %>
                                             <a href="javascript:void(0);" onclick="loadPage(<%=i%>)" id="page-num-<%=i%>" class="page-num"><%=i%></a>
                                             <%
+                                            } else {
+                                            %>
+                                            <a href="javascript:void(0);" onclick="loadPage(<%=i%>)" id="page-num-<%=i%>" class="page-num" style="display: none;"><%=i%></a>
+                                            <%
+                                                    }
                                                 }
                                             %>
                                             <a href="javascript:void(0);" onclick="nextPage()" class="prevNext" id="nextPage">Sau</a>
                                         </div>
+                                        <div id="load-limit" hidden><%=loadLimit%></div>
+                                        <div id="page-limit" hidden><%=pageLimit%></div>
+                                        <div id="page-count" hidden><%=pageCount%></div>
                                     </div>
                                 </div>
                             </div>

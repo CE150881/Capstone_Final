@@ -108,7 +108,7 @@ public class ChatAdminSessionController extends HttpServlet {
             for (ChatSession cs : csList) {
                 UserDAO userdao = new UserDAO();
                 User u = userdao.getUserByID2(cs.getUserID());
-                if (cs.getStatus() == 0 && u.getRole().equals("Người dùng")) {
+                if (cs.getStatus() == 0 && u.getUserID() != cAdmin.getUserID()) {
                     int sID = cs.getSessionID();
                     int uID = u.getUserID();
                     String uName = u.getUsername();
