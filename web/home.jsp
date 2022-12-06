@@ -266,7 +266,7 @@
                                             <%
                                             } else {
                                             %>
-                                            <a href="javascript:void(0);" onclick="loadPage(<%=i%>)" id="page-num-<%=i%>" class="page-num" style="display: none;"><%=i%></a>
+                                            <a href="javascript:void(0);" onclick="loadPage(<%=i%>)" id="page-num-<%=i%>" class="page-num"><%=i%></a>
                                             <%
                                                     }
                                                 }

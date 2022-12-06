@@ -13,7 +13,7 @@ $(document).ready(function () {
     tailPage = pageLimit;
     maxHeadPage = pageCount - pageLimit;
     var initActivePage = $('#page-num-1');
-    
+
     if (initActivePage.prev().hasClass("prevNext")) {
         initActivePage.prev().css("pointer-events", "none");
         initActivePage.prev().css("cursor", "default");
@@ -112,6 +112,28 @@ function loadPage(pageNum) {
 
     lastActivePage.removeClass("active");
     currentActivePage.addClass("active");
+
+//    if ((((pageNum - 1) + pageLimit) < pageCount) && pageNum !== 1) {
+//        $('#page-num-' + (pageNum - 1)).css("display", "none");
+//    }
+//    
+//    // show this page and the next (pageLimit - 1) more pages
+//    for (let i = 1; i <= pageLimit; i++) {
+//        $('#page-num-' + (pageNum - 1 + i)).css("display", "block");
+//    }
+
+    for (let i = 1; i <= pageCount; i++) {
+        $('#page-num-' + i).css("display", "block");
+    }
+//    if ((pageNum - 1 + pageLimit) <= pageCount) {
+//        for (let i = pageNum; i <= (pageNum - 1 + pageLimit); i++) {
+//            $('#page-num-' + i).css("display", "block");
+//        }
+//    } else {
+//        for (let i = pageNum; i <= pageCount; i++) {
+//            $('#page-num-' + i).css("display", "block");
+//        }
+//    }
 
     currentPage = pageNum;
 }
