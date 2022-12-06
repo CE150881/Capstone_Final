@@ -33,13 +33,13 @@
                         <div class="login-wrap p-0">
                             <form action="SignupControl" method="POST" class="signin-form">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="email" placeholder="Email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Địa chỉ email không hợp lệ!" required/>
+                                    <input type="text" class="form-control" name="email" placeholder="Email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" oninvalid="this.setCustomValidity('Địa chỉ Email không hợp lệ!')" title="Nhập Email" required/>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="username" class="form-control"  pattern="[A-Za-z0-9]{1,20}" title="Tên người dùng ít hơn 20 kí tự!" placeholder="Tên Người Dùng" required/>
+                                    <input type="text" name="username" class="form-control"  pattern="[A-Za-z0-9]{1,20}" oninvalid="this.setCustomValidity('Tên người dùng ít hơn 20 kí tự!')" title="Nhập Tên Người Dùng" placeholder="Tên Người Dùng" required/>
                                 </div>
                                 <div class="form-group">
-                                    <input id="password-field" name="password" type="password" pattern="[A-Za-z0-9]{6,12}" title="Độ dài mật khẩu từ 6 đến 12 kí tự!" class="form-control" placeholder="Mật Khẩu" required/>                                    
+                                    <input id="password-field" name="password" type="password" pattern="[A-Za-z0-9]{6,12}" oninvalid="this.setCustomValidity('Độ dài mật khẩu từ 6 đến 12 kí tự!')" title="Nhập Mật Khẩu" class="form-control" placeholder="Mật Khẩu" required/>                                    
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="phone" class="form-control" placeholder="Số Điện Thoại" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b" title="Số điện thoại không hợp lệ!"/>

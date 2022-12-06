@@ -16,7 +16,8 @@
         <meta content="" name="description">
         <meta content="" name="keywords">
 
-         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="user/js/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Favicons -->
         <link href="user/img/logo.jpg" rel="icon">
         <link href="user/img/logo.jpg" rel="apple-touch-icon">
@@ -53,9 +54,40 @@
         .dropdown-menu li:hover>a{
             background-color: #f5b8c5;
         }
+        .toggle-form {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 5%;
+            bottom: 15%;
+        }
     </style>
 
     <body>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".toggle-password").click(function () {
+                    $(this).toggleClass("fa-eye fa-eye-slash");
+                    var input = $($(this).attr("toggle"));
+                    if (input.attr("type") === "password") {
+                        input.attr("type", "text");
+                    } else {
+                        input.attr("type", "password");
+                    }
+                });
+            });
+
+            function Validate() {
+                var password = document.getElementById("txtPassword").value;
+                var confirmPassword = document.getElementById("txtConfirmPassword").value;
+                if (password !== confirmPassword) {
+                    alert("Mật khẩu không trùng khớp!");
+                    return false;
+                }
+                return true;
+            }
+        </script>
 
         <!-- ======= Header ======= -->
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
@@ -262,15 +294,15 @@
                         <div class="tab-pane fade" style="margin-top: 50px; margin-left: 500px;" id="pw" role="tabpanel" aria-labelledby="pw-tab">
                             <div class="col-md-4">        
                                 <form action="UpdatePasswordControl" method="post">
-                                    <div class="mb-3 mt-3 form-group">
+                                    <div class="mb-3 mt-3 form-group toggle-form">
                                         <label for="email" class="form-label">Mật Khẩu Mới:</label>
-                                        <input type="password" class="form-control" placeholder="" id="txtPassword" name="newPassword" value="${newpass}">
+                                        <input type="password" class="form-control" placeholder="" id="txtPassword" name="newPassword" value="${newpass}" pattern="[A-Za-z0-9]{6,12}" oninvalid="this.setCustomValidity('Độ dài mật khẩu từ 6 đến 12 kí tự!')" title="Nhập Mật Khẩu Mới">
                                         <span toggle="#txtPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
-                                    <div class="mb-3 form-group">
+                                    <div class="mb-3 form-group toggle-form">
                                         <label for="pwd" class="form-label">Nhập Lại Mật Khẩu Mới:</label>
-                                        <input type="password" class="form-control" placeholder="" id="txtConfirmPassword" name="reNewPassword" value="${renewpass}">
-                                        <span toggle="#txtPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                        <input type="password" class="form-control" placeholder="" id="txtConfirmPassword" name="reNewPassword" value="${renewpass}" pattern="[A-Za-z0-9]{6,12}" oninvalid="this.setCustomValidity('Độ dài mật khẩu từ 6 đến 12 kí tự!')" title="Nhập Lại Mật Khẩu Mới">
+                                        <span toggle="#txtConfirmPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                     </div>
                                     <button type="submit" class="btn" onclick="return Validate()" style="background-color: #f5b8c5; margin:auto; display:block;">Cập Nhật</button>
                                 </form>
@@ -336,30 +368,5 @@
     <script src="user/js/main.js"></script>
 
 
-
 </body>
-<script type="text/javascript">
-                                        $(document).ready(function () {
-                                            $(".toggle-password").click(function () {
-
-                                                $(this).toggleClass("fa-eye fa-eye-slash");
-                                                var input = $($(this).attr("toggle"));
-                                                if (input.attr("type") == "password") {
-                                                    input.attr("type", "text");
-                                                } else {
-                                                    input.attr("type", "password");
-                                                }
-                                            });
-                                        });
-                                        
-                                        function Validate() {
-                                            var password = document.getElementById("txtPassword").value;
-                                            var confirmPassword = document.getElementById("txtConfirmPassword").value;
-                                            if (password != confirmPassword) {
-                                                alert("Mật khẩu không trùng khớp!");
-                                                return false;
-                                            }
-                                            return true;
-                                        }
-</script>
 </html>

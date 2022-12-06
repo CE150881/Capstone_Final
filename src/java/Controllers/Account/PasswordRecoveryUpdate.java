@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,15 +35,20 @@ public class PasswordRecoveryUpdate extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        String authorized = session.getAttribute("isAuthorizedPassChange").toString();
+        if (authorized != null) {
+            String email = request.getParameter("email");
 
-        String email = request.getParameter("email");
+            String password = MD5(request.getParameter("password"));
 
-        String password = MD5(request.getParameter("password"));
-
-        UserDAO dao = new UserDAO();
-        dao.updatePassword(password, email);
+            UserDAO dao = new UserDAO();
+            dao.updatePassword(password, email);
+            session.removeAttribute("isAuthorizedPassChange");
+        } else {
+            //out.println("<div class='unauthorized-error'></div>");
+        }
     }
 
     private static String MD5(String s) {

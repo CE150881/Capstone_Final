@@ -86,52 +86,60 @@ public class PasswordRecovery extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String recoverEmail = request.getParameter("recoverEmail");
-        
-        HttpSession session = request.getSession();
-        session.setAttribute("recoverEmail", recoverEmail);
+        try (PrintWriter out = response.getWriter()) {
+            request.setCharacterEncoding("UTF-8");
+            String recoverEmail = request.getParameter("recoverEmail");
 
-        // Get User
-        UserDAO userdao = new UserDAO();
-        User u = userdao.getUserByEmail(recoverEmail);
+            HttpSession session = request.getSession();
+            session.setAttribute("recoverEmail", recoverEmail);
 
-        // Set Random Code
-        String codeRandom = getRandom();
+            // Get User
+            UserDAO userdao = new UserDAO();
+            User u = userdao.getUserByEmail(recoverEmail);
 
-        // Set Expiry Date
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime expDate = LocalDateTime.now().plusMinutes(10);
-        String expDateStr = dtf.format(expDate);
+            if (u != null) {
 
-        // Find if user already has a Code
-        Code checkCode = CodeDAO.getCodeByUID(u.getUserID());
-        if (checkCode != null) {
-            // Set Code Object
-            Code tmpCode = new Code();
-            tmpCode.setCodeID(checkCode.getCodeID());
-            tmpCode.setCode(codeRandom);
-            tmpCode.setExpiryDate(expDateStr);
-            tmpCode.setUserID(u.getUserID());
+                // Set Random Code
+                String codeRandom = getRandom();
 
-            // Edit Existing Code
-            CodeDAO.editCode(tmpCode);
-        } else {
-            // Set Code Object
-            Code tmpCode = new Code();
-            tmpCode.setCode(codeRandom);
-            tmpCode.setExpiryDate(expDateStr);
-            tmpCode.setUserID(u.getUserID());
+                // Set Expiry Date
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime expDate = LocalDateTime.now().plusMinutes(10);
+                String expDateStr = dtf.format(expDate);
 
-            // Add New Code
-            CodeDAO.addNewCode(tmpCode);
+                // Find if user already has a Code
+                Code checkCode = CodeDAO.getCodeByUID(u.getUserID());
+                if (checkCode != null) {
+                    // Set Code Object
+                    Code tmpCode = new Code();
+                    tmpCode.setCodeID(checkCode.getCodeID());
+                    tmpCode.setCode(codeRandom);
+                    tmpCode.setExpiryDate(expDateStr);
+                    tmpCode.setUserID(u.getUserID());
+
+                    // Edit Existing Code
+                    CodeDAO.editCode(tmpCode);
+                } else {
+                    // Set Code Object
+                    Code tmpCode = new Code();
+                    tmpCode.setCode(codeRandom);
+                    tmpCode.setExpiryDate(expDateStr);
+                    tmpCode.setUserID(u.getUserID());
+
+                    // Add New Code
+                    CodeDAO.addNewCode(tmpCode);
+                }
+
+                // Send Email
+                sendEmail(recoverEmail, codeRandom);
+                // Go to validate site
+                //request.getRequestDispatcher("account_recovery_validate.jsp").forward(request, response);
+                //response.sendRedirect(request.getContextPath() + "/account_recovery_validate.jsp");
+                //out.println("<div class='w-100 text-md-center success' id='no-email-msg'>Đang chuyển hướng, vui lòng đợi...</div>");
+            } else {
+                out.println("<div class='w-100 text-md-center warning' id='no-email-msg'>Email không có trong hệ thống, vui lòng thử lại!</div>");
+            }
         }
-
-        // Send Email
-        sendEmail(recoverEmail, codeRandom);
-        // Go to validate site
-        //request.getRequestDispatcher("account_recovery_validate.jsp").forward(request, response);
-        response.sendRedirect(request.getContextPath() + "/account_recovery_validate.jsp");
     }
 
     /**
@@ -149,7 +157,7 @@ public class PasswordRecovery extends HttpServlet {
         int number = rand.nextInt(999999);
         return String.format("%06d", number);
     }
-    
+
     private void sendEmail(String toMail, String code) {
 
         String toEmail = toMail; // email user

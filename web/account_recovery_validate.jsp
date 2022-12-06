@@ -77,6 +77,9 @@
                 $('#resend-btn').on("click", function () {
                     if (countdown === 0) {
                         const recoverEmail = $('#recover-email').val();
+                        $('#recover-message').css("display", "block");
+                        $('#recover-message').css("color", "#e3f2e1");
+                        $('#recover-message').text("Đang xử lý, vui lòng đợi...");
                         $.ajax({
                             type: "POST",
                             url: "PasswordRecovery?recoverEmail=" + recoverEmail,
