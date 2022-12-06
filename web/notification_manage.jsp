@@ -381,7 +381,8 @@
                                                 <%
                                                     }
                                                 %>
-                                    <td class="center-align"><form action="DeleteNotification" method="POST" id="notifDeleteForm-<%=id%>"><input type="hidden" name="notifID" value="<%=id%>"><button type="submit" onclick="notifFormDeleteConfirm(<%=id%>)" id="notifDeleteBtn-<%=id%>" style="all: unset; cursor: pointer;" title="Xóa"><i class="fa-solid fa-trash"></i></button></form></td>
+                                    <td class="center-align"><form action="DeleteNotification" method="POST" id="notifDeleteForm-<%=id%>"><input type="hidden" name="notifID" value="<%=id%>"><button type="submit" onclick="notifFormDeleteConfirm(<%=id%>)" id="notifDeleteBtn-<%=id%>" style="all: unset; cursor: pointer;" title="Xóa">
+                                                <i class="fa-solid fa-trash"></i></button></form></td>
                                 </tr>
                                 <%
                                     }

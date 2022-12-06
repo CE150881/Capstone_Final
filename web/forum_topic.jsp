@@ -84,24 +84,23 @@
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-
                         <div class="table-title">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <h2>Quản Lí Chủ Đề</h2>
                                 </div>
+                                <div class="col-sm-6">
+                                    <a href="#addTopic" class="btn btn-success" data-toggle="modal" data-target="#addTopic" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Tạo Chủ Đề</span></a>                                             
+                                </div>
                             </div>
                         </div>
-                        <div class="btn-group bg-white">
-                            <a href="<%= request.getContextPath()%>/NewTopic" class="btn btn-outline-success" role="button">Tạo Chủ Đề Mới</a>
-                        </div>
-                        <br>
                         <br>
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Tên Chủ Đề</th>                   
-                                    <th>Chỉnh Sửa/Vô Hiệu Hoá</th>
+                                    <th>Chỉnh Sửa</th>
+                                    <th>Vô Hiệu Hoá</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -110,8 +109,8 @@
                                     //while (rs.next()) {
                                     List<ForumTopic> t = (List<ForumTopic>) session.getAttribute("allTopic");
                                     for (int i = 0; i < t.size(); i++) {
-                                        
-                                        
+
+
                                 %>
                                 <tr>
                                     <td><%= t.get(i).getTopic_name()%>
@@ -122,76 +121,104 @@
                                         %>
                                     </td>                    
                                     <td>
-                                        <button type="button" data-toggle="modal" data-target="#exampleModalEdit<%= t.get(i).getTopic_id()%>"
-                                                class="btn btn-secondary">Chỉnh Sửa</button>
+                                        <a type="button" data-toggle="modal" data-target="#exampleModalEdit<%= t.get(i).getTopic_id()%>"
+                                           ><i class="fa fa-pen" title="Chỉnh sửa"></i></a>
+                                    </td>
+                                    <td> 
                                         <%
                                             if (t.get(i).getTopic_id() != 1) {
-                                        %>       
-                                        <button type="button" data-toggle="modal" data-target="#exampleModalDelete<%= t.get(i).getTopic_id()%>"
-                                                class="btn btn-danger">Vô Hiệu Hoá</button>
-                                        <%
-                                            }
-                                        %>        
-                                        <!-- Modal Edit Topic-->
-                                        <div class="modal fade" id="exampleModalEdit<%= t.get(i).getTopic_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh Sửa Chủ Đề</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Tên Chủ Đề Mới
-                                                        <form id="myform<%= t.get(i).getTopic_id()%>" role='form' method="post" action="<%= request.getContextPath()%>/EditTopic">
-                                                            <label for="exampleFormControlTextarea1"></label>
-                                                            <input name="topic_name" value="<%= t.get(i).getTopic_name()%>" required="required">
-                                                            <input name="topic_id" value="<%= t.get(i).getTopic_id()%>" style="display: none">
-                                                        </form>                                                        
-                                                    </div>
-                                                    <div class="modal-footer">  
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                                                        <button type="submit" form="myform<%= t.get(i).getTopic_id()%>" value="editTopic" name="editTopic" class="btn btn-danger">Chỉnh Sửa</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Modal Delete Topic-->
-                                        <div class="modal fade" id="exampleModalDelete<%= t.get(i).getTopic_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Vô Hiệu Hoá Chủ Đề</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Bạn có chắc chắn muốn vô hiệu hoá chủ đề này?
-                                                        <br>
-                                                        Những bài đăng thuộc chủ đề này sẽ bị vô hiệu hoá
-                                                        <form id="myformDelete<%= t.get(i).getTopic_id()%>" role='form' method="post" action="<%= request.getContextPath()%>/DisableTopic">
-                                                            <label for="exampleFormControlTextarea1"></label>
-                                                            <input name="topic_id" value="<%= t.get(i).getTopic_id()%>" style="display: none">
-                                                        </form>                                                        
-                                                    </div>
-                                                    <div class="modal-footer">  
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                                                        <button type="submit" form="myformDelete<%= t.get(i).getTopic_id()%>" value="disableTopic" name="disableTopic" class="btn btn-danger">Vô Hiệu Hoá</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                        %>
+                                        <a type="button" data-toggle="modal" data-target="#exampleModalDelete<%= t.get(i).getTopic_id()%>"
+                                           ><i class="fa fa-eye-slash" title="Vô hiệu hoá"></i></a>
+                                            <%
+                                                }
+                                            %>  
                                     </td>
-                                </tr>
-                                <%
-                                    }
-                                %>
+                                    <!-- Modal Edit Topic-->
+                            <div class="modal fade" id="exampleModalEdit<%= t.get(i).getTopic_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Chỉnh Sửa Chủ Đề</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Tên Chủ Đề Mới
+                                            <form id="myform<%= t.get(i).getTopic_id()%>" role='form' method="post" action="<%= request.getContextPath()%>/EditTopic">
+                                                <label for="exampleFormControlTextarea1"></label>
+                                                <input name="topic_name" value="<%= t.get(i).getTopic_name()%>" required="required">
+                                                <input name="topic_id" value="<%= t.get(i).getTopic_id()%>" style="display: none">
+                                            </form>                                                        
+                                        </div>
+                                        <div class="modal-footer">  
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                                            <button type="submit" form="myform<%= t.get(i).getTopic_id()%>" value="editTopic" name="editTopic" class="btn btn-danger">Chỉnh Sửa</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Delete Topic-->
+                            <div class="modal fade" id="exampleModalDelete<%= t.get(i).getTopic_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Vô Hiệu Hoá Chủ Đề</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Bạn có chắc chắn muốn vô hiệu hoá chủ đề này?
+                                            <br>
+                                            Những bài đăng thuộc chủ đề này sẽ bị vô hiệu hoá
+                                            <form id="myformDelete<%= t.get(i).getTopic_id()%>" role='form' method="post" action="<%= request.getContextPath()%>/DisableTopic">
+                                                <label for="exampleFormControlTextarea1"></label>
+                                                <input name="topic_id" value="<%= t.get(i).getTopic_id()%>" style="display: none">
+                                            </form>                                                        
+                                        </div>
+                                        <div class="modal-footer">  
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                                            <button type="submit" form="myformDelete<%= t.get(i).getTopic_id()%>" value="disableTopic" name="disableTopic" class="btn btn-danger">Vô Hiệu Hoá</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </td>
+                            </tr>
+                            <%
+                                }
+                            %>
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- Modal Add-->
+                    <div class="modal fade" id="addTopic" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form role='form' method="post" action="NewTopic" accept-charset="utf-8">
+                                    <div class="modal-header">                      
+                                        <h4 class="modal-title">Tạo Chủ Đề</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">    
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">Tên Chủ Đề</label>
+                                            <textarea class="form-control" required="required" name="topic_name" id="exampleFormControlTextarea1"
+                                                      rows="1" placeholder="Xin hãy điền tên chủ đề"></textarea>
+                                        </div>                                                                                                                         
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                                        <input type="submit" class="btn btn-success" style="background-color: #000000;" value="Tạo Chủ Đề">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- /.container-fluid -->

@@ -120,7 +120,7 @@
                                     <td>
                                         <form method="post" style="display: inline" action="<%= request.getContextPath()%>/RestoreTopic">
                                             <input value="<%= rs.get(i).getTopic_id()%>" name="topic_id" style="display: none">
-                                            <button class="btn btn-success" type="sumbit" value="restoreTopic" name="restoreTopic">Phục Hồi</button>
+                                            <button class="btn" type="sumbit" value="restoreTopic" name="restoreTopic"><i class="fa fa-eye" title="Phục Hồi"></i></button>
                                         </form>
                                         <%
                                             if (rs.get(i).getTopic_id() != 1) {

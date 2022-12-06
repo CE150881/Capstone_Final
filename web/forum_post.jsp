@@ -203,7 +203,7 @@
                                     %>
                                     <div>
                                         <button type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExamplePost" aria-expanded="false" aria-controls="multiCollapseExamplePost"
-                                                class="btn btn-outline-secondary">Chỉnh Sửa</button>
+                                                class="btn" style="background-color: #f5b8c5; color: white">Chỉnh Sửa</button>
                                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModalPost"
                                                 class="btn btn-danger">Xoá</button>
                                     </div>                                    
@@ -258,7 +258,7 @@
                                                       <br>
                                             <label for="exampleFormControlTextarea1">Chỉnh Sửa Nội Dung</label>
                                             <textarea required="required" maxlength="500" name="post_content" class="form-control" id="exampleFormControlTextarea1"
-                                                      rows="3"><%= p.getPost_content()%></textarea>
+                                                      rows="3"><%= p.getPost_content().replace("<br>", "\r\n") %></textarea>
                                                       <br>
                                         </div>
                                         <button type="submit" value="Edit" name="editPost"

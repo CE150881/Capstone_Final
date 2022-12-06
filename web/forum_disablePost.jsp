@@ -101,7 +101,7 @@
                             
                         %>
                         <div class="card mb-4 box-shadow">
-                            <div onclick="location.href = '<%= request.getContextPath()%>/Post/<%= rs.get(i).getPost_id()%>';" style="cursor: pointer;">
+                            <div>
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <img src="<%= request.getContextPath()%>/<%= rs.get(i).getAvatar()%>" class="rounded-circle" alt="" width="40" height="40">

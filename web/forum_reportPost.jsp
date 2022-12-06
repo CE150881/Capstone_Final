@@ -101,7 +101,7 @@
                             <div>
                                 <div class="card-body">
                                     <div class="d-flex">                                        
-                                        <p class="text-muted p-2"><%= rs.get(i).getUsername()%></p>
+                                        <p class="text-muted p-2"></p>
                                         <p class="text-muted ml-auto p-2">Ngày Chỉnh Sửa: <%= rs.get(i).getPost_edit_date().substring(0, Math.min(rs.get(i).getPost_edit_date().length(), 19))%></p>
                                     </div>                                    
                                 </div>
@@ -131,7 +131,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Xử Lý Báo Cáo</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>

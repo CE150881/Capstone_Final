@@ -31,12 +31,12 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6 col-lg-4">
                         <div class="login-wrap p-0">
-                            <form action="SignupControl" method="POST" class="signin-form" onsubmit="alert('Đăng kí tài khoản thành công!')">
+                            <form action="SignupControl" method="POST" class="signin-form">
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="email" placeholder="Email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" title="Địa chỉ email không hợp lệ!" required/>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="username" class="form-control"  pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_].{1,4}$" title="Tên người dùng ít hơn 5 kí tự! (bao gồm khoảng trống)" placeholder="Tên Người Dùng" required/>
+                                    <input type="text" name="username" class="form-control"  pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_].{1,14}$" title="Tên người dùng ít hơn 15 kí tự! (bao gồm khoảng trống)" placeholder="Tên Người Dùng" required/>
                                 </div>
                                 <div class="form-group">
                                     <input id="password-field" name="password" type="password" pattern="[A-Za-z0-9]{6,12}" title="Độ dài mật khẩu từ 6 đến 12 kí tự!" class="form-control" placeholder="Mật Khẩu" required/>                                    
@@ -46,9 +46,24 @@
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" name="submit" class="form-control btn submit px-3" style="background: #f5b8c5; color: white;">Đăng Kí</button>
+                                    <%
+                                        try {
+                                            String existMail = session.getAttribute("existMail").toString();
+                                            if (existMail != null) {
+                                    %>
+                                    <div class="form-group d-md-flex">
+                                        <div class='w-100 text-md-center' id='status-msg' style='color: #D0342C;'><%=existMail%></div>
+                                    </div>
+                                    <%
+                                            }
+                                            session.removeAttribute("invalidMailOrPassword");
+                                        } catch (NullPointerException ex) {
+
+                                        }
+                                    %>
                                 </div>
                             </form>                            
-                               
+
                             <p class="w-100 text-center">&mdash; hoặc đăng ký với &mdash;</p>
                             <div class="social d-flex text-center">
                                 <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8084/Capstone_Final/SignupWithGoogleControl&response_type=code
@@ -71,6 +86,14 @@
     <script src="user/js/jquery.min.js"></script>
     <script src="user/js/bootstrap.min.js"></script>
     <script src="user/js/login.js"></script>
+    <script>
+                                $(document).ready(function () {
+                                    $('input').click(function () {
+                                        $('#status-msg').css("display", "none");
+                                    });
+                                });
+    </script>
+
 </html>
 
 

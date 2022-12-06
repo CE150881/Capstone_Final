@@ -103,8 +103,8 @@
                                 <div class="card-body">
                                     <div class="d-flex">
 
-                                        <p class="text-muted p-2"><%= rs.get(i).getUsername()%></p>
-                                        <p class="text-muted ml-auto p-2"><%= rs.get(i).getComment_edit_date().substring(0, Math.min(rs.get(i).getComment_edit_date().length(), 19))%></p>
+                                        <p class="text-muted p-2"></p>
+                                        <p class="text-muted ml-auto p-2">Ngày Chỉnh Sửa: <%= rs.get(i).getComment_edit_date().substring(0, Math.min(rs.get(i).getComment_edit_date().length(), 19))%></p>
                                     </div>                                    
                                 </div>
                                 <div class="card-body" >

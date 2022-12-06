@@ -95,8 +95,13 @@ public class UpdateAvatarControl extends HttpServlet {
             dao.updateAvatar(a, email);
         }
 
-        request.setAttribute("message", "Upload File Success!");
-        getServletContext().getRequestDispatcher("/account_login.jsp").forward(request, response);
+        UserDAO dao2 = new UserDAO();
+        
+        User u = dao2.getUserByEmail(email);
+
+        session.setAttribute("acc", u);
+
+        response.sendRedirect(request.getContextPath() + "/ProfileUserControl");
     }
 
     /**

@@ -208,7 +208,7 @@
                             if (u != null) {
                         %>
                         <div>
-                            <a href="<%= request.getContextPath()%>/NewPost" class="btn btn-outline-success" role="button">Tạo Bài Đăng Mới</a>
+                            <a href="<%= request.getContextPath()%>/NewPost" class="btn" style="background-color: #f5b8c5; color: white" role="button">Tạo Bài Đăng Mới</a>
                             <%
                                 //int userID = u.getUserID();
                                 //ResultSet notReadNotification = ReportNotificationDAO.getAllReportNotificationByUserIDNotRead(userID);

@@ -5,12 +5,14 @@
  */
 package Controllers.Account;
 
+import DAOs.Account.UserDAO;
 import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.TagDAO;
 import Models.Level;
 import Models.Tag;
 import Models.Type;
+import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -63,6 +66,15 @@ public class ProfileUserControl extends HttpServlet {
         
         
         
+        HttpSession session = request.getSession();
+        User user = new User();
+        String email = user.getEmail();
+        UserDAO dao2 = new UserDAO();
+
+        User u = dao2.getUserByEmail(email);
+        u = (User) request.getSession().getAttribute("acc");
+        session.setAttribute("acc", u);
+
         request.getRequestDispatcher("account_profile.jsp").forward(request, response);
     }
 

@@ -399,7 +399,7 @@ public class UserDAO {
         UserDAO dao = new UserDAO();
 
         System.out.println("1");
-        System.out.println(dao.getAllAccount());
+        System.out.println(dao.checkEmailExist("user@gmail.com"));
         System.out.println("2");
     }
 }

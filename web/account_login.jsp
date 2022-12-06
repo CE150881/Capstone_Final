@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="form-group">
                                     <input id="password-field" name="password" type="password" class="form-control" title="Nhập Mật khẩu" placeholder="Mật khẩu" required>
-                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="form-control btn submit px-3" style="background: #f5b8c5; color: white;">ĐĂNG NHẬP</button>                                                                     
