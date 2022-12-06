@@ -92,7 +92,7 @@ public class testEditControl extends HttpServlet {
         String levelid = request.getParameter("listlevel");
         //insert data into database
         TestDAO dao = new TestDAO();
-        dao.editTest(Integer.parseInt(testID), name,Integer.parseInt(tagID),Integer.parseInt(levelid));
+        dao.editTest(Integer.parseInt(testID), name,Integer.parseInt(tagID),Integer.parseInt(levelid),dao.getTestByID(Integer.parseInt(testID)).getStatus());
         response.sendRedirect("testControl");
     }
 

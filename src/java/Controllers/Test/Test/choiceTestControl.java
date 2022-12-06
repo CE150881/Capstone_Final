@@ -100,7 +100,7 @@ public class choiceTestControl extends HttpServlet {
                 }
             }
                         
-            if (ques.size()==aoq.size()){
+            if (ques.size()> 0 && ques.size() == aoq.size()&& t.getStatus() == 1){
                 thasqanda.add(t);
             }
         }

@@ -298,13 +298,6 @@
                     }
                 });
             });
-            function showMess(ID) {
-                var option = confirm('Bạn có muốn xoá hay không?');
-                if (option === true) {
-                    window.location.href = '${pageContext.request.contextPath}/insertTest_DeleteAnswer?answerID=' + ID;
-                }
-            }
-            ;
         </script>
     </body>
 

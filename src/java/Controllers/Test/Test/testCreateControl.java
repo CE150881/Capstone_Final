@@ -88,7 +88,7 @@ public class testCreateControl extends HttpServlet {
         String levelID = request.getParameter("listlevel");
         //insert data into database
         TestDAO dao = new TestDAO();
-        dao.insertTest(name, Integer.parseInt(tagID),Integer.parseInt(levelID));
+        dao.insertTest(name, Integer.parseInt(tagID),Integer.parseInt(levelID),0);
         
         int lasttest = dao.getLastTest().getTestID();
         

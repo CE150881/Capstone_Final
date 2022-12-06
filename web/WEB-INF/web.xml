@@ -164,6 +164,10 @@
         <servlet-name>Archive</servlet-name>
         <servlet-class>Controllers.Forum.Archive</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>changeStstusControl</servlet-name>
+        <servlet-class>Controllers.Test.Test.changeStstusControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Forum</servlet-name>
         <url-pattern>/Forum/*</url-pattern>
@@ -639,6 +643,10 @@
     <servlet-mapping>
         <servlet-name>Archive</servlet-name>
         <url-pattern>/Archive/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changeStstusControl</servlet-name>
+        <url-pattern>/changeStstus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

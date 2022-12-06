@@ -35,7 +35,8 @@ public class TestDAO {
                 list.add(new Test(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(5)));
             }
             conn.close();
         } catch (Exception e) {
@@ -55,7 +56,8 @@ public class TestDAO {
                 list.add(new Test(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(5)));
             }
             conn.close();
         } catch (Exception e) {
@@ -75,7 +77,8 @@ public class TestDAO {
                 list.add(new Test(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(5)));
             }
             conn.close();
         } catch (Exception e) {
@@ -96,7 +99,8 @@ public class TestDAO {
                 list.add(new Test(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
-                        rs.getInt(4)));
+                        rs.getInt(4),
+                        rs.getInt(5)));
             }
             conn.close();
         } catch (Exception e) {
@@ -116,7 +120,8 @@ public class TestDAO {
                 a = new Test(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
-                        rs.getInt(4));
+                        rs.getInt(4),
+                        rs.getInt(5));
             }
             conn.close();
         } catch (Exception e) {
@@ -136,7 +141,8 @@ public class TestDAO {
                 a = new Test(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
-                        rs.getInt(4));
+                        rs.getInt(4),
+                        rs.getInt(5));
             }
         } catch (Exception e) {
         }
@@ -154,7 +160,8 @@ public class TestDAO {
                 a = new Test(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
-                        rs.getInt(4));
+                        rs.getInt(4),
+                        rs.getInt(5));
             }
             conn.close();
         } catch (Exception e) {
@@ -162,14 +169,15 @@ public class TestDAO {
         return a;
     }
 
-    public void insertTest(String Name, int TagsID, int LevelID) {
-        String query = "INSERT INTO `test`( `Name`, `TagID`, `LevelID`) VALUES (?,?,?);";
+    public void insertTest(String Name, int TagID, int LevelID, int status) {
+        String query = "INSERT INTO `test`(`Name`, `TagID`, `LevelID`,`Status`) VALUES (?,?,?,?);";
         try {
             Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, Name);
-            ps.setInt(2, TagsID);
+            ps.setInt(2, TagID);
             ps.setInt(3, LevelID);
+            ps.setInt(4, status);
             ps.executeUpdate();
             conn.close();
         } catch (Exception e) {
@@ -188,25 +196,26 @@ public class TestDAO {
         }
     }
 
-    public void editTest(int TestID, String Name, int TagsID, int LevelID) {
-        String query = "UPDATE `test` SET `Name`=?,`TagID`=?,`levelID`=? WHERE `TestID`=?;";
+    public void editTest(int TestID, String Name, int TagID, int LevelID, int status) {
+        String query = "UPDATE `test` SET `Name`=?,`TagID`=?,`LevelID`=?, `Status`=? WHERE `TestID`=?;";
         try {
             Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
             ps.setString(1, Name);
-            ps.setInt(2, TagsID);
+            ps.setInt(2, TagID);
             ps.setInt(3, LevelID);
-            ps.setInt(4, TestID);
+            ps.setInt(4, status);
+            ps.setInt(5, TestID);
             ps.executeUpdate();
             conn.close();
         } catch (Exception e) {
         }
     }
 
-    public static void main(String[] args) {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        TestDAO dao = new TestDAO();
+//    public static void main(String[] args) {
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//        TestDAO dao = new TestDAO();
 //        List<Test> list = dao.getAllTest();
 //        Test a = dao.getTestByID(1);
 //        System.out.println(a);
@@ -216,35 +225,35 @@ public class TestDAO {
 //                               " LevelID:"+o.getLevelID()+" timeBigin:"+o.getTimeBigin()+" timeExpire:"+o.getTimeExpire()+
 //                               " Duration:"+o.getDuration()+" numberQuestion:"+o.getNumberQuestion()+" ResultID:"+o.getResultID());
 //        }
-
-        int TagsID = 3;
-        int LevelID = 5;
-        String Name = "Lamborghini";
-        int Duration = 10;
-        int numberQuestion = 10;
-        int TestID = 10;
-        String query = "update `test` \n"
-                + "set `Name` = ? `TagID` = ?, `LevelID` = ?,`Duration` = ?, `numberQuestion` = ?\n"
-                + "where `TestID` = ?";
-        try {
-            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
-            ps = conn.prepareStatement(query);
-            ps.setString(1, Name);
-            ps.setInt(2, TagsID);
-            ps.setInt(3, LevelID);
-            ps.setInt(4, Duration);
-            ps.setInt(5, numberQuestion);
-            ps.setInt(6, TestID);
-            int row = ps.executeUpdate();
-            if (row != 0) {
+//
+//        int TagsID = 3;
+//        int LevelID = 5;
+//        String Name = "Lamborghini";
+//        int Duration = 10;
+//        int numberQuestion = 10;
+//        int TestID = 10;
+//        String query = "update `test` \n"
+//                + "set `Name` = ? `TagID` = ?, `LevelID` = ?,`Duration` = ?, `numberQuestion` = ?\n"
+//                + "where `TestID` = ?";
+//        try {
+//            Connection conn = DBConnection.getConnection();//mo ket noi voi sql
+//            ps = conn.prepareStatement(query);
+//            ps.setString(1, Name);
+//            ps.setInt(2, TagsID);
+//            ps.setInt(3, LevelID);
+//            ps.setInt(4, Duration);
+//            ps.setInt(5, numberQuestion);
+//            ps.setInt(6, TestID);
+//            int row = ps.executeUpdate();
+//            if (row != 0) {
 //                System.out.println("thêm thành công " + row);
-                System.out.println("Update thành công " + row);
+//                System.out.println("Update thành công " + row);
 //                System.out.println("Xoá thành công " + row);
-            }
-            conn.close();
-        } catch (Exception e) {
-        }
+//            }
+//            conn.close();
+//        } catch (Exception e) {
+//        }
 //        AnswerOfQuestion AvsQ = dao.getAnsandQues(2);
 //        System.out.println(AvsQ);
-    }
+//    }
 }

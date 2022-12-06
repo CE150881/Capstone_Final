@@ -14,14 +14,16 @@ public class Test {
     private String Name;
     private int TagID;
     private int LevelID;
+    private int status;
     
     public Test(){}
 
-    public Test(int TestID, String Name, int TagID, int LevelID) {
+    public Test(int TestID, String Name, int TagID, int LevelID, int status) {
         this.TestID = TestID;
         this.Name = Name;
         this.TagID = TagID;
         this.LevelID = LevelID;
+        this.status = status;
     }
 
     public int getTestID() {
@@ -56,9 +58,17 @@ public class Test {
         this.LevelID = LevelID;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Test{" + "TestID=" + TestID + ", Name=" + Name + ", TagID=" + TagID + ", LevelID=" + LevelID + '}';
+        return "Test{" + "TestID=" + TestID + ", Name=" + Name + ", TagID=" + TagID + ", LevelID=" + LevelID + ", status=" + status + '}';
     }
 
     

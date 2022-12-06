@@ -15,16 +15,18 @@ public class TestHasResult {
     private int TagID;
     private int LevelID;
     private int hasResult;
+    private int status;
 
     public TestHasResult() {
     }
 
-    public TestHasResult(int TestID, String Name, int TagID, int LevelID, int hasResult) {
+    public TestHasResult(int TestID, String Name, int TagID, int LevelID, int hasResult, int status) {
         this.TestID = TestID;
         this.Name = Name;
         this.TagID = TagID;
         this.LevelID = LevelID;
         this.hasResult = hasResult;
+        this.status = status;
     }
 
     public int getTestID() {
@@ -67,10 +69,18 @@ public class TestHasResult {
         this.hasResult = hasResult;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "TestHasResult{" + "TestID=" + TestID + ", Name=" + Name + ", TagID=" + TagID + ", LevelID=" + LevelID + ", hasResult=" + hasResult + '}';
+        return "TestHasResult{" + "TestID=" + TestID + ", Name=" + Name + ", TagID=" + TagID + ", LevelID=" + LevelID + ", hasResult=" + hasResult + ", status=" + status + '}';
     }
-    
+
     
 }

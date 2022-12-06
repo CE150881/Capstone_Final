@@ -109,6 +109,8 @@ Author     : Saing
                                         <th>Nội Dung</th>
                                         <th>Thể Loại</th>
                                         <th>Mức Độ</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Ẩn / Hiện</th>
                                         <th>Cập Nhật / Xoá</th>
                                         <th>Quản Lý Câu Hỏi</th>
                                     </tr>
@@ -116,21 +118,45 @@ Author     : Saing
                                 <tbody>
                                     <c:forEach items="${listTest}" var="o" varStatus="i">
                                         <tr>
-                                            <td>${i.index+1}</td>
+                                            <td style="text-align: center;">${i.index+1}</td>
                                             <td>${o.name}</td>
-                                            <td>
+                                            <td style="text-align: center;">
                                                 <c:forEach items="${listtag}" var="t">
                                                     <c:if test="${o.tagID.equals(t.tagID)}">
                                                         ${t.desc}
                                                     </c:if>
                                                 </c:forEach>
                                             </td>
-                                            <td>
+                                            <td style="text-align: center;">
                                                 <c:forEach items="${listlevel}" var="l">
                                                     <c:if test="${o.levelID.equals(l.levelID)}">
                                                         ${l.levelName}
                                                     </c:if>
                                                 </c:forEach>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <c:if test="${o.status == 1}">Mở</c:if>
+                                                <c:if test="${o.status == 0}">Đang Hoàn Thiện</c:if>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <c:if test = "${o.hasResult==0}">
+                                                    <c:if test="${o.status==1}">
+                                                        <button type="submit" form="changeStstus${i.index}" style="all: unset; cursor: pointer;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                                            </svg>
+                                                        </button>
+                                                    </c:if>
+                                                    <c:if test="${o.status==0}">
+                                                        <button type="submit" form="changeStstus${i.index}" style="all: unset; cursor: pointer;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                                            <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+                                                            <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+                                                            </svg>
+                                                        </button>
+                                                    </c:if>
+                                                </c:if>
                                             </td>
                                             <td>
                                                 <c:if test = "${o.hasResult==0}">
@@ -166,6 +192,16 @@ Author     : Saing
                     </div> 
 
                     <c:forEach items="${listTest}" var="o" varStatus="i">
+                        <!-- Form Change Status Test-->
+                        <form id="changeStstus${i.index}" action="changeStstus" method="POST">
+                            <input  name="testID" value="${o.testID}"style="display: none">
+                            <input  name="name" value="${o.name}"style="display: none">
+                            <input  name="tag" value="${o.tagID}"style="display: none">
+                            <input  name="level" value="${o.levelID}"style="display: none">
+                            <input  name="status" value="${o.status==1?"0":"1"}"style="display: none">
+
+                        </form>
+
                         <!-- Modal Edit Test-->
                         <div class="modal fade" id="editTestModal${i.index+1}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -192,7 +228,6 @@ Author     : Saing
                                                     </c:forEach>
                                                 </select>
                                             </div>
-
                                             <div class="form-group">
                                                 <label>Mức độ:</label>
                                                 <label id="levelError" hidden>Hãy nhập lại đi ạ! Vì nó không có thay đổi.</label>
@@ -259,7 +294,6 @@ Author     : Saing
                                                 </c:forEach>
                                             </select>
                                         </div>
-
                                         <div class="form-group">
                                             <label>Mức độ:</label>
                                             <select name="listlevel">
@@ -270,7 +304,6 @@ Author     : Saing
                                         </div>                                
                                     </form>
                                 </div>
-
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Hủy</button>
                                     <button type="submit" form="addTestform" class="btn btn-success">Thêm</button>
@@ -347,12 +380,6 @@ Author     : Saing
                     }
                 });
             });
-            function showMess(ID) {
-                var option = confirm('Bạn có muốn xoá hay không?');
-                if (option === true) {
-                    window.location.href = 'testDelete?testID=' + ID;
-                }
-            }
         </script>
     </body>
 

@@ -5,19 +5,9 @@
  */
 package Controllers.Test.Test;
 
-import DAOs.Test.LevelDAO;
-import DAOs.Test.ResultDAO;
-import DAOs.Test.TagDAO;
 import DAOs.Test.TestDAO;
-import Models.Level;
-import Models.Result;
-import Models.Tag;
-import Models.Test;
-import Models.TestHasResult;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Saing
  */
-public class testControl extends HttpServlet {
+public class changeStstusControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +36,10 @@ public class testControl extends HttpServlet {
 //            out.println("<!DOCTYPE html>");
 //            out.println("<html>");
 //            out.println("<head>");
-//            out.println("<title>Servlet testControl</title>");            
+//            out.println("<title>Servlet changeStstusControl</title>");            
 //            out.println("</head>");
 //            out.println("<body>");
-//            out.println("<h1>Servlet testControl at " + request.getContextPath() + "</h1>");
+//            out.println("<h1>Servlet changeStstusControl at " + request.getContextPath() + "</h1>");
 //            out.println("</body>");
 //            out.println("</html>");
 //        }
@@ -68,35 +58,7 @@ public class testControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8");
-
-        //khai báo
-        TestDAO dao = new TestDAO();
-        List<Test> listTest = dao.getAllTest();
-        List<TestHasResult> listhasResult = new ArrayList<TestHasResult>();
-        for (Test o : listTest) {
-            int hasResult = 0;
-            List<Result> listresult = new ResultDAO().getResultByTest(o.getTestID());
-            if (!listresult.isEmpty()) {
-                hasResult += 1;
-            }
-
-            listhasResult.add(new TestHasResult(o.getTestID(), o.getName(), o.getTagID(), o.getLevelID(), hasResult,o.getStatus()));
-        }
-
-        TagDAO tagdao = new TagDAO();
-        List<Tag> listtag = tagdao.getAllTag();
-
-        LevelDAO leveldao = new LevelDAO();
-        List<Level> listlevel = leveldao.getAllLevel();
-
-        //step2: load data to jsp
         
-        request.setAttribute("listTest", listhasResult);
-        request.setAttribute("listtag", listtag);
-        request.setAttribute("listlevel", listlevel);
-        request.getRequestDispatcher("Test_manage_detailTest.jsp").forward(request, response);
     }
 
     /**
@@ -111,7 +73,21 @@ public class testControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        //set utf-8 for input vietnamese word
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
+        //get data from jsp
+        String testID = request.getParameter("testID");
+        String name = request.getParameter("name");
+        String tagID = request.getParameter("tag");
+        String levelid = request.getParameter("level");
+        String status = request.getParameter("status");
+                
+        //insert data into database
+        TestDAO dao = new TestDAO();
+        dao.editTest(Integer.parseInt(testID), name,Integer.parseInt(tagID),Integer.parseInt(levelid),Integer.parseInt(status));
+        response.sendRedirect("testControl");
     }
 
     /**

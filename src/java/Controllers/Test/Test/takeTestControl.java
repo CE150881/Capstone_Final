@@ -27,6 +27,8 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -116,8 +118,14 @@ public class takeTestControl extends HttpServlet {
             AnswerDAO ans = new AnswerDAO();
             List<Answer> AoQ = ans.getAnswerByQuestion(Integer.parseInt(o));
             List<String> listans = new ArrayList<String>();
-            for (Answer z : AoQ) {
-                listans.add(z.getAnswer());
+
+            Integer[] arr = new Integer[AoQ.size()];
+            for (int i = 0; i < AoQ.size(); i++) {
+                arr[i] = i;
+            }
+            Collections.shuffle(Arrays.asList(arr));
+            for (Integer i : arr) {
+                listans.add(AoQ.get(i).getAnswer());
             }
 
             listAandQ.add(new AnswerOfQuestion(Integer.parseInt(o), question, listans));
