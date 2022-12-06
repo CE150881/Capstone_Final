@@ -101,7 +101,7 @@
                             <thead>
                                 <tr>
                                     <th>Tên Chủ Đề</th>                   
-                                    <th>Chỉnh Sửa/Xoá</th>
+                                    <th>Chỉnh Sửa/Vô Hiệu Hoá</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,7 +128,7 @@
                                             if (t.get(i).getTopic_id() != 1) {
                                         %>       
                                         <button type="button" data-toggle="modal" data-target="#exampleModalDelete<%= t.get(i).getTopic_id()%>"
-                                                class="btn btn-danger">Xoá</button>
+                                                class="btn btn-danger">Vô Hiệu Hoá</button>
                                         <%
                                             }
                                         %>        
@@ -163,15 +163,15 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Xoá Chủ Đề</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Vô Hiệu Hoá Chủ Đề</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Bạn có chắc chắn muốn xoá chủ đề này?
+                                                        Bạn có chắc chắn muốn vô hiệu hoá chủ đề này?
                                                         <br>
-                                                        Những bài đăng thuộc chủ đề này sẽ bị xoá
+                                                        Những bài đăng thuộc chủ đề này sẽ bị vô hiệu hoá
                                                         <form id="myformDelete<%= t.get(i).getTopic_id()%>" role='form' method="post" action="<%= request.getContextPath()%>/DisableTopic">
                                                             <label for="exampleFormControlTextarea1"></label>
                                                             <input name="topic_id" value="<%= t.get(i).getTopic_id()%>" style="display: none">
@@ -179,7 +179,7 @@
                                                     </div>
                                                     <div class="modal-footer">  
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                                                        <button type="submit" form="myformDelete<%= t.get(i).getTopic_id()%>" value="disableTopic" name="disableTopic" class="btn btn-danger">Xoá</button>
+                                                        <button type="submit" form="myformDelete<%= t.get(i).getTopic_id()%>" value="disableTopic" name="disableTopic" class="btn btn-danger">Vô Hiệu Hoá</button>
                                                     </div>
                                                 </div>
                                             </div>

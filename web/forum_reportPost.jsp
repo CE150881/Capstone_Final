@@ -92,80 +92,73 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        
-                        <table id="example" class="table table-striped" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Lý Do Báo Cáo</th>
-                                    <th>Tiêu Đề</th>
-                                    <th>Nội Dung</th>
-                                    <th>Ngày Chỉnh Sửa</th>
-                                    <th>Thành Viên Báo Cáo</th>
-                                    <th>Ngày Báo Cáo</th>
-                                    <th>Bỏ Qua/Xoá</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    //ResultSet rs = (ResultSet) session.getAttribute("allReportPost");
-                                    //while (rs.next()) {
-                                    List<ForumAllReportPost> rs = (List<ForumAllReportPost>) session.getAttribute("allReportPost");
-                                    for (int i = 0; i < rs.size(); i++) {
+                        <%
+                            List<ForumAllReportPost> rs = (List<ForumAllReportPost>) session.getAttribute("allReportPost");
+                            for (int i = 0; i < rs.size(); i++) {
 
-                                %>
-                                <tr>
-                                    <td><%= rs.get(i).getReport_post_reason()%></td>
-                                    <td><%= rs.get(i).getPost_title()%></td>
-                                    <td><%= rs.get(i).getPost_content()%></td>
-                                    <td><%= rs.get(i).getPost_edit_date().substring(0, Math.min(rs.get(i).getPost_edit_date().length(), 19))%></td>
-                                    <td><%= rs.get(i).getUsername()%></td>
-                                    <td><%= rs.get(i).getReport_post_date().substring(0, Math.min(rs.get(i).getReport_post_date().length(), 19))%></td>
-                                    <td>
-                                        <form method="post" action="<%= request.getContextPath()%>/ReportPost" style="display: inline">
+                        %>
+                        <div class="card mb-4 box-shadow">
+                            <div>
+                                <div class="card-body">
+                                    <div class="d-flex">                                        
+                                        <p class="text-muted p-2"><%= rs.get(i).getUsername()%></p>
+                                        <p class="text-muted ml-auto p-2">Ngày Chỉnh Sửa: <%= rs.get(i).getPost_edit_date().substring(0, Math.min(rs.get(i).getPost_edit_date().length(), 19))%></p>
+                                    </div>                                    
+                                </div>
+                                <div class="card-body" >
+                                    <h3 style="display: inline-block" class="card-text"><%= rs.get(i).getPost_title()%></h3>
+                                    <p class="card-text"><%= rs.get(i).getPost_content()%></p>
+                                    <p style="color: red">Lý Do Báo Cáo: <%= rs.get(i).getReport_post_reason()%></p>
+                                    <p>Thành Viên Báo Cáo: <%= rs.get(i).getUsername()%></p>
+                                    <p>Ngày Báo Cáo: <%= rs.get(i).getReport_post_date().substring(0, Math.min(rs.get(i).getReport_post_date().length(), 19))%></p>
+                                </div>
+                            </div>
+                            <div class="card-body" >
+                                <form method="post" action="<%= request.getContextPath()%>/ReportPost" style="display: inline">
+                                    <input name="report_post_id" value="<%= rs.get(i).getReport_post_id()%>" style="display: none">
+                                    <input name="post_id" value="<%= rs.get(i).getPost_id()%>" style="display: none">
+                                    <input name="reportPostDelete" value="" style="display: none">
+                                    <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-secondary">Bỏ Qua</button>
+                                </form>
+                                <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getReport_post_id()%>"
+                                        class="btn btn-danger">Xử Lý</button>
+
+                            </div>
+                        </div>
+
+                        <!-- Modal Delete Report and Post-->
+                        <div class="modal fade" id="exampleModalPost<%= rs.get(i).getReport_post_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bạn có chắc muốn xử lý báo cáo này lẫn bài đăng?
+                                        <form id="myform<%= rs.get(i).getReport_post_id()%>" method="post" action="<%= request.getContextPath()%>/ReportPost">
+                                            <textarea class="form-control" required="required" name="report_notification_content" id="exampleFormControlTextarea2"
+                                                      rows="6" placeholder="Nhập lý do xoá để thông báo cho người dùng"></textarea>
                                             <input name="report_post_id" value="<%= rs.get(i).getReport_post_id()%>" style="display: none">
                                             <input name="post_id" value="<%= rs.get(i).getPost_id()%>" style="display: none">
-                                            <input name="reportPostDelete" value="" style="display: none">
-                                            <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-secondary">Bỏ Qua</button>
+                                            <input name="reportIgnore" value="" style="display: none">
+
                                         </form>
-                                        <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getReport_post_id()%>"
-                                                class="btn btn-danger">Xoá</button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <button type="submit" form="myform<%= rs.get(i).getReport_post_id()%>" value="reportPostDelete" name="reportPostDelete" class="btn btn-danger">Xử Lý</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                        <!-- Modal Delete Report and Post-->
-                                        <div class="modal fade" id="exampleModalPost<%= rs.get(i).getReport_post_id()%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Bạn có chắc muốn xoá báo cáo này lẫn bài đăng?
-                                                        <form id="myform<%= rs.get(i).getReport_post_id()%>" method="post" action="<%= request.getContextPath()%>/ReportPost">
-                                                            <textarea class="form-control" required="required" name="report_notification_content" id="exampleFormControlTextarea2"
-                                                                      rows="6" placeholder="Nhập lý do xoá đê thông báo cho người dùng"></textarea>
-                                                            <input name="report_post_id" value="<%= rs.get(i).getReport_post_id()%>" style="display: none">
-                                                            <input name="post_id" value="<%= rs.get(i).getPost_id()%>" style="display: none">
-                                                            <input name="reportIgnore" value="" style="display: none">
+                        <%
+                            }
+                        %>
 
-                                                        </form>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                        <button type="submit" form="myform<%= rs.get(i).getReport_post_id()%>" value="reportPostDelete" name="reportPostDelete" class="btn btn-danger">Xoá</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <%
-                                    }
-                                %>
-                            </tbody>
-                        </table>
                     </div>
 
                     <!-- /.container-fluid -->
@@ -224,17 +217,17 @@
         <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('#example').DataTable({
-                    "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
-                    "pageLength": 5,
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
-                        "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
-                        "info": "Hiển thị _END_ trên tổng số _TOTAL_ dữ liệu"
-                    }
-                });                
-            });
+                                $(document).ready(function () {
+                                    $('#example').DataTable({
+                                        "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
+                                        "pageLength": 5,
+                                        "language": {
+                                            "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
+                                            "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
+                                            "info": "Hiển thị _END_ trên tổng số _TOTAL_ dữ liệu"
+                                        }
+                                    });
+                                });
 
         </script>
     </body>

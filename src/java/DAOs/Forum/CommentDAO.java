@@ -209,8 +209,9 @@ public class CommentDAO {
         ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            ps = conn.prepareStatement("DELETE FROM `forum_comment` "
-                    + "WHERE `forum_comment`.`comment_id` = ?;");
+            ps = conn.prepareStatement("UPDATE `forum_comment` "
+                    + "SET `comment_status` = 'disable' "
+                    + "WHERE `forum_comment`.`comment_id` = ? ;");
 
             ps.setInt(1, a.getComment_id());
 

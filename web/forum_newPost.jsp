@@ -160,7 +160,7 @@
 
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h2 style="display: inline-block;">Cộng Đồng</h2>                            
+                            <h2 style="display: inline-block;">Cộng Đồng/Tạo Bài Mới</h2>                            
                         </div>
 
                         <ol>                                                       
@@ -184,13 +184,13 @@
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Tiêu Đề</label>
                                     <textarea maxlength="100" class="form-control" required="required" name="post_title" id="exampleFormControlTextarea1"
-                                              rows="1" placeholder="Chủ đề (Tối đa 100 chứ cái)"></textarea>
+                                              rows="1" placeholder="Tiêu đề (Tối đa 100 chứ cái)"></textarea>
                                 </div>
                                 <br>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Nội Dung</label>
-                                    <textarea maxlength="500" class="form-control" required="required" name="post_content" id="exampleFormControlTextarea2"
-                                              rows="10" placeholder="Nội dung (Tối đa 500 chứ cái)"></textarea>
+                                    <textarea maxlength="400" class="form-control" required="required" name="post_content" id="exampleFormControlTextarea2"
+                                              rows="10" placeholder="Nội dung (Tối đa 400 chứ cái)"></textarea>
                                 </div>
                                 <br>
                                 <div class="row">
@@ -210,7 +210,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <Button type="submit" value="New Post" name="newPost" class="btn btn-sm btn-outline-secondary">Đăng Bài</button>
+                                <Button type="submit" value="New Post" name="newPost" class="btn btn-success">Đăng Bài</button>
 
                             </form>
                         </div>

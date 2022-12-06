@@ -102,7 +102,7 @@ public class ReportComment extends HttpServlet {
         if (!reportIgnore.equals("")) {
             report_comment_id = Integer.parseInt(request.getParameter("report_comment_id"));
             comment_id = Integer.parseInt(request.getParameter("comment_id"));
-            user_report_id = Integer.parseInt(request.getParameter("userID"));
+            
 
             ForumReportComment ra = new ForumReportComment(report_comment_id, user_report_id, report_comment_reason, comment_id, report_comment_date);
             int count = ReportCommentDAO.deleteReportComment2(ra);

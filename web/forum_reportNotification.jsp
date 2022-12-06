@@ -55,33 +55,31 @@
         <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
             <div class="container d-flex align-items-center justify-content-lg-between">
 
-                <h1 class="logo me-auto me-lg-0"><a href="HomeControl">JPD<span>.</span></a></h1>
-                <!-- Uncomment below if you prefer to use an image logo -->
-                <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="user/img/logo.png" alt="" class="img-fluid"></a>-->
-
+                <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
+                
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto" href="HomeControl">Trang Chủ</a></li>
+                        <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
                         <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listT}" var="q">
-                                            <li><a href="AlphabetControl?type=${q.type}">${q.type}</a></li>
+                                            <li><a href="<%= request.getContextPath()%>/AlphabetControl?type=${q.type}">${q.type}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
-                                            <li><a href="KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
+                                            <li><a href="<%= request.getContextPath()%>/KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
                                             </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
-                                            <li><a href="GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
+                                            <li><a href="<%= request.getContextPath()%>/GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </li>
@@ -93,7 +91,7 @@
                                     <li class="dropdown"><a><span>${i.desc}</span> <i class="bi bi-chevron-right"></i></a>
                                         <ul>
                                             <c:forEach items="${listlevel}" var="x">
-                                                <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
+                                                <li><a href="<%= request.getContextPath()%>/choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
                                                 </c:forEach> 
                                         </ul>
                                     </li>
@@ -113,17 +111,17 @@
                     <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                         <!-- đã đăng nhập -->
 
-                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a href="<%= request.getContextPath()%>/ProfileUserControl" class="logo me-auto me-lg-0" ><img src="<%= request.getContextPath()%>/${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/ProfileUserControl">Tài Khoản</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
 
                     <c:if test="${sessionScope.acc.role != 'Người dùng' && sessionScope.acc.role != 'Quản trị viên' && sessionScope.acc.role != 'Quản lí nội dung'}">               
-                        <a href="account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
-                        <a href="account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
+                        <a href="<%= request.getContextPath()%>/account_signup.jsp" class="get-started-btn scrollto">Đăng Ký</a>
+                        <a href="<%= request.getContextPath()%>/account_login.jsp" class="get-started-btn scrollto">Đăng Nhập</a>
                     </c:if>
                 </ul>
             </div>
@@ -163,7 +161,7 @@
 
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h2 style="display: inline-block;">Cộng Đồng</h2>                            
+                            <h2 style="display: inline-block;">Cộng Đồng/Xem Tin Nhắn</h2>                            
                         </div>
 
                         <ol>                                                       
@@ -193,7 +191,17 @@
                     %>
                     <div class="card mb-4 box-shadow">
                         <div>
+                            <%
+                            if(rnUser.get(i).getPost_status().equals("active")){
+                            %>
                             <div class="card-body" onclick="location.href = '<%= request.getContextPath()%>/Post/<%= rnUser.get(i).getPost_id()%>';" style="cursor: pointer;">
+                                <%
+                                }else{
+                                %>
+                                <div class="card-body" onclick="location.href = '<%= request.getContextPath()%>/Archive/<%= rnUser.get(i).getPost_id()%>';" style="cursor: pointer;">
+                                <%
+                                }
+                                %>
                                 <p>Bài Đăng</p>
                                 <h3 class="card-text"><%= rnUser.get(i).getPost_title()%></h3>
                                 <p class="card-text"><%= rnUser.get(i).getPost_content()%></p>
@@ -201,7 +209,7 @@
                                 <form method="post" action="<%= request.getContextPath()%>/DeleteForumNotification" style="display: inline">
                                     <input name="userID" value="<%= rnUser.get(i).getUserID() %>" style="display: none">
                                     <input name="report_notification_id" value="<%= rnUser.get(i).getReport_notification_id()%>" style="display: none">                                            
-                                    <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-danger">Xoá</button>
+                                    <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-success">Đã Xem</button>
                                 </form>
                             </div>
                         </div>
@@ -219,7 +227,7 @@
                                     <form method="post" action="<%= request.getContextPath()%>/DeleteForumNotification" style="display: inline">
                                         <input name="userID" value="<%= rnUser.get(i).getUserID() %>" style="display: none">
                                         <input name="report_notification_id" value="<%= rnUser.get(i).getReport_notification_id()%>" style="display: none">   
-                                        <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-danger">Xoá</button>
+                                        <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-success">Đã Xem</button>
                                     </form>
                                 </div>
                             </div>

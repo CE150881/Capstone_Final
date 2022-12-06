@@ -63,7 +63,9 @@ public class ReportPostDAO {
             ps = conn.prepareStatement("SELECT `report_post_id`, `report_post_reason`, `post_id`, `post_title`, `post_content`, `post_edit_date`,"
                     + " `username`, `report_post_date` FROM `forum_report_post` "
                     + "NATURAL JOIN `forum_post` "
-                    + "LEFT JOIN `user` ON `forum_report_post`.`user_report_id` = `user`.`userID`;");
+                    + "LEFT JOIN `user` ON `forum_report_post`.`user_report_id` = `user`.`userID`"
+                    + "WHERE `forum_report_post`.`status` = 'active'"
+                    + "ORDER BY `forum_report_post`.`report_post_id` DESC ;");
             rs = ps.executeQuery();
             
             ForumAllReportPost f = null;
@@ -98,8 +100,9 @@ public class ReportPostDAO {
         ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            ps = conn.prepareStatement("DELETE FROM `forum_report_post` "
-                    + "WHERE `forum_report_post`.`report_post_id` = ?");
+            ps = conn.prepareStatement("UPDATE `forum_report_post` "
+                    + "SET `status` = 'disable' "
+                    + "WHERE `forum_report_post`.`report_post_id` = ? ;");
             
             ps.setInt(1, rp.getReport_post_id());       
             

@@ -57,7 +57,7 @@
     </head>
     <body>
         <!-- ======= Header ======= -->
-        <header id="header" class="fixed-top" style="background-color: rgba(0,0,0,0.8);">
+        <header id="header" class="" style="background-color: rgba(0,0,0,0.8);">
             <div class="container d-flex align-items-center justify-content-lg-between">
 
                 <h1 class="logo me-auto me-lg-0"><a href="HomeControl">JPD<span>.</span></a></h1>
@@ -161,23 +161,7 @@
             </div>
         </div>
 
-        <!-- ======= Breadcrumbs ======= -->
-        <section id="breadcrumbs" class="breadcrumbs bg-light">
-            <div class="container">
-
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h2 style="display: inline-block;">Hỗ Trợ</h2>                            
-                    </div>
-
-                    <ol>                                                       
-                        <li><a href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
-                        <li>Hỗ Trợ</li>
-                    </ol>
-                </div>
-
-            </div>
-        </section><!-- End Breadcrumbs -->
+        
         <main id="main" class="bg-light">
             <div class="container bg-light">
                 <%
@@ -200,27 +184,7 @@
             </div>
         </main>
 
-        <!-- ======= Footer ======= -->
-        <footer id="footer">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-3 col-md-6">
-                            <div class="footer-info">
-                                <h3>JPD<span>.</span></h3>
-                                <p>
-                                    600 Nguyễn Văn Cừ <br>
-                                    An Bình, Cần Thơ<br><br>
-                                    <strong>Số Điện Thoại:</strong> 0349554811<br>
-                                    <strong>Email:</strong> noreply.jpd@gmail.com<br>
-                                </p>                                
-                            </div>
-                        </div>                                              
-                    </div>
-                </div>
-            </div>
-        </footer><!-- End Footer -->
+        
 
         <div id="preloader"></div>
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

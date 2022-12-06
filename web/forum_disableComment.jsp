@@ -106,8 +106,7 @@
                                         <img src="<%= request.getContextPath()%>/<%= rs.get(i).getAvatar()%>" class="rounded-circle" alt="" width="40" height="40">
                                         <p class="text-muted p-2"><%= rs.get(i).getUsername()%></p>
                                         <p class="text-muted ml-auto p-2"><%= rs.get(i).getComment_date().substring(0, Math.min(rs.get(i).getComment_date().length(), 19))%></p>
-                                    </div>
-                                    <br>
+                                    </div>                                    
                                 </div>
                                 <div class="card-body" >
                                     <p class="card-text"><%= rs.get(i).getComment_content()%></p>
@@ -115,10 +114,9 @@
                                 <div class="card-body" >
                                     <form method="post" action="<%= request.getContextPath()%>/RestoreComment" style="display: inline">
                                         <input value="<%= rs.get(i).getComment_id()%>" name="comment_id" style="display: none">
-                                        <button class="btn btn-secondary" type="sumbit" value="restoreComment" name="restoreComment">Phục Hồi</button>
+                                        <button class="btn btn-success" type="sumbit" value="restoreComment" name="restoreComment">Phục Hồi</button>
                                     </form>
-                                    <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getComment_id()%>"
-                                            class="btn btn-danger">Xoá Hoàn Toàn</button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -139,7 +137,7 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                                         <form method="post" action="<%= request.getContextPath()%>/DeleteComment">
                                             <input name="comment_id" value="<%= rs.get(i).getComment_id()%>" style="display: none">
-                                            <button type="submit" value="deleteComment" name="deleteComment" class="btn btn-danger">Xoá Hoàn Toàn</button>
+                                            
                                         </form>
                                     </div>
                                 </div>
