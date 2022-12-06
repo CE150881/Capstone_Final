@@ -48,7 +48,7 @@
 
                     <!-- Topbar -->
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
+                        <a class="btn" onclick="history.back(-1)"><i class="fa fa-arrow-left"> Quay lại</i></a>
                         <!-- Sidebar Toggle (Topbar) -->
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                             <i class="fa fa-bars"></i>
@@ -85,7 +85,8 @@
                         <div class="table-title">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <h2>Quản Lí Ví Dụ Ngữ Pháp: ${gm.structure}</h2>
+                                    <h2>Quản Lí Ví Dụ Ngữ Pháp: </h2>
+                                    <h4>${gm.structure}</h4>
                                 </div>
                                 <div class="col-sm-6">
                                     <a href="#addExample" class="btn btn-success" data-toggle="modal" data-target="#addExample" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Thêm Ví Dụ</span></a>                                             
@@ -111,8 +112,8 @@
                                         <td hidden>${o.exampleID}</td>
                                         <td>${o.exJ}</td>
                                         <td>${o.exV}</td>                               
-                                        <td><a href="LoadExampleControl?exampleID=${o.exampleID}"><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
-                                        <td><a href="DeleteExampleControl?exampleID=${o.exampleID}"><i class="delete" data-toggle="modal"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>                                   
+                                        <td><a href="#viewExample${o.grammarID}" data-toggle="modal" data-target="#viewExample${o.grammarID}" ><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
+                                        <td><a href="#deleteExample${o.grammarID}" data-toggle="modal" data-target="#deleteExample${o.grammarID}" ><i class="delete" data-toggle="modal"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>                                   
                                     </tr>
                                 </c:forEach>                              
                             </tbody>
@@ -134,21 +135,76 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Câu Ví Dụ</label>
-                                            <textarea name="exJ" type="text" class="form-control" required></textarea>
+                                            <input name="exJ" type="text" class="form-control" pattern="[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[々〆〤ヶ]" title="Câu ví dụ chỉ bao gồm kí tự tiếng Nhật!" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Nghĩa</label>
-                                            <textarea name="exV" type="text" class="form-control" required></textarea>
+                                            <input name="exV" type="text" class="form-control" pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$" title="Nghĩa câu ví dụ chỉ bao gồm kí tự tiếng Việt!" required>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy bỏ">
-                                        <input type="submit" class="btn btn-success" value="Thêm">
+                                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy bỏ">
+                                        <input type="submit" name="submit" class="btn btn-primary" value="Thêm Ví Dụ">
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>    
+
+                    <!-- Modal Edit-->
+                    <c:forEach items="${listE}" var="o">
+                        <div class="modal fade" id="viewExample${o.grammarID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="UpdateExampleControl" method="post">
+                                        <div class="modal-header">                      
+                                            <h4 class="modal-title">Cập Nhật Ví Dụ</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body"> 
+                                            <div class="form-group" hidden>
+                                                <label>ID</label>
+                                                <input value="${o.exampleID}" name="exampleID" type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group" >
+                                                <label>Câu Ví Dụ</label>
+                                                <input value="${o.exJ}" name="exJ" type="text" class="form-control" pattern="[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[々〆〤ヶ]" title="Câu ví dụ chỉ bao gồm kí tự tiếng Nhật!" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Nghĩa</label>
+                                                <input value="${o.exV}" name="exV" type="text" class="form-control" pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$" title="Nghĩa câu ví dụ chỉ bao gồm kí tự tiếng Việt!" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                            <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>    
+                    </c:forEach>
+
+                    <!-- Modal Delete-->
+                    <c:forEach items="${listE}" var="o">
+                        <div class="modal fade" id="deleteExample${o.grammarID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Bạn muốn xóa ?</div>                       
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                                        <a class="btn btn-primary" href="DeleteExampleControl?exampleID=${o.exampleID}">Xóa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </c:forEach>
 
 
                     <!-- /.container-fluid -->
@@ -207,9 +263,9 @@
         <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $('#example').DataTable();
-            });
+                            $(document).ready(function () {
+                                $('#example').DataTable();
+                            });
         </script>
     </body>
 

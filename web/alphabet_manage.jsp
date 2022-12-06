@@ -112,18 +112,65 @@
                                         <td>${o.type}</td>
                                         <td>${o.alphabet}</td>
                                         <td>${o.pronounce}</td>
-                                        <td><a href="LoadAlphabetControl?alphabetID=${o.alphabetID}"><i class="fa fa-pen" title="Sửa"></i></a></td>
-                                        <td><a href="DeleteAlphabetControl?alphabetID=${o.alphabetID}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="fa fa-trash" title="Xóa"></i></a></td>
+                                        <td>
+                                            <a href="#editAlphabet${o.alphabetID}" data-toggle="modal" data-target="#editAlphabet${o.alphabetID}"><i class="fa fa-pen" title="Sửa"></i></a></a>
+                                        </td>
+                                        <td><a href="#deleteAlphabet${o.alphabetID}" data-toggle="modal" data-target="#deleteAlphabet${o.alphabetID}"><i class="fa fa-trash" title="Xóa"></i></a></td>
                                     </tr>
                                 </c:forEach>                              
                             </tbody>
                     </div>
 
+
+                    <!-- Modal Edit-->
+                    <c:forEach items="${listA}" var="o">
+                        <div class="modal fade" id="editAlphabet${o.alphabetID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="UpdateAlphabetControl" method="post">
+                                        <div class="modal-header">                      
+                                            <h4 class="modal-title">Thêm Chữ Cái</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">   
+                                            <div class="form-group" hidden>
+                                                <label>ID</label>
+                                                <input value="${o.alphabetID}" name="alphabetID" type="text" class="form-control" required>
+                                            </div>                            
+                                            <div class="form-group">
+                                                <label>Chữ Cái</label>
+                                                <input value="${o.alphabet}" name="alphabet" type="text" pattern="[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[々〆〤ヶ]" title="Chữ cái chỉ bao gồm kí tự tiếng Nhật!" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cách Đọc</label>
+                                                <input value="${o.pronounce}" name="pronounce" type="text" pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$" title="Cách phát âm chỉ bao gồm kí tự tiếng Việt!" class="form-control" >
+                                            </div>                                                        
+                                            <div class="form-group">
+                                                <label>Cấp Độ</label>
+                                                <select name="type" class="form-select" aria-label="Default select example">
+                                                    <c:forEach items="${listT}" var="o">
+                                                        <option value="${o.type}">${o.type}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                            <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật">
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>  
+                    </c:forEach>
+
                     <!-- Modal Add-->
                     <div class="modal fade" id="addAlphabet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="CreateAlphabetControl" method="post">
+                                <form action="CreateAlphabetControl" method="post" onsubmit="alert('Thêm chữ cái thành công!')">
                                     <div class="modal-header">                      
                                         <h4 class="modal-title">Thêm Chữ Cái</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -131,11 +178,11 @@
                                     <div class="modal-body">                    
                                         <div class="form-group">
                                             <label>Chữ Cái</label>
-                                            <input name="alphabet" type="text" class="form-control" pattern="[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B" title="Chữ cái chỉ bao gồm kí tự tiếng Nhật!" required/>
+                                            <input name="alphabet" type="text" class="form-control" pattern="[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[々〆〤ヶ]" title="Chữ cái chỉ bao gồm kí tự tiếng Nhật!" required/>
                                         </div>
                                         <div class="form-group">
                                             <label>Cách Đọc</label>
-                                            <input name="pronounce" type="text" class="form-control" pattern="[a-zA-Z]+$" title="Cách phát âm chỉ bao gồm kí tự tiếng Việt!" required/>
+                                            <input name="pronounce" type="text" class="form-control" pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$" title="Cách phát âm chỉ bao gồm kí tự tiếng Việt!" required/>
                                         </div>                           
                                         <div class="form-group">
                                             <label>Bảng Chữ Cái</label>
@@ -148,11 +195,11 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                                        <input type="submit" name="submit" class="btn btn-success" value="Thêm">
+                                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                        <input type="submit" name="submit" class="btn btn-primary" value="Thêm">
                                     </div>
                                 </form>
-                               
+
                             </div>
                         </div>
                     </div>    
@@ -171,27 +218,28 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <!-- Delete Modal-->
-        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Bạn muốn đăng xuất ?</div>
-                    <p>alphabetID</p>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                        <a class="btn btn-primary" href="DeleteAlphabetControl">Đăng Xuất</a>
+        <c:forEach items="${listA}" var="o">
+            <!-- Delete Modal-->
+            <div class="modal fade" id="deleteAlphabet${o.alphabetID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Bạn muốn xóa ${o.alphabet} ?</div>                       
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                            <a class="btn btn-primary" href="DeleteAlphabetControl?alphabetID=${o.alphabetID}">Xóa</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </c:forEach>
+
         <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">

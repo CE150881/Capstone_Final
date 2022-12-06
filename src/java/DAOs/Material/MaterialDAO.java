@@ -384,9 +384,7 @@ public class MaterialDAO {
 
         try {
             con = DBConnection.getConnection();
-            String sql = "UPDATE kanji "
-                    + "SET levelID = ?, kanji = ?, meaning = ?"
-                    + "WHERE kanji.`kanjiID` = ?";
+            String sql = "UPDATE `kanji` SET `levelID`= ?,`kanji`= ?,`meaning`= ? WHERE `kanji`.`kanjiID`= ?";
             ps = con.prepareStatement(sql);
             ps.setString(1, levelID);
             ps.setString(2, kanji);
@@ -591,7 +589,7 @@ public class MaterialDAO {
     public static void main(String[] args) {
         System.out.println("1");
         MaterialDAO dao = new MaterialDAO();
-        dao.addKanji("1", "g", "h", "f");
+        System.out.println(dao.getGrammarByLevelID("1"));
         System.out.println("2");
     }    
 }

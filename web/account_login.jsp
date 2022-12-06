@@ -50,6 +50,7 @@
                                     </div>
                                 </div>
                             </form>
+                            
                             <p class="w-100 text-center">&mdash; hoặc đăng nhập với &mdash;</p>
                             <div class="social text-center">
                                 <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:8084/Capstone_Final/LoginWithGoogleControl&response_type=code

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : dashboard
-    Created on : 25-Nov-2022, 14:15:59
-    Author     : A Hi
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -109,9 +103,9 @@
                                     <tr>
                                         <td hidden>${o.grammarID}</td>     
                                         <td>${o.structure}</td>                                                                                                       
-                                        <td><a href="ViewGrammarControl?grammarID=${o.grammarID}"><i class="edit" data-toggle="modal"><i class="fa fa-eye" data-toggle="tooltip" title="Xem"></i></a></td>
-                                        <td><a href="LoadGrammarControl?grammarID=${o.grammarID}"><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
-                                        <td><a href="DeleteGrammarControl?grammarID=${o.grammarID}"><i class="delete" data-toggle="modal"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>
+                                        <td><a href="#viewGrammar${o.grammarID}" data-toggle="modal" data-target="#viewGrammar${o.grammarID}"><i class="edit" data-toggle="modal"><i class="fa fa-eye" data-toggle="tooltip" title="Xem"></i></a></td>
+                                        <td><a href="#editGrammar${o.grammarID}" data-toggle="modal" data-target="#editGrammar${o.grammarID}"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
+                                        <td><a href="#deleteGrammar${o.grammarID}" data-toggle="modal" data-target="#deleteGrammar${o.grammarID}"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>
                                         <td><a href="ManageExampleControl?grammarID=${o.grammarID}"><i class="delete" data-toggle="modal"><i class="fa fa-list-alt" data-toggle="tooltip" title="Ví Dụ"></i></a></td>
                                     </tr>
                                 </c:forEach>                              
@@ -146,14 +140,112 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy bỏ">
-                                        <input type="submit" class="btn btn-success" value="Thêm">
+                                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                        <input type="submit" name="submit" class="btn btn-primary" value="Thêm Ngữ Pháp">
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>    
 
+                    <!-- Modal View-->
+                    <c:forEach items="${listG}" var="o">
+                        <div class="modal fade" id="viewGrammar${o.grammarID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form>
+                                        <div class="modal-header">                      
+                                            <h4 class="modal-title">Chi Tiết Ngữ Pháp</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">                    
+                                            <div class="form-group" hidden>
+                                                <label>ID</label>
+                                                <input value="${o.grammarID}" name="grammarID" type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cấu Trúc: ${o.structure}</label>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cấp Độ: ${o.level}</label>                                                      
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cách Dùng: ${o.use}</label>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-primary" data-dismiss="modal" value="Thoát">     
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>    
+                    </c:forEach>
+
+                    <!-- Modal Edit-->
+                    <c:forEach items="${listG}" var="o">
+                        <div class="modal fade" id="editGrammar${o.grammarID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form>
+                                        <div class="modal-header">                      
+                                            <h4 class="modal-title">Chi Tiết Ngữ Pháp</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">                    
+                                            <div class="form-group" hidden>
+                                                <label>Cấu Trúc</label>
+                                                <input value="${o.grammarID}" name="grammarID" type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cấu Trúc</label>
+                                                <input value="${o.structure}" name="structure" type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cách Dùng</label>
+                                                <input value="${o.use}" name="use" type="text" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cấp Độ</label>
+                                                <select name="level" class="form-select" aria-label="Default select example">
+                                                    <c:forEach items="${listL}" var="o">
+                                                        <option value="${o.levelID}">${o.levelName}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-primary" data-dismiss="modal" value="Thoát">     
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>    
+                    </c:forEach>
+
+
+                    <!-- Modal Delete-->
+                    <c:forEach items="${listG}" var="o">
+                        <div class="modal fade" id="deleteGrammar${o.grammarID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Bạn muốn xóa ngữ pháp ?</div>                       
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                                        <a class="btn btn-primary" href="DeleteGrammarControl?grammarID=${o.grammarID}">Xóa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </c:forEach>
 
                     <!-- /.container-fluid -->
                 </div>

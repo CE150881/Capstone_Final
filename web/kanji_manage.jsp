@@ -89,7 +89,7 @@
                                     <h2>Quản Lí Kanji</h2>
                                 </div>
                                 <div class="col-sm-6">
-                                                                  
+
                                     <a href="#addKanji" class="btn btn-success" data-toggle="modal" data-target="#addKanji" style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>Tạo Kanji</span></a>                                             
                                 </div>
                             </div>
@@ -111,10 +111,10 @@
                                     <tr>
                                         <td hidden>${o.kanjiID}</td>     
                                         <td>${o.kanji}</td>                                                                                                       
-                                        <td><a href="ViewKanjiControl?kanjiID=${o.kanjiID}"><i class="edit" data-toggle="modal"><i class="fa fa-eye" data-toggle="tooltip" title="Xem"></i></a></td>
-                                        <td><a href="LoadKanjiControl?kanjiID=${o.kanjiID}"><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
-                                        <td><a href="LoadKanjiPictureControl?kanjiID=${o.kanjiID}"><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa hình vẽ"></i></a></td>
-                                        <td><a href="DeleteKanjiControl?kanjiID=${o.kanjiID}"><i class="delete" data-toggle="modal"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>
+                                        <td><a href="#viewKanji${o.kanjiID}" data-toggle="modal" data-target="#viewKanji${o.kanjiID}"><i class="fa fa-eye" data-toggle="tooltip" title="Xem"></i></a></td>
+                                        <td><a href="#editKanji${o.kanjiID}" data-toggle="modal" data-target="#editKanji${o.kanjiID}"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
+                                        <td><a href="#editKanjiPicture${o.kanjiID}" data-toggle="modal" data-target="#editKanjiPicture${o.kanjiID}"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa hình kanji"></i></a></td>
+                                        <td><a href="#deleteKanji${o.kanjiID}" data-toggle="modal" data-target="#deleteKanji${o.kanjiID}"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>
 
                                     </tr>
                                 </c:forEach>                              
@@ -133,11 +133,11 @@
                                     <div class="modal-body">                    
                                         <div class="form-group">
                                             <label>Kanji</label>
-                                            <input name="kanji" type="text" class="form-control" pattern="[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B" title="Kanji chỉ bao gồm kí tự tiếng Nhật!" required>
+                                            <input name="kanji" type="text" class="form-control" pattern="[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[々〆〤ヶ]" title="Kanji chỉ bao gồm kí tự tiếng Nhật!" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Nghĩa</label>
-                                            <input name="meaning" type="text" class="form-control" pattern="[a-zA-Z]+$" title="Nghĩa kanji chỉ bao gồm kí tự tiếng Việt!" required>
+                                            <input name="meaning" type="text" class="form-control"  pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$" title="Nghĩa kanji chỉ bao gồm kí tự tiếng Việt!" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Hình Vẽ</label>
@@ -155,16 +155,150 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                                        <input type="submit" class="btn btn-success" value="Thêm"/>
+                                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                        <input type="submit" name="submit" class="btn btn-primary" value="Thêm Kanji">
                                     </div>
                                 </form>
 
 
                             </div>
                         </div>
-                    </div>    
+                    </div> 
 
+                    <!-- Modal View-->
+                    <c:forEach items="${listK}" var="o">
+                        <div class="modal fade" id="viewKanji${o.kanjiID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form>
+                                        <div class="modal-header">                      
+                                            <h4 class="modal-title">Chi Tiết Kanji</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">	
+                                            <div class="form-group" hidden>
+                                                <label>ID</label>
+                                                <a>${o.kanjiID}</a>
+                                            </div> 
+                                            <div class="form-group d-flex justify-content-center">
+                                                <img src="${o.picture}" alt="Kanji Picture" width="50%">                                             
+                                            </div>
+                                            <div class="form-group d-flex justify-content-center">
+                                                <label>Kanji: ${o.kanji}</label>                                                                                            
+                                            </div>
+                                            <div class="form-group d-flex justify-content-center">
+                                                <label>Nghĩa: ${o.meaning}</label>                                                                                          
+                                            </div>                                                    
+                                            <div class="form-group d-flex justify-content-center">
+                                                <label>Cấp Độ: ${o.level}</label>                                              
+                                            </div>
+                                        </div> 
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-primary" data-dismiss="modal" value="Thoát">                                          
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>    
+                    </c:forEach>
+
+                    <!-- Modal Edit-->
+                    <c:forEach items="${listK}" var="o">
+                        <div class="modal fade" id="editKanji${o.kanjiID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" action="UpdateKanjiControl">
+                                        <div class="modal-header">                      
+                                            <h4 class="modal-title">Cập Nhật Kanji</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">	
+                                            <div class="form-group" hidden>
+                                                <label>ID</label>
+                                                <input value="${o.kanjiID}" name="kanjiID" type="text" class="form-control" required>
+                                            </div>                               
+                                            <div class="form-group">
+                                                <label>Kanji</label>
+                                                <input value="${o.kanji}" name="kanji" type="text" class="form-control" pattern="[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[々〆〤ヶ]" title="Kanji chỉ bao gồm kí tự tiếng Nhật!" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Nghĩa</label>
+                                                <input value="${o.meaning}" name="meaning" type="text" class="form-control"  pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$" title="Nghĩa kanji chỉ bao gồm kí tự tiếng Việt!" required>
+                                            </div>                                                    
+                                            <div class="form-group">
+                                                <label>Cấp Độ</label>
+                                                <select name="level" class="form-select" aria-label="Default select example">
+                                                    <c:forEach items="${listL}" var="o">
+                                                        <option value="${o.levelID}">${o.levelName}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                            <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật">
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>    
+                    </c:forEach>
+
+                    <!-- Modal Edit Picture-->
+                    <c:forEach items="${listK}" var="o">
+                        <div class="modal fade" id="editKanjiPicture${o.kanjiID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" action="UpdateKanjiPictureControl" enctype="multipart/form-data">
+                                        <div class="modal-header">                      
+                                            <h4 class="modal-title">Cập Nhật Hình Kanji</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">                    
+                                            <div class="form-group" hidden>
+                                                <label>ID</label>
+                                                <input value="${o.kanjiID}" name="kanjiID" type="text" class="form-control" required>
+                                            </div>  
+                                            <div class="form-group">
+                                                <label>Hình Kanji</label>
+                                                <img src="${o.picture}" name="avatar" width="60%"><br>
+                                                <input type="file" name="file" required>  
+                                            </div>  
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                            <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật">
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>    
+                    </c:forEach>
+
+                    <!-- Modal Delete-->
+                    <c:forEach items="${listK}" var="o">
+                        <div class="modal fade" id="deleteKanji${o.kanjiID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Bạn muốn xóa ${o.kanji} ?</div>                       
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                                        <a class="btn btn-primary" href="DeleteKanjiControl?kanjiID=${o.kanjiID}">Xóa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </c:forEach>
 
                     <!-- /.container-fluid -->
                 </div>

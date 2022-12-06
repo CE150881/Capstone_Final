@@ -184,28 +184,33 @@ public class UserDAO {
 //        return null;
 //    }
 //
-//    // check if email exist
-//    public user checkEmailExist(String mail) {
-//        String query = "SELECT * FROM user WHERE email = ?";
-//        try {
-//            conn = new DBConnection().getConnection();       // call function form DBconnection
-//            ps = conn.prepareStatement(query);
-//            ps.setString(1, mail);
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                return new user(
-//                        rs.getString(1),
-//                        rs.getString(2),
-//                        rs.getString(3),
-//                        rs.getString(4),
-//                        rs.getInt(5));
-//            }
-//        } catch (Exception e) {
-//
-//        }
-//        return null;
-//    }
-//
+    // check if email exist
+
+    public User checkEmailExist(String mail) {
+        Connection conn = DBConnection.getConnection();
+        String query = "SELECT * FROM user WHERE email = ?";
+        try {
+            conn = new DBConnection().getConnection();       // call function form DBconnection
+            ps = conn.prepareStatement(query);
+            ps.setString(1, mail);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7)
+                );
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
 //    // check if phone exist
 //    public user checkPhoneExist(String phone) {
 //        String query = "SELECT * FROM user WHERE phone = ?";
@@ -227,7 +232,6 @@ public class UserDAO {
 //        }
 //        return null;
 //    }
-
     public User updateUser(String username, String phone, String email) {
         try {
             Connection conn = DBConnection.getConnection();
