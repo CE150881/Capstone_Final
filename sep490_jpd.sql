@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 07, 2022 lúc 08:50 AM
+-- Thời gian đã tạo: Th12 07, 2022 lúc 09:09 AM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -42,7 +42,7 @@ CREATE TABLE `account_code` (
 
 CREATE TABLE `alphabet` (
   `alphabetID` int(11) NOT NULL,
-  `type` varchar(255) NOT NULL,
+  `type` varchar(10) NOT NULL,
   `alphabet` varchar(255) NOT NULL,
   `pronounce` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -580,7 +580,7 @@ INSERT INTO `type` (`type`) VALUES
 
 CREATE TABLE `user` (
   `userID` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
