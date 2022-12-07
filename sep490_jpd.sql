@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 07, 2022 lúc 05:39 AM
+-- Thời gian đã tạo: Th12 07, 2022 lúc 08:50 AM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -52,8 +52,8 @@ CREATE TABLE `alphabet` (
 --
 
 INSERT INTO `alphabet` (`alphabetID`, `type`, `alphabet`, `pronounce`) VALUES
-(1, 'Hiragana', 'あ', 'a'),
-(2, 'Katakana', 'ア', 'a');
+(5, 'Hiragana', 'あ', 'a'),
+(6, 'Katakana', 'ア', 'a');
 
 -- --------------------------------------------------------
 
@@ -561,7 +561,7 @@ INSERT INTO `test` (`TestID`, `Name`, `TagID`, `LevelID`, `Status`) VALUES
 --
 
 CREATE TABLE `type` (
-  `type` varchar(255) NOT NULL
+  `type` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -790,7 +790,7 @@ ALTER TABLE `account_code`
 -- AUTO_INCREMENT cho bảng `alphabet`
 --
 ALTER TABLE `alphabet`
-  MODIFY `alphabetID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `alphabetID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `answer`
@@ -926,7 +926,7 @@ ALTER TABLE `account_code`
 -- Các ràng buộc cho bảng `alphabet`
 --
 ALTER TABLE `alphabet`
-  ADD CONSTRAINT `alphabet_ibfk_1` FOREIGN KEY (`type`) REFERENCES `type` (`type`);
+  ADD CONSTRAINT `alphabet_ibfk_1` FOREIGN KEY (`type`) REFERENCES `type` (`type`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `answer`
