@@ -16,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Quản Lí</title>
+        <title>Quản Lí Câu Hỏi</title>
         <link href="user/img/logo.jpg" rel="icon">
 
         <!-- Custom fonts for this template-->
@@ -125,7 +125,7 @@
         <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
-    
+
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -176,8 +176,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#example').DataTable({
-                "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
-                "pageLength": 5,
+                "lengthMenu": [[10, 15, 20, 25, 30, -1], [10, 15, 20, 25, 30, 'Tất cả']],
+                "pageLength": 10,
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
                     "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
@@ -185,6 +185,7 @@
                 }
             });
         });
+
     </script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

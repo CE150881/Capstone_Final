@@ -14,6 +14,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+        <title>Kiểm Tra</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -161,14 +162,15 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h2>${type}</h2>
                         <ol>
-                            <li><a href="HomeControl">Trang Chủ</a></li>
-                            <li><a href="choiceTestControl?levelID=${levelID}&&tagID=${tagID}">Chọn bài kiểm tra</a></li>
+                            <li><a href="HomeControl"  style="color: black">Trang Chủ</a></li>
+                            <li><a href="choiceTestControl?levelID=${levelID}&&tagID=${tagID}"  style="color: black">Chọn bài kiểm tra</a></li>
                             <li>Làm bài kiểm tra</li>
                         </ol>
                     </div>
 
                 </div>
             </section><!-- End Breadcrumbs -->
+            
 
             <!-- ======= Services Section ======= -->
             <section id="services" class="services" style="background: #fff">
@@ -178,7 +180,7 @@
                             <div class="col-md-10 col-lg-10">
                                 <div class="question bg-white p-3 border-bottom">
                                     <div class="d-flex flex-row justify-content-between align-items-center mcq">
-                                        <h4>${testunis.name}</h4>
+                                        <h4 class="d-flex align-items-center">${testunis.name}</h4>
                                     </div>
                                     <c:forEach items="${listAandQ}" var="o" varStatus="i">
                                         <div class="question bg-white p-3 border-bottom">
@@ -200,7 +202,8 @@
                                     </c:forEach>
                                     <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
                                         <div class="row pt-4">
-                                            <input id="finishbtn" type="submit" class="btn btn-outline-danger" value="Nộp bài" role="button"></input>
+                                            <input id="finishbtn" type="submit" class="btn bt-sub" value="Nộp bài" role="button" style="border-color: #f5b8c5; color: #f5b8c5;"></input>
+                                            
                                         </div>
                                     </div>
                                 </div>

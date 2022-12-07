@@ -16,7 +16,7 @@ Author     : Saing
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Quản Lí</title>
+        <title>Quản Lí Bài Kiểm Tra</title>
         <link href="user/img/logo.jpg" rel="icon">
 
         <!-- Custom fonts for this template-->
@@ -137,8 +137,8 @@ Author     : Saing
                                             <td style="text-align: center;">
                                                 <c:if test="${o.status == 1}">Mở</c:if>
                                                 <c:if test="${o.status == 0}">Đang Hoàn Thiện</c:if>
-                                            </td>
-                                            <td style="text-align: center;">
+                                                </td>
+                                                <td style="text-align: center;">
                                                 <c:if test = "${o.hasResult==0}">
                                                     <c:if test="${o.status==1}">
                                                         <button type="submit" form="changeStstus${i.index}" style="all: unset; cursor: pointer;">
@@ -371,8 +371,8 @@ Author     : Saing
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#example').DataTable({
-                    "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
-                    "pageLength": 5,
+                    "lengthMenu": [[10, 15, 20, 25, 30, -1], [10, 15, 20, 25, 30, 'Tất cả']],
+                    "pageLength": 10,
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
                         "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
@@ -380,6 +380,7 @@ Author     : Saing
                     }
                 });
             });
+
         </script>
     </body>
 

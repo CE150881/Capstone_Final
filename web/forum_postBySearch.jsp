@@ -117,6 +117,7 @@
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<%= request.getContextPath()%>/ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
@@ -284,29 +285,7 @@
         </main><!-- End #main -->
 
         <!-- ======= Footer ======= -->
-        <footer id="footer">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-3 col-md-6">
-                            <div class="footer-info">
-                                <h3>JPD<span>.</span></h3>
-                                <p>
-                                    600 Nguyễn Văn Cừ <br>
-                                    An Bình, Cần Thơ<br><br>
-                                    <strong>Số Điện Thoại:</strong> 0349554811<br>
-                                    <strong>Email:</strong> noreply.jpd@gmail.com<br>
-                                </p>                                
-                            </div>
-                        </div>                                              
-                    </div>
-                </div>
-            </div>
-        </footer><!-- End Footer -->
-
-        <div id="preloader"></div>
-        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+        <jsp:include page="footer_user.jsp" />
 
         <!-- Vendor JS Files -->
         <script src="${pageContext.request.contextPath}/user/vendor/purecounter/purecounter_vanilla.js"></script>

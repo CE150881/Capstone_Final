@@ -43,23 +43,39 @@
     <body id="page-top">
 
         <!-- ///Edit Modal -->
-        <div id="myModal-edit" class="modal-edit">
-            <!-- Modal content -->
-            <div class="modal-edit-content">
-                <span class="close-edit">&times;</span>
-                <div id="edit-form-legend">Chỉnh sửa Thông báo</div>
-                <div id="edit-form-container">
-                    <form id="edit-form" action="EditNotification" method="POST">
-                        <input type="hidden" id="edit-id" name="editNotifID">
-                        <label for="edit-title">Tiêu đề</label><br>
-                        <input type="text" class="form-control" id="edit-title" name="editTitle" placeholder="Nhập tiêu đề"><br>
-                        <label for="edit-details">Chi tiết</label><br>
-                        <textarea type="text" class="form-control" id="edit-details" name="editDetails" placeholder="Nhập chi tiết"></textarea><br>
-                        <button type="submit" class="btn btn-success" id="edit-submit">Lưu</button><br>
-                    </form>
+
+            <div class="modal fade" id="myModal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="UpdateAlphabetControl" method="post">
+                            <div class="modal-header">                      
+                                <h4 class="modal-title">Cập Nhật Thông Báo</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">   
+                                <div class="form-group" hidden>
+                                    <input type="hidden" id="edit-id" name="editNotifID">
+                                </div>                            
+                                <div class="form-group">
+                                    <label>Tiêu Đề</label>
+                                    <input type="text" class="form-control" id="edit-title" name="editTitle" placeholder="Nhập tiêu đề">
+                                </div>
+                                <div class="form-group">
+                                    <label>Chi Tiết</label>
+                                    <textarea type="text" class="form-control" id="edit-details" name="editDetails" placeholder="Nhập chi tiết"></textarea>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật">
+                            </div>
+                        </form>
+
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div>  
+       
 
         <style>
             /* The Modal (background) */
@@ -479,8 +495,8 @@
         <script type="text/javascript">
                                         $(document).ready(function () {
                                             $('#example').DataTable({
-                                                "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
-                                                "pageLength": 5,
+                                                "lengthMenu": [[10, 15, 20, 25, 30, -1], [10, 15, 20, 25, 30, 'Tất cả']],
+                                                "pageLength": 10,
                                                 "language": {
                                                     "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
                                                     "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",

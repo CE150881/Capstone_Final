@@ -6,6 +6,7 @@
 package Controllers.Test.Result;
 
 import DAOs.Account.UserDAO;
+import DAOs.Material.MaterialDAO;
 import DAOs.Test.LevelDAO;
 import DAOs.Test.ResultDAO;
 import DAOs.Test.TagDAO;
@@ -14,6 +15,7 @@ import Models.Level;
 import Models.Result;
 import Models.ResultUser;
 import Models.Tag;
+import Models.Type;
 import Models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +44,7 @@ public class viewHistoryTestControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
 //        ResultDAO dao = new ResultDAO();
 //        List<Result> listResult = dao.getResultByUser(userID);
 ////        List<ResultUser> list = new ArrayList<ResultUser>();
@@ -87,25 +89,23 @@ public class viewHistoryTestControl extends HttpServlet {
 //        int UserID = userDAO.getUserByEmail(email).getUserID();
         User u = (User) session.getAttribute("acc");
         int userID = u.getUserID();
-        
+
         ResultDAO dao = new ResultDAO();
         List<Result> listResult = dao.getResultByUser(userID);
         List<ResultUser> list = new ArrayList<ResultUser>();
-        
-        
+
         String username = u.getUsername();
 
-        
         for (Result o : listResult) {
-            
+
             String test = new TestDAO().getTestByID(o.getTestID()).getName();
-            
-            list.add(new ResultUser(o.getResultID(),username, test, o.getTimeBigin(),o.getTimeExpire(),o.getScore(), o.getTrueQuestion()));
+
+            list.add(new ResultUser(o.getResultID(), username, test, o.getTimeBigin(), o.getTimeExpire(), o.getScore(), o.getTrueQuestion()));
         }
-        
+
         TagDAO tagdao = new TagDAO();
         List<Tag> listtag = tagdao.getAllTag();
-        
+
         LevelDAO leveldao = new LevelDAO();
         List<Level> listlevel = leveldao.getAllLevel();
 
@@ -113,6 +113,14 @@ public class viewHistoryTestControl extends HttpServlet {
         request.setAttribute("listlevel", listlevel);
         //step2: load data to jsp
         request.setAttribute("listResult", list);
+
+        // document
+        MaterialDAO daoo = new MaterialDAO();
+        List<Type> listT = daoo.getAllType();
+        List<Level> listL = daoo.getAllLevel();
+        request.setAttribute("listT", listT);
+        request.setAttribute("listL", listL);
+
         request.getRequestDispatcher("Test_HistroyTest.jsp").forward(request, response);
     }
 

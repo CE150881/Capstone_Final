@@ -6,6 +6,7 @@
 package Controllers.Example;
 
 import DAOs.Material.MaterialDAO;
+import Models.ExampleGrammar;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -36,14 +37,17 @@ public class UpdateExampleControl extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
 
+        
         String exampleID = request.getParameter("exampleID");
         String exJ = request.getParameter("exJ");
         String exV = request.getParameter("exV");
-        
 
         MaterialDAO dao = new MaterialDAO();
         dao.updateExample(exJ, exV, exampleID);
-        response.sendRedirect("ManageGrammarControl");
+        ExampleGrammar gID = dao.getExampleByExampleID(exampleID);
+        int grammarID = gID.getGrammarID();
+        
+        response.sendRedirect("ManageExampleControl?grammarID=" + grammarID);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

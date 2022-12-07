@@ -37,8 +37,8 @@ public class UpdateGrammarControl extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         String grammarID = request.getParameter("grammarID");
-        String structure = request.getParameter("structure");
-        String use = request.getParameter("use");
+        String structure = request.getParameter("structure").replace("\r\n", "<br>");;
+        String use = request.getParameter("use").replace("\r\n", "<br>");;
         String levelID = request.getParameter("level");
 
         MaterialDAO dao = new MaterialDAO();

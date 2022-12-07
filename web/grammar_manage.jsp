@@ -164,7 +164,7 @@
                                                 <input value="${o.grammarID}" name="grammarID" type="text" class="form-control" required>
                                             </div>
                                             <div class="form-group">
-                                                <label>Cấu Trúc: ${o.structure}</label>
+                                                <label>Cấu Trúc: <br>${o.structure}</label>
 
                                             </div>
                                             <div class="form-group">
@@ -189,23 +189,23 @@
                         <div class="modal fade" id="editGrammar${o.grammarID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <form>
+                                    <form action="UpdateGrammarControl" method="post">
                                         <div class="modal-header">                      
-                                            <h4 class="modal-title">Chi Tiết Ngữ Pháp</h4>
+                                            <h4 class="modal-title">Cập Nhật Ngữ Pháp</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         </div>
                                         <div class="modal-body">                    
                                             <div class="form-group" hidden>
-                                                <label>Cấu Trúc</label>
+                                                <label>ID</label>
                                                 <input value="${o.grammarID}" name="grammarID" type="text" class="form-control" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>Cấu Trúc</label>
-                                                <input value="${o.structure}" name="structure" type="text" class="form-control" required>
+                                                <textarea value="${o.structure}" name="structure" type="text" class="form-control" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label>Cách Dùng</label>
-                                                <input value="${o.use}" name="use" type="text" class="form-control" required>
+                                                <textarea value="${o.use}" name="use" type="text" class="form-control" required></textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label>Cấp Độ</label>
@@ -217,7 +217,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <input type="button" class="btn btn-primary" data-dismiss="modal" value="Thoát">     
+                                            <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">    
+                                            <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật Ngữ Pháp">
                                         </div>
                                     </form>
                                 </div>
@@ -302,10 +303,19 @@
         <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#example').DataTable();
-            });
+        
+         <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            $('#example').DataTable({
+                                                "lengthMenu": [[10, 15, 20, 25, 30, -1], [10, 15, 20, 25, 30, 'Tất cả']],
+                                                "pageLength": 10,
+                                                "language": {
+                                                    "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
+                                                    "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
+                                                    "info": "Hiển thị _END_ trên tổng số _TOTAL_ dữ liệu"
+                                                }
+                                            });
+                                        });
         </script>
     </body>
 

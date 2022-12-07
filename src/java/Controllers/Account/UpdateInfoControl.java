@@ -34,8 +34,9 @@ public class UpdateInfoControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        response.setContentType("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("acc");
@@ -43,11 +44,17 @@ public class UpdateInfoControl extends HttpServlet {
 
         String username = request.getParameter("username");
         String phone = request.getParameter("phone");
-        
+
         UserDAO dao = new UserDAO();
         dao.updateUser(username, phone, email);
-        
-        response.sendRedirect("account_login.jsp");
+
+        UserDAO dao2 = new UserDAO();
+
+        User u = dao2.getUserByEmail(email);
+
+        session.setAttribute("acc", u);
+
+        response.sendRedirect(request.getContextPath() + "/ProfileUserControl");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

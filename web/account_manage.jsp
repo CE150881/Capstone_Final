@@ -110,7 +110,9 @@
                                         <td>${o.username}</td>
                                         <td>${o.email}</td>
                                         <td>${o.role}</td>
-                                        <td><a href="ViewAccountControl?userID=${o.userID}"><i class="view" data-toggle="modal"><i class="fa fa-eye" data-toggle="tooltip" title="Xem"></i></a></td>
+                                        <td>
+                                            <a hhref="#viewAccount${o.userID}" data-toggle="modal" data-target="#viewAccount${o.userID}"><i class="view" data-toggle="modal"><i class="fa fa-eye" data-toggle="tooltip" title="Xem"></i></a>
+                                        </td>
 
                                     </tr>
                                 </c:forEach>                              
@@ -148,6 +150,41 @@
                             </div>
                         </div>
                     </div>    
+
+                    <!-- Modal View info-->
+                    <c:forEach items="${listA}" var="o">
+                        <div class="modal fade" id="viewAccount${o.userID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="CreateAccountControl" method="post">
+                                        <div class="modal-header">
+
+                                            <h4>Thông Tin Tài Khoản</h4>
+
+                                        </div>
+                                        <div class="modal-body">  
+                                            <div class="form-group">
+                                                <img src="${o.avatar}" alt="avatar" width="60%" style="display: block; margin: auto">
+                                            </div> 
+                                            <div class="form-group">
+                                                <p class="card-text d-flex justify-content-center"><strong>Tên Người Dùng: </strong> ${o.username}</p>
+                                            </div>                            
+                                            <div class="form-group">
+                                                <p class="card-text d-flex justify-content-center"><strong>Email: </strong> ${o.email}</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <p class="card-text d-flex justify-content-center"><strong>Số Điện Thoại: </strong> ${o.phone}</p>
+                                            </div>                                                        
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-primary" data-dismiss="modal" value="Thoát">                                             
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>  
+                    </c:forEach>
+
                     <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
@@ -206,8 +243,8 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#example').DataTable({
-                    "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
-                    "pageLength": 5,
+                    "lengthMenu": [[10, 15, 20, 25, 30, -1], [10, 15, 20, 25, 30, 'Tất cả']],
+                    "pageLength": 10,
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
                         "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",

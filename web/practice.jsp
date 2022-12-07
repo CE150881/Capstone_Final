@@ -223,7 +223,7 @@
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                         </select>
-                                        <button class="btn btn-primary" onclick="myFunction()" >Phát Âm</button>
+                                        <button class="btn" onclick="myFunction()" style="background-color: #f5b8c5; margin:auto; color: white">Phát Âm</button>
                                     </div>
                                     <script>
                                         function myFunction() {
@@ -253,7 +253,7 @@
                         <div data-bs-parent="#myGroup" class="collapse  multi-collapse" id="multiCollapseExample2">
                             <div class="card mb-4 box-shadow">
                                 <div class="card-body text-center">
-                                    <button class="btn btn-primary" id="btnTalk">Bắt Đầu Nói</button>
+                                    <button class="btn" id="btnTalk" style="background-color: #f5b8c5; margin:auto; color: white">Nhấn Để Nói</button>
                                     <br><br>
                                     <span style="font-weight: bold; font-size: large;" id="message"></span>
                                     <br>
@@ -280,7 +280,7 @@
                                             var content = event.results[lastResult][0].transcript;
                                             var confidence = event.results[lastResult][0].confidence;
                                             message.textContent = 'Câu nói nhận diện được: ' + content;
-                                            messageC.textContent = 'Độ chính xác: ' + (confidence * 100).toFixed(2) + '%';
+                                            
                                         };
 
                                         recognition.onspeechend = function () {
@@ -289,7 +289,7 @@
                                         };
 
                                         recognition.onerror = function (event) {
-                                            message.textContent = 'Error occurred in recognition: ' + event.error;
+                                            message.textContent = 'Không thể nhận diện giọng nói. Vui lòng thử lại!';
                                         }
 
                                         document.querySelector('#btnTalk').addEventListener('click', function () {
@@ -320,7 +320,7 @@
                                     <div class="card-body">
                                         <form method="post" action="Practice" accept-charset="utf-8">
                                             <div class="form-group">
-                                                <label for="exampleFormControlTextarea1">Nhập Câu Tiếng Nhật</label>                                        
+                                                <label for="exampleFormControlTextarea1">Nhập Văn Bản Tiếng Nhật</label>                                        
                                                 <%
                                                     if (text != null) {
                                                 %>
@@ -334,14 +334,14 @@
                                                 %>
                                             </div>
                                             <br>
-                                            <button type="submit" name="translate" value="translate" class="btn btn-primary">Dịch</button>
+                                            <button type="submit" name="translate" value="translate" class="btn" style="background-color: #f5b8c5; margin:auto; color: white">Dịch</button>
                                             <button type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3"
                                                     aria-expanded="false" aria-controls="multiCollapseExample3"
                                                     class="btn btn-outline-secondary">Đóng</button>
                                         </form>
                                     </div>
                                     <div class="card-body">
-                                        <label for="exampleFormControlTextarea2">Dịch Sang Tiếng Việt</label>
+                                        <label for="exampleFormControlTextarea2">Bản Dịch Tiếng Việt</label>
                                         <%
                                             if (translatedText != null) {
                                         %>
@@ -386,7 +386,7 @@
                                                 <div id="wrapper">
                                                     <canvas id="colors_sketch" width="200" height="200">
                                                     </canvas>                                                    
-                                                    <input type="button" class="btn btn-primary" id="btnSave" value="Nhận Diện" />
+                                                    <input type="button" class="btn" style="background-color: #f5b8c5; color: white" id="btnSave" value="Nhận Diện" />
                                                 </div>                                                
                                                 <br />
                                                 <%
@@ -420,13 +420,13 @@
                                                 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
                                                 <script src="https://cdn.rawgit.com/mobomo/sketch.js/master/lib/sketch.min.js" type="text/javascript"></script>
                                                 <script type="text/javascript">
-                                                    
+
                                         $(function () {
                                             $('#colors_sketch').sketch();
                                             $(".tools a").eq(0).attr("style", "color:#000");
-                                            $(".tools a").click(function () {                                                
+                                            $(".tools a").click(function () {
                                                 $(".tools a").removeAttr("style");
-                                                $(this).attr("style", "color:#000");                                                
+                                                $(this).attr("style", "color:#000");
                                             });
                                             $("#btnSave").bind("click", function () {
                                                 var base64 = $('#colors_sketch')[0].toDataURL();
@@ -489,29 +489,8 @@
                         </main><!-- End #main -->
 
                         <!-- ======= Footer ======= -->
-                        <footer id="footer">
-                            <div class="footer-top">
-                                <div class="container">
-                                    <div class="row">
+                        <jsp:include page="footer_user.jsp" />
 
-                                        <div class="col-lg-3 col-md-6">
-                                            <div class="footer-info">
-                                                <h3>JPD<span>.</span></h3>
-                                                <p>
-                                                    600 Nguyễn Văn Cừ <br>
-                                                    An Bình, Cần Thơ<br><br>
-                                                    <strong>Số Điện Thoại:</strong> 0349554811<br>
-                                                    <strong>Email:</strong> noreply.jpd@gmail.com<br>
-                                                </p>                                
-                                            </div>
-                                        </div>                                              
-                                    </div>
-                                </div>
-                            </div>
-                        </footer><!-- End Footer -->
-
-                        <div id="preloader"></div>
-                        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
                         <!-- Vendor JS Files -->
                         <script src="${pageContext.request.contextPath}/user/vendor/purecounter/purecounter_vanilla.js"></script>

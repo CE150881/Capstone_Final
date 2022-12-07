@@ -154,7 +154,8 @@
                         <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>                           
+                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>  
+                            <li><a class="dropdown-item" href="viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
@@ -224,9 +225,7 @@
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="pw-tab" data-bs-toggle="tab" data-bs-target="#pw" type="button" role="tab" aria-controls="pw" aria-selected="false">Cập Nhật Mật Khẩu</a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false" href="viewHistoryTest">Lịch Sử Kiểm Tra</a>
-                        </li>
+
                     </ul>
                     <div class="tab-content" id="myTabContent">
 
@@ -255,14 +254,18 @@
                                 <form action="UpdateInfoControl" method="post">
                                     <div class="mb-3 mt-3">
                                         <label for="email" class="form-label">Tên Người Dùng:</label>
-                                        <input type="text" class="form-control" value="${sessionScope.acc.username}" name="username">
+                                        <input type="text" class="form-control" value="${sessionScope.acc.username}"
+                                               pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_].{1,14}$" 
+                                               title="Tên người dùng ít hơn 15 kí tự! (bao gồm khoảng trống)"
+                                               name="username" >
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="pwd" class="form-label">Số Điện Thoại:</label>
-                                        <input type="tel" class="form-control" id="phone" value="${sessionScope.acc.phone}" name="phone">
+                                        <input type="tel" class="form-control" id="phone" value="${sessionScope.acc.phone}" 
+                                               name="phone" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b" title="Số điện thoại không hợp lệ!">
                                     </div>
-                                    <button type="submit" class="btn " style="background-color: #f5b8c5; margin:auto; display:block;">Cập Nhật</button>
+                                    <button type="submit" class="btn " style="background-color: #f5b8c5; margin:auto; display:block; color: white">Cập Nhật</button>
                                 </form>
                             </div>
                         </div>
@@ -286,7 +289,7 @@
                                 <img src="${sessionScope.acc.avatar}" class="img" alt="avatar" width="70%">
                                 <form method="post" action="UpdateAvatarControl" enctype="multipart/form-data">
                                     Select file to upload: <input type="file" name="file" size="60" /><br /><br /> 
-                                    <input type="submit" value="Upload" />
+                                    <button type="submit" class="btn " style="background-color: #f5b8c5; margin:auto; display:block; color: white">Tải lên</button>
                                 </form>
                             </div>
                         </div>
@@ -297,47 +300,16 @@
                                     <div class="mb-3 mt-3 form-group toggle-form">
                                         <label for="email" class="form-label">Mật Khẩu Mới:</label>
                                         <input type="password" class="form-control" placeholder="" id="txtPassword" name="newPassword" value="${newpass}" pattern="[A-Za-z0-9]{6,12}" oninvalid="this.setCustomValidity('Độ dài mật khẩu từ 6 đến 12 kí tự!')" title="Nhập Mật Khẩu Mới">
-                                        <span toggle="#txtPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
                                     </div>
                                     <div class="mb-3 form-group toggle-form">
                                         <label for="pwd" class="form-label">Nhập Lại Mật Khẩu Mới:</label>
                                         <input type="password" class="form-control" placeholder="" id="txtConfirmPassword" name="reNewPassword" value="${renewpass}" pattern="[A-Za-z0-9]{6,12}" oninvalid="this.setCustomValidity('Độ dài mật khẩu từ 6 đến 12 kí tự!')" title="Nhập Lại Mật Khẩu Mới">
-                                        <span toggle="#txtConfirmPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
                                     </div>
-                                    <button type="submit" class="btn" onclick="return Validate()" style="background-color: #f5b8c5; margin:auto; display:block;">Cập Nhật</button>
+                                    <button type="submit" class="btn" onclick="return Validate()" style="background-color: #f5b8c5; margin:auto; display:block; color: white">Cập Nhật</button>
                                 </form>
                             </div>
-                        </div>
-
-                        <div class="tab-pane fade" style="margin-top: 50px; margin-left: 300px;" id="history" role="tabpanel" aria-labelledby="history-tab">
-
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>UserID</th>
-                                        <th>Test</th>
-                                        <th>Thời Gian Bắt Đầu</th>
-                                        <th>Thời Gian Kết Thúc</th>
-                                        <th>Tổng Điểm</th>
-                                        <th>Xem Chi Tiết</th>
-                                        <th>Tổng Đáp Án Đúng</th>
-                                    </tr>
-                                <tbody>
-                                    <c:forEach items="${listResult}" var="o" varStatus="i">
-                                        <tr>
-                                            <td>${i.index+1}</td>
-                                            <td>${o.user}</td>
-                                            <td>${o.test}</td>
-                                            <td>${o.timeBigin}</td>
-                                            <td>${o.timeExpire}</td>
-                                            <td>${o.score}</td>
-                                            <td>${o.trueQuestion}</td>
-                                            <td><a href="viewResultDetail?resultID=${o.resultID}" class="btn btn-success" tabindex="-1" role="button">Quản Lý Câu Hỏi</a></td>
-                                        </tr>
-                                    </c:forEach>                            
-                            </table>
-
                         </div>
 
 

@@ -6,6 +6,7 @@
 package Controllers.Example;
 
 import DAOs.Material.MaterialDAO;
+import Models.ExampleGrammar;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -36,10 +37,12 @@ public class DeleteExampleControl extends HttpServlet {
         String exampleID = request.getParameter("exampleID");
 
         MaterialDAO dao = new MaterialDAO();
+        ExampleGrammar gID = dao.getExampleByExampleID(exampleID);
+        int grammarID = gID.getGrammarID();
         dao.deleteExample(exampleID);
         
         
-        response.sendRedirect("ManageGrammarControl");
+        response.sendRedirect("ManageExampleControl?grammarID=" + grammarID);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

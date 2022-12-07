@@ -16,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Quản Lí</title>
+        <title>Quản Lí Nhãn</title>
         <link href="user/img/logo.jpg" rel="icon">
 
         <!-- Custom fonts for this template-->
@@ -125,7 +125,7 @@
                             <a href="tagCreate">Create student</a>
                         </form> 
                     </div>
-                    
+
                     <!-- Modal Add-->
                     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -208,8 +208,8 @@
         <script type="text/javascript">
                                                     $(document).ready(function () {
                                                         $('#example').DataTable({
-                                                            "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
-                                                            "pageLength": 5,
+                                                            "lengthMenu": [[10, 15, 20, 25, 30, -1], [10, 15, 20, 25, 30, 'Tất cả']],
+                                                            "pageLength": 10,
                                                             "language": {
                                                                 "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
                                                                 "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
@@ -217,10 +217,11 @@
                                                             }
                                                         });
                                                     });
+
                                                     function showMess(ID) {
                                                         var option = confirm('Bạn có muốn xoá hay không?');
                                                         if (option === true) {
-                                                            window.location.href= '${pageContext.request.contextPath}/tagDelete?tagID='+ID;
+                                                            window.location.href = '${pageContext.request.contextPath}/tagDelete?tagID=' + ID;
                                                         }
                                                     }
                                                     ;

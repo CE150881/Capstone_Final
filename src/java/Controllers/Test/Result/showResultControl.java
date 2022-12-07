@@ -102,7 +102,7 @@ public class showResultControl extends HttpServlet {
         
         
         List<Tag> listtag = tagdao.getAllTag();
-        
+         
         List<Level> listlevel = leveldao.getAllLevel();
 
         request.setAttribute("listtag", listtag);

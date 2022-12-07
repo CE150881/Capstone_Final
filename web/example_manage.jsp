@@ -112,8 +112,8 @@
                                         <td hidden>${o.exampleID}</td>
                                         <td>${o.exJ}</td>
                                         <td>${o.exV}</td>                               
-                                        <td><a href="#viewExample${o.grammarID}" data-toggle="modal" data-target="#viewExample${o.grammarID}" ><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
-                                        <td><a href="#deleteExample${o.grammarID}" data-toggle="modal" data-target="#deleteExample${o.grammarID}" ><i class="delete" data-toggle="modal"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>                                   
+                                        <td><a href="#viewExample${o.exampleID}" data-toggle="modal" data-target="#viewExample${o.exampleID}" ><i class="edit" data-toggle="modal"><i class="fa fa-pen" data-toggle="tooltip" title="Sửa"></i></a></td>
+                                        <td><a href="#deleteExample${o.exampleID}" data-toggle="modal" data-target="#deleteExample${o.exampleID}" ><i class="delete" data-toggle="modal"><i class="fa fa-trash" data-toggle="tooltip" title="Xóa"></i></a></td>                                   
                                     </tr>
                                 </c:forEach>                              
                             </tbody>
@@ -135,11 +135,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Câu Ví Dụ</label>
-                                            <input name="exJ" type="text" class="form-control" pattern="[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[々〆〤ヶ]" title="Câu ví dụ chỉ bao gồm kí tự tiếng Nhật!" required>
+                                            <input name="exJ" type="text" class="form-control"  required>
                                         </div>
                                         <div class="form-group">
                                             <label>Nghĩa</label>
-                                            <input name="exV" type="text" class="form-control" pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$" title="Nghĩa câu ví dụ chỉ bao gồm kí tự tiếng Việt!" required>
+                                            <input name="exV" type="text" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -153,7 +153,7 @@
 
                     <!-- Modal Edit-->
                     <c:forEach items="${listE}" var="o">
-                        <div class="modal fade" id="viewExample${o.grammarID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="viewExample${o.exampleID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <form action="UpdateExampleControl" method="post">
@@ -168,11 +168,11 @@
                                             </div>
                                             <div class="form-group" >
                                                 <label>Câu Ví Dụ</label>
-                                                <input value="${o.exJ}" name="exJ" type="text" class="form-control" pattern="[一-龠]+|[ぁ-ゔ]+|[ァ-ヴー]+|[々〆〤ヶ]" title="Câu ví dụ chỉ bao gồm kí tự tiếng Nhật!" required>
+                                                <input value="${o.exJ}" name="exJ" type="text" class="form-control" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>Nghĩa</label>
-                                                <input value="${o.exV}" name="exV" type="text" class="form-control" pattern="[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$" title="Nghĩa câu ví dụ chỉ bao gồm kí tự tiếng Việt!" required>
+                                                <input value="${o.exV}" name="exV" type="text" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -187,7 +187,7 @@
 
                     <!-- Modal Delete-->
                     <c:forEach items="${listE}" var="o">
-                        <div class="modal fade" id="deleteExample${o.grammarID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="deleteExample${o.exampleID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -262,10 +262,19 @@
         <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
-        <script type="text/javascript">
-                            $(document).ready(function () {
-                                $('#example').DataTable();
-                            });
+        
+         <script type="text/javascript">
+                                        $(document).ready(function () {
+                                            $('#example').DataTable({
+                                                "lengthMenu": [[10, 15, 20, 25, 30, -1], [10, 15, 20, 25, 30, 'Tất cả']],
+                                                "pageLength": 10,
+                                                "language": {
+                                                    "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
+                                                    "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
+                                                    "info": "Hiển thị _END_ trên tổng số _TOTAL_ dữ liệu"
+                                                }
+                                            });
+                                        });
         </script>
     </body>
 
