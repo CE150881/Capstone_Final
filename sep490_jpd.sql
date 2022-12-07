@@ -336,7 +336,7 @@ CREATE TABLE `message` (
   `messageID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `chatContent` text NOT NULL,
-  `time` datetime NOT NULL DEFAULT current_timestamp(),
+  `time` datetime NOT NULL,
   `sessionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -350,7 +350,7 @@ CREATE TABLE `notification` (
   `notificationID` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `details` varchar(6000) NOT NULL,
-  `time` datetime NOT NULL DEFAULT current_timestamp(),
+  `time` datetime NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -412,7 +412,7 @@ CREATE TABLE `resultdetail` (
 CREATE TABLE `session` (
   `sessionID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `status` tinyint(4) NOT NULL
+  `status` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
