@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 06, 2022 at 12:07 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 07, 2022 lúc 05:39 AM
+-- Phiên bản máy phục vụ: 10.4.24-MariaDB
+-- Phiên bản PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sep490_jpd`
+-- Cơ sở dữ liệu: `sep490_jpd`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account_code`
+-- Cấu trúc bảng cho bảng `account_code`
 --
 
 CREATE TABLE `account_code` (
@@ -37,7 +37,7 @@ CREATE TABLE `account_code` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `alphabet`
+-- Cấu trúc bảng cho bảng `alphabet`
 --
 
 CREATE TABLE `alphabet` (
@@ -47,10 +47,18 @@ CREATE TABLE `alphabet` (
   `pronounce` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `alphabet`
+--
+
+INSERT INTO `alphabet` (`alphabetID`, `type`, `alphabet`, `pronounce`) VALUES
+(1, 'Hiragana', 'あ', 'a'),
+(2, 'Katakana', 'ア', 'a');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `answer`
+-- Cấu trúc bảng cho bảng `answer`
 --
 
 CREATE TABLE `answer` (
@@ -60,10 +68,20 @@ CREATE TABLE `answer` (
   `isCorrect` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `answer`
+--
+
+INSERT INTO `answer` (`AnswerID`, `QuestionID`, `Answer`, `isCorrect`) VALUES
+(3, 3, 'dap an dung', b'1'),
+(4, 4, 'dap an dung', b'1'),
+(5, 3, 'がくこう', b'0'),
+(6, 4, 'けさ', b'0');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `examplegrammar`
+-- Cấu trúc bảng cho bảng `examplegrammar`
 --
 
 CREATE TABLE `examplegrammar` (
@@ -73,10 +91,18 @@ CREATE TABLE `examplegrammar` (
   `exV` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `examplegrammar`
+--
+
+INSERT INTO `examplegrammar` (`exampleID`, `grammarID`, `exJ`, `exV`) VALUES
+(1, 2, '親は子供のためを思えばこそ厳きびしくるのだ。', 'Chính vì nghĩ cho con cái nên bố mẹ mới la mắng nghiêm khắc.'),
+(2, 2, '小説を書くことが楽しければこそ、40年も書き続けてきたのです。', 'Chính vì công việc viết tiểu thuyết là niềm vui nên tôi mới viết suốt 40 năm qua.');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `forum_comment`
+-- Cấu trúc bảng cho bảng `forum_comment`
 --
 
 CREATE TABLE `forum_comment` (
@@ -90,7 +116,7 @@ CREATE TABLE `forum_comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `forum_comment`
+-- Đang đổ dữ liệu cho bảng `forum_comment`
 --
 
 INSERT INTO `forum_comment` (`comment_id`, `post_id`, `comment_content`, `userID`, `comment_date`, `comment_edit_date`, `comment_status`) VALUES
@@ -106,13 +132,13 @@ INSERT INTO `forum_comment` (`comment_id`, `post_id`, `comment_content`, `userID
 (10, 5, 'xét về mức uy tín á, thì mình đánh giá Esuhai cũng nhất nhì, Esuhai thì chỉ ngoài việc bay lâu hơn xí so với mấy trung tâm khác và trừ mấy cái đào tạo ko liên quan tiếng Nhật xàm xàm ra, thì mọi thứ đều ổn. Còn việc đào tạo tiếng Nhật thì rất okela. <br>Mình cũng đi Kỹ sư thông qua Esuhai, nên cũng nắm sơ sơ quy trình của họ.<br>', 3, '2022-12-06 14:00:30', '2022-12-06 14:00:30', 'active'),
 (11, 6, 'Về cơ bản thì không cấm nhưng cũng loằng ngoằng nhỉ.', 2, '2022-12-06 14:01:29', '2022-12-06 14:01:29', 'active'),
 (12, 6, 'Được nha bác, chỉ cần trường mới của bác cấp cho 在学証明書 nộp cho cục là oki·', 3, '2022-12-06 14:01:51', '2022-12-06 14:01:51', 'disable'),
-(13, 8, 'Giám đốc công ty em, kể hồi trước ổng toàn làm rồi ngủ luôn ở bàn xong dậy làm tiếp, và xe cấp cứu đến liên tục bế ổng đi :v', 1, '2022-12-06 14:12:41', '2022-12-06 14:12:41', 'active'),
+(13, 8, 'Giám đốc công ty em, kể hồi trước ổng toàn làm rồi ngủ luôn ở bàn xong dậy làm tiếp, và xe cấp cứu đến liên tục bế ổng đi :v<br>1234', 1, '2022-12-06 14:12:41', '2022-12-07 11:09:20', 'active'),
 (14, 8, 'Tăng ca cũng được nhưng phải có tiền tăng ca, chứ tăng ca mà \"cống hiến cho công việc, tiền không quan trọng\" thì thôi bỏ sớm =)))', 3, '2022-12-06 14:13:07', '2022-12-06 14:13:07', 'active');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `forum_post`
+-- Cấu trúc bảng cho bảng `forum_post`
 --
 
 CREATE TABLE `forum_post` (
@@ -127,7 +153,7 @@ CREATE TABLE `forum_post` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `forum_post`
+-- Đang đổ dữ liệu cho bảng `forum_post`
 --
 
 INSERT INTO `forum_post` (`post_id`, `topic_id`, `post_title`, `post_content`, `userID`, `post_date`, `post_edit_date`, `post_status`) VALUES
@@ -148,7 +174,7 @@ INSERT INTO `forum_post` (`post_id`, `topic_id`, `post_title`, `post_content`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `forum_report_comment`
+-- Cấu trúc bảng cho bảng `forum_report_comment`
 --
 
 CREATE TABLE `forum_report_comment` (
@@ -161,7 +187,7 @@ CREATE TABLE `forum_report_comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `forum_report_comment`
+-- Đang đổ dữ liệu cho bảng `forum_report_comment`
 --
 
 INSERT INTO `forum_report_comment` (`report_comment_id`, `user_report_id`, `report_comment_reason`, `comment_id`, `report_comment_date`, `status`) VALUES
@@ -171,7 +197,7 @@ INSERT INTO `forum_report_comment` (`report_comment_id`, `user_report_id`, `repo
 -- --------------------------------------------------------
 
 --
--- Table structure for table `forum_report_notification`
+-- Cấu trúc bảng cho bảng `forum_report_notification`
 --
 
 CREATE TABLE `forum_report_notification` (
@@ -185,7 +211,7 @@ CREATE TABLE `forum_report_notification` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `forum_report_notification`
+-- Đang đổ dữ liệu cho bảng `forum_report_notification`
 --
 
 INSERT INTO `forum_report_notification` (`report_notification_id`, `userID`, `report_notification_content`, `post_id`, `comment_id`, `report_notification_status`, `status`) VALUES
@@ -212,7 +238,7 @@ INSERT INTO `forum_report_notification` (`report_notification_id`, `userID`, `re
 -- --------------------------------------------------------
 
 --
--- Table structure for table `forum_report_post`
+-- Cấu trúc bảng cho bảng `forum_report_post`
 --
 
 CREATE TABLE `forum_report_post` (
@@ -225,7 +251,7 @@ CREATE TABLE `forum_report_post` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `forum_report_post`
+-- Đang đổ dữ liệu cho bảng `forum_report_post`
 --
 
 INSERT INTO `forum_report_post` (`report_post_id`, `user_report_id`, `report_post_reason`, `post_id`, `report_post_date`, `status`) VALUES
@@ -234,7 +260,7 @@ INSERT INTO `forum_report_post` (`report_post_id`, `user_report_id`, `report_pos
 -- --------------------------------------------------------
 
 --
--- Table structure for table `forum_topic`
+-- Cấu trúc bảng cho bảng `forum_topic`
 --
 
 CREATE TABLE `forum_topic` (
@@ -244,7 +270,7 @@ CREATE TABLE `forum_topic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `forum_topic`
+-- Đang đổ dữ liệu cho bảng `forum_topic`
 --
 
 INSERT INTO `forum_topic` (`topic_id`, `topic_name`, `topic_status`) VALUES
@@ -261,7 +287,7 @@ INSERT INTO `forum_topic` (`topic_id`, `topic_name`, `topic_status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `grammar`
+-- Cấu trúc bảng cho bảng `grammar`
 --
 
 CREATE TABLE `grammar` (
@@ -271,10 +297,18 @@ CREATE TABLE `grammar` (
   `use` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `grammar`
+--
+
+INSERT INTO `grammar` (`grammarID`, `levelID`, `structure`, `use`) VALUES
+(1, 1, 'N1 + あっての + N2', ' Bởi vì có …/Sự tồn tại…không thể thiếu…'),
+(2, 1, 'Vば　+　こそ<br>Aい　ければ　+　こそ<br>N/na であれば　+　こそ', 'Chính vì…');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `grammarhistory`
+-- Cấu trúc bảng cho bảng `grammarhistory`
 --
 
 CREATE TABLE `grammarhistory` (
@@ -283,10 +317,17 @@ CREATE TABLE `grammarhistory` (
   `grammarHistoryStatus` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `grammarhistory`
+--
+
+INSERT INTO `grammarhistory` (`grammarID`, `UserID`, `grammarHistoryStatus`) VALUES
+(1, 1, 'Đã Học');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kanji`
+-- Cấu trúc bảng cho bảng `kanji`
 --
 
 CREATE TABLE `kanji` (
@@ -298,16 +339,25 @@ CREATE TABLE `kanji` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kanji`
+-- Đang đổ dữ liệu cho bảng `kanji`
 --
 
 INSERT INTO `kanji` (`kanjiID`, `levelID`, `kanji`, `meaning`, `picture`) VALUES
-(1, 1, '暑', 'dsaf', 'upload\\Screenshot (374).png');
+(2, 1, '炊', 'XUY', 'upload\\xuy.png'),
+(3, 1, '織', 'CHỨC', 'upload\\chuc.png'),
+(4, 1, '功', 'CÔNG', 'upload\\CÔNG.png'),
+(5, 1, '奈', 'NẠI', 'upload\\nai.png'),
+(6, 1, '升', 'THĂNG', 'upload\\thang.png'),
+(7, 2, '導', 'ĐẠO', 'upload\\.dao.png'),
+(8, 2, '均', 'QUÂN', 'upload\\.hieen.png'),
+(9, 2, '装', 'TRANG', 'upload\\.trang.png'),
+(10, 2, '柔', 'NHU', 'upload\\nhu.png'),
+(11, 2, '賢', 'HIỀN', 'upload\\.hien.png');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `level`
+-- Cấu trúc bảng cho bảng `level`
 --
 
 CREATE TABLE `level` (
@@ -316,7 +366,7 @@ CREATE TABLE `level` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `level`
+-- Đang đổ dữ liệu cho bảng `level`
 --
 
 INSERT INTO `level` (`levelID`, `levelName`) VALUES
@@ -329,7 +379,7 @@ INSERT INTO `level` (`levelID`, `levelName`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `message`
+-- Cấu trúc bảng cho bảng `message`
 --
 
 CREATE TABLE `message` (
@@ -340,10 +390,18 @@ CREATE TABLE `message` (
   `sessionID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `message`
+--
+
+INSERT INTO `message` (`messageID`, `userID`, `chatContent`, `time`, `sessionID`) VALUES
+(1, 6, 'hi admin\n', '2022-12-07 08:07:53', 3),
+(2, 3, 'gì\n', '2022-12-07 08:08:01', 3);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notification`
+-- Cấu trúc bảng cho bảng `notification`
 --
 
 CREATE TABLE `notification` (
@@ -356,16 +414,18 @@ CREATE TABLE `notification` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `notification`
+-- Đang đổ dữ liệu cho bảng `notification`
 --
 
 INSERT INTO `notification` (`notificationID`, `title`, `details`, `time`, `status`, `userID`) VALUES
-(1, '123', '123', '2022-12-06 17:00:03', 0, 3);
+(2, 'Thông tin đăng ký thi JLPT 7/2022 ở Nhật và Việt Nam', 'Thông tin về kỳ thi năng lực tiếng Nhật JLPT N1 N2 N3 N4 N5, tháng 7/2022 ở Nhật và Việt Nam. Tất cả các thông tin về kỳ thi như, địa điểm, thời gian bắt đầu bán hồ sơ và hạn cuối cùng để nộp hồ sơ đăng ký kỳ thi tiếng Nhật JLPT 7/2022.', '2022-12-07 08:43:51', 0, 3),
+(3, 'Xem đáp án đề thi JLPT 12/2022 N1 N2 N3 N4 N5', 'https://camnangnhatban.com/ky-thi-jlpt/xem-dap-an-de-thi-jlpt-12-2022-n1-n2-n3-n4-n5-nhanh-chinh-xac-nhat.html', '2022-12-07 08:45:23', 0, 3),
+(4, 'Cách tính điểm thi năng lực tiếng Nhật JLPT N3', 'Tổng điểm 180\r\nĐiểm đỗ 95, điểm thành phần tối thiểu\r\n\r\nTừ vựng, chữ Hán, ngữ pháp: 19điểm\r\nĐọc hiểu: 19 điểm ( rất dễ liệt vì ý nào cũng na ná đúng )\r\nNghe hiểu: 19 điểm\r\nCó một chú ý là: Ngữ pháp gộp với đọc hiểu nhưng tính điểm lại cộng vào Moji, Goi, Bunpou ( gengo chishiki ), mà 1 câu ngữ pháp chỉ 1 điểm trong khi 1 câu đọc hiểu là 3 điểm với bài đọc ngắn và 4 điểm với các bài đọc trung, dài và tìm thông tin, vì vậy, làm đọc hiểu trước, hoặc chỉ bấm đúng 15 phút để làm ngữ pháp thôi nhé, nếu không sẽ không kịp giờ.', '2022-12-07 08:46:30', 0, 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `question`
+-- Cấu trúc bảng cho bảng `question`
 --
 
 CREATE TABLE `question` (
@@ -374,10 +434,18 @@ CREATE TABLE `question` (
   `TestID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `question`
+--
+
+INSERT INTO `question` (`QuestionID`, `Question`, `TestID`) VALUES
+(3, '先週の金曜日学校のとしょかんでレポートを書きました。', 1),
+(4, 'question2', 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `result`
+-- Cấu trúc bảng cho bảng `result`
 --
 
 CREATE TABLE `result` (
@@ -390,10 +458,19 @@ CREATE TABLE `result` (
   `trueQuestion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Đang đổ dữ liệu cho bảng `result`
+--
+
+INSERT INTO `result` (`ResultID`, `UserID`, `TestID`, `timeBigin`, `timeExpire`, `Score`, `trueQuestion`) VALUES
+(1, 1, 1, '2022-12-07 10:16:03', '2022-12-07 10:16:10', 1, 1),
+(2, 1, 1, '2022-12-07 10:41:10', '2022-12-07 10:41:12', 0, 0),
+(3, 1, 1, '2022-12-07 10:42:48', '2022-12-07 10:42:55', 1, 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `resultdetail`
+-- Cấu trúc bảng cho bảng `resultdetail`
 --
 
 CREATE TABLE `resultdetail` (
@@ -403,10 +480,22 @@ CREATE TABLE `resultdetail` (
   `Answer` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `resultdetail`
+--
+
+INSERT INTO `resultdetail` (`ResultDetailID`, `ResultID`, `QuestionID`, `Answer`) VALUES
+(1, 1, 3, 'dap an dung'),
+(2, 1, 4, 'けさ'),
+(3, 2, 3, 'answer'),
+(4, 2, 4, 'answer'),
+(5, 3, 3, 'がくこう'),
+(6, 3, 4, 'dap an dung');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `session`
+-- Cấu trúc bảng cho bảng `session`
 --
 
 CREATE TABLE `session` (
@@ -416,17 +505,18 @@ CREATE TABLE `session` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `session`
+-- Đang đổ dữ liệu cho bảng `session`
 --
 
 INSERT INTO `session` (`sessionID`, `userID`, `status`) VALUES
 (1, 2, 0),
-(2, 1, 0);
+(2, 1, 0),
+(3, 6, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tag`
+-- Cấu trúc bảng cho bảng `tag`
 --
 
 CREATE TABLE `tag` (
@@ -435,7 +525,7 @@ CREATE TABLE `tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tag`
+-- Đang đổ dữ liệu cho bảng `tag`
 --
 
 INSERT INTO `tag` (`TagID`, `Desc`) VALUES
@@ -445,7 +535,7 @@ INSERT INTO `tag` (`TagID`, `Desc`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test`
+-- Cấu trúc bảng cho bảng `test`
 --
 
 CREATE TABLE `test` (
@@ -456,10 +546,18 @@ CREATE TABLE `test` (
   `Status` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Đang đổ dữ liệu cho bảng `test`
+--
+
+INSERT INTO `test` (`TestID`, `Name`, `TagID`, `LevelID`, `Status`) VALUES
+(1, 'Kanji - Đề 1', 1, 1, b'1'),
+(2, 'Kanji - Đề 2', 1, 2, b'0');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `type`
+-- Cấu trúc bảng cho bảng `type`
 --
 
 CREATE TABLE `type` (
@@ -467,7 +565,7 @@ CREATE TABLE `type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `type`
+-- Đang đổ dữ liệu cho bảng `type`
 --
 
 INSERT INTO `type` (`type`) VALUES
@@ -477,7 +575,7 @@ INSERT INTO `type` (`type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Cấu trúc bảng cho bảng `user`
 --
 
 CREATE TABLE `user` (
@@ -491,50 +589,49 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Đang đổ dữ liệu cho bảng `user`
 --
 
 INSERT INTO `user` (`userID`, `email`, `password`, `username`, `phone`, `avatar`, `role`) VALUES
 (1, 'user@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Người Dùng', '', 'images\\user.png', 'Người dùng'),
 (2, 'cm@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Content Manager', '', 'images\\user.png', 'Quản lí nội dung'),
 (3, 'admin@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'Admin', '', 'images\\user.png', 'Quản trị viên'),
-(4, 'sang@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'saing', '0826278177', 'images\\user.png', 'Người dùng'),
-(5, 'user@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'HungNQCE150879', '0349554811', 'images\\user.png', 'Người dùng');
+(6, 'TamNTCE150881@fpt.edu.vn', 'fcea920f7412b5da7be0cf42b8c93759', 'Thanh Tâm', '0349554811', 'upload\\FB_IMG_1665748145857.jpg', 'Người dùng');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `account_code`
+-- Chỉ mục cho bảng `account_code`
 --
 ALTER TABLE `account_code`
   ADD PRIMARY KEY (`codeID`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `alphabet`
+-- Chỉ mục cho bảng `alphabet`
 --
 ALTER TABLE `alphabet`
   ADD PRIMARY KEY (`alphabetID`),
   ADD KEY `type` (`type`);
 
 --
--- Indexes for table `answer`
+-- Chỉ mục cho bảng `answer`
 --
 ALTER TABLE `answer`
   ADD PRIMARY KEY (`AnswerID`),
   ADD KEY `QuestionID` (`QuestionID`);
 
 --
--- Indexes for table `examplegrammar`
+-- Chỉ mục cho bảng `examplegrammar`
 --
 ALTER TABLE `examplegrammar`
   ADD PRIMARY KEY (`exampleID`),
   ADD KEY `examplegrammar_ibfk_1` (`grammarID`);
 
 --
--- Indexes for table `forum_comment`
+-- Chỉ mục cho bảng `forum_comment`
 --
 ALTER TABLE `forum_comment`
   ADD PRIMARY KEY (`comment_id`),
@@ -542,7 +639,7 @@ ALTER TABLE `forum_comment`
   ADD KEY `forum_comment_ibfk_2` (`post_id`);
 
 --
--- Indexes for table `forum_post`
+-- Chỉ mục cho bảng `forum_post`
 --
 ALTER TABLE `forum_post`
   ADD PRIMARY KEY (`post_id`),
@@ -550,7 +647,7 @@ ALTER TABLE `forum_post`
   ADD KEY `fk_userID` (`userID`);
 
 --
--- Indexes for table `forum_report_comment`
+-- Chỉ mục cho bảng `forum_report_comment`
 --
 ALTER TABLE `forum_report_comment`
   ADD PRIMARY KEY (`report_comment_id`),
@@ -558,7 +655,7 @@ ALTER TABLE `forum_report_comment`
   ADD KEY `forum_report_comment_ibfk_2` (`user_report_id`);
 
 --
--- Indexes for table `forum_report_notification`
+-- Chỉ mục cho bảng `forum_report_notification`
 --
 ALTER TABLE `forum_report_notification`
   ADD PRIMARY KEY (`report_notification_id`),
@@ -567,7 +664,7 @@ ALTER TABLE `forum_report_notification`
   ADD KEY `comment_id` (`comment_id`);
 
 --
--- Indexes for table `forum_report_post`
+-- Chỉ mục cho bảng `forum_report_post`
 --
 ALTER TABLE `forum_report_post`
   ADD PRIMARY KEY (`report_post_id`),
@@ -575,40 +672,40 @@ ALTER TABLE `forum_report_post`
   ADD KEY `forum_report_post_ibfk_2` (`user_report_id`);
 
 --
--- Indexes for table `forum_topic`
+-- Chỉ mục cho bảng `forum_topic`
 --
 ALTER TABLE `forum_topic`
   ADD PRIMARY KEY (`topic_id`);
 
 --
--- Indexes for table `grammar`
+-- Chỉ mục cho bảng `grammar`
 --
 ALTER TABLE `grammar`
   ADD PRIMARY KEY (`grammarID`),
   ADD KEY `levelID` (`levelID`);
 
 --
--- Indexes for table `grammarhistory`
+-- Chỉ mục cho bảng `grammarhistory`
 --
 ALTER TABLE `grammarhistory`
   ADD PRIMARY KEY (`grammarID`,`UserID`),
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `kanji`
+-- Chỉ mục cho bảng `kanji`
 --
 ALTER TABLE `kanji`
   ADD PRIMARY KEY (`kanjiID`),
   ADD KEY `levelID` (`levelID`);
 
 --
--- Indexes for table `level`
+-- Chỉ mục cho bảng `level`
 --
 ALTER TABLE `level`
   ADD PRIMARY KEY (`levelID`);
 
 --
--- Indexes for table `message`
+-- Chỉ mục cho bảng `message`
 --
 ALTER TABLE `message`
   ADD PRIMARY KEY (`messageID`),
@@ -616,21 +713,21 @@ ALTER TABLE `message`
   ADD KEY `usernameMessage_FK_1` (`userID`);
 
 --
--- Indexes for table `notification`
+-- Chỉ mục cho bảng `notification`
 --
 ALTER TABLE `notification`
   ADD PRIMARY KEY (`notificationID`),
   ADD KEY `userID_FK_1` (`userID`);
 
 --
--- Indexes for table `question`
+-- Chỉ mục cho bảng `question`
 --
 ALTER TABLE `question`
   ADD PRIMARY KEY (`QuestionID`),
   ADD KEY `TestID` (`TestID`);
 
 --
--- Indexes for table `result`
+-- Chỉ mục cho bảng `result`
 --
 ALTER TABLE `result`
   ADD PRIMARY KEY (`ResultID`),
@@ -638,7 +735,7 @@ ALTER TABLE `result`
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `resultdetail`
+-- Chỉ mục cho bảng `resultdetail`
 --
 ALTER TABLE `resultdetail`
   ADD PRIMARY KEY (`ResultDetailID`),
@@ -646,20 +743,20 @@ ALTER TABLE `resultdetail`
   ADD KEY `QuestionID` (`QuestionID`);
 
 --
--- Indexes for table `session`
+-- Chỉ mục cho bảng `session`
 --
 ALTER TABLE `session`
   ADD PRIMARY KEY (`sessionID`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `tag`
+-- Chỉ mục cho bảng `tag`
 --
 ALTER TABLE `tag`
   ADD PRIMARY KEY (`TagID`);
 
 --
--- Indexes for table `test`
+-- Chỉ mục cho bảng `test`
 --
 ALTER TABLE `test`
   ADD PRIMARY KEY (`TestID`),
@@ -667,198 +764,205 @@ ALTER TABLE `test`
   ADD KEY `TagID` (`TagID`);
 
 --
--- Indexes for table `type`
+-- Chỉ mục cho bảng `type`
 --
 ALTER TABLE `type`
   ADD PRIMARY KEY (`type`);
 
 --
--- Indexes for table `user`
+-- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`userID`);
+  ADD PRIMARY KEY (`userID`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `account_code`
+-- AUTO_INCREMENT cho bảng `account_code`
 --
 ALTER TABLE `account_code`
   MODIFY `codeID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `alphabet`
+-- AUTO_INCREMENT cho bảng `alphabet`
 --
 ALTER TABLE `alphabet`
-  MODIFY `alphabetID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `alphabetID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `answer`
+-- AUTO_INCREMENT cho bảng `answer`
 --
 ALTER TABLE `answer`
-  MODIFY `AnswerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `AnswerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `examplegrammar`
+-- AUTO_INCREMENT cho bảng `examplegrammar`
 --
 ALTER TABLE `examplegrammar`
-  MODIFY `exampleID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `exampleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `forum_comment`
+-- AUTO_INCREMENT cho bảng `forum_comment`
 --
 ALTER TABLE `forum_comment`
   MODIFY `comment_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `forum_post`
+-- AUTO_INCREMENT cho bảng `forum_post`
 --
 ALTER TABLE `forum_post`
   MODIFY `post_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `forum_report_comment`
+-- AUTO_INCREMENT cho bảng `forum_report_comment`
 --
 ALTER TABLE `forum_report_comment`
   MODIFY `report_comment_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `forum_report_notification`
+-- AUTO_INCREMENT cho bảng `forum_report_notification`
 --
 ALTER TABLE `forum_report_notification`
   MODIFY `report_notification_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `forum_report_post`
+-- AUTO_INCREMENT cho bảng `forum_report_post`
 --
 ALTER TABLE `forum_report_post`
   MODIFY `report_post_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `forum_topic`
+-- AUTO_INCREMENT cho bảng `forum_topic`
 --
 ALTER TABLE `forum_topic`
   MODIFY `topic_id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `grammar`
+-- AUTO_INCREMENT cho bảng `grammar`
 --
 ALTER TABLE `grammar`
-  MODIFY `grammarID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `grammarID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `kanji`
+-- AUTO_INCREMENT cho bảng `kanji`
 --
 ALTER TABLE `kanji`
-  MODIFY `kanjiID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `kanjiID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `level`
+-- AUTO_INCREMENT cho bảng `level`
 --
 ALTER TABLE `level`
   MODIFY `levelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `message`
+-- AUTO_INCREMENT cho bảng `message`
 --
 ALTER TABLE `message`
-  MODIFY `messageID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `messageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `notification`
+-- AUTO_INCREMENT cho bảng `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `notificationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `notificationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `question`
+-- AUTO_INCREMENT cho bảng `question`
 --
 ALTER TABLE `question`
-  MODIFY `QuestionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `QuestionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `result`
+-- AUTO_INCREMENT cho bảng `result`
 --
 ALTER TABLE `result`
-  MODIFY `ResultID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ResultID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `resultdetail`
+-- AUTO_INCREMENT cho bảng `resultdetail`
 --
 ALTER TABLE `resultdetail`
-  MODIFY `ResultDetailID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ResultDetailID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `session`
+-- AUTO_INCREMENT cho bảng `session`
 --
 ALTER TABLE `session`
-  MODIFY `sessionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `sessionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tag`
+-- AUTO_INCREMENT cho bảng `tag`
 --
 ALTER TABLE `tag`
   MODIFY `TagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `test`
+-- AUTO_INCREMENT cho bảng `test`
 --
 ALTER TABLE `test`
-  MODIFY `TestID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `TestID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `alphabet`
+-- Các ràng buộc cho bảng `account_code`
+--
+ALTER TABLE `account_code`
+  ADD CONSTRAINT `account_code_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`);
+
+--
+-- Các ràng buộc cho bảng `alphabet`
 --
 ALTER TABLE `alphabet`
   ADD CONSTRAINT `alphabet_ibfk_1` FOREIGN KEY (`type`) REFERENCES `type` (`type`);
 
 --
--- Constraints for table `answer`
+-- Các ràng buộc cho bảng `answer`
 --
 ALTER TABLE `answer`
   ADD CONSTRAINT `answer_ibfk_1` FOREIGN KEY (`QuestionID`) REFERENCES `question` (`QuestionID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `examplegrammar`
+-- Các ràng buộc cho bảng `examplegrammar`
 --
 ALTER TABLE `examplegrammar`
   ADD CONSTRAINT `examplegrammar_ibfk_1` FOREIGN KEY (`grammarID`) REFERENCES `grammar` (`grammarID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `forum_comment`
+-- Các ràng buộc cho bảng `forum_comment`
 --
 ALTER TABLE `forum_comment`
   ADD CONSTRAINT `forum_comment_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `forum_comment_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `forum_post` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `forum_post`
+-- Các ràng buộc cho bảng `forum_post`
 --
 ALTER TABLE `forum_post`
   ADD CONSTRAINT `fk_topic_id` FOREIGN KEY (`topic_id`) REFERENCES `forum_topic` (`topic_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `forum_report_comment`
+-- Các ràng buộc cho bảng `forum_report_comment`
 --
 ALTER TABLE `forum_report_comment`
   ADD CONSTRAINT `forum_report_comment_ibfk_1` FOREIGN KEY (`comment_id`) REFERENCES `forum_comment` (`comment_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `forum_report_comment_ibfk_2` FOREIGN KEY (`user_report_id`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `forum_report_notification`
+-- Các ràng buộc cho bảng `forum_report_notification`
 --
 ALTER TABLE `forum_report_notification`
   ADD CONSTRAINT `forum_report_notification_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -866,72 +970,72 @@ ALTER TABLE `forum_report_notification`
   ADD CONSTRAINT `forum_report_notification_ibfk_3` FOREIGN KEY (`comment_id`) REFERENCES `forum_comment` (`comment_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `forum_report_post`
+-- Các ràng buộc cho bảng `forum_report_post`
 --
 ALTER TABLE `forum_report_post`
   ADD CONSTRAINT `forum_report_post_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `forum_post` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `forum_report_post_ibfk_2` FOREIGN KEY (`user_report_id`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `grammar`
+-- Các ràng buộc cho bảng `grammar`
 --
 ALTER TABLE `grammar`
-  ADD CONSTRAINT `grammar_ibfk_1` FOREIGN KEY (`levelID`) REFERENCES `level` (`levelID`);
+  ADD CONSTRAINT `grammar_ibfk_1` FOREIGN KEY (`levelID`) REFERENCES `level` (`levelID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `grammarhistory`
+-- Các ràng buộc cho bảng `grammarhistory`
 --
 ALTER TABLE `grammarhistory`
   ADD CONSTRAINT `grammarhistory_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `grammarhistory_ibfk_2` FOREIGN KEY (`grammarID`) REFERENCES `grammar` (`grammarID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `kanji`
+-- Các ràng buộc cho bảng `kanji`
 --
 ALTER TABLE `kanji`
   ADD CONSTRAINT `kanji_ibfk_1` FOREIGN KEY (`levelID`) REFERENCES `level` (`levelID`);
 
 --
--- Constraints for table `message`
+-- Các ràng buộc cho bảng `message`
 --
 ALTER TABLE `message`
   ADD CONSTRAINT `sessionID_FK_1` FOREIGN KEY (`sessionID`) REFERENCES `session` (`sessionID`),
   ADD CONSTRAINT `usernameMessage_FK_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`);
 
 --
--- Constraints for table `notification`
+-- Các ràng buộc cho bảng `notification`
 --
 ALTER TABLE `notification`
   ADD CONSTRAINT `userID_FK_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`);
 
 --
--- Constraints for table `question`
+-- Các ràng buộc cho bảng `question`
 --
 ALTER TABLE `question`
   ADD CONSTRAINT `question_ibfk_1` FOREIGN KEY (`TestID`) REFERENCES `test` (`TestID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `result`
+-- Các ràng buộc cho bảng `result`
 --
 ALTER TABLE `result`
   ADD CONSTRAINT `result_ibfk_1` FOREIGN KEY (`TestID`) REFERENCES `test` (`TestID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `result_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `resultdetail`
+-- Các ràng buộc cho bảng `resultdetail`
 --
 ALTER TABLE `resultdetail`
   ADD CONSTRAINT `resultdetail_ibfk_1` FOREIGN KEY (`ResultID`) REFERENCES `result` (`ResultID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `resultdetail_ibfk_2` FOREIGN KEY (`QuestionID`) REFERENCES `question` (`QuestionID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `session`
+-- Các ràng buộc cho bảng `session`
 --
 ALTER TABLE `session`
   ADD CONSTRAINT `session_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `test`
+-- Các ràng buộc cho bảng `test`
 --
 ALTER TABLE `test`
   ADD CONSTRAINT `test_ibfk_1` FOREIGN KEY (`LevelID`) REFERENCES `level` (`levelID`) ON DELETE CASCADE ON UPDATE CASCADE,
