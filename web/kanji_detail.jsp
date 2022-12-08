@@ -4,6 +4,7 @@
     Author     : A Hi
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +13,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Portfolio Details - Gp Bootstrap Template</title>
+        <title>Chi Tiết Kanji</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -62,21 +63,21 @@
                                     <ul>
                                         <c:forEach items="${listT}" var="q">
                                             <li><a href="AlphabetControl?type=${q.type}">${q.type}</a></li>
-                                        </c:forEach>
+                                            </c:forEach>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Kanji</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="w">
                                             <li><a href="KanjiControl?levelID=${w.levelID}">${w.levelName}</a></li>
-                                        </c:forEach> 
+                                            </c:forEach> 
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a><span>Ngữ Pháp</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
                                         <c:forEach items="${listL}" var="e">
                                             <li><a href="GrammarControl?levelID=${e.levelID}">${e.levelName}</a></li>
-                                        </c:forEach>
+                                            </c:forEach>
                                     </ul>
                                 </li>
                             </ul>
@@ -88,7 +89,7 @@
                                         <ul>
                                             <c:forEach items="${listlevel}" var="x">
                                                 <li><a href="choiceTestControl?levelID=${x.levelID}&&tagID=${i.tagID}">${x.levelName}</a></li>
-                                            </c:forEach> 
+                                                </c:forEach> 
                                         </ul>
                                     </li>
                                 </c:forEach>
@@ -97,9 +98,9 @@
                         <li><a class="nav-link scrollto " href="<%= request.getContextPath()%>/Practice">Luyện Tập</a></li>
                         <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Forum">Cộng Đồng</a></li>
                         <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/Chat">Hỗ Trợ</a></li>
-                        <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
+                            <c:if test="${sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                             <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/dashboard.jsp">Quản Lý</a></li>
-                        </c:if>
+                            </c:if>
                     </ul>
                     <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
@@ -110,7 +111,8 @@
                         <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>                           
+                            <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>  
+                            <li><a class="dropdown-item" href="viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
@@ -128,6 +130,7 @@
                 }
             </style>
         </header><!-- End Header -->
+
         <main id="main">
 
             <!-- ======= Breadcrumbs ======= -->
@@ -137,8 +140,8 @@
                     <div class="d-flex justify-content-between align-items-center">                      
                         <p onclick="history.back(-1)"><i class="bi bi-arrow-left"></i> Quay lại</p>
                         <ol>
-                            <li><a href="HomeControl">Home</a></li>
-                            <li>Chi Tiết Ngữ Pháp</li>
+                            <li><a href="HomeControl">Trang Chủ</a></li>
+                            <li>Chi Tiết Kanji</li>
                         </ol>
                     </div>
 
@@ -156,7 +159,7 @@
                         <div class="portfolio-details-slider swiper">
                             <div class="align-items-center">
                                 <div class="swiper-slide">
-                                    <img src="${detail.picture}" alt="Kanji Picture" width="30%">
+                                    <img src="${detail.picture}" alt="Kanji Picture" width="10%">
                                 </div>
                             </div>
                         </div>
@@ -176,6 +179,28 @@
 
                 </div>
 
+            </div>
+
+
+            </div>
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Bạn muốn đăng xuất ?</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                            <a class="btn btn-primary" href="LogoutControl">Đăng Xuất</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section><!-- End Portfolio Details Section -->
 

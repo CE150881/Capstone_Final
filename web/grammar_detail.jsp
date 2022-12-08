@@ -13,7 +13,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Portfolio Details - Gp Bootstrap Template</title>
+        <title>Chi Tiết Ngữ Pháp</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
