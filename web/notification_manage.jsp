@@ -44,38 +44,8 @@
 
         <!-- ///Edit Modal -->
 
-            <div class="modal fade" id="myModal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="UpdateAlphabetControl" method="post">
-                            <div class="modal-header">                      
-                                <h4 class="modal-title">Cập Nhật Thông Báo</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">   
-                                <div class="form-group" hidden>
-                                    <input type="hidden" id="edit-id" name="editNotifID">
-                                </div>                            
-                                <div class="form-group">
-                                    <label>Tiêu Đề</label>
-                                    <input type="text" class="form-control" id="edit-title" name="editTitle" placeholder="Nhập tiêu đề">
-                                </div>
-                                <div class="form-group">
-                                    <label>Chi Tiết</label>
-                                    <textarea type="text" class="form-control" id="edit-details" name="editDetails" placeholder="Nhập chi tiết"></textarea>
-                                </div>
 
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
-                                <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật">
-                            </div>
-                        </form>
 
-                    </div>
-                </div>
-            </div>  
-       
 
         <style>
             /* The Modal (background) */
@@ -385,7 +355,7 @@
                                     <td><%=time%></td>
                                     <td><%=poster%></td>
                                     <td><%=statusStr%></td>
-                                    <td class="center-align"><button type="button" onclick="openModal(<%=id%>, '<%=title%>', '<%=details%>')" style="all: unset; cursor: pointer;" title="Chỉnh sửa"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                                    <td class="center-align"><a href="#editNoti<%=id%>" data-toggle="modal" data-target="#editNoti<%=id%>" title="Chỉnh sửa"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                             <%
                                                 if (statusStr.equals("Hiện")) {
                                             %>
@@ -400,12 +370,45 @@
                                     <td class="center-align"><form action="DeleteNotification" method="POST" id="notifDeleteForm-<%=id%>"><input type="hidden" name="notifID" value="<%=id%>"><button type="submit" onclick="notifFormDeleteConfirm(<%=id%>)" id="notifDeleteBtn-<%=id%>" style="all: unset; cursor: pointer;" title="Xóa">
                                                 <i class="fa-solid fa-trash"></i></button></form></td>
                                 </tr>
-                                <%
-                                    }
-                                %>                             
+                            <div class="modal fade" id="editNoti<%=id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="EditNotification" method="post">
+                                            <div class="modal-header">                      
+                                                <h4 class="modal-title">Cập Nhật Thông Báo</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            </div>
+                                            <div class="modal-body">   
+                                                <div class="form-group" hidden>
+                                                    <input type="hidden" id="<%=title%>" name="editNotifID">
+                                                </div>                            
+                                                <div class="form-group">
+                                                    <label>Tiêu Đề</label>
+                                                    <input type="text" class="form-control" value="<%=title%>" name="editTitle" placeholder="Nhập tiêu đề">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Chi Tiết</label>
+                                                    <textarea type="text" class="form-control" value="<%=details%>" name="editDetails" placeholder="Nhập chi tiết"></textarea>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                                <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật">
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <%
+                                }
+                            %>                             
                             </tbody>
                         </table>
                     </div>  
+
 
                     <!-- Modal Add-->
                     <div class="modal fade" id="addNoti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
