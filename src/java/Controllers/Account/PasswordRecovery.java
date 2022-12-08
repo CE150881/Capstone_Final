@@ -190,11 +190,11 @@ public class PasswordRecovery extends HttpServlet {
             mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 
             //set email subject
-            String title = "Mã Code để Khôi phục Tài khoản JPD";
+            String title = "[JPD] Khôi phục Tài khoản JPD";
             mess.setSubject(title, "UTF-8");
 
             //set message text
-            String message = "Chúng tôi đã nhận được yêu cầu thay đổi mật khẩu của tài khoản <strong>" + toMail + "</strong><br>Vui lòng sử dụng mã code này để thay đổi mật khẩu: <strong>" + code + "</strong>";
+            String message = "Chúng tôi đã nhận được yêu cầu thay đổi mật khẩu của tài khoản <strong>" + toMail + "</strong><br>Vui lòng sử dụng mã OTP này để thay đổi mật khẩu: <strong>" + code + "</strong>";
             mess.setContent(message, "text/html;charset=utf-8");
             //send the message
             Transport.send(mess);

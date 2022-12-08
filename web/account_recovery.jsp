@@ -56,7 +56,7 @@
                                 if ($('<div />').html(data).find("#no-email-msg").length > 0) {
                                     // display no such email message
                                     $('#status-msg').css("color", "#d0342c");
-                                    $('#status-msg').text("Email không có trong hệ thống, vui lòng thử lại!");
+                                    $('#status-msg').text("Email chưa đăng nhập, vui lòng thử lại!");
                                     // enable all inputs and button
                                     $('#recover-email').css("pointer-events", "auto");
                                     $('.submit').css("pointer-events", "auto");
@@ -100,7 +100,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 text-center mb-5">
-                        <h2 class="heading-section">Khôi phục tài khoản</h2>
+                        <h2 class="heading-section">Khôi Phục Tài Khoản</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -111,11 +111,11 @@
                                     <input type="text" name="recoverEmail" class="form-control" id="recover-email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" oninvalid="this.setCustomValidity('Địa chỉ Email không hợp lệ!')" title="Nhập Email" placeholder="Nhập Email" required>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary submit px-3">XÁC NHẬN</button>
+                                    <button type="submit" class="form-control btn" style="background: #f5b8c5; color: white;">XÁC NHẬN</button>
                                 </div>
                                 <div class="form-group d-md-flex">
                                     <div class="w-100 text-md-center">
-                                        <a href="<%=request.getContextPath()%>/account_login.jsp" style="color: #fff">Quay lại Đăng nhập</a>
+                                        <a href="<%=request.getContextPath()%>/account_login.jsp" style="color: #fff">Quay lại đăng nhập</a>
                                     </div>
                                 </div>
                                 <div class="form-group d-md-flex">

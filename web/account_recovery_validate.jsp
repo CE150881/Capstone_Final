@@ -165,7 +165,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 text-center mb-5">
-                        <h2 class="heading-section">Xác thực Email</h2>
+                        <h2 class="heading-section">Xác Thực Email</h2>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -173,20 +173,20 @@
                         <div class="login-wrap p-0">
                             <form action="/" method="POST" class="signin-form" id="validate-form">
                                 <div class="form-group">
-                                    <label for="recover-code">Mã Code đã được gửi đến email <br><strong><%=recoverEmail%></strong><br>Mã code có hiệu lực <strong>10 phút</strong><br><span>Bạn có thể gửi lại mã code sau <span id="resend-countdown"></span></span></label><br>
+                                    <label for="recover-code">Mã OTP đã được gửi đến email <br><strong><%=recoverEmail%></strong><br>Mã OTP có hiệu lực <strong>10 phút</strong><br><span>Bạn có thể gửi lại mã OTP sau <span id="resend-countdown"></span></span></label><br>
                                     <input type="number" maxlength="6" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" name="recoverCode" class="form-control" id="recover-code" placeholder="Nhập Mã" required>
-                                    <button type="button" id="resend-btn" class="form-control btn btn-primary submit px-3" title="Gửi Lại Mã"><i class="fa-solid fa-rotate-right"></i></button><br>
+                                    <button type="button" id="resend-btn" class="form-control btn" style="background: #f5b8c5; color: white;" title="Gửi Lại OTP"><i class="fa-solid fa-rotate-right"></i></button><br>
                                     <div id="recover-message" style="display: none"></div>
                                 </div>
                                 <div class="form-group">
                                     <input type="hidden" name="recoverEmail" class="form-control" id="recover-email" value="<%=recoverEmail%>">
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary submit px-3">XÁC NHẬN</button>
+                                    <button type="submit" class="form-control btn" style="background: #f5b8c5; color: white;">XÁC NHẬN</button>
                                 </div>
                                 <div class="form-group d-md-flex">
                                     <div class="w-100 text-md-center">
-                                        <a href="<%=request.getContextPath()%>/account_login.jsp" style="color: #fff">Quay lại Đăng nhập</a>
+                                        <a href="<%=request.getContextPath()%>/account_login.jsp" style="color: #fff">Quay lại đăng nhập</a>
                                     </div>
                                 </div>
                                 <div class="form-group d-md-flex" id="validate-msg-container">

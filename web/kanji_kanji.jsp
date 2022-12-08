@@ -138,7 +138,7 @@
                 <div class="container">
 
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2>Kanji ${level}</h2>
+                        <h2>Kanji N${level}</h2>
                         <ol>
                             <li><a href="HomeControl">Trang Chủ</a></li>
                             <li>Kanji</li>
@@ -163,6 +163,25 @@
                             </div>
                         </c:forEach>
 
+                    </div>
+                </div>
+                <!-- Logout Modal-->
+                <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                                <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">Bạn muốn đăng xuất ?</div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy</button>
+                                <a class="btn" style="background-color: #f5b8c5; color: white" href="LogoutControl">Đăng Xuất</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section><!-- End Services Section -->
