@@ -277,8 +277,8 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <h5 class="modal-title" id="exampleModalLabel">Xoá Bài Đăng</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -286,7 +286,7 @@
                                         Bạn có chắc sẽ xoá bài đăng này?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                         <form role='form' method="post" action="Post">
                                             <input name="newReply" value="" style="display: none">
                                             <input name="edit" value="" style="display: none">
@@ -306,7 +306,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Báo Cáo Bài Đăng</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -334,7 +334,7 @@
                                         </form>                                                        
                                     </div>
                                     <div class="modal-footer">  
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                         <button type="submit" form="myform" value="reportPost" name="reportPost" class="btn btn-danger">Báo Cáo</button>
                                     </div>
                                 </div>
@@ -465,7 +465,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -473,7 +473,7 @@
                                             Bạn có chắc khi xoá bình luận này?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                             <form role='form' method="post" action="Post">
                                                 <input name="newReply" value="" style="display: none">
                                                 <input name="edit" value="" style="display: none">
@@ -494,7 +494,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Báo Cáo Bình Luận</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
@@ -522,7 +522,7 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                             <button type="submit" form="myformComment<%= rs.get(i).getComment_id()%>" value="reportComment" name="reportComment" class="btn btn-danger">Báo Cáo</button>
                                         </div>
                                     </div>
