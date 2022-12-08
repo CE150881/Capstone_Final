@@ -103,6 +103,7 @@ public class managequestionControl extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("testID", TestID);
         session.setAttribute("hasResult", hasResult);
+        session.setAttribute("status", test.getStatus());
         session.setAttribute("numberques", numberques);
         request.getRequestDispatcher("Test_manage_insretTest_Test.jsp").forward(request, response);
     }

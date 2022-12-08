@@ -5,9 +5,16 @@
  */
 package Controllers.Test.Test;
 
+import DAOs.Test.AnswerDAO;
+import DAOs.Test.QuestionDAO;
+import DAOs.Test.ResultDAO;
 import DAOs.Test.TestDAO;
+import Models.Answer;
+import Models.Question;
+import Models.Result;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -76,8 +83,26 @@ public class testDeleteControl extends HttpServlet {
         //step1: get AnswerID from jsp
         String TestID = request.getParameter("testID");
         //step2: pass AnswerID to DAO
-        TestDAO dao = new TestDAO();
-        dao.deleteTest(Integer.parseInt(TestID));
+        TestDAO testdao = new TestDAO();
+        QuestionDAO quesdao = new QuestionDAO();
+        List<Question> listques = quesdao.getByTest(Integer.parseInt(TestID));
+        for (Question q : listques) {
+                AnswerDAO ansdao = new AnswerDAO();
+                List<Answer> listans = ansdao.getAnswerByQuestion(q.getQuestionID());
+                for (Answer a : listans) {
+                    ansdao.deleteAnswer(a.getAnswerID());
+                }
+            quesdao.deleteQuestion(q.getQuestionID());
+        }
+        
+        ResultDAO resultDAO = new ResultDAO();
+        List<Result> list_result = resultDAO.getResultByTest(Integer.parseInt(TestID));
+        for (Result r : list_result) {
+            resultDAO.deleteResult(r.getResultID());
+        }
+        
+        testdao.deleteTest(Integer.parseInt(TestID));
+        
         response.sendRedirect("testControl");
     }
 

@@ -117,19 +117,23 @@
                                             <td>${o.question}</td>
 
                                             <td>
-                                                <c:if test = "${sessionScope.hasResult==0}">
-                                                    <a  data-toggle="modal" data-target="#editQuestionModal${i.index+1}">
-                                                        <i class="fa fa-pen" title="Cập Nhật"></i>   
-                                                    </a>
-                                                </c:if>
+                                                <c:if test="${sessionScope.status==0}">
+                                                    <c:if test = "${sessionScope.hasResult==0}">
+                                                        <a  data-toggle="modal" data-target="#editQuestionModal${i.index+1}">
+                                                            <i class="fa fa-pen" title="Cập Nhật"></i>   
+                                                        </a>
+                                                    </c:if>
+                                                </c:if>                                                
                                             </td>
 
                                             <td>
-                                                <c:if test = "${sessionScope.hasResult==0}">
-                                                    <c:if test="${numberques!=1}">
-                                                        <a data-toggle="modal" data-target="#deleteQuestionModal${i.index+1}">
-                                                            <i class="fa fa-trash" title="Xóa"></i> 
-                                                        </a>
+                                                <c:if test="${sessionScope.status==0}">
+                                                    <c:if test = "${sessionScope.hasResult==0}">
+                                                        <c:if test="${numberques!=1}">
+                                                            <a data-toggle="modal" data-target="#deleteQuestionModal${i.index+1}">
+                                                                <i class="fa fa-trash" title="Xóa"></i> 
+                                                            </a>
+                                                        </c:if>
                                                     </c:if>
                                                 </c:if>
                                             </td>

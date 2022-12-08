@@ -8,9 +8,11 @@ package Controllers.Test.Answer;
 import DAOs.Test.AnswerDAO;
 import DAOs.Test.QuestionDAO;
 import DAOs.Test.ResultDAO;
+import DAOs.Test.TestDAO;
 import Models.Answer;
 import Models.Question;
 import Models.Result;
+import Models.Test;
 import Models.ansofques;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,8 +85,10 @@ public class insertTest_AnswerControl extends HttpServlet {
             aoq.add(new ansofques(a.getAnswerID(), a.getAnswer(), a.getQuestionID(), ques, a.getIsCorrect()));
         }
 
+        Test test = new TestDAO().getTestByID(new QuestionDAO().getQuestionByID(Integer.parseInt(questionID)).getTestID());
+        
         int hasResult = 0;
-        List<Result> listresult = new ResultDAO().getResultByTest(new QuestionDAO().getQuestionByID(Integer.parseInt(questionID)).getTestID());
+        List<Result> listresult = new ResultDAO().getResultByTest(test.getTestID());
         if (!listresult.isEmpty()) {
             hasResult += 1;
         }
@@ -96,6 +100,7 @@ public class insertTest_AnswerControl extends HttpServlet {
         session.setAttribute("questionID", questionID);
         session.setAttribute("question", ques);
         session.setAttribute("hasResult", hasResult);
+        session.setAttribute("status", test.getStatus());
         request.getRequestDispatcher("Test_manage_insretTest_question.jsp").forward(request, response);
     }
 

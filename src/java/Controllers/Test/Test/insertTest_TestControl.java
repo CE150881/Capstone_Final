@@ -91,6 +91,7 @@ public class insertTest_TestControl extends HttpServlet {
         }
 
         session.setAttribute("hasResult", hasResult);
+        session.setAttribute("status", test.getStatus());
         session.setAttribute("numberques", numberques);
         session.setAttribute("testID", TestID);
 

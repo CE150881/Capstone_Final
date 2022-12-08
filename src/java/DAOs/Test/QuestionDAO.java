@@ -58,13 +58,13 @@ public class QuestionDAO {
         return a;
     }
 
-    public List<Question> getByTest(int TagID) {
+    public List<Question> getByTest(int TestID) {
         List<Question> list = new ArrayList<>();
         String query = "SELECT * FROM `question` WHERE `TestID` = ?;";
         try {
             Connection conn = DBConnection.getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
-            ps.setInt(1, TagID);
+            ps.setInt(1, TestID);
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Question(rs.getInt(1),

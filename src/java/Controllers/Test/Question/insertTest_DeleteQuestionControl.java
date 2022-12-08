@@ -5,11 +5,14 @@
  */
 package Controllers.Test.Question;
 
+import DAOs.Test.AnswerDAO;
 import DAOs.Test.QuestionDAO;
 import DAOs.Test.TestDAO;
+import Models.Answer;
 import Models.Question;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -78,6 +81,12 @@ public class insertTest_DeleteQuestionControl extends HttpServlet {
 //        processRequest(request, response);
 
         String QuestionID = request.getParameter("questionID");
+        
+        AnswerDAO ansdao = new AnswerDAO();
+        List<Answer> listans = ansdao.getAnswerByQuestion(Integer.parseInt(QuestionID));
+        for (Answer a : listans) {
+            ansdao.deleteAnswer(a.getAnswerID());
+        }
 
         //step2: pass AnswerID to DAO
         QuestionDAO dao = new QuestionDAO();
