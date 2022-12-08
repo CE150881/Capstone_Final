@@ -47,6 +47,7 @@
 
                     <!-- Topbar -->
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                        <a href="${pageContext.request.contextPath}/testControl"><i class="fa fa-arrow-left"> Quay lại</i></a>
 
                         <!-- Sidebar Toggle (Topbar) -->
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -89,12 +90,8 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <a href="#add" class="btn btn-success" data-toggle="modal" data-target="#add" 
-                                       style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                            </svg>
-                                            Tạo Mới
+                                       style="margin-left: 450px; background-color: #000000; border-color: #000000;"><span>                                          
+                                            Thêm Câu Hỏi
                                         </span>
                                     </a>                                             
                                 </div>
@@ -105,10 +102,10 @@
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
-                                        <th>Bài Kiểm Tra</th>
+                                        <th>STT</th>                                       
                                         <th>Câu Hỏi</th>
-                                        <th>Cập Nhật / Xoá</th>
+                                        <th>Cập Nhật</th>
+                                        <th>Xoá</th>
                                         <th>Quản Lý Câu Trả Lời</th>
                                     </tr>
                                 </thead>
@@ -116,48 +113,36 @@
                                     <c:forEach items="${listQuestion}" var="o" varStatus="i">
                                         <tr>
                                             <td>${i.index+1}</td>
-                                            <td>${o.test}</td>
+
                                             <td>${o.question}</td>
+
                                             <td>
                                                 <c:if test = "${sessionScope.hasResult==0}">
-                                                    <button type="button" data-toggle="modal" data-target="#editQuestionModal${i.index+1}" class="btn btn-secondary">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                                        </svg>                                                
-                                                        Cập Nhật
-                                                    </button>
+                                                    <a  data-toggle="modal" data-target="#editQuestionModal${i.index+1}">
+                                                        <i class="fa fa-pen" title="Cập Nhật"></i>   
+                                                    </a>
+                                                </c:if>
+                                            </td>
+
+                                            <td>
+                                                <c:if test = "${sessionScope.hasResult==0}">
                                                     <c:if test="${numberques!=1}">
-                                                        <button type="button" data-toggle="modal" data-target="#deleteQuestionModal${i.index+1}" class="btn btn-danger">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                                            </svg>
-                                                            xoá
-                                                        </button>
+                                                        <a data-toggle="modal" data-target="#deleteQuestionModal${i.index+1}">
+                                                            <i class="fa fa-trash" title="Xóa"></i> 
+                                                        </a>
                                                     </c:if>
                                                 </c:if>
                                             </td>
                                             <td>
-                                                <a href="insertTest_Answer?questionID=${o.questionID}" class="btn btn-success" tabindex="-1" role="button">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                                                    <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                                                    <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-                                                    </svg>
-                                                    Quản lý câu trả lời
+                                                <a href="insertTest_Answer?questionID=${o.questionID}">
+                                                    <i class="fa fa-list-alt" title="Quản lí câu trả lời"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            <div>
-                                <a href="${pageContext.request.contextPath}/testControl" class="btn btn-outline-secondary" tabindex="-1" role="button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left" viewBox="0 0 16 16">
-                                    <path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/>
-                                    </svg>
-                                    Quay Lại
-                                </a>
-                            </div>
+
                         </form>
                     </div> 
 
@@ -182,9 +167,9 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Hủy</button>
-                                        <button type="submit" form="editQuestionform${o.questionID}" 
-                                                name="editquestion" class="btn btn-success">Cập Nhật</button>
+
+                                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                        <input type="submit" form="editQuestionform${o.questionID}"  name="submit" class="btn btn-primary" value="Cập Nhật">
                                     </div>
                                 </div>
                             </div>
@@ -200,14 +185,15 @@
                                     <div class="modal-body">
                                         <form id="deleteQuestionform${i.index+1}" action="${pageContext.request.contextPath}/insertTest_DeleteQuestion" method="post">
                                             <div class="form-group">
-                                                <label>Bạn chắc là bạn có thật sự muốn xoá hay không?${o.questionID}</label>
+                                                <label>Bạn muốn xóa câu hỏi?</label>
                                                 <input name="questionID" value="${o.questionID}" style="display: none">
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Hủy</button>
-                                        <button type="submit" form="deleteQuestionform${i.index+1}" name="deletequestion" class="btn btn-danger">Xoá</button>
+
+                                        <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                        <input type="submit" form="deleteQuestionform${i.index+1}"  name="submit" class="btn btn-primary" value="Xóa">
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +204,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">                      
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Câu Hỏi Mới</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Thêm Câu Hỏi</h5>
                                 </div>
                                 <div class="modal-body">   
                                     <form id="addQuestioform" action="${pageContext.request.contextPath}/insertTest_CreateQuestion" method="post">
@@ -229,8 +215,9 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Hủy</button>
-                                    <button type="submit" form="addQuestioform" class="btn btn-success">Thêm</button>
+
+                                    <input type="button" class="btn btn-secondary" data-dismiss="modal" value="Hủy">
+                                    <input type="submit" form="addQuestioform" name="submit" class="btn btn-primary" value="Thêm Câu Hỏi">
                                 </div>
                             </div>
                         </div>

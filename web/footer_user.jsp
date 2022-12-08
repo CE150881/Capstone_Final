@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-                <!-- ======= Footer ======= -->
+        <!-- ======= Footer ======= -->
         <footer id="footer">
             <div class="footer-top">
                 <div class="container">
@@ -38,29 +38,28 @@
                         <div class="col-lg-2 col-md-6 footer-links">
                             <h4>Dành Cho Bạn</h4>
                             <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="">Trang Chủ</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Tài Liệu</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Kiểm Tra</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Luyện Tập</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Cộng Đồng</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="HomeControl">Trang Chủ</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="AlphabetControl?type=Hiragana">Tài Liệu</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="choiceTestControl?levelID=1&&tagID=1">Kiểm Tra</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="Practice">Luyện Tập</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="Forum">Cộng Đồng</a></li>
                             </ul>
                         </div>
 
                         <div class="col-lg-3 col-md-6 footer-links">
                             <h4>Dịch Vụ Của Chúng Tôi</h4>
                             <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Nguyên Tắc Cộng Đồng</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Quyền Riêng Tư</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Điều Khoản</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="Footer_Community">Nguyên Tắc Cộng Đồng</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="Footer_PrivacySecurity">Quyền Riêng Tư Và Bảo Mật</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </footer><!-- End Footer -->
-        
+
         <div id="preloader"></div>
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short" style="color: black"></i></a>
-        
+
     </body>
 </html>

@@ -1,20 +1,18 @@
 <%-- 
-    Document   : index.jsp
-    Created on : 03-Dec-2022, 08:08:03
+    Document   : newjsp
+    Created on : 08-Dec-2022, 01:23:55
     Author     : A Hi
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>JSP-Servlet Upload file</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
     </head>
     <body>
-        <h2>Demo JSP-Servlet Upload File</h2>
-        <form method="post" action="UploadFileServlet" enctype="multipart/form-data">
-            Select file to upload: <input type="file" name="file" size="60" /><br /><br /> 
-            <input type="submit" value="Upload" />
-        </form>
+        <c:redirect url="/HomeControl"/>
     </body>
 </html>

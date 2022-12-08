@@ -51,7 +51,7 @@
             <div class="container d-flex align-items-center justify-content-lg-between">
 
                 <h1 class="logo me-auto me-lg-0"><a href="<%= request.getContextPath()%>/HomeControl">JPD<span>.</span></a></h1>
-                
+
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
                         <li><a class="nav-link scrollto" href="<%= request.getContextPath()%>/HomeControl">Trang Chủ</a></li>
@@ -110,6 +110,7 @@
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<%= request.getContextPath()%>/ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
@@ -176,7 +177,8 @@
                             <p>${result.score}/${totalScore}</p>
                         </div>
                         <br>
-                        <p class="view-detail-result text-center"><a href="showResultDetailControl?resultID=${resultID}">Đáp án</a></p>    
+                        <p class="view-detail-result text-center">                           
+                            <a href="showResultDetailControl?resultID=${resultID}"><button type="button" class="btn btn-outline-dark">Đáp án</button></a>
                         <hr>
                     </div>
                 </center>

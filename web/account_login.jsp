@@ -34,7 +34,7 @@
                         <div class="login-wrap p-0">
                             <form action="LoginControl" method="POST" class="signin-form">
                                 <div class="form-group">
-                                    <input id="email" type="text" name="email" class="form-control" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" oninvalid="this.setCustomValidity('Địa chỉ Email không hợp lệ!')" title="Nhập Email" placeholder="Email" required>
+                                    <input id="email" type="text" name="email" class="form-control" title="Nhập Email" placeholder="Email" required>
                                 </div>
                                 <div class="form-group">
                                     <input id="password-field" name="password" type="password" class="form-control" title="Nhập Mật khẩu" placeholder="Mật khẩu" required>

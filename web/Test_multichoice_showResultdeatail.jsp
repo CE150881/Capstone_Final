@@ -33,12 +33,15 @@
         <link href="user/vendor/remixicon/remixicon.css" rel="stylesheet">
         <link href="user/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
         <!-- Template Main CSS File -->
         <link href="user/css/style.css" rel="stylesheet">
+        <link href="user/css/home.css" rel="stylesheet">
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/user/css/takeTestStyle.css" type="text/css"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <title>Take Test</title>
+        
         
 
         <!-- =======================================================
@@ -118,6 +121,7 @@
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>

@@ -33,25 +33,12 @@
         <link href="user/vendor/remixicon/remixicon.css" rel="stylesheet">
         <link href="user/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
         <!-- Template Main CSS File -->
         <link href="user/css/style.css" rel="stylesheet">
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-        <link href="${pageContext.request.contextPath}/user/css/home.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <!-- =======================================================
-        * Template Name: Gp - v4.9.1
-        * Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
-        * Author: BootstrapMade.com
-        * License: https://bootstrapmade.com/license/
-        ======================================================== -->
+        <link href="user/css/home.css" rel="stylesheet">
     </head>
 
 
@@ -123,6 +110,7 @@
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
@@ -166,58 +154,61 @@
             <section id="breadcrumbs" class="breadcrumbs">
                 <div class="container">
 
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="aa d-flex justify-content-between align-items-center">
                         <h2>${type}</h2>
                         <ol>
-                            <li><a href="HomeControl" style="color: black">Trang Chủ</a></li>
+                            <li><a href="HomeControl">Trang Chủ</a></li>
                             <li>Chọn bài kiểm tra</li>
                         </ol>
                     </div>
+                    
+                    </div>
+                </section><!-- End Breadcrumbs -->
 
-                </div>
-            </section><!-- End Breadcrumbs -->
 
-            <!-- ======= Services Section ======= -->
-            <section id="services" class="services" style="background: #fff">
-                <center>
-                    <form action="${pageContext.request.contextPath}/choiceTest" method="post" style="width: 960px;">
-                        <div class="option-level row start-en">
-                            <h3 id="kanj_n5" style="color: white; background-color: #f5b8c5">
-                                Bài kiểm tra ${tag.desc} ${level.levelName}
-                            </h3>
-                            <c:forEach items="${choiceTestlist}" var="o">
-                                <p>
-                                    <a>Bài kiểm tra ${tag.desc} ${level.levelName} - ${o.name}</a>
-                                    <a href="takeTestControl?testID=${o.testID}" class="btn" style="color: white; background-color: black">Bắt Đầu</a>
-                                </p>
-                            </c:forEach>
+                <!-- ======= Services Section ======= -->
+                <section id="services" class="services" style="background: #fff">
+                        <div class="container">
+                            <center>
+                                <form action="${pageContext.request.contextPath}/choiceTest" method="post" style="width: 960px;">
+                                <div class="option-level row start-en">
+                                    <h3 id="kanj_n5" style="color: white; background-color: #f5b8c5">
+                                            Bài kiểm tra ${tag.desc} ${level.levelName}
+                                        </h3>
+                                        <c:forEach items="${choiceTestlist}" var="o">
+                                            <p>
+                                                <a>Bài kiểm tra ${tag.desc} ${level.levelName} - ${o.name}</a>
+                                                <a href="takeTestControl?testID=${o.testID}" class="btn" style="color: white; background-color: black">Bắt Đầu</a>
+                                            </p>
+                                        </c:forEach>
+                                    </div>
+                                </form> 
+                            </center>
                         </div>
-                    </form> 
-                </center>
-            </section><!-- End Services Section -->
+                    </section><!-- End Services Section -->
 
-        </main><!-- End #main -->
+                </main><!-- End #main -->
 
-        <jsp:include page="footer_user.jsp" />
+                <jsp:include page="footer_user.jsp" />
 
 
-        <!-- Vendor JS Files -->
-        <script src="user/vendor/purecounter/purecounter_vanilla.js"></script>
-        <script src="user/vendor/aos/aos.js"></script>
-        <script src="user/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="user/vendor/glightbox/js/glightbox.min.js"></script>
-        <script src="user/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-        <script src="user/vendor/swiper/swiper-bundle.min.js"></script>
-        <script src="user/vendor/php-email-form/validate.js"></script>
+                <!-- Vendor JS Files -->
+                <script src="user/vendor/purecounter/purecounter_vanilla.js"></script>
+                <script src="user/vendor/aos/aos.js"></script>
+                <script src="user/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <script src="user/vendor/glightbox/js/glightbox.min.js"></script>
+                <script src="user/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+                <script src="user/vendor/swiper/swiper-bundle.min.js"></script>
+                <script src="user/vendor/php-email-form/validate.js"></script>
 
-        <!-- Template Main JS File -->
-        <script src="user/js/main.js"></script>
+                <!-- Template Main JS File -->
+                <script src="user/js/main.js"></script>
 
 
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </body>
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            </body>
 
-</html>
+        </html>

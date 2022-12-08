@@ -113,6 +113,7 @@
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
@@ -173,22 +174,24 @@
                 </div>
             </section><!-- End Breadcrumbs -->
 
-            <!-- ======= Services Section ======= -->
-            <section id="services" class="services" style="background: #fff">
-                <form action="${pageContext.request.contextPath}/resultDetail" method="POST">
-                    <table id="example" class="table table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Test</th>
-                                <th>Thời Gian Bắt Đầu</th>
-                                <th>Thời Gian Kết Thúc</th>
-                                <th>Tổng Điểm</th>
-                                <th>Tổng Đáp Án Đúng</th>
-                                <th>Xem Chi Tiết</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            <!-- ======= Services Section ======= -->\
+            <div class="container">
+                <section id="services" class="services" style="background: #fff">
+                    <h4 style="text-align: center">Lịch Sử Làm Bài Kiểm Tra</h4><br>
+                    <form action="${pageContext.request.contextPath}/resultDetail" method="POST">
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Test</th>
+                                    <th>Thời Gian Bắt Đầu</th>
+                                    <th>Thời Gian Kết Thúc</th>
+                                    <th>Tổng Điểm</th>
+                                    <th>Tổng Đáp Án Đúng</th>
+                                    <th>Xem Chi Tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             <div class="resultform">
                                 <c:forEach items="${listResult}" var="o" varStatus="i">
                                     <tr>
@@ -198,39 +201,35 @@
                                         <td>${o.timeExpire}</td>
                                         <td>${o.score}</td>
                                         <td>${o.trueQuestion}</td>
-                                        <td><a href="viewResultDetail?resultID=${o.resultID}" class="btn btn-success" tabindex="-1" role="button">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                                                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                                                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-                                                </svg>
-                                                Đáp Án Chi tiết
-                                            </a>
+                                        <td>
+                                            <a href="viewResultDetail?resultID=${o.resultID}"><button type="button" class="btn btn-outline-dark">Đáp án</button></a>
                                         </td>
                                     </tr>
                                 </c:forEach>
                             </div>
-                        </tbody>
-                    </table>
-                </form>
-            </section><!-- End Services Section -->
+                            </tbody>
+                        </table>
+                    </form>
+                </section><!-- End Services Section -->
+            </div>
         </main><!-- End #main -->
 
 
-    <jsp:include page="footer_user.jsp" />
+        <jsp:include page="footer_user.jsp" />
 
 
-    <!-- Vendor JS Files -->
-    <script src="user/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="user/vendor/aos/aos.js"></script>
-    <script src="user/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="user/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="user/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="user/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="user/vendor/php-email-form/validate.js"></script>
+        <!-- Vendor JS Files -->
+        <script src="user/vendor/purecounter/purecounter_vanilla.js"></script>
+        <script src="user/vendor/aos/aos.js"></script>
+        <script src="user/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="user/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="user/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+        <script src="user/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="user/vendor/php-email-form/validate.js"></script>
 
-    <!-- Template Main JS File -->
-    <script src="user/js/main.js"></script>
+        <!-- Template Main JS File -->
+        <script src="user/js/main.js"></script>
 
-</body>
+    </body>
 
 </html>

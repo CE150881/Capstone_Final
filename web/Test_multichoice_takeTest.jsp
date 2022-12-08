@@ -34,27 +34,12 @@
         <link href="user/vendor/remixicon/remixicon.css" rel="stylesheet">
         <link href="user/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
         <!-- Template Main CSS File -->
         <link href="user/css/style.css" rel="stylesheet">
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/user/css/takeTestStyle.css" type="text/css"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <title>Take Test</title>
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-        <!-- =======================================================
-        * Template Name: Gp - v4.9.1
-        * Template URL: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/
-        * Author: BootstrapMade.com
-        * License: https://bootstrapmade.com/license/
-        ======================================================== -->
+        <link href="${pageContext.request.contextPath}/user/css/takeTestStyle.css" rel="stylesheet">
     </head>
 
 
@@ -134,6 +119,7 @@
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/viewHistoryTest">Lịch Sử Kiểm Tra</a></li>
                             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Đăng Xuất</a></li>                            
                         </ul>
                     </c:if>
@@ -162,15 +148,15 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h2>${type}</h2>
                         <ol>
-                            <li><a href="HomeControl"  style="color: black">Trang Chủ</a></li>
-                            <li><a href="choiceTestControl?levelID=${levelID}&&tagID=${tagID}"  style="color: black">Chọn bài kiểm tra</a></li>
+                            <li><a href="HomeControl">Trang Chủ</a></li>
+                            <li><a href="choiceTestControl?levelID=${levelID}&&tagID=${tagID}">Chọn bài kiểm tra</a></li>
                             <li>Làm bài kiểm tra</li>
                         </ol>
                     </div>
 
                 </div>
             </section><!-- End Breadcrumbs -->
-            
+
 
             <!-- ======= Services Section ======= -->
             <section id="services" class="services" style="background: #fff">
@@ -180,13 +166,13 @@
                             <div class="col-md-10 col-lg-10">
                                 <div class="question bg-white p-3 border-bottom">
                                     <div class="d-flex flex-row justify-content-between align-items-center mcq">
-                                        <h4 class="d-flex align-items-center">${testunis.name}</h4>
+                                        <h4 style="display: block; margin: auto; font-size: 37px">${testunis.name}</h4>
                                     </div>
                                     <c:forEach items="${listAandQ}" var="o" varStatus="i">
                                         <div class="question bg-white p-3 border-bottom">
                                             <div class="d-flex flex-row align-items-center question-title">
                                                 <h3 class="text-danger">Q${i.index+1}.</h3>
-                                                <h5 class="mt-1 ml-2">${o.question}</h5>
+                                                <h5 class="mt-1 ml-2"> ${o.question}</h5>
                                             </div>
                                             <c:forEach items="${o.answer}" var="z">
                                                 <div class="ans-list" name="ans-$(o.answerID)">
@@ -200,12 +186,20 @@
                                             </c:forEach>
                                         </div>
                                     </c:forEach>
-                                    <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
-                                        <div class="row pt-4">
-                                            <input id="finishbtn" type="submit" class="btn bt-sub" value="Nộp bài" role="button" style="border-color: #f5b8c5; color: #f5b8c5;"></input>
-                                            
+                                    <div  id="wrapper">
+                                        <div class="row pt-4" style="text-align: center;">
+                                            <button id="finishbtn" type="submit" class="btn btn-danger" value="Nộp bài">Nộp bài</button>
+
                                         </div>
                                     </div>
+                                    <style type="text/css">
+                                        #wrapper{
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;                    
+                                        }
+                                        
+                                    </style>
                                 </div>
                             </div>
                         </div>

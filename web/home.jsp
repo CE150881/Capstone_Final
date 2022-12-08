@@ -165,8 +165,8 @@
 
                 <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
                     <div class="col-xl-6 col-lg-8">
-                        <h1>Ứng dụng học tiếng Nhật JPD<span>.</span></h1>
-                        <h2>Học tiếng nhật miễn phí và hiệu quả</h2>
+                        <h1>JPD<span>.</span></h1>
+                        <h2>Học tiếng Nhật miễn phí và hiệu quả</h2>
                     </div>
                 </div>
 
@@ -180,13 +180,13 @@
                     <div class="col-xl-2 col-md-4">
                         <div class="icon-box">
                             <i class="bi bi-file-earmark-text"></i>
-                            <h3><a href="">Tài Liệu</a></h3>
+                            <h3><a href="AlphabetControl?type=Hiragana">Tài Liệu</a></h3>
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-4">
                         <div class="icon-box">
                             <i class="bi bi-card-checklist"></i>
-                            <h3><a href="">Kiểm Tra</a></h3>
+                            <h3><a href="choiceTestControl?levelID=1&&tagID=1">Kiểm Tra</a></h3>
                         </div>
                     </div>
                     <div class="col-xl-2 col-md-4">
@@ -214,9 +214,9 @@
 
                     <div class="row">
                         <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
-                            <img src="user/img/about.jpg" class="img-fluid" alt="">
+                            <img src="user/img/about.jpg" class="img-fluid" alt="" width="90%">
                         </div>
-                        <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right" data-aos-delay="100">
+                        <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right" data-aos-delay="100" style="margin-top: 100px">
                             <div class="row">            
                                 <div class="main">
                                     <div class="main-section" id="notif-container">

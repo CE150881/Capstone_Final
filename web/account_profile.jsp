@@ -99,7 +99,7 @@
 
                 <nav id="navbar" class="navbar order-last order-lg-0">
                     <ul>
-                        <li><a class="nav-link scrollto active" href="HomeControl">Trang Chủ</a></li>
+                        <li><a class="nav-link scrollto" href="HomeControl">Trang Chủ</a></li>
                         <li class="dropdown"><a href=""><span>Tài Liệu</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li class="dropdown"><a><span>Bảng Chữ Cái</span> <i class="bi bi-chevron-right"></i></a>
@@ -226,7 +226,7 @@
                             <a class="nav-link" id="pw-tab" data-bs-toggle="tab" data-bs-target="#pw" type="button" role="tab" aria-controls="pw" aria-selected="false">Cập Nhật Mật Khẩu</a>
                         </li>
 
-                    </ul>
+                    </ul>                   
                     <div class="tab-content" id="myTabContent">
 
                         <div class="tab-pane fade show active" style="margin-top: 50px; margin-left: 300px;" id="profile" role="tabpanel" aria-labelledby="profile-tab">

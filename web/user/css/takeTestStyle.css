@@ -35,7 +35,11 @@ label.radio input:checked + span {
 .ans {
   margin-left: 36px !important;
 }
-
+.btn{
+    display: block;
+    margin: auto;
+    text-align: center;
+}
 .btn:focus {
   outline: 0 !important;
   box-shadow: none !important;

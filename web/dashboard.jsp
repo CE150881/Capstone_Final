@@ -4,6 +4,7 @@
     Author     : A Hi
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,9 +82,47 @@
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-                        <p>welcome jpd</p>
-                        
-                        <a href="HomeControl">Web người dùng</a>
+
+                        <c:if test="${sessionScope.acc.role == 'Quản trị viên'}">
+                            <div class="row d-flex align-content-center" style="margin-top: 150px">
+                                <div style="display: block; margin: auto">
+                                    <h1>Quản lí hệ thống học tiếng Nhật JPD<span>.</span></h1>
+                                    <h4 style="text-align: center">Học tiếng nhật miễn phí và hiệu quả</h>
+                                </div>
+                            </div>
+                        </c:if>
+
+                        <c:if test="${sessionScope.acc.role == 'Quản lí nội dung'}">
+                            <div class="row d-flex align-content-center" style="margin-top: 150px">
+                                <div style="display: block; margin: auto">
+                                    <h1>Quản lí hệ thống học tiếng Nhật JPD<span>.</span></h1>
+                                    <h4 style="text-align: center">Học tiếng nhật miễn phí và hiệu quả</h>
+                                </div>
+                            </div>
+                        </c:if> 
+                        <div style="display: flex;
+                             align-items: center;
+                             justify-content: center;">
+                            <a href="HomeControl" class="csw-btn-button" rel="nofollow" target="_blank">Trang Web Người Dùng</a>
+                        </div>
+                        <style>
+                            .csw-btn-button {
+                                cursor: pointer;
+                                font-size: 16px;
+                                padding: 10px 35px;
+                                color: #fff;
+                                border-radius: 5px;
+                                background: #000;                                
+                                border: 1px solid #000;
+                                transition: 0.4s;                               
+                            }
+                            .csw-btn-button:hover {
+                                background: #fff;
+                                border-color: #000;
+                                color: #000;
+                                text-decoration: none;
+                            }
+                        </style>
                     </div>
                     <!-- /.container-fluid -->
                 </div>
