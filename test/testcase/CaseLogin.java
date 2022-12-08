@@ -35,7 +35,7 @@ public class CaseLogin {
         driver.findElement(By.cssSelector("#header > div > ul > a:nth-child(2)")).click();
         Thread.sleep(2000);
         WebElement mailInput = driver.findElement(By.cssSelector("body > section > div > div:nth-child(2) > div > div > form > div:nth-child(1) > input"));
-        mailInput.sendKeys("tan@gmail.com");
+        mailInput.sendKeys("user@gmail.com");
         WebElement passInput = driver.findElement(By.cssSelector("#password-field"));
         passInput.sendKeys("1234");
         passInput.sendKeys(Keys.ENTER);

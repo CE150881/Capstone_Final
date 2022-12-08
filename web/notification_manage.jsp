@@ -221,7 +221,7 @@
                 if (event.target === modal) {
                     modal.style.display = "none";
                 }
-            }
+            };
         </script>
         <!-- Edit Modal/// -->
 
@@ -355,7 +355,7 @@
                                     <td><%=time%></td>
                                     <td><%=poster%></td>
                                     <td><%=statusStr%></td>
-                                    <td class="center-align"><a href="#editNoti<%=id%>" data-toggle="modal" data-target="#editNoti<%=id%>" title="Chỉnh sửa"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                    <td class="center-align"><a href="#editNoti<%=id%>" data-toggle="modal" data-target="#editNoti<%=id%>" title="Chỉnh sửa" style="all: unset; cursor: pointer;"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                             <%
                                                 if (statusStr.equals("Hiện")) {
                                             %>
@@ -366,6 +366,7 @@
                                     <td class="center-align"><form action="ToggleNotificationVisibility" method="POST"><input type="hidden" name="notifID" value="<%=id%>"><button type="submit" style="all: unset; cursor: pointer;" title="Hiện"><i class="fa-solid fa-eye"></i></button></form></td>
                                                 <%
                                                     }
+                                                    details = details.replaceAll("<br>", "\r\n");
                                                 %>
                                     <td class="center-align"><form action="DeleteNotification" method="POST" id="notifDeleteForm-<%=id%>"><input type="hidden" name="notifID" value="<%=id%>"><button type="submit" onclick="notifFormDeleteConfirm(<%=id%>)" id="notifDeleteBtn-<%=id%>" style="all: unset; cursor: pointer;" title="Xóa">
                                                 <i class="fa-solid fa-trash"></i></button></form></td>
@@ -380,7 +381,7 @@
                                             </div>
                                             <div class="modal-body">   
                                                 <div class="form-group" hidden>
-                                                    <input type="hidden" id="<%=title%>" name="editNotifID">
+                                                    <input type="hidden" id="<%=title%>" name="editNotifID" value="<%=id%>">
                                                 </div>                            
                                                 <div class="form-group">
                                                     <label>Tiêu Đề</label>
@@ -388,7 +389,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Chi Tiết</label>
-                                                    <textarea type="text" class="form-control" value="<%=details%>" name="editDetails" placeholder="Nhập chi tiết"></textarea>
+                                                    <textarea type="text" class="form-control" name="editDetails" placeholder="Nhập chi tiết" style="resize: none; height: 30vh;"><%=details%></textarea>
                                                 </div>
 
                                             </div>
@@ -422,12 +423,12 @@
                                     <div class="modal-body">    
                                         <div class="form-group">
                                             <label>Tiêu Đề</label>
-                                            <input type="text" id="add-title" class="form-control" name="addTitle" >
+                                            <input type="text" id="add-title" class="form-control" name="addTitle" placeholder="Nhập tiêu đề">
                                         </div>                            
 
                                         <div class="form-group">
                                             <label>Chi Tiết</label>
-                                            <textarea type="text" id="add-details" class="form-control" name="addDetails"></textarea>
+                                            <textarea type="text" id="add-details" class="form-control" name="addDetails" placeholder="Nhập chi tiết"></textarea>
                                         </div>                                                        
                                     </div>
                                     <div class="modal-footer">
