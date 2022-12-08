@@ -23,6 +23,14 @@ public class DBConnection {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
     private static final String DBNAME = "sep490_jpd";
+    
+//    // Thông tin database online trên heroku
+//    private static final String HOST = "us-cdbr-east-06.cleardb.net";
+//    private static final String PORT = "3306";
+//    private static final String USERNAME = "b09ee206039851";
+//    private static final String PASSWORD = "d7325273";
+//    private static final String DBNAME = "heroku_5794ac090ac92ba";
+
 
     public static ResultSet querySet(String query) {
         Connection connection = null;
