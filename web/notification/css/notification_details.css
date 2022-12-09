@@ -19,7 +19,7 @@
 
 /* Sidebar column, on the right */
 .side {
-    flex: 30%;
+    flex: 40%;
     padding: 0 5vw;
 }
 

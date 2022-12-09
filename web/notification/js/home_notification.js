@@ -2,17 +2,27 @@ var currentPage = 1;
 var loadLimit = -1;
 var pageLimit = -1;
 var pageCount = -1;
-var headPage = 1;
-var tailPage = -1;
-var maxHeadPage = -1;
 
 $(document).ready(function () {
     loadLimit = $('#load-limit').text();
     pageLimit = $('#page-limit').text();
     pageCount = $('#page-count').text();
-    tailPage = pageLimit;
-    maxHeadPage = pageCount - pageLimit;
     var initActivePage = $('#page-num-1');
+
+    let displayCount = 0;
+
+    for (let i = 1; i <= pageCount; i++) {
+        if (i >= 1) {
+            displayCount = displayCount + 1;
+            if (displayCount <= pageLimit) {
+                $('#page-num-' + i).css("display", "block");
+            } else {
+                $('#page-num-' + i).css("display", "none");
+            }
+        } else {
+            $('#page-num-' + i).css("display", "none");
+        }
+    }
 
     if (initActivePage.prev().hasClass("prevNext")) {
         initActivePage.prev().css("pointer-events", "none");
@@ -112,28 +122,27 @@ function loadPage(pageNum) {
 
     lastActivePage.removeClass("active");
     currentActivePage.addClass("active");
-
-//    if ((((pageNum - 1) + pageLimit) < pageCount) && pageNum !== 1) {
-//        $('#page-num-' + (pageNum - 1)).css("display", "none");
-//    }
-//    
-//    // show this page and the next (pageLimit - 1) more pages
-//    for (let i = 1; i <= pageLimit; i++) {
-//        $('#page-num-' + (pageNum - 1 + i)).css("display", "block");
-//    }
+    let tmpCount = 0;
 
     for (let i = 1; i <= pageCount; i++) {
-        $('#page-num-' + i).css("display", "block");
+        if (i >= pageNum) {
+            tmpCount = tmpCount + 1;
+            if (tmpCount <= pageLimit) {
+                $('#page-num-' + i).css("display", "block");
+            } else {
+                $('#page-num-' + i).css("display", "none");
+            }
+        } else {
+            $('#page-num-' + i).css("display", "none");
+        }
     }
-//    if ((pageNum - 1 + pageLimit) <= pageCount) {
-//        for (let i = pageNum; i <= (pageNum - 1 + pageLimit); i++) {
-//            $('#page-num-' + i).css("display", "block");
-//        }
-//    } else {
-//        for (let i = pageNum; i <= pageCount; i++) {
-//            $('#page-num-' + i).css("display", "block");
-//        }
-//    }
+
+    let offset = pageLimit - tmpCount;
+
+    while (offset > 0) {
+        $('#page-num-' + (pageNum - offset)).css("display", "block");
+        offset = offset - 1;
+    }
 
     currentPage = pageNum;
 }

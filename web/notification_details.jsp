@@ -17,7 +17,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Cộng Đồng</title>
+        <title>Bảng Tin</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -210,7 +210,7 @@
                 </div>
                 <div class="side">
                     <div class="side-section" id="notif-container">
-                        <h2>Thông báo</h2>
+                        <h2>Bảng Tin</h2>
                         <%                        // Get All Notification
                             int loadLimit = 5;
                             int pageLimit = 3;
