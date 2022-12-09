@@ -163,7 +163,7 @@
 
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h2 style="display: inline-block;">Cộng Đồng</h2>                            
+                            <h2 style="display: inline-block;">Cộng Đồng/Bài Đăng</h2>                            
                         </div>
 
                         <ol>                                                       

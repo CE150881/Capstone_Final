@@ -220,7 +220,7 @@
                                         <label for="speak">Chọn Tốc Độ</label>
                                         <select id="speak">
                                             <option value="0.5">0.5</option>
-                                            <option value="1">1</option>
+                                            <option selected value="1">1</option>
                                             <option value="2">2</option>
                                         </select>
                                         <button class="btn" onclick="myFunction()" style="background-color: #f5b8c5; margin:auto; color: white">Phát Âm</button>

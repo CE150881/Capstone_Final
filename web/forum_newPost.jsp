@@ -190,8 +190,8 @@
                                 <br>
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Nội Dung</label>
-                                    <textarea maxlength="400" class="form-control" required="required" name="post_content" id="exampleFormControlTextarea2"
-                                              rows="10" placeholder="Nội dung (Tối đa 400 chứ cái)"></textarea>
+                                    <textarea maxlength="500" class="form-control" required="required" name="post_content" id="exampleFormControlTextarea2"
+                                              rows="10" placeholder="Nội dung (Tối đa 500 chứ cái)"></textarea>
                                 </div>
                                 <br>
                                 <div class="row">

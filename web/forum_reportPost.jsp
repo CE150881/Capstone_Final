@@ -111,19 +111,17 @@
                                     <p style="color: red">Lý Do Báo Cáo: <%= rs.get(i).getReport_post_reason()%></p>
                                     <p>Thành Viên Báo Cáo: <%= rs.get(i).getUsername()%></p>
                                     <p>Ngày Báo Cáo: <%= rs.get(i).getReport_post_date().substring(0, Math.min(rs.get(i).getReport_post_date().length(), 19))%></p>
+                                    <form method="post" action="<%= request.getContextPath()%>/ReportPost" style="display: inline">
+                                        <input name="report_post_id" value="<%= rs.get(i).getReport_post_id()%>" style="display: none">
+                                        <input name="post_id" value="<%= rs.get(i).getPost_id()%>" style="display: none">
+                                        <input name="reportPostDelete" value="" style="display: none">
+                                        <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-secondary">Bỏ Qua</button>
+                                    </form>
+                                    <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getReport_post_id()%>"
+                                            class="btn btn-danger">Xử Lý</button>
                                 </div>
                             </div>
-                            <div class="card-body" >
-                                <form method="post" action="<%= request.getContextPath()%>/ReportPost" style="display: inline">
-                                    <input name="report_post_id" value="<%= rs.get(i).getReport_post_id()%>" style="display: none">
-                                    <input name="post_id" value="<%= rs.get(i).getPost_id()%>" style="display: none">
-                                    <input name="reportPostDelete" value="" style="display: none">
-                                    <button type="submit" value="reportIgnore" name="reportIgnore" class="btn btn-secondary">Bỏ Qua</button>
-                                </form>
-                                <button type="button" data-toggle="modal" data-target="#exampleModalPost<%= rs.get(i).getReport_post_id()%>"
-                                        class="btn btn-danger">Xử Lý</button>
 
-                            </div>
                         </div>
 
                         <!-- Modal Delete Report and Post-->
@@ -217,17 +215,17 @@
         <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
         <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('#example').DataTable({
-                                        "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
-                                        "pageLength": 5,
-                                        "language": {
-                                            "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
-                                            "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
-                                            "info": "Hiển thị _END_ trên tổng số _TOTAL_ dữ liệu"
-                                        }
-                                    });
-                                });
+            $(document).ready(function () {
+                $('#example').DataTable({
+                    "lengthMenu": [[5, 10, 15, 20, 25, 30, -1], [5, 10, 15, 20, 25, 30, 'Tất cả']],
+                    "pageLength": 5,
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json",
+                        "lengthMenu": "Hiển thị tối đa _MENU_ dữ liệu",
+                        "info": "Hiển thị _END_ trên tổng số _TOTAL_ dữ liệu"
+                    }
+                });
+            });
 
         </script>
     </body>
