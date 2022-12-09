@@ -166,7 +166,7 @@
                             <div class="col-md-10 col-lg-10">
                                 <div class="question bg-white p-3 border-bottom">
                                     <div class="d-flex flex-row justify-content-between align-items-center mcq">
-                                        <h4 style="display: block; margin: auto; font-size: 37px">${testunis.name}</h4>
+                                        <h4 style="display: block; margin: auto; font-size: 37px">${testname}</h4>
                                     </div>
                                     <c:forEach items="${listAandQ}" var="o" varStatus="i">
                                         <div class="question bg-white p-3 border-bottom">

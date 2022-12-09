@@ -108,6 +108,8 @@ public class takeTestControl extends HttpServlet {
         //step: lấy thông tin bài test
         TestDAO testdao = new TestDAO();
         Test testunis = testdao.getTestByID(Integer.parseInt(TestID));
+        String testname = (new LevelDAO().getLevelbyID(Integer.parseInt(levelID))).getLevelName()+" - "+
+                          (new TagDAO().getTagByID(Integer.parseInt(tagID))).getDesc()+" Test - "+testunis.getName();
 
         //step: lấy câu trả lời của từng câu hỏi
         List<AnswerOfQuestion> listAandQ = new ArrayList<AnswerOfQuestion>();
@@ -157,7 +159,7 @@ public class takeTestControl extends HttpServlet {
 
         //step: show tất cả câu hỏi của bài test kèm câu trả lời
         request.setAttribute("listAandQ", listAandQ);
-        request.setAttribute("testunis", testunis);
+        request.setAttribute("testname", testname);
         request.setAttribute("type", type);
 
         session.setAttribute("TestID", TestID);
