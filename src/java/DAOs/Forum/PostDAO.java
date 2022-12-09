@@ -33,13 +33,13 @@ public class PostDAO {
         try {
             conn = DBConnection.getConnection();
             ps = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
-                    + "COUNT(b.post_id) AS 'comment_count' "
+                    + "COUNT(IF(b.comment_status = 'active', b.post_id, NULL))  AS 'comment_count' "
                     + "FROM `forum_post` a "
                     + "LEFT JOIN `forum_comment` b ON a.post_id = b.post_id "
                     + "LEFT JOIN `forum_topic` c ON a.topic_id = c.topic_id "
                     + "LEFT JOIN `user` d ON a.userID = d.userID "
                     + "WHERE a.`post_status` = 'active' "
-                    + "AND (b.comment_status = 'active' OR b.comment_status IS NULL) "
+                    + "AND (b.comment_status = 'active' OR b.comment_status IS NULL OR b.comment_status = 'disable')  "
                     + "GROUP BY  a.post_id "
                     + "ORDER BY a.post_date "
                     + "DESC LIMIT 10 OFFSET ? ;");
@@ -81,13 +81,13 @@ public class PostDAO {
         try {
             conn = DBConnection.getConnection();
             ps = conn.prepareStatement("SELECT a.*, c.topic_name, d.*, "
-                    + "COUNT(b.post_id) AS 'comment_count' "
+                    + "COUNT(IF(b.comment_status = 'active', b.post_id, NULL))  AS 'comment_count'  "
                     + "FROM `forum_post` a "
                     + "LEFT JOIN `forum_comment` b ON a.post_id = b.post_id "
                     + "LEFT JOIN `forum_topic` c ON a.topic_id = c.topic_id "
                     + "LEFT JOIN `user` d ON a.userID = d.userID "
                     + "WHERE a.`post_status` = 'disable' "
-                    + "AND (b.comment_status = 'active' OR b.comment_status IS NULL) "
+                    + "AND (b.comment_status = 'active' OR b.comment_status IS NULL OR b.comment_status = 'disable')  "
                     + "GROUP BY  a.post_id "
                     + "ORDER BY a.post_date DESC ;");
 
