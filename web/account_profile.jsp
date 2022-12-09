@@ -151,7 +151,7 @@
                     <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                         <!-- đã đăng nhập -->
 
-                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle" width="40" height="40"></a>
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>  
@@ -233,7 +233,7 @@
                             <div class="card mb-3" style="max-width: 770px;">
                                 <div class="row g-0 img-fluid d-flex justify-content-center" >
                                     <div class="d-flex justify-content-center" style="margin-top: 20px">
-                                        <img src="${sessionScope.acc.avatar}" alt="avatar" width="60%">
+                                        <img src="${sessionScope.acc.avatar}" alt="avatar" width="20%">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
@@ -288,7 +288,7 @@
 
                                 <img src="${sessionScope.acc.avatar}" class="img" alt="avatar" width="70%">
                                 <form method="post" action="UpdateAvatarControl" enctype="multipart/form-data">
-                                    Select file to upload: <input type="file" name="file" size="60" /><br /><br /> 
+                                    Chọn file tải lên: <input type="file" name="file" size="60" accept=".jpg, .jpeg, .png"/><br /><br />
                                     <button type="submit" class="btn " style="background-color: #f5b8c5; margin:auto; display:block; color: white">Tải lên</button>
                                 </form>
                             </div>

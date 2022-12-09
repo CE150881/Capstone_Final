@@ -19,7 +19,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Quản Lí Cộng Đồng</title>
+        <title>Bình Luận Bị Vô Hiệu</title>
         <link href="user/img/logo.jpg" rel="icon">
 
         <!-- Custom fonts for this template-->
