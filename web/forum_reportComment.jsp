@@ -103,7 +103,7 @@
                                 <div class="card-body">
                                     <div class="d-flex">
 
-                                        <p class="text-muted p-2"></p>
+                                        <h3 style="display: inline-block" class="card-text">Tiêu đề: <%= rs.get(i).getPost_title()%></h3>
                                         <p class="text-muted ml-auto p-2">Ngày Chỉnh Sửa: <%= rs.get(i).getComment_edit_date().substring(0, Math.min(rs.get(i).getComment_edit_date().length(), 19))%></p>
                                     </div>                                    
                                 </div>
