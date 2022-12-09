@@ -62,7 +62,8 @@ public class Footer_Community extends HttpServlet {
         request.setAttribute("listlevel", listlevel);
         // end test
         
-        response.sendRedirect("footer_community.jsp");
+        //response.sendRedirect("footer_community.jsp");
+        request.getRequestDispatcher("footer_community.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

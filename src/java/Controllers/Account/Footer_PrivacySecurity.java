@@ -62,7 +62,8 @@ public class Footer_PrivacySecurity extends HttpServlet {
         request.setAttribute("listlevel", listlevel);
         // end test
         
-        response.sendRedirect("footer_privacySecurity.jsp");
+        //response.sendRedirect("footer_privacySecurity.jsp");
+        request.getRequestDispatcher("footer_privacySecurity.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

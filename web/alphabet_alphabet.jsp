@@ -110,7 +110,7 @@
                     <c:if test="${sessionScope.acc.role == 'Người dùng' || sessionScope.acc.role == 'Quản trị viên' || sessionScope.acc.role == 'Quản lí nội dung'}">
                         <!-- đã đăng nhập -->
 
-                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle"></a>                        
+                        <a href="ProfileUserControl" class="logo me-auto me-lg-0" ><img src="${sessionScope.acc.avatar}" alt="" class="rounded-circle" width="40" height="40"></a>                        
                         <a class="username dropdown-toggle" data-bs-toggle="dropdown" style="color: white">${sessionScope.acc.username}</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="ProfileUserControl">Tài Khoản</a></li>  
@@ -179,15 +179,15 @@
 
                         <c:forEach items="${listA}" var="g">
                             <div class="col-xl-3 col-md-4">
-                                <div class="icon-box" onclick="myFunction()">
+                                <div class="icon-box" onclick="myFunction(${g.alphabetID})">
                                     <h4><input id="${g.alphabetID}" value="${g.alphabet}" style="display: none"><a>${g.alphabet}</a></input></h4>
                                     <p>${g.pronounce}</p>                                    
                                 </div>
-                                <!--
+                                
                                 <script>
-                                    function myFunction() {
-                                        var text = document.getElementById().value
-                                        document.getElementById().value = text;
+                                    function myFunction(id) {
+                                        var text = document.getElementById(id).value
+                                        document.getElementById(id).value = text;
 
                                         var msg = new SpeechSynthesisUtterance();
                                         var voices = window.speechSynthesis.getVoices();
@@ -203,7 +203,7 @@
                                         speechSynthesis.speak(msg);
                                     }
                                 </script>
-                                -->
+                               
                             </div>
                         </c:forEach>
 
