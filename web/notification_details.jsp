@@ -210,7 +210,7 @@
                 </div>
                 <div class="side">
                     <div class="side-section" id="notif-container">
-                        <h2>Thông báo</h2>
+                        <h2>Bảng Tin</h2>
                         <%                        // Get All Notification
                             int loadLimit = 5;
                             int pageLimit = 3;
