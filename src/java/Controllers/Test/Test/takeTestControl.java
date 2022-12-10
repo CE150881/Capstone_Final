@@ -108,8 +108,8 @@ public class takeTestControl extends HttpServlet {
         //step: lấy thông tin bài test
         TestDAO testdao = new TestDAO();
         Test testunis = testdao.getTestByID(Integer.parseInt(TestID));
-        String testname = (new LevelDAO().getLevelbyID(Integer.parseInt(levelID))).getLevelName()+" - "+
-                          (new TagDAO().getTagByID(Integer.parseInt(tagID))).getDesc()+" Test - "+testunis.getName();
+        String testname = "Bài kiểm tra - " +(new TagDAO().getTagByID(Integer.parseInt(tagID))).getDesc()+
+                          (new LevelDAO().getLevelbyID(Integer.parseInt(levelID))).getLevelName()+" - "+testunis.getName();
 
         //step: lấy câu trả lời của từng câu hỏi
         List<AnswerOfQuestion> listAandQ = new ArrayList<AnswerOfQuestion>();

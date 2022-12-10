@@ -173,11 +173,11 @@
                                 <form action="${pageContext.request.contextPath}/choiceTest" method="post" style="width: 960px;">
                                 <div class="option-level row start-en">
                                     <h3 id="kanj_n5" style="color: white; background-color: #f5b8c5">
-                                            Bài kiểm tra ${tag.desc} ${level.levelName}
+                                            Bài kiểm tra ${tag.desc} - ${level.levelName}
                                         </h3>
                                         <c:forEach items="${choiceTestlist}" var="o">
                                             <p>
-                                                <a>Bài kiểm tra ${tag.desc} ${level.levelName} - ${o.name}</a>
+                                                <a>Bài kiểm tra ${tag.desc} - ${level.levelName} - ${o.name}</a>
                                                 <a href="takeTestControl?testID=${o.testID}" class="btn" style="color: white; background-color: black">Bắt Đầu</a>
                                             </p>
                                         </c:forEach>

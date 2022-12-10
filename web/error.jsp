@@ -15,16 +15,16 @@
         <meta content="" name="keywords">
 
         <!-- Favicons -->
-        <link href="user/img/logo.jpg" rel="icon">
-        <link href="user/img/logo.jpg" rel="apple-touch-icon">
+        <link href="<%= request.getContextPath()%>/user/img/logo.jpg" rel="icon">
+        <link href="<%= request.getContextPath()%>/user/img/logo.jpg" rel="apple-touch-icon">
         
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <link rel="stylesheet" href="user/css/login.css">
+        <link rel="stylesheet" href="<%= request.getContextPath()%>/user/css/login.css">
 
-        <script src="user/js/jquery.min.js"></script>
+        <script src="<%= request.getContextPath()%>/user/js/jquery.min.js"></script>
     </head>
     <style type="text/css">
         #wrapper{
