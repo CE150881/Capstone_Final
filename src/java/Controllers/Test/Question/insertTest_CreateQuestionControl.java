@@ -98,7 +98,7 @@ public class insertTest_CreateQuestionControl extends HttpServlet {
         dao.insertQuestion(Question, Integer.parseInt(TestID));
         Question lastques = dao.getLastQuestion();
         
-        new AnswerDAO().insertAnswer(lastques.getQuestionID(), "dap an dung", 1);
+        new AnswerDAO().insertAnswer(lastques.getQuestionID(), "Đáp Án Đúng", 1);
         
         session.setAttribute("TestID", TestID);
         
