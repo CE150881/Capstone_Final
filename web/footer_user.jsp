@@ -38,19 +38,19 @@
                         <div class="col-lg-2 col-md-6 footer-links">
                             <h4>Dành Cho Bạn</h4>
                             <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="HomeControl">Trang Chủ</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="AlphabetControl?type=Hiragana">Tài Liệu</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="choiceTestControl?levelID=1&&tagID=1">Kiểm Tra</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="Practice">Luyện Tập</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="Forum">Cộng Đồng</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="${pageContext.request.contextPath}/HomeControl">Trang Chủ</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="${pageContext.request.contextPath}/AlphabetControl?type=Hiragana">Tài Liệu</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="${pageContext.request.contextPath}/choiceTestControl?levelID=1&&tagID=1">Kiểm Tra</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="${pageContext.request.contextPath}/Practice">Luyện Tập</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="${pageContext.request.contextPath}/Forum">Cộng Đồng</a></li>
                             </ul>
                         </div>
 
                         <div class="col-lg-3 col-md-6 footer-links">
                             <h4>Dịch Vụ Của Chúng Tôi</h4>
                             <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="Footer_Community">Nguyên Tắc Cộng Đồng</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="Footer_PrivacySecurity">Quyền Riêng Tư Và Bảo Mật</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="${pageContext.request.contextPath}/Footer_Community">Nguyên Tắc Cộng Đồng</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="${pageContext.request.contextPath}/Footer_PrivacySecurity">Quyền Riêng Tư Và Bảo Mật</a></li>
                             </ul>
                         </div>
                     </div>
